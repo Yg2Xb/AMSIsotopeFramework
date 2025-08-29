@@ -2,4 +2,4 @@
 # This allows the root CMakeLists.txt to discover and build them.
 
 add_subdirectory(IsoToolbox)
-# add_subdirectory(PhysicsModules) # We will uncomment this later
+add_subdirectory(PhysicsModules)

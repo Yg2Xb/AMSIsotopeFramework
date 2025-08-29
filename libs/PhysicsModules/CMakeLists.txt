@@ -1,18 +1,15 @@
 # CMakeLists.txt for the PhysicsModules collection
 
-# 1. Create a virtual INTERFACE library to group all physics modules.
-#    It doesn't compile any code itself, it only collects properties.
+# 1. 创建一个“虚拟的”INTERFACE库来组织所有的物理模块。
 add_library(PhysicsModules INTERFACE)
 
-# 2. Add subdirectories for each module.
+# 2. 添加子模块目录
 add_subdirectory(DataModel)
-# add_subdirectory(Selection) # etc.
+# 未来我们会在这里添加更多模块
 
-# 3. Link the sub-module libraries to the main interface.
-#    This crucial step propagates the PUBLIC properties (like include paths)
-#    from DataModel up to the PhysicsModules interface.
+# 3. 将子模块的公开属性“注入”到总接口中
 target_link_libraries(PhysicsModules
-    PUBLIC
+    INTERFACE       # <-- 这里是修正的地方，从PUBLIC改为INTERFACE
         DataModel
-        # Selection # etc.
+        # Selection
 )

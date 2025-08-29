@@ -334,7 +334,7 @@ public :
    TBranch        *b_jmembpatt2;   //!
    TBranch        *b_ecalflag;   //!
    TBranch        *b_tofflag;   //!
-   TBranch        *b_   antipatt;   //!
+   TBranch        *b_antipatt;   //!
    TBranch        *b_irti;   //!
    TBranch        *b_zenith;   //!
    TBranch        *b_glong;   //!
@@ -683,7 +683,7 @@ void AMSDstTreeA::Init(TTree *tree)
    fChain->SetBranchAddress("jmembpatt2", &jmembpatt2, &b_jmembpatt2);
    fChain->SetBranchAddress("ecalflag", &ecalflag, &b_ecalflag);
    fChain->SetBranchAddress("tofflag", tofflag, &b_tofflag);
-   fChain->SetBranchAddress("antipatt", &antipatt, &b_   antipatt);
+   fChain->SetBranchAddress("antipatt", &antipatt, &b_antipatt);
    fChain->SetBranchAddress("irti", &irti, &b_irti);
    fChain->SetBranchAddress("zenith", &zenith, &b_zenith);
    fChain->SetBranchAddress("glong", &glong, &b_glong);
