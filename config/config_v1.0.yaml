@@ -1,0 +1,12 @@
+# Main Configuration File for AMS Isotope Framework v1.0
+
+# "DEBUG", "INFO", "WARN", "ERROR"
+log_level: "DEBUG" 
+
+run_mode: "local"
+
+# Parameters for the first analysis scenario
+analysis:
+    acceptance: "UnbiasedL1Inner"
+    rigidity_version: "GBL_v6_InnerRig"
+    user_name: "zixuan"
