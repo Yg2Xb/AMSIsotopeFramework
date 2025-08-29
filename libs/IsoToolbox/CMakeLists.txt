@@ -4,12 +4,16 @@
 set(SOURCES
     src/Logger.cpp
     src/ConfigManager.cpp
+    src/PhysicsConstants.cpp # <-- 新增
+    src/AnalysisContext.cpp # <-- 新增
 )
 
 # 2. Add all public header files for the library
 set(HEADERS
     include/IsoToolbox/Logger.h
     include/IsoToolbox/ConfigManager.h
+    include/IsoToolbox/PhysicsConstants.h # <-- 新增
+    include/IsoToolbox/AnalysisContext.h # <-- 新增
 )
 
 # 3. Create the shared library target
@@ -25,5 +29,7 @@ target_include_directories(IsoToolbox
 target_link_libraries(IsoToolbox
     PUBLIC
         spdlog::spdlog
-        yaml-cpp      # <-- 这里是修正的地方
+        yaml-cpp
+        ROOT::Core
+        ROOT::MathCore # <-- ADD THIS LINE
 )

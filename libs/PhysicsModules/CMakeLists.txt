@@ -1,15 +1,17 @@
 # CMakeLists.txt for the PhysicsModules collection
 
-# 1. 创建一个“虚拟的”INTERFACE库来组织所有的物理模块。
+# 1. 创建“虚拟”接口库
 add_library(PhysicsModules INTERFACE)
 
 # 2. 添加子模块目录
 add_subdirectory(DataModel)
-# 未来我们会在这里添加更多模块
+add_subdirectory(Selection)      # <-- 新增
+add_subdirectory(HistManager)    # <-- 新增
 
-# 3. 将子模块的公开属性“注入”到总接口中
+# 3. 将子模块链接到总接口上
 target_link_libraries(PhysicsModules
-    INTERFACE       # <-- 这里是修正的地方，从PUBLIC改为INTERFACE
+    INTERFACE
         DataModel
-        # Selection
+        Selection            # <-- 新增
+        HistManager          # <-- 新增
 )

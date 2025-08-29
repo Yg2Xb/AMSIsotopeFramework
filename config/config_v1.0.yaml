@@ -1,12 +1,4 @@
-# Main Configuration File for AMS Isotope Framework v1.0
-
-# "DEBUG", "INFO", "WARN", "ERROR"
-log_level: "DEBUG" 
-
-run_mode: "local"
-
-# Parameters for the first analysis scenario
-analysis:
-    acceptance: "UnbiasedL1Inner"
-    rigidity_version: "GBL_v6_InnerRig"
-    user_name: "zixuan"
+analysis_target: "Beryllium"
+input_files:
+  - "root://eosams.cern.ch//eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1305853512_10.root"
+output_file: "/eos/user/z/zixuan/1305853512_10_testresults.root"
