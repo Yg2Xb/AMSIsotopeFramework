@@ -3,19 +3,16 @@
 #include <vector>
 #include <memory>
 #include <fstream>
-#include <nlohmann/json.hpp> // This include is now found correctly
-
-// ... The rest of the main.cpp file from my previous response was already correct and robust.
-// It correctly implements the detector loop and task-driven workflow. No changes needed from that version.
-// For clarity, I am including it again.
+#include <nlohmann/json.hpp>
 
 // Framework headers
 #include <IsoToolbox/Logger.h>
 #include <IsoToolbox/AnalysisContext.h>
 #include <IsoToolbox/Tools.h>
-#include <PhysicsModules/HistManager.h>
-#include <DataModel/AMSDstTreeA.h>
+#include <HistManager/HistManager.h>
 #include <Selection/RTICut.h>
+// BUG FIX: Include the full definition of AMSDstTreeA to resolve "incomplete type" errors.
+#include <DataModel/AMSDstTreeA.h>
 
 // ROOT headers
 #include <TFile.h>
@@ -57,9 +54,11 @@ int main(int argc, char** argv) {
     }
 
     // --- 2. Initialization with Physics Config ---
-    IsoToolbox::Logger::Initialize();
-    LOG_INFO("Starting job for sample '{}' from task file '{}'", current_task.sample_name, task_path);
+    // BUG FIX: Replace non-existent LOG_INFO macro with the correct Logger::Info method.
+    // The logger is a singleton, initialized on first use, so Initialize() is not needed.
+    Logger::Info("Starting job for sample '{}' from task file '{}'", current_task.sample_name, task_path);
 
+    // BUG FIX: The call below now works because of the new constructor in AnalysisContext.
     auto context = std::make_shared<IsoToolbox::AnalysisContext>(physics_config_path);
     const auto& sample_config = context->GetSample(current_task.sample_name);
     const auto& particle_info = context->GetParticleInfo();
@@ -78,12 +77,13 @@ int main(int argc, char** argv) {
 
     auto data = std::make_unique<DataModel::AMSDstTreeA>(chain.get());
     long n_entries = data->fChain->GetEntries();
-    LOG_INFO("Processing {} entries.", n_entries);
+    Logger::Info("Processing {} entries.", n_entries);
 
     for (long i = 0; i < n_entries; ++i) {
         data->fChain->GetEntry(i);
 
-        if (!rti_cut->IsPass(data)) continue;
+        // BUG FIX: Use .get() to pass the raw pointer from a unique_ptr.
+        if (!rti_cut->IsPass(data.get())) continue;
         if (data->rigidity[1] <= 0) continue;
         
         const std::vector<std::pair<std::string, float>> detectors = {
@@ -122,6 +122,6 @@ int main(int argc, char** argv) {
     // --- 5. Write Output ---
     hist_manager->write(current_task.output_file);
 
-    LOG_INFO("Job finished successfully.");
+    Logger::Info("Job finished successfully.");
     return 0;
 }

@@ -9,7 +9,9 @@ namespace IsoToolbox {
 
 // --- Data Structures that define the analysis context ---
 
-struct Isotope {
+// BUG FIX: Renamed from 'Isotope' to 'IsotopeDef' to avoid redefinition conflict
+// with the class in PhysicsConstants.h
+struct IsotopeDef {
     std::string name;
     int mass;
 };
@@ -17,10 +19,9 @@ struct Isotope {
 struct ParticleInfo {
     std::string name;
     int charge;
-    std::vector<Isotope> isotopes;
+    std::vector<IsotopeDef> isotopes;
 };
 
-// 修正: 添加了之前缺失的 Sample 结构体定义
 struct Sample {
     std::string name;
     std::string type;
@@ -30,11 +31,13 @@ struct Sample {
 
 class AnalysisContext {
 public:
+    // BUG FIX: Added a new constructor that takes the config file path directly.
+    // This simplifies instantiation and resolves the constructor mismatch error in main.
+    AnalysisContext(const std::string& config_path);
+    
     AnalysisContext(std::shared_ptr<ConfigManager> config);
 
-    // 修正: 添加了之前缺失的 GetParticleInfo 方法
     const ParticleInfo& GetParticleInfo() const;
-
     const std::vector<Sample>& GetSamplesToProcess() const;
     const Sample& GetSample(const std::string& name) const;
 

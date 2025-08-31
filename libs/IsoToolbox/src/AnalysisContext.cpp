@@ -3,6 +3,17 @@
 
 namespace IsoToolbox {
 
+// BUG FIX: Implementation for the new convenience constructor.
+AnalysisContext::AnalysisContext(const std::string& config_path) {
+    // This smart pointer uses a no-op deleter because the ConfigManager is a singleton
+    // and its lifetime is managed by its static instance, not by this shared_ptr.
+    m_configManager = std::shared_ptr<ConfigManager>(&ConfigManager::GetInstance(), [](auto*){});
+    if (!m_configManager->Load(config_path)) {
+        throw std::runtime_error("AnalysisContext: Failed to load config file: " + config_path);
+    }
+    parseConfig();
+}
+
 AnalysisContext::AnalysisContext(std::shared_ptr<ConfigManager> config) : m_configManager(config) {
     parseConfig();
 }
@@ -14,6 +25,7 @@ void AnalysisContext::parseConfig() {
     m_particleInfo.charge = m_configManager->Get<int>("particle_definitions." + particle_name + ".charge");
     auto isotopes_nodes = m_configManager->GetNode("particle_definitions." + particle_name + ".isotopes");
     for (const auto& node : isotopes_nodes) {
+        // BUG FIX: Use the renamed IsotopeDef struct
         m_particleInfo.isotopes.push_back({node["name"].as<std::string>(), node["mass"].as<int>()});
     }
 
@@ -29,7 +41,6 @@ void AnalysisContext::parseConfig() {
     }
 }
 
-// 修正: 添加了之前缺失的 GetParticleInfo 方法的实现
 const ParticleInfo& AnalysisContext::GetParticleInfo() const {
     return m_particleInfo;
 }
