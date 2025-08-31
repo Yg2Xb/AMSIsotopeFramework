@@ -17,6 +17,8 @@ public:
     // Method to get the sub-node for nested parameters
     YAML::Node GetNode(const std::string& key) const;
 
+    const YAML::Node& GetRootNode() const;
+
     static ConfigManager& GetInstance();
 
 private:

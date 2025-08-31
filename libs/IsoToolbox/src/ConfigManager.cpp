@@ -20,5 +20,8 @@ bool ConfigManager::Load(const std::string& filepath) {
 YAML::Node ConfigManager::GetNode(const std::string& key) const {
     return m_config[key];
 }
+const YAML::Node& ConfigManager::GetRootNode() const {
+    return m_config;
+}
 
 } // namespace IsoToolbox

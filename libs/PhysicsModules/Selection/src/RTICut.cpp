@@ -1,4 +1,5 @@
 #include "Selection/RTICut.h"
+#include "DataModel/AMSDstTreeA.h"
 
 namespace Selection {
 

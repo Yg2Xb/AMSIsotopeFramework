@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 
     // 1. Load configuration
     IsoToolbox::ConfigManager::GetInstance().Load("config/config_v1.0.yaml");
-    auto config = IsoToolbox::ConfigManager::GetInstance().GetNode("");
+    auto config = IsoToolbox::ConfigManager::GetInstance().GetRootNode();
 
     // 2. Setup Analysis Context
     std::string target = config["analysis_target"].as<std::string>();
