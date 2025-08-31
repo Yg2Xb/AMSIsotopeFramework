@@ -69,12 +69,13 @@ int main(int argc, char** argv) {
     hist_manager->initializeForSample(sample_config);
 
     // --- 4. Event Loop ---
-    auto chain = std::make_unique<TChain>("AMSDstTreeA");
+    auto chain = std::make_unique<TChain>("amstreea");
     for (const auto& file_path : current_task.input_files) {
         chain->Add(file_path.c_str());
     }
 
-    auto data = std::make_unique<DataModel::AMSDstTreeA>(chain.get());
+    // FIX: Removed the incorrect "DataModel::" namespace prefix.
+    auto data = std::make_unique<AMSDstTreeA>(chain.get());
     long n_entries = data->fChain->GetEntries();
     IsoToolbox::Logger::Info("Processing {} entries.", n_entries);
 
@@ -112,8 +113,8 @@ int main(int argc, char** argv) {
             }
 
             if (!selected_isotope_name.empty()) {
-                hist_manager->fill(Form("ISS.ID.H1.CountsVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, 1.0);
-                hist_manager->fill(Form("ISS.ID.H2.InvMassVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, mass_result.invMass, 1.0);
+                hist_manager->Fill1D(Form("ISS.ID.H1.CountsVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, 1.0);
+                hist_manager->Fill2D(Form("ISS.ID.H2.InvMassVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, mass_result.invMass, 1.0);
             }
         }
     }

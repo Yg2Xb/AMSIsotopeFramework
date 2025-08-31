@@ -17,14 +17,12 @@ public:
     HistManager(const IsoToolbox::AnalysisContext& context);
     ~HistManager();
 
-    // Initializes and books histograms for a specific sample based on config
     void initializeForSample(const IsoToolbox::Sample& sample);
 
-    // --- Optimized Filling functions with default weight = 1.0 ---
-    void fill(const std::string& key, double value, double weight = 1.0);
-    void fill(const std::string& key, double x_value, double y_value, double weight = 1.0);
+    // FIX: Renamed methods to resolve ambiguity.
+    void Fill1D(const std::string& key, double value, double weight = 1.0);
+    void Fill2D(const std::string& key, double x_value, double y_value, double weight = 1.0);
 
-    // Writes all currently booked histograms to a file
     void write(const std::string& output_path);
 
 private:
@@ -34,7 +32,6 @@ private:
     const IsoToolbox::AnalysisContext& m_context;
     std::map<std::string, TH1*> m_hists;
     
-    // The "Blueprint Registry": Maps a string ID to a function that books the histogram
     std::map<std::string, std::function<void()>> m_registry;
 };
 

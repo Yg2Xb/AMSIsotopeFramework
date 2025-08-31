@@ -35,5 +35,9 @@ target_link_libraries(IsoToolbox
         spdlog::spdlog
         yaml-cpp
         ROOT::Core
-        ROOT::MathCore # <-- ADD THIS LINE
+        ROOT::MathCore
+        # FIX: Add the ROOT components that provide graphics, histograms, and RooFit classes
+        ROOT::Graf
+        ROOT::Hist
+        ROOT::RooFitCore
 )

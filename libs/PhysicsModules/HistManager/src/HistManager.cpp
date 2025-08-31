@@ -75,7 +75,7 @@ void HistManager::initializeForSample(const IsoToolbox::Sample& sample) {
     SPDLOG_INFO("Booked {} histograms for sample '{}'.", m_hists.size(), sample.name);
 }
 // ... the rest of the file (fill and write methods) is correct and remains unchanged.
-void HistManager::fill(const std::string& key, double value, double weight) {
+void HistManager::Fill1D(const std::string& key, double value, double weight) {
     try {
         m_hists.at(key)->Fill(value, weight);
     } catch (const std::out_of_range& e) {
@@ -83,7 +83,7 @@ void HistManager::fill(const std::string& key, double value, double weight) {
     }
 }
 
-void HistManager::fill(const std::string& key, double x_value, double y_value, double weight) {
+void HistManager::Fill2D(const std::string& key, double x_value, double y_value, double weight) {
     try {
         dynamic_cast<TH2*>(m_hists.at(key))->Fill(x_value, y_value, weight);
     } catch (const std::out_of_range& e) {

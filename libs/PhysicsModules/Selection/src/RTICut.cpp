@@ -1,12 +1,13 @@
 #include <Selection/RTICut.h>
 #include <DataModel/AMSDstTreeA.h>
-#include <IsoToolbox/AnalysisContext.h> // FIX: Added include for AnalysisContext
+#include <IsoToolbox/AnalysisContext.h>
 
 namespace PhysicsModules {
 
-RTICut::RTICut(const IsoToolbox::AnalysisContext& context) : CutBase(context) {} // This line will now compile
+RTICut::RTICut(const IsoToolbox::AnalysisContext& context) : CutBase(context) {}
 
-bool RTICut::IsPass(DataModel::AMSDstTreeA* data) const {
+// FIX: Removed the incorrect "DataModel::" namespace prefix from the function signature.
+bool RTICut::IsPass(AMSDstTreeA* data) const {
     // This is a placeholder for the actual RTI cut logic.
     return true;
 }

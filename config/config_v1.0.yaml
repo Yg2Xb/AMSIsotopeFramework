@@ -27,11 +27,11 @@ particle_definitions:
 
 # 3. Analysis Chain Definition.
 #    Defines the specific combination of algorithms and cuts to be used.
-#    [cite_start]The C++ code will use this ID to select the correct logic. [cite: 141]
+#    The C++ code will use this ID to select the correct logic.
 analysis_chain:
-  [cite_start]chain_id: "L1IKalZJU_v1" # Example [cite: 141]
-  rigidity_algorithm: "Kalman"
-  velocity_algorithm: "ZJU_Calib"
+  chain_id: "UNBL1IGBLRINGR_v1" # Example
+  rigidity_algorithm: "GBL"
+  velocity_algorithm: "RINGR"
   acceptance_type: "L1Inner"
 
 # 4. Data Sample Definitions.
@@ -47,17 +47,5 @@ samples_to_process:
       - "ISS.ID.H2"
     # The master list of raw data files for this sample.
     files:
-      - "/afs/cern.ch/work/z/zixuan/public/data/iss/beryllium.001.root"
-      - "/afs/cern.ch/work/z/zixuan/public/data/iss/beryllium.002.root"
-      # ... more files
-
-  - name: "MC_Be10"
-    type: "MC"
-    histograms:
-      - "MC.ID.H1a"
-      - "MC.ID.H1b"
-      - "MC.BKG.H1"
-    files:
-      - "/afs/cern.ch/work/z/zixuan/public/data/mc/be10.001.root"
-      - "/afs/cern.ch/work/z/zixuan/public/data/mc/be10.002.root"
+      - "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1306026449_10.root"
       # ... more files

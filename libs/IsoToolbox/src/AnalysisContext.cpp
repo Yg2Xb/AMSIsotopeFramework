@@ -19,18 +19,26 @@ AnalysisContext::AnalysisContext(std::shared_ptr<ConfigManager> config) : m_conf
 }
 
 void AnalysisContext::parseConfig() {
+    // FIX: Access YAML nodes sequentially instead of using a single dot-separated string.
+    const auto& config = m_configManager->GetRootNode();
+
     // Parse particle info
-    std::string particle_name = m_configManager->Get<std::string>("current_particle");
+    std::string particle_name = config["current_particle"].as<std::string>();
     m_particleInfo.name = particle_name;
-    m_particleInfo.charge = m_configManager->Get<int>("particle_definitions." + particle_name + ".charge");
-    auto isotopes_nodes = m_configManager->GetNode("particle_definitions." + particle_name + ".isotopes");
+
+    const auto& particle_def_node = config["particle_definitions"][particle_name];
+    if (!particle_def_node) {
+        throw std::runtime_error("Particle definition not found for: " + particle_name);
+    }
+
+    m_particleInfo.charge = particle_def_node["charge"].as<int>();
+    auto isotopes_nodes = particle_def_node["isotopes"];
     for (const auto& node : isotopes_nodes) {
-        // BUG FIX: Use the renamed IsotopeDef struct
         m_particleInfo.isotopes.push_back({node["name"].as<std::string>(), node["mass"].as<int>()});
     }
 
     // Parse samples
-    auto samples_nodes = m_configManager->GetNode("samples_to_process");
+    auto samples_nodes = config["samples_to_process"];
     for (const auto& node : samples_nodes) {
         m_samples.push_back({
             node["name"].as<std::string>(),

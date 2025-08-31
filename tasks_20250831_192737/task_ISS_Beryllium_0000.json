@@ -1,0 +1,7 @@
+{
+    "sample_name": "ISS_Beryllium",
+    "input_files": [
+        "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1306026449_10.root"
+    ],
+    "output_file": "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/results_20250831_192737/ISS_Beryllium/chunk_0000.root"
+}

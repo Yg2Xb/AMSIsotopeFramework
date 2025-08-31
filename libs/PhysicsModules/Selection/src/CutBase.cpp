@@ -1,27 +1,11 @@
-#pragma once
-
-// Forward declaration is efficient here
-namespace IsoToolbox {
-    class AnalysisContext;
-}
-
-// Forward declaration
-namespace DataModel {
-    class AMSDstTreeA;
-}
+#include <Selection/CutBase.h>
+#include <IsoToolbox/AnalysisContext.h>
 
 namespace PhysicsModules {
 
-class CutBase {
-public:
-    // FIX: Added the necessary forward declaration for AnalysisContext above
-    CutBase(const IsoToolbox::AnalysisContext& context);
-    virtual ~CutBase() = default;
+// This is the constructor implementation.
+CutBase::CutBase(const IsoToolbox::AnalysisContext& context) : m_context(context) {}
 
-    virtual bool IsPass(DataModel::AMSDstTreeA* data) const = 0;
-
-protected:
-    const IsoToolbox::AnalysisContext& m_context;
-};
+// The IsPass method is pure virtual in the base class, so it has no implementation here.
 
 }
