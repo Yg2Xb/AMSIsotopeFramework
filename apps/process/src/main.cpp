@@ -6,13 +6,12 @@
 #include <nlohmann/json.hpp>
 
 // Framework headers
+#include <DataModel/AMSDstTreeA.h> // <--- 在这里添加这一行
 #include <IsoToolbox/Logger.h>
 #include <IsoToolbox/AnalysisContext.h>
 #include <IsoToolbox/Tools.h>
 #include <HistManager/HistManager.h>
 #include <Selection/RTICut.h>
-// BUG FIX: Include the full definition of AMSDstTreeA to resolve "incomplete type" errors.
-#include <DataModel/AMSDstTreeA.h>
 
 // ROOT headers
 #include <TFile.h>
@@ -56,7 +55,7 @@ int main(int argc, char** argv) {
     // --- 2. Initialization with Physics Config ---
     // BUG FIX: Replace non-existent LOG_INFO macro with the correct Logger::Info method.
     // The logger is a singleton, initialized on first use, so Initialize() is not needed.
-    Logger::Info("Starting job for sample '{}' from task file '{}'", current_task.sample_name, task_path);
+    IsoToolbox::Logger::Info("Starting job for sample '{}' from task file '{}'", current_task.sample_name, task_path);
 
     // BUG FIX: The call below now works because of the new constructor in AnalysisContext.
     auto context = std::make_shared<IsoToolbox::AnalysisContext>(physics_config_path);
@@ -77,19 +76,19 @@ int main(int argc, char** argv) {
 
     auto data = std::make_unique<DataModel::AMSDstTreeA>(chain.get());
     long n_entries = data->fChain->GetEntries();
-    Logger::Info("Processing {} entries.", n_entries);
+    IsoToolbox::Logger::Info("Processing {} entries.", n_entries);
 
     for (long i = 0; i < n_entries; ++i) {
         data->fChain->GetEntry(i);
 
         // BUG FIX: Use .get() to pass the raw pointer from a unique_ptr.
         if (!rti_cut->IsPass(data.get())) continue;
-        if (data->rigidity[1] <= 0) continue;
+        if (data->tk_rigidity1[1][2][1] <= 0) continue;
         
         const std::vector<std::pair<std::string, float>> detectors = {
-            {"TOF", data->beta},
-            {"NaF", data->beta_rich[0]},
-            {"AGL", data->beta_rich[1]}
+            {"TOF", data->tof_betah},
+            {"NaF", data->rich_beta[0]},
+            {"AGL", data->rich_beta[1]}
         };
 
         for (const auto& det : detectors) {
@@ -98,7 +97,7 @@ int main(int argc, char** argv) {
 
             if (!IsoToolbox::Tools::isValidBeta(beta_val)) continue;
 
-            auto mass_result = IsoToolbox::Tools::calculateMass(beta_val, 1.0, data->rigidity[1], particle_info.charge);
+            auto mass_result = IsoToolbox::Tools::calculateMass(beta_val, 1.0, data->tk_rigidity1[1][2][1], particle_info.charge);
             if (mass_result.invMass <= 0) continue;
             
             double ek_per_nucleon = mass_result.ek;
@@ -113,8 +112,8 @@ int main(int argc, char** argv) {
             }
 
             if (!selected_isotope_name.empty()) {
-                hist_manager->fill(Form("ISS.ID.H1.CountsVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon);
-                hist_manager->fill(Form("ISS.ID.H2.InvMassVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, mass_result.invMass);
+                hist_manager->fill(Form("ISS.ID.H1.CountsVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, 1.0);
+                hist_manager->fill(Form("ISS.ID.H2.InvMassVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, mass_result.invMass, 1.0);
             }
         }
     }
@@ -122,6 +121,6 @@ int main(int argc, char** argv) {
     // --- 5. Write Output ---
     hist_manager->write(current_task.output_file);
 
-    Logger::Info("Job finished successfully.");
+    IsoToolbox::Logger::Info("Job finished successfully.");
     return 0;
 }
