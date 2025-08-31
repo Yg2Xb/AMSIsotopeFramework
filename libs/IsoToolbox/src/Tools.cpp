@@ -66,12 +66,12 @@ double calculateWeight(double mmom, int charge, bool isISS) {
 double betaToKineticEnergy(double beta) {
     if (beta <= 0.0 || beta >= 1.0) return -9.0;
     double gamma = 1.0 / std::sqrt(1.0 - beta * beta);
-    return (gamma - 1.0) * PhysicsConstants::MASS_UNIT;
+    return (gamma - 1.0) * Constants::AMU_GEV;
 }
 
 double kineticEnergyToBeta(double kineticEnergy) {
     if (kineticEnergy < 0.0) return -9.0;
-    double gamma = kineticEnergy / PhysicsConstants::MASS_UNIT + 1.0;
+    double gamma = kineticEnergy / Constants::AMU_GEV + 1.0;
     return std::sqrt(1.0 - 1.0 / (gamma * gamma));
 }
 
@@ -85,7 +85,7 @@ double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron) {
         double beta = rigidity / std::sqrt(ELECTRON_MASS * ELECTRON_MASS + rigidity * rigidity);
         return (charge == -1) ? beta : -beta;
     } else {
-        double particleMass = static_cast<double>(mass) * PhysicsConstants::MASS_UNIT;
+        double particleMass = static_cast<double>(mass) * Constants::AMU_GEV;
         double charge_d = static_cast<double>(charge);
         return (rigidity * charge_d) / std::sqrt(particleMass * particleMass + rigidity * rigidity * charge_d * charge_d);
     }
@@ -99,30 +99,30 @@ double betaToRigidity(double beta, int charge, int mass, bool isElectron) {
         double rigidity = beta * ELECTRON_MASS / std::sqrt(1.0 - beta * beta);
         return (charge == -1) ? rigidity : -rigidity;
     } else {
-        double particleMass = static_cast<double>(mass) * PhysicsConstants::MASS_UNIT;
+        double particleMass = static_cast<double>(mass) * Constants::AMU_GEV;
         return (beta * particleMass) / (std::sqrt(1.0 - beta * beta) * static_cast<double>(charge));
     }
 }
 
 double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
-    double factor = (static_cast<double>(a) * PhysicsConstants::MASS_UNIT) / static_cast<double>(z);
-    double term = std::pow(ek_per_nucleon / PhysicsConstants::MASS_UNIT + 1.0, 2) - 1.0;
+    double factor = (static_cast<double>(a) * Constants::AMU_GEV) / static_cast<double>(z);
+    double term = std::pow(ek_per_nucleon / Constants::AMU_GEV + 1.0, 2) - 1.0;
     if (term < 0) return -100000.0;
     return factor * std::sqrt(term);
 }
 
 double rigidityToKineticEnergy(double rig_gv, int z, int a) {
     if (rig_gv <= 0.0 || z == 0) return -9.0;
-    double factor = (static_cast<double>(a) * PhysicsConstants::MASS_UNIT) / static_cast<double>(z);
+    double factor = (static_cast<double>(a) * Constants::AMU_GEV) / static_cast<double>(z);
     double term = std::pow(rig_gv / factor, 2);
-    return PhysicsConstants::MASS_UNIT * (std::sqrt(1.0 + term) - 1.0);
+    return Constants::AMU_GEV * (std::sqrt(1.0 + term) - 1.0);
 }
 
 double dR_dEk(double ek_per_nucleon, int z, int a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
-    double factor = (static_cast<double>(a) * PhysicsConstants::MASS_UNIT) / static_cast<double>(z);
-    double ek_term = ek_per_nucleon / PhysicsConstants::MASS_UNIT + 1.0;
+    double factor = (static_cast<double>(a) * Constants::AMU_GEV) / static_cast<double>(z);
+    double ek_term = ek_per_nucleon / Constants::AMU_GEV + 1.0;
     double denominator = std::sqrt(ek_term * ek_term - 1.0);
     if (denominator == 0) return std::numeric_limits<double>::infinity();
     return factor * ek_term / denominator;
@@ -130,9 +130,9 @@ double dR_dEk(double ek_per_nucleon, int z, int a) {
 
 double dEk_dR(double rig_gv, int z, int a) {
     if (rig_gv <= 0.0 || z == 0) return -9.0;
-    double factor = (static_cast<double>(a) * PhysicsConstants::MASS_UNIT) / static_cast<double>(z);
+    double factor = (static_cast<double>(a) * Constants::AMU_GEV) / static_cast<double>(z);
     double term = std::pow(rig_gv / factor, 2);
-    return PhysicsConstants::MASS_UNIT * rig_gv / (factor * factor * std::sqrt(1.0 + term));
+    return Constants::AMU_GEV * rig_gv / (factor * factor * std::sqrt(1.0 + term));
 }
 
 MassResult calculateMass(double beta, double alpha, double innerRig, int charge) {
@@ -143,7 +143,7 @@ MassResult calculateMass(double beta, double alpha, double innerRig, int charge)
     if (!isValidBeta(result.beta)) return {0.0, 0.0, 0.0, 0.0};
     
     result.gamma = 1.0 / std::sqrt(1.0 - result.beta * result.beta);
-    result.ek = (result.gamma - 1.0) * PhysicsConstants::MASS_UNIT;
+    result.ek = (result.gamma - 1.0) * Constants::AMU_GEV;
     result.invMass = (result.beta * result.gamma) / (static_cast<double>(charge) * innerRig);
     
     return result;
