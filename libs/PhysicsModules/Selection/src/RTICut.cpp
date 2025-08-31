@@ -1,11 +1,14 @@
-#include "Selection/RTICut.h"
-#include "DataModel/AMSDstTreeA.h"
+#include <Selection/RTICut.h>
+#include <DataModel/AMSDstTreeA.h>
+#include <IsoToolbox/AnalysisContext.h> // 这里需要完整的头文件
 
-namespace Selection {
+namespace PhysicsModules {
 
-bool RTICut::pass(const AMSDstTreeA& event) {
-    // Logic from old RTICut.h: isGoodRTI(int rtigood)
-    return (event.rtigood & 0x7F) == 0;
+RTICut::RTICut(const IsoToolbox::AnalysisContext& context) : CutBase(context) {}
+
+bool RTICut::IsPass(DataModel::AMSDstTreeA* data) const {
+    // 这是一个用于测试的占位符，之后我们会在这里实现真正的物理逻辑
+    return true;
 }
 
 }

@@ -51,7 +51,7 @@ void HistManager::bookFromBlueprint(const std::string& base_key) {
                     m_registry.at(full_key)();
                     if(m_hists.count(full_key)) m_hists.at(full_key)->SetDirectory(nullptr);
                 } else {
-                    LOG_WARN("Blueprint for key '{}' not found in registry.", full_key);
+                    SPDLOG_WARN("Blueprint for key '{}' not found in registry.", full_key);
                 }
             }
         }
@@ -60,7 +60,7 @@ void HistManager::bookFromBlueprint(const std::string& base_key) {
             m_registry.at(base_key)();
             if(m_hists.count(base_key)) m_hists.at(base_key)->SetDirectory(nullptr);
         } else {
-            LOG_WARN("Blueprint for key '{}' not found in registry.", base_key);
+            SPDLOG_WARN("Blueprint for key '{}' not found in registry.", base_key);
         }
     }
 }
@@ -72,7 +72,7 @@ void HistManager::initializeForSample(const IsoToolbox::Sample& sample) {
     for (const auto& hist_base_key : sample.histograms) {
         bookFromBlueprint(hist_base_key);
     }
-    LOG_INFO("Booked {} histograms for sample '{}'.", m_hists.size(), sample.name);
+    SPDLOG_INFO("Booked {} histograms for sample '{}'.", m_hists.size(), sample.name);
 }
 // ... the rest of the file (fill and write methods) is correct and remains unchanged.
 void HistManager::fill(const std::string& key, double value, double weight) {
@@ -102,7 +102,7 @@ void HistManager::write(const std::string& output_path) {
     }
     output_file->Close();
     delete output_file;
-    LOG_INFO("Histograms successfully written to {}", output_path);
+    SPDLOG_INFO("Histograms successfully written to {}", output_path);
 }
 
 } // namespace PhysicsModules

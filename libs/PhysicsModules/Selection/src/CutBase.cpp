@@ -1,6 +1,8 @@
-#include "Selection/CutBase.h"
+#include <Selection/CutBase.h>
+#include <IsoToolbox/AnalysisContext.h> // 这里需要完整的头文件
 
-// By providing an implementation in a .cpp file, we give the linker a
-// single, unambiguous location for the class's virtual table,
-// which resolves the "undefined reference to vtable" error.
-Selection::CutBase::~CutBase() = default;
+namespace PhysicsModules {
+
+CutBase::CutBase(const IsoToolbox::AnalysisContext& context) : m_context(context) {}
+
+}

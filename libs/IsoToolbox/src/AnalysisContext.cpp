@@ -29,7 +29,7 @@ void AnalysisContext::parseConfig() {
     }
 }
 
-// BUG FIX: The implementation for GetParticleInfo() was missing.
+// 修正: 添加了之前缺失的 GetParticleInfo 方法的实现
 const ParticleInfo& AnalysisContext::GetParticleInfo() const {
     return m_particleInfo;
 }

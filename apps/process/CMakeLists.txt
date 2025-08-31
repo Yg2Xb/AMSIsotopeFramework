@@ -7,9 +7,11 @@ add_executable(process
 
 # 2. Link the executable against our libraries.
 #    We now link to the main PhysicsModules interface, which provides everything.
+# ...
 target_link_libraries(process
     PRIVATE
         IsoToolbox
         PhysicsModules
+        # 修正: 添加了缺失的 nlohmann_json 链接目标
         nlohmann_json::nlohmann_json
 )

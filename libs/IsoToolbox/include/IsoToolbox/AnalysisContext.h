@@ -15,12 +15,12 @@ struct Isotope {
 };
 
 struct ParticleInfo {
-    std.string name;
+    std::string name;
     int charge;
     std::vector<Isotope> isotopes;
 };
 
-// BUG FIX: The definition for 'Sample' was missing.
+// 修正: 添加了之前缺失的 Sample 结构体定义
 struct Sample {
     std::string name;
     std::string type;
@@ -32,7 +32,7 @@ class AnalysisContext {
 public:
     AnalysisContext(std::shared_ptr<ConfigManager> config);
 
-    // BUG FIX: The GetParticleInfo() method declaration was missing.
+    // 修正: 添加了之前缺失的 GetParticleInfo 方法
     const ParticleInfo& GetParticleInfo() const;
 
     const std::vector<Sample>& GetSamplesToProcess() const;
