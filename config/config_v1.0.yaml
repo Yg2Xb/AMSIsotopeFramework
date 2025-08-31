@@ -1,4 +1,63 @@
-analysis_target: "Beryllium"
-input_files:
-  - "root://eosams.cern.ch//eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1305853512_10.root"
-output_file: "/eos/user/z/zixuan/1305853512_10_testresults.root"
+# ===================================================================
+# AMS Isotope Framework - Physics & Analysis Configuration
+# Version: 2.0 (Task-Driven)
+#
+# This file defines WHAT to analyze (physics settings).
+# The python script (run_process.py) defines HOW to run it (job control).
+# ===================================================================
+
+# 1. Defines the primary particle being analyzed in this configuration.
+#    This affects which set of isotopes and parameters are loaded.
+current_particle: Beryllium
+
+# 2. Particle definitions library.
+#    The framework will load the configuration for the 'current_particle'.
+particle_definitions:
+  Beryllium:
+    charge: 4
+    isotopes:
+      - { name: "Be7",  mass: 7 }
+      - { name: "Be9",  mass: 9 }
+      - { name: "Be10", mass: 10 }
+  Lithium:
+    charge: 3
+    isotopes:
+      - { name: "Li6", mass: 6 }
+      - { name: "Li7", mass: 7 }
+
+# 3. Analysis Chain Definition.
+#    Defines the specific combination of algorithms and cuts to be used.
+#    [cite_start]The C++ code will use this ID to select the correct logic. [cite: 141]
+analysis_chain:
+  [cite_start]chain_id: "L1IKalZJU_v1" # Example [cite: 141]
+  rigidity_algorithm: "Kalman"
+  velocity_algorithm: "ZJU_Calib"
+  acceptance_type: "L1Inner"
+
+# 4. Data Sample Definitions.
+#    This section is the master list of all available data samples.
+#    The `run_process.py` script reads this to find the file paths.
+samples_to_process:
+  - name: "ISS_Beryllium"
+    type: "ISS"
+    # The list of histograms this sample should produce.
+    # The C++ code reads this from the config to book the correct histograms.
+    histograms:
+      - "ISS.ID.H1"
+      - "ISS.ID.H2"
+    # The master list of raw data files for this sample.
+    files:
+      - "/afs/cern.ch/work/z/zixuan/public/data/iss/beryllium.001.root"
+      - "/afs/cern.ch/work/z/zixuan/public/data/iss/beryllium.002.root"
+      # ... more files
+
+  - name: "MC_Be10"
+    type: "MC"
+    histograms:
+      - "MC.ID.H1a"
+      - "MC.ID.H1b"
+      - "MC.BKG.H1"
+    files:
+      - "/afs/cern.ch/work/z/zixuan/public/data/mc/be10.001.root"
+      - "/afs/cern.ch/work/z/zixuan/public/data/mc/be10.002.root"
+      # ... more files

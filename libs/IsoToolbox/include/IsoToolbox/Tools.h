@@ -1,92 +1,93 @@
+/***********************************************************
+ * File: Tools.h
+ *
+ * Modern C++ header file for AMS analysis tools.
+ * Consolidates functions from legacy Tool1.h, Tool2.h,
+ * and RootFunc.h.
+ *
+ * History:
+ * 20250831 - Ported and refactored by Gemini
+ ***********************************************************/
+
 #pragma once
 
 #include <string>
 #include <vector>
-#include <array>
+#include <map>
 #include <optional>
-#include <numeric>
-#include <algorithm>
-#include <TGraphErrors.h>
+#include <array>
+#include <cmath>
+#include <stdexcept>
+#include <limits>
+#include <iostream>
+#include <sys/resource.h>
+
+// ROOT includes
 #include <TF1.h>
-#include <TH1.h>
+#include <TROOT.h>
+#include <TH1D.h>
+#include <TH2D.h>
+#include <RooPlot.h>
+#include <RooHist.h>
+#include <RooCurve.h>
+#include <TGraphErrors.h>
+#include <TCanvas.h>
+#include <TLegend.h>
+
+#include <IsoToolbox/PhysicsConstants.h>
+
 
 namespace IsoToolbox {
 namespace Tools {
 
-    // ===================================================================
-    // 1. Core Data Structures
-    // ===================================================================
-    struct Point2D { double x = 0.0; double y = 0.0; };
+// DATA STRUCTURES
+struct Point2D {
+    double x;
+    double y;
+};
 
-    template<size_t N>
-    struct CutResult {
-        bool pass_all = false;
-        std::array<bool, N> details{};
-        CutResult() = default;
-        explicit CutResult(const std::array<bool, N>& cuts) : details(cuts) {
-            pass_all = std::all_of(details.begin(), details.end(), [](bool b){ return b; });
-        }
-    };
+struct MassResult {
+    double beta;
+    double gamma;
+    double ek;
+    double invMass;
+};
 
-    // ===================================================================
-    // 2. Core Physics Conversions
-    // ===================================================================
-    double RigidityToMomentum(double rigidity, int charge);
-    double MomentumToBeta(double momentum, int mass);
-    double BetaToMomentum(double beta, int mass);
-    
-    // Replaces all rigidity/beta <-> Ek functions for consistency
-    double MomentumToEkPerNucleon(double momentum, int mass);
-    double EkPerNucleonToMomentum(double ek_per_nucleon, int mass);
+// PHYSICS & KINEMATICS
+double betaToKineticEnergy(double beta);
+double kineticEnergyToBeta(double kineticEnergy);
+double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron = false);
+double betaToRigidity(double beta, int charge, int mass, bool isElectron = false);
+double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a);
+double rigidityToKineticEnergy(double rig_gv, int z, int a);
+double dR_dEk(double ek_per_nucleon, int z, int a);
+double dEk_dR(double rig_gv, int z, int a);
+MassResult calculateMass(double beta, double alpha, double innerRig, int charge);
+double calculateWeight(double mmom, int charge, bool isISS);
 
-    // Convenience wrappers
-    double RigidityToEkPerNucleon(double rigidity, int mass, int charge);
-    double EkPerNucleonToRigidity(double ek_per_nucleon, int mass, int charge);
-    double BetaToEkPerNucleon(double beta, int mass);
-    double EkPerNucleonToBeta(double ek_per_nucleon, int mass);
-    double RigidityToBeta(double rigidity, int mass, int charge);
-    double BetaToRigidity(double beta, int mass, int charge);
-    
-    double dR_dEk(double ek_per_nucleon, int mass, int charge); // Derivative
-    double dEk_dR(double rigidity, int mass, int charge);     // Derivative
+// EVENT SELECTION & BINNING
+bool isValidBeta(double beta);
+int findBin(const std::vector<double>& bins, double value);
+int findRigidityLowerBound(double rigidity, double *xAxis, int range);
 
-    double CalculateMass(double rigidity, double beta, int charge);
+// GEOMETRY & UTILITIES
+std::string convertElementName(const std::string& fullName, bool isISS);
+double calculateAverage(const double* values, int count, double ignoreValue = -1000000.001);
+void modifyPositionByZ(double targetZ, std::array<double, 3>& position, double theta, double phi);
+std::optional<Point2D> calculateXYAtZ(const Float_t positions[9][3], const Float_t directions[9][3], double zpl, int trackIndex = 0);
+std::optional<Point2D> calculateXYAtNaFZ(const std::array<double, 3>& pos1, const std::array<double, 3>& pos2, double nafZ);
+double getCurrentRSS_MB();
+std::unique_ptr<TH1D> getEnergySlice(int plusIbin, int Nrebin, TH2D* h2d, int binIndex, const std::string& name);
 
-    // ===================================================================
-    // 3. MC & Weighting Functions
-    // ===================================================================
-    TF1* GetMCNormFunction();
-    TF1* GetReweightFunction();
-    double CalculateWeight(double rigidity, bool is_iss, int charge);
+// FITTING FUNCTIONS
+Double_t landauGaussianFit(Double_t *x, Double_t *par);
+double extendedExponentialGaussianFit(double *x, double *p);
 
-    // ===================================================================
-    // 4. Analysis Helper Functions
-    // ===================================================================
-    std::string ConvertElementName(const std::string& fullName, bool isISS);
-    bool IsValidBeta(double beta);
-    int FindBin(const std::vector<double>& bins, double value);
-    bool IsBeyondCutoff(double beta, double theta_m);
-    bool IsBeyondCutoff(double beta, double rigidity, bool is_rich_naf, bool is_agl); // Overloaded version
-    std::optional<Point2D> CalculateXYAtZ(double z_target, double z_pos, const double pos[3], const double dir[3]);
-    
-    // From old code, kept for compatibility
-    void CorrectCalibrationBias(double& beta, int charge, const TF1& func);
-    void CorrectCalibrationBiasInData(double& beta, const TF1& func);
-    void setCutStatus(std::vector<bool>& status, int index, bool value);
-    double calculateAverage(const std::vector<double>& vec);
-    
-    // ===================================================================
-    // 5. Plotting & Diagnostic Functions
-    // ===================================================================
-    TGraphErrors* calculatePull(const TH1* dataHist, const TF1* fitFunc);
-    void setupPullPlot(TGraphErrors* pullGraph, double fit_min, double fit_max);
-    void DrawTheoryLines(int Z);
-    double langaufun(double* x, double* par);
-    double funcExpGausExp(double* x, double* par);
-    long getCurrentRSS_MB();
-    TH1F* getEnergySlice(TH2F* h, int bin);
-    TH1* extendHistogram(const TH1* h, int nbins, double xmax);
-    TLegend* createLegend(double x1, double y1, double x2, double y2);
+// PLOTTING & ANALYSIS
+void calculatePull(RooPlot* frame, TGraphErrors* pullGraph, double fit_min, double fit_max);
+void setupPullPlot(TGraphErrors* pullGraph, double fit_min, double fit_max);
+std::unique_ptr<TLegend> createLegend();
+std::unique_ptr<TH1D> extendHistogram(const TH1D* hist, double new_min, double new_max);
 
 } // namespace Tools
 } // namespace IsoToolbox

@@ -1,71 +1,115 @@
-#include "IsoToolbox/Logger.h"
-#include "IsoToolbox/ConfigManager.h"
-#include "IsoToolbox/AnalysisContext.h"
-#include "DataModel/AMSDstTreeA.h"
-#include "Selection/RTICut.h"
-#include "HistManager/HistManager.h"
-
-#include <TChain.h>
-#include <TFile.h>
 #include <iostream>
+#include <string>
 #include <vector>
+#include <memory>
+#include <fstream>
+#include <nlohmann/json.hpp> // You need to add nlohmann::json to your CMake dependencies
 
-using Logger = IsoToolbox::Logger;
+// Framework headers
+#include <IsoToolbox/Logger.h>
+#include <IsoToolbox/ConfigManager.h>
+#include <IsoToolbox/AnalysisContext.h>
+#include <IsoToolbox/Tools.h>
+#include <PhysicsModules/HistManager.h>
+#include <DataModel/AMSDstTreeA.h>
+#include <Selection/RTICut.h>
+
+// ROOT headers
+#include <TFile.h>
+#include <TChain.h>
+#include <TString.h>
+#include <TMath.h>
+
+// A simple structure to hold the task information
+struct Task {
+    std::string sample_name;
+    std::vector<std::string> input_files;
+    std::string output_file;
+};
+
+void show_usage(const std::string& name) {
+    std::cerr << "Usage: " << name << " <physics_config.yaml> --task <task_description.json>" << std::endl;
+}
 
 int main(int argc, char** argv) {
-    
-    Logger::GetInstance().SetLevel(Logger::Level::INFO);
-    Logger::Info("Starting IsoProcess application...");
-
-    // 1. Load configuration
-    IsoToolbox::ConfigManager::GetInstance().Load("config/config_v1.0.yaml");
-    auto config = IsoToolbox::ConfigManager::GetInstance().GetRootNode();
-
-    // 2. Setup Analysis Context
-    std::string target = config["analysis_target"].as<std::string>();
-    IsoToolbox::AnalysisContext context(target);
-    Logger::Info("Analysis target set to: {}", context.GetTargetIsotope().GetName());
-
-    // 3. Prepare data input
-    TChain chain("amstreea");
-    auto files = config["input_files"].as<std::vector<std::string>>();
-    for (const auto& file : files) {
-        chain.Add(file.c_str());
+    if (argc != 4 || std::string(argv[2]) != "--task") {
+        show_usage(argv[0]);
+        return 1;
     }
-    Logger::Info("Chain created with {} entries.", chain.GetEntries());
-    
-    AMSDstTreeA eventReader;
-    eventReader.Init(&chain);
 
-    // 4. Prepare Cuts and Histograms
-    Selection::RTICut rtiCut;
-    // ... we will add more cuts here ...
-    
-    HistManager::HistManager histManager(context);
-    
-    // 5. Event Loop
-    Logger::Info("Starting event loop...");
-    for (Long64_t i = 0; i < chain.GetEntries(); ++i) {
-        chain.GetEntry(i);
+    std::string physics_config_path = argv[1];
+    std::string task_path = argv[3];
 
-        if (i % 10000 == 0) {
-            Logger::Debug("Processing entry {}", i);
+    // --- 1. Parse Task File ---
+    Task current_task;
+    try {
+        std::ifstream f(task_path);
+        nlohmann::json data = nlohmann::json::parse(f);
+        current_task.sample_name = data.at("sample_name");
+        current_task.input_files = data.at("input_files").get<std::vector<std::string>>();
+        current_task.output_file = data.at("output_file");
+    } catch (const std::exception& e) {
+        std::cerr << "Error parsing task file " << task_path << ": " << e.what() << std::endl;
+        return 1;
+    }
+
+    // --- 2. Initialization with Physics Config ---
+    IsoToolbox::Logger::Initialize();
+    LOG_INFO("Starting job for sample '{}' from task file '{}'", current_task.sample_name, task_path);
+
+    auto config_manager = std::make_shared<IsoToolbox::ConfigManager>(physics_config_path);
+    auto context = std::make_shared<IsoToolbox::AnalysisContext>(config_manager);
+    const auto& sample_config = context->GetSample(current_task.sample_name);
+    const auto& particle_info = context->GetParticleInfo();
+
+    // --- 3. Setup Physics Modules ---
+    auto hist_manager = std::make_unique<PhysicsModules::HistManager>(*context);
+    auto rti_cut = std::make_unique<PhysicsModules::RTICut>(*context);
+    
+    hist_manager->initializeForSample(sample_config);
+
+    // --- 4. Event Loop ---
+    auto chain = std::make_unique<TChain>("AMSDstTreeA");
+    for (const auto& file_path : current_task.input_files) {
+        chain->Add(file_path.c_str());
+    }
+
+    auto data = std::make_unique<DataModel::AMSDstTreeA>(chain.get());
+    long n_entries = data->fChain->GetEntries();
+    LOG_INFO("Processing {} entries.", n_entries);
+
+    for (long i = 0; i < n_entries; ++i) {
+        data->fChain->GetEntry(i);
+
+        if (!rti_cut->IsPass(data.get())) continue;
+        if (!IsoToolbox::Tools::isValidBeta(data->rich_beta[0]) || data->tk_rigidity[1][2][1] <= 0) continue;
+        
+        auto mass_result = IsoToolbox::Tools::calculateMass(data->rich_beta[0], 1.0, data->tk_rigidity[1][2][1], particle_info.charge);
+        if (mass_result.invMass <= 0) continue;
+        
+        // Final, corrected logic for ek_per_nucleon
+        double ek_per_nucleon = mass_result.ek;
+
+        int mass_number = TMath::Nint(1.0 / mass_result.invMass);
+        std::string selected_isotope_name = "";
+        for (const auto& iso : particle_info.isotopes) {
+            if (iso.mass == mass_number) {
+                selected_isotope_name = iso.name;
+                break;
+            }
         }
 
-        // Apply Cuts
-        if (!rtiCut.pass(eventReader)) continue;
-        // ... more cuts ...
-
-        // Fill Histograms (simplified logic)
-        // We assume isotope 0 (Be7) and detector 0 (TOF) for now
-        histManager.fill(eventReader, 0, 0); 
+        if (!selected_isotope_name.empty()) {
+            // This assumes a single detector for now, can be expanded later
+            std::string detector = "TOF"; 
+            hist_manager->fill(Form("ISS.ID.H1.CountsVsEk.%s.%s", selected_isotope_name.c_str(), detector.c_str()), ek_per_nucleon);
+            hist_manager->fill(Form("ISS.ID.H2.InvMassVsEk.%s.%s", selected_isotope_name.c_str(), detector.c_str()), ek_per_nucleon, mass_result.invMass);
+        }
     }
-    Logger::Info("Event loop finished.");
+    
+    // --- 5. Write Output ---
+    hist_manager->write(current_task.output_file);
 
-    // 6. Save results
-    std::string outputFile = config["output_file"].as<std::string>();
-    histManager.save(outputFile);
-    Logger::Info("Histograms saved to {}", outputFile);
-
+    LOG_INFO("Job finished successfully.");
     return 0;
 }

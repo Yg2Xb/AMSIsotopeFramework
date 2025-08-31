@@ -8,9 +8,6 @@ project(AMSIsotopeFramework CXX)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # 2. Find ROOT package and its required components
-#    We list all components the ENTIRE framework will need.
-#    This makes dependencies explicit and turns warnings into errors
-#    if a component is missing.
 find_package(ROOT REQUIRED
     COMPONENTS
         Core
@@ -21,7 +18,7 @@ find_package(ROOT REQUIRED
         Graf3d
         Gpad
         Hist
-        RooFit      
+        RooFit
         RooFitCore
         MathCore
         Matrix
@@ -36,19 +33,30 @@ add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
 
 # 4. Configure FetchContent module to manage external dependencies
 include(FetchContent)
-# ... (spdlog and yaml-cpp sections remain the same) ...
+
+# --- spdlog ---
 FetchContent_Declare(
     spdlog
     GIT_REPOSITORY https://github.com/gabime/spdlog.git
     GIT_TAG        v1.x
 )
 FetchContent_MakeAvailable(spdlog)
+
+# --- yaml-cpp ---
 FetchContent_Declare(
     yaml-cpp
     GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
     GIT_TAG        0.8.0
 )
 FetchContent_MakeAvailable(yaml-cpp)
+
+# --- nlohmann_json ---  <-- 新增下面这个代码块
+FetchContent_Declare(
+    nlohmann_json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG        v3.11.2 # A recent, stable version
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
 
 # 5. Set the C++ standard for the entire project

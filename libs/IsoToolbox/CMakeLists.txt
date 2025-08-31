@@ -6,6 +6,8 @@ set(SOURCES
     src/ConfigManager.cpp
     src/PhysicsConstants.cpp # <-- 新增
     src/AnalysisContext.cpp # <-- 新增
+    src/SplineFitter.cpp
+    src/Tools.cpp
 )
 
 # 2. Add all public header files for the library
@@ -14,6 +16,8 @@ set(HEADERS
     include/IsoToolbox/ConfigManager.h
     include/IsoToolbox/PhysicsConstants.h # <-- 新增
     include/IsoToolbox/AnalysisContext.h # <-- 新增
+    include/IsoToolbox/SplineFitter.h
+    include/IsoToolbox/Tools.h
 )
 
 # 3. Create the shared library target

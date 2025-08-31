@@ -10,5 +10,6 @@ add_executable(process
 target_link_libraries(process
     PRIVATE
         IsoToolbox
-        PhysicsModules  
+        PhysicsModules
+        nlohmann_json::nlohmann_json # <-- 确保这一行存在
 )
