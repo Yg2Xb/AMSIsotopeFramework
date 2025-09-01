@@ -2,126 +2,108 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <fstream>
-#include <nlohmann/json.hpp>
+#include <exception>
 
-// Framework headers
-#include <DataModel/AMSDstTreeA.h> // <--- 在这里添加这一行
-#include <IsoToolbox/Logger.h>
-#include <IsoToolbox/AnalysisContext.h>
-#include <IsoToolbox/Tools.h>
-#include <HistManager/HistManager.h>
-#include <Selection/RTICut.h>
+#include "TFile.h"
+#include "TTree.h"
 
-// ROOT headers
-#include <TFile.h>
-#include <TChain.h>
-#include <TString.h>
-#include <TMath.h>
+#include "IsoToolbox/Logger.h"
+#include "IsoToolbox/ConfigManager.h"
+#include "IsoToolbox/AnalysisContext.h"
+#include "IsoToolbox/BinningManager.h"
+#include "PhysicsModules/DataModel/AMSDstTreeA.h"
+#include "PhysicsModules/HistManager/HistManager.h"
 
-// A simple structure to hold the task information
-struct Task {
-    std::string sample_name;
-    std::vector<std::string> input_files;
-    std::string output_file;
-};
+int main(int argc, char* argv[]) {
+    // Set logger level, e.g., to DEBUG for more verbose output
+    Logger::GetInstance().SetLogLevel(LogLevel::INFO);
 
-void show_usage(const std::string& name) {
-    std::cerr << "Usage: " << name << " <physics_config.yaml> --task <task_description.json>" << std::endl;
-}
-
-int main(int argc, char** argv) {
-    if (argc != 4 || std::string(argv[2]) != "--task") {
-        show_usage(argv[0]);
+    if (argc != 3) {
+        LOG_CRITICAL("Usage: %s <config_file> <input_file>", argv[0]);
         return 1;
     }
 
-    std::string physics_config_path = argv[1];
-    std::string task_path = argv[3];
+    std::string configFile = argv[1];
+    std::string inputFile = argv[2];
 
-    // --- 1. Parse Task File ---
-    Task current_task;
     try {
-        std::ifstream f(task_path);
-        nlohmann::json data = nlohmann::json::parse(f);
-        current_task.sample_name = data.at("sample_name");
-        current_task.input_files = data.at("input_files").get<std::vector<std::string>>();
-        current_task.output_file = data.at("output_file");
-    } catch (const std::exception& e) {
-        std::cerr << "Error parsing task file " << task_path << ": " << e.what() << std::endl;
-        return 1;
-    }
+        // 1. ====================== INITIALIZATION PHASE ======================
+        LOG_INFO("======= AMS Isotope Analysis Framework =======");
 
-    // --- 2. Initialization with Physics Config ---
-    // BUG FIX: Replace non-existent LOG_INFO macro with the correct Logger::Info method.
-    // The logger is a singleton, initialized on first use, so Initialize() is not needed.
-    IsoToolbox::Logger::Info("Starting job for sample '{}' from task file '{}'", current_task.sample_name, task_path);
+        // -- Load Configuration
+        ConfigManager config(configFile);
 
-    // BUG FIX: The call below now works because of the new constructor in AnalysisContext.
-    auto context = std::make_shared<IsoToolbox::AnalysisContext>(physics_config_path);
-    const auto& sample_config = context->GetSample(current_task.sample_name);
-    const auto& particle_info = context->GetParticleInfo();
+        // -- Setup Analysis Context (The brain of the operation)
+        auto context = std::make_shared<AnalysisContext>();
+        context->SetTargetNucleus(config.Get<std::string>("run_settings.target_nucleus"));
+        context->Initialize();
+        LOG_INFO("Analysis Target: %s (Z=%d)", context->GetTargetNucleus().c_str(), context->GetChargeZ());
 
-    // --- 3. Setup Physics Modules ---
-    auto hist_manager = std::make_unique<PhysicsModules::HistManager>(*context);
-    auto rti_cut = std::make_unique<PhysicsModules::RTICut>(*context);
-    
-    hist_manager->initializeForSample(sample_config);
+        // -- Setup Binning Manager (The ruler maker)
+        auto binningManager = std::make_shared<BinningManager>(context.get());
+        binningManager->Initialize();
 
-    // --- 4. Event Loop ---
-    auto chain = std::make_unique<TChain>("amstreea");
-    for (const auto& file_path : current_task.input_files) {
-        chain->Add(file_path.c_str());
-    }
+        // -- Book Histograms (The data containers)
+        auto histManager = std::make_shared<HistManager>();
+        histManager->BookHistograms(config, context.get(), binningManager.get());
 
-    // FIX: Removed the incorrect "DataModel::" namespace prefix.
-    auto data = std::make_unique<AMSDstTreeA>(chain.get());
-    long n_entries = data->fChain->GetEntries();
-    IsoToolbox::Logger::Info("Processing {} entries.", n_entries);
+        // -- Prepare Input Data
+        auto inFile = std::make_unique<TFile>(inputFile.c_str(), "READ");
+        if (!inFile || inFile->IsZombie()) {
+            throw std::runtime_error("Error opening input file: " + inputFile);
+        }
+        TTree* tree = static_cast<TTree*>(inFile->Get("AMSDst"));
+        if (!tree) {
+            throw std::runtime_error("Could not find TTree 'AMSDst' in file: " + inputFile);
+        }
+        AMSDstTreeA dst(tree);
 
-    for (long i = 0; i < n_entries; ++i) {
-        data->fChain->GetEntry(i);
+        // 2. ====================== EVENT LOOP PHASE ======================
+        LOG_INFO("Starting event loop for %s...", inputFile.c_str());
+        long long nEntries = tree->GetEntries();
+        long long maxEvents = config.Get<long long>("run_settings.max_events", -1);
+        if (maxEvents > 0 && maxEvents < nEntries) {
+            nEntries = maxEvents;
+        }
 
-        // BUG FIX: Use .get() to pass the raw pointer from a unique_ptr.
-        if (!rti_cut->IsPass(data.get())) continue;
-        if (data->tk_rigidity1[1][2][1] <= 0) continue;
-        
-        const std::vector<std::pair<std::string, float>> detectors = {
-            {"TOF", data->tof_betah},
-            {"NaF", data->rich_beta[0]},
-            {"AGL", data->rich_beta[1]}
-        };
-
-        for (const auto& det : detectors) {
-            const std::string& detector_name = det.first;
-            const float beta_val = det.second;
-
-            if (!IsoToolbox::Tools::isValidBeta(beta_val)) continue;
-
-            auto mass_result = IsoToolbox::Tools::calculateMass(beta_val, 1.0, data->tk_rigidity1[1][2][1], particle_info.charge);
-            if (mass_result.invMass <= 0) continue;
-            
-            double ek_per_nucleon = mass_result.ek;
-            int mass_number = TMath::Nint(1.0 / mass_result.invMass);
-
-            std::string selected_isotope_name = "";
-            for (const auto& iso : particle_info.isotopes) {
-                if (iso.mass == mass_number) {
-                    selected_isotope_name = iso.name;
-                    break;
-                }
+        for (long long i = 0; i < nEntries; ++i) {
+            tree->GetEntry(i);
+            if (i > 0 && i % 100000 == 0) {
+                LOG_INFO("Processing event %lld / %lld (%.1f%%)", i, nEntries, (double)i / nEntries * 100.0);
             }
 
-            if (!selected_isotope_name.empty()) {
-                hist_manager->Fill1D(Form("ISS.ID.H1.CountsVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, 1.0);
-                hist_manager->Fill2D(Form("ISS.ID.H2.InvMassVsEk.%s.%s", selected_isotope_name.c_str(), detector_name.c_str()), ek_per_nucleon, mass_result.invMass, 1.0);
+            histManager->Fill1D("Event_Count_Total", 1.0);
+
+            // ===============================================================
+            // NEXT STEP: This is where the SELECTION logic will be added.
+            // A 'SelectionManager' will be created and called here.
+            // if (!selectionManager.ProcessEvent(dst)) continue;
+            // ===============================================================
+
+            // For now, fill histograms with fake data to test the system.
+            for (const auto& isotope : context->GetIsotopes()) {
+                // FAKE physics values for testing
+                double fake_ek_per_nucleon = (i % 1000) / 100.0; // GeV/n
+                double fake_inv_mass = (i % 200) / 400.0;
+
+                std::string h1_name = "ISS_ID_H1_" + isotope.name;
+                histManager->Fill1D(h1_name, fake_ek_per_nucleon);
+
+                std::string h2_name = "ISS_ID_H2_" + isotope.name;
+                histManager->Fill2D(h2_name, fake_inv_mass, fake_ek_per_nucleon);
             }
         }
-    }
-    
-    // --- 5. Write Output ---
-    hist_manager->write(current_task.output_file);
+        LOG_INFO("Event loop finished. Processed %lld events.", nEntries);
 
-    IsoToolbox::Logger::Info("Job finished successfully.");
+        // 3. ====================== FINALIZATION PHASE ======================
+        std::string outputFile = config.Get<std::string>("run_settings.output_file");
+        histManager->SaveHistograms(outputFile);
+
+    } catch (const std::exception& e) {
+        LOG_CRITICAL("An unrecoverable error occurred: %s", e.what());
+        return 1;
+    }
+
+    LOG_INFO("Analysis finished successfully.");
     return 0;
 }

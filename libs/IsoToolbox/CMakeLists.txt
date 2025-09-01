@@ -1,43 +1,36 @@
-# CMakeLists.txt for the IsoToolbox library
+# IsoToolbox - A library for common analysis tools
 
-# 1. Add all source files for the library
-set(SOURCES
-    src/Logger.cpp
-    src/ConfigManager.cpp
-    src/PhysicsConstants.cpp # <-- 新增
-    src/AnalysisContext.cpp # <-- 新增
-    src/SplineFitter.cpp
-    src/Tools.cpp
-)
+add_library(IsoToolbox)
 
-# 2. Add all public header files for the library
-set(HEADERS
-    include/IsoToolbox/Logger.h
-    include/IsoToolbox/ConfigManager.h
-    include/IsoToolbox/PhysicsConstants.h # <-- 新增
-    include/IsoToolbox/AnalysisContext.h # <-- 新增
-    include/IsoToolbox/SplineFitter.h
-    include/IsoToolbox/Tools.h
-)
-
-# 3. Create the shared library target
-add_library(IsoToolbox SHARED ${SOURCES} ${HEADERS})
-
-# 4. Specify the public include directory.
+# Public headers (available to other modules)
 target_include_directories(IsoToolbox
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-# 5. Link against external dependencies
+# Private headers (implementation details)
+target_include_directories(IsoToolbox
+    PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/IsoToolbox/impl>
+)
+
+# Source files
+target_sources(IsoToolbox
+    PRIVATE
+        src/AnalysisContext.cpp
+        src/ConfigManager.cpp
+        src/Logger.cpp
+        src/PhysicsConstants.cpp
+        src/SplineFitter.cpp
+        src/Tools.cpp
+        src/BinningManager.cpp # <-- ADDED
+)
+
+# Dependencies
 target_link_libraries(IsoToolbox
     PUBLIC
-        spdlog::spdlog
-        yaml-cpp
         ROOT::Core
-        ROOT::MathCore
-        # FIX: Add the ROOT components that provide graphics, histograms, and RooFit classes
-        ROOT::Graf
         ROOT::Hist
-        ROOT::RooFitCore
+        ROOT::Graf
+        YAML::yaml-cpp
 )

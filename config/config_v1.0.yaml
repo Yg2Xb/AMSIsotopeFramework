@@ -1,51 +1,43 @@
-# ===================================================================
-# AMS Isotope Framework - Physics & Analysis Configuration
-# Version: 2.0 (Task-Driven)
+# Analysis Framework Configuration Version 1.0
+# This file controls high-level settings and versioning.
+# The framework provides default physics constants and binning;
+# this file can be used to switch between different analysis chains or parameters.
+
+# General settings
+run_settings:
+  target_nucleus: "Beryllium"
+  output_file: "results.root"
+  # Number of events to process. Set to -1 for all events.
+  max_events: 100000000
+
+# Histogram definitions
+# The framework intelligently handles creation based on the 'category'.
+# - category: "per_isotope_ek_bin"
+#   - The histogram will be created for EACH isotope of the target_nucleus.
+#   - The Y-axis (for TH2D) or X-axis (for TH1D) will use the isotope's
+#     dedicated Ek/n binning, derived automatically from the default rigidity bins.
+#   - The name will be automatically appended with "_IsotopeName" (e.g., "_Be7").
+# - category: "default" (or if omitted)
+#   - A single histogram is created with the specified name and binning.
 #
-# This file defines WHAT to analyze (physics settings).
-# The python script (run_process.py) defines HOW to run it (job control).
-# ===================================================================
+histograms:
+  - name: "ISS_ID_H1"
+    type: "TH1D"
+    title: "Event counts of each isotope vs Ek/n"
+    category: "per_isotope_ek_bin"
 
-# 1. Defines the primary particle being analyzed in this configuration.
-#    This affects which set of isotopes and parameters are loaded.
-current_particle: Beryllium
+  - name: "ISS_ID_H2"
+    type: "TH2D"
+    title: "1/M of each isotope vs Ek/n"
+    category: "per_isotope_ek_bin"
+    nbinsx: 200
+    xlow: 0.0
+    xup: 0.5
 
-# 2. Particle definitions library.
-#    The framework will load the configuration for the 'current_particle'.
-particle_definitions:
-  Beryllium:
-    charge: 4
-    isotopes:
-      - { name: "Be7",  mass: 7 }
-      - { name: "Be9",  mass: 9 }
-      - { name: "Be10", mass: 10 }
-  Lithium:
-    charge: 3
-    isotopes:
-      - { name: "Li6", mass: 6 }
-      - { name: "Li7", mass: 7 }
-
-# 3. Analysis Chain Definition.
-#    Defines the specific combination of algorithms and cuts to be used.
-#    The C++ code will use this ID to select the correct logic.
-analysis_chain:
-  chain_id: "UNBL1IGBLRINGR_v1" # Example
-  rigidity_algorithm: "GBL"
-  velocity_algorithm: "RINGR"
-  acceptance_type: "L1Inner"
-
-# 4. Data Sample Definitions.
-#    This section is the master list of all available data samples.
-#    The `run_process.py` script reads this to find the file paths.
-samples_to_process:
-  - name: "ISS_Beryllium"
-    type: "ISS"
-    # The list of histograms this sample should produce.
-    # The C++ code reads this from the config to book the correct histograms.
-    histograms:
-      - "ISS.ID.H1"
-      - "ISS.ID.H2"
-    # The master list of raw data files for this sample.
-    files:
-      - "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1306026449_10.root"
-      # ... more files
+  - name: "Event_Count_Total"
+    type: "TH1D"
+    title: "Total Processed Event Count"
+    category: "default"
+    nbins: 1
+    low: 0.5
+    up: 1.5

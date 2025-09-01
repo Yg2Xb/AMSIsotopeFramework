@@ -63,15 +63,15 @@ double calculateWeight(double mmom, int charge, bool isISS) {
 
 
 // PHYSICS & KINEMATICS IMPLEMENTATION
-double betaToKineticEnergy(double beta) {
+double betaToEkPerNucleon(double beta) {
     if (beta <= 0.0 || beta >= 1.0) return -9.0;
     double gamma = 1.0 / std::sqrt(1.0 - beta * beta);
     return (gamma - 1.0) * Constants::AMU_GEV;
 }
 
-double kineticEnergyToBeta(double kineticEnergy) {
-    if (kineticEnergy < 0.0) return -9.0;
-    double gamma = kineticEnergy / Constants::AMU_GEV + 1.0;
+double EkPerNucleonToBeta(double EkPerNucleon) {
+    if (EkPerNucleon < 0.0) return -9.0;
+    double gamma = EkPerNucleon / Constants::AMU_GEV + 1.0;
     return std::sqrt(1.0 - 1.0 / (gamma * gamma));
 }
 
@@ -104,7 +104,7 @@ double betaToRigidity(double beta, int charge, int mass, bool isElectron) {
     }
 }
 
-double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
+double EkPerNucleonToRigidity(double ek_per_nucleon, int z, int a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
     double factor = (static_cast<double>(a) * Constants::AMU_GEV) / static_cast<double>(z);
     double term = std::pow(ek_per_nucleon / Constants::AMU_GEV + 1.0, 2) - 1.0;
@@ -112,7 +112,7 @@ double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
     return factor * std::sqrt(term);
 }
 
-double rigidityToKineticEnergy(double rig_gv, int z, int a) {
+double rigidityToEkPerNucleon(double rig_gv, int z, int a) {
     if (rig_gv <= 0.0 || z == 0) return -9.0;
     double factor = (static_cast<double>(a) * Constants::AMU_GEV) / static_cast<double>(z);
     double term = std::pow(rig_gv / factor, 2);

@@ -1,108 +1,107 @@
-#include <HistManager/HistManager.h>
-#include <TFile.h>
-#include <TString.h>
-#include <IsoToolbox/Logger.h> // BUG FIX: Missing include for logging macros
+#include "HistManager/HistManager.h"
+#include "IsoToolbox/ConfigManager.h"
+#include "IsoToolbox/AnalysisContext.h"
+#include "IsoToolbox/BinningManager.h"
+#include "IsoToolbox/Logger.h"
 
-namespace PhysicsModules {
+#include "TFile.h"
+#include "TH1D.h"
+#include "TH2D.h"
+#include <stdexcept>
 
-HistManager::HistManager(const IsoToolbox::AnalysisContext& context) : m_context(context) {
-    registerAllBlueprints();
-}
+void HistManager::BookHistograms(const ConfigManager& config, const AnalysisContext* context, const BinningManager* binningManager) {
+    LOG_INFO("Booking histograms...");
 
-HistManager::~HistManager() {
-    for (auto const& [key, val] : m_hists) {
-        delete val;
+    if (!context || !binningManager) {
+        throw std::runtime_error("HistManager requires valid AnalysisContext and BinningManager.");
     }
-}
 
-void HistManager::registerAllBlueprints() {
-    auto particle_info = m_context.GetParticleInfo(); // This call now works
-    std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
-
-    for (const auto& isotope : particle_info.isotopes) {
-        for (const auto& detector : detectors) {
-            std::string h1_key = Form("ISS.ID.H1.CountsVsEk.%s.%s", isotope.name.c_str(), detector.c_str());
-            // BUG FIX: Corrected lambda capture. The variables used inside must be captured.
-            m_registry[h1_key] = [this, h1_key, isotope, detector]() {
-                std::string title = Form("Event counts for %s (%s) vs. E_k/n; E_k/n (GeV/n); Counts", isotope.name.c_str(), detector.c_str());
-                m_hists[h1_key] = new TH1F(h1_key.c_str(), title.c_str(), 100, 0.5, 10.0);
-            };
-
-            std::string h2_key = Form("ISS.ID.H2.InvMassVsEk.%s.%s", isotope.name.c_str(), detector.c_str());
-            // BUG FIX: Corrected lambda capture.
-            m_registry[h2_key] = [this, h2_key, isotope, detector]() {
-                std::string title = Form("1/M for %s (%s) vs. E_k/n; E_k/n (GeV/n); 1/M (amu^-1)", isotope.name.c_str(), detector.c_str());
-                m_hists[h2_key] = new TH2F(h2_key.c_str(), title.c_str(), 100, 0.5, 10.0, 100, 0.08, 0.15);
-            };
-        }
+    auto histConfigs = config.GetNode("histograms");
+    if (!histConfigs) {
+        LOG_WARNING("No 'histograms' section found in config file. No histograms will be booked.");
+        return;
     }
-}
 
-void HistManager::bookFromBlueprint(const std::string& base_key) {
-    auto particle_info = m_context.GetParticleInfo(); // This call now works
-    std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
+    for (const auto& histNode : histConfigs) {
+        std::string name = histNode["name"].as<std::string>();
+        std::string type = histNode["type"].as<std::string>();
+        std::string title = histNode["title"].as<std::string>();
+        std::string category = histNode["category"] ? histNode["category"].as<std::string>() : "default";
 
-    if (base_key == "ISS.ID.H1" || base_key == "ISS.ID.H2") {
-        std::string desc = (base_key == "ISS.ID.H1") ? "CountsVsEk" : "InvMassVsEk";
-        for (const auto& isotope : particle_info.isotopes) {
-            for (const auto& detector : detectors) {
-                std::string full_key = Form("%s.%s.%s.%s", base_key.c_str(), desc.c_str(), isotope.name.c_str(), detector.c_str());
-                if (m_registry.count(full_key)) {
-                    m_registry.at(full_key)();
-                    if(m_hists.count(full_key)) m_hists.at(full_key)->SetDirectory(nullptr);
-                } else {
-                    SPDLOG_WARN("Blueprint for key '{}' not found in registry.", full_key);
+        if (category == "per_isotope_ek_bin") {
+            const auto& isotopes = context->GetIsotopes();
+            for (const auto& isotope : isotopes) {
+                std::string hist_name = name + "_" + isotope.name;
+                std::string hist_title = title + " (" + isotope.name + ")";
+
+                const auto& ek_bins = binningManager->GetEkPerNucleonBins(isotope.name);
+                if (ek_bins.size() < 2) {
+                    LOG_ERROR("Skipping histogram %s for isotope %s: requires at least 2 bin edges, but got %zu.", name.c_str(), isotope.name.c_str(), ek_bins.size());
+                    continue;
+                }
+
+                if (type == "TH2D") {
+                    int nbinsx = histNode["nbinsx"].as<int>();
+                    double xlow = histNode["xlow"].as<double>();
+                    double xup = histNode["xup"].as<double>();
+                    m_histograms[hist_name] = std::make_shared<TH2D>(hist_name.c_str(), hist_title.c_str(), nbinsx, xlow, xup, ek_bins.size() - 1, ek_bins.data());
+                    LOG_DEBUG("Booked per-isotope TH2D: %s", hist_name.c_str());
+                } else if (type == "TH1D") {
+                     m_histograms[hist_name] = std::make_shared<TH1D>(hist_name.c_str(), hist_title.c_str(), ek_bins.size() - 1, ek_bins.data());
+                     LOG_DEBUG("Booked per-isotope TH1D: %s", hist_name.c_str());
                 }
             }
+        } else { // Default category for non-isotope-specific histograms
+            if (type == "TH1D") {
+                int nbins = histNode["nbins"].as<int>();
+                double low = histNode["low"].as<double>();
+                double up = histNode["up"].as<double>();
+                m_histograms[name] = std::make_shared<TH1D>(name.c_str(), title.c_str(), nbins, low, up);
+                LOG_DEBUG("Booked default TH1D: %s", name.c_str());
+            }
+            // Add other types like TH2D if needed for the 'default' category
         }
-    } else {
-        if (m_registry.count(base_key)) {
-            m_registry.at(base_key)();
-            if(m_hists.count(base_key)) m_hists.at(base_key)->SetDirectory(nullptr);
-        } else {
-            SPDLOG_WARN("Blueprint for key '{}' not found in registry.", base_key);
-        }
+    }
+    LOG_INFO("All histograms booked.");
+}
+
+template<typename T>
+std::shared_ptr<T> HistManager::GetHist(const std::string& name) {
+    auto it = m_histograms.find(name);
+    if (it == m_histograms.end()) {
+        LOG_WARNING("Histogram '%s' not found.", name.c_str());
+        return nullptr;
+    }
+    auto hist = std::dynamic_pointer_cast<T>(it->second);
+    if (!hist) {
+        LOG_WARNING("Histogram '%s' found, but has incorrect type.", name.c_str());
+        return nullptr;
+    }
+    return hist;
+}
+
+void HistManager::Fill1D(const std::string& name, double value, double weight) {
+    if (auto hist = GetHist<TH1D>(name)) {
+        hist->Fill(value, weight);
     }
 }
 
-void HistManager::initializeForSample(const IsoToolbox::Sample& sample) {
-    for (auto const& [key, val] : m_hists) { delete val; }
-    m_hists.clear();
-
-    for (const auto& hist_base_key : sample.histograms) {
-        bookFromBlueprint(hist_base_key);
-    }
-    SPDLOG_INFO("Booked {} histograms for sample '{}'.", m_hists.size(), sample.name);
-}
-// ... the rest of the file (fill and write methods) is correct and remains unchanged.
-void HistManager::Fill1D(const std::string& key, double value, double weight) {
-    try {
-        m_hists.at(key)->Fill(value, weight);
-    } catch (const std::out_of_range& e) {
-        throw std::runtime_error("Attempted to fill non-existent histogram with key: " + key);
+void HistManager::Fill2D(const std::string& name, double x, double y, double weight) {
+    if (auto hist = GetHist<TH2D>(name)) {
+        hist->Fill(x, y, weight);
     }
 }
 
-void HistManager::Fill2D(const std::string& key, double x_value, double y_value, double weight) {
-    try {
-        dynamic_cast<TH2*>(m_hists.at(key))->Fill(x_value, y_value, weight);
-    } catch (const std::out_of_range& e) {
-        throw std::runtime_error("Attempted to fill non-existent 2D histogram with key: " + key);
+void HistManager::SaveHistograms(const std::string& outputFileName) {
+    auto outFile = std::make_unique<TFile>(outputFileName.c_str(), "RECREATE");
+    if (!outFile || outFile->IsZombie()) {
+        LOG_ERROR("Failed to create output file: %s", outputFileName.c_str());
+        return;
     }
+    outFile->cd();
+    for (const auto& pair : m_histograms) {
+        pair.second->Write();
+    }
+    outFile->Close();
+    LOG_INFO("Histograms successfully saved to %s", outputFileName.c_str());
 }
-
-void HistManager::write(const std::string& output_path) {
-    TFile* output_file = TFile::Open(output_path.c_str(), "RECREATE");
-    if (!output_file || output_file->IsZombie()) {
-         throw std::runtime_error("Failed to open output file: " + output_path);
-    }
-    output_file->cd();
-    for (auto const& [key, hist] : m_hists) {
-        hist->Write();
-    }
-    output_file->Close();
-    delete output_file;
-    SPDLOG_INFO("Histograms successfully written to {}", output_path);
-}
-
-} // namespace PhysicsModules

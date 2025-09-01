@@ -54,12 +54,12 @@ struct MassResult {
 };
 
 // PHYSICS & KINEMATICS
-double betaToKineticEnergy(double beta);
-double kineticEnergyToBeta(double kineticEnergy);
+double betaToEkPerNucleon(double beta);
+double EkPerNucleonToBeta(double EkPerNucleon);
 double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron = false);
 double betaToRigidity(double beta, int charge, int mass, bool isElectron = false);
-double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a);
-double rigidityToKineticEnergy(double rig_gv, int z, int a);
+double EkPerNucleonToRigidity(double ek_per_nucleon, int z, int a);
+double rigidityToEkPerNucleon(double rig_gv, int z, int a);
 double dR_dEk(double ek_per_nucleon, int z, int a);
 double dEk_dR(double rig_gv, int z, int a);
 MassResult calculateMass(double beta, double alpha, double innerRig, int charge);
