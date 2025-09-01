@@ -17,7 +17,6 @@ target_include_directories(IsoToolbox
 target_sources(IsoToolbox
     PRIVATE
         src/AnalysisContext.cpp
-        src/ConfigManager.cpp
         src/Logger.cpp
         src/PhysicsConstants.cpp
         src/SplineFitter.cpp
