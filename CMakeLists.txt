@@ -1,72 +1,70 @@
-# Root CMakeLists.txt for the AMSIsotopeFramework project
+# ====================================================================
+# Project Definition
+# ====================================================================
+cmake_minimum_required(VERSION 3.16)
+project(AMSIsotopeFramework VERSION 1.0 LANGUAGES CXX)
 
-# 1. Set minimum required version of CMake and project name
-cmake_minimum_required(VERSION 3.10)
-project(AMSIsotopeFramework CXX)
-
-# Ensure all targets are built with Position Independent Code
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# 2. Find ROOT package and its required components
-find_package(ROOT REQUIRED
-    COMPONENTS
-        Core
-        RIO
-        Net
-        Tree
-        Graf
-        Graf3d
-        Gpad
-        Hist
-        RooFit
-        RooFitCore
-        MathCore
-        Matrix
-)
-
-# Include ROOT's CMake utilities
-include(${ROOT_USE_FILE})
-
-# 3. Add crucial compile option for compatibility with CERN's ROOT builds
-add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
-
-
-# 4. Configure FetchContent module to manage external dependencies
-include(FetchContent)
-
-# --- spdlog ---
-FetchContent_Declare(
-    spdlog
-    GIT_REPOSITORY https://github.com/gabime/spdlog.git
-    GIT_TAG        v1.x
-)
-FetchContent_MakeAvailable(spdlog)
-
-# --- yaml-cpp ---
-FetchContent_Declare(
-    yaml-cpp
-    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
-    GIT_TAG        0.8.0
-)
-FetchContent_MakeAvailable(yaml-cpp)
-
-# --- nlohmann_json ---  <-- 新增下面这个代码块
-FetchContent_Declare(
-    nlohmann_json
-    GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG        v3.11.2 # A recent, stable version
-)
-FetchContent_MakeAvailable(nlohmann_json)
-
-
-# 5. Set the C++ standard for the entire project
+# ====================================================================
+# Global Settings
+# ====================================================================
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
 
-# 6. Add the subdirectories that contain libraries and applications
+# ====================================================================
+# Find OR Fetch External Dependencies
+# ====================================================================
+message(STATUS "Looking for required packages...")
+
+# Find ROOT (provided by the CERN environment)
+find_package(ROOT 6.24 COMPONENTS Core Hist Graf REQUIRED)
+message(STATUS "Found ROOT ${ROOT_VERSION}")
+
+# Find yaml-cpp (provided by the CERN environment)
+find_package(yaml-cpp 0.6 REQUIRED)
+message(STATUS "Found yaml-cpp ${yaml-cpp_VERSION}")
+
+# --- THE FINAL, CORRECT, AND PROFESSIONAL SOLUTION FOR SPDLOG ---
+# Include the FetchContent module to manage dependencies automatically
+include(FetchContent)
+
+# Declare where to get spdlog from if we don't have it
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG        v1.9.2 # A stable, widely used version
+)
+
+# --- Add nlohmann/json for parsing task files ---
+FetchContent_Declare(
+  json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG        v3.11.2 # A stable, widely used version
+)
+FetchContent_MakeAvailable(json)
+message(STATUS "nlohmann/json dependency is now available.")
+# ----------------------------------------------------
+
+# This command will first check if spdlog is already available via find_package.
+# If not, it will download and build it for our project automatically.
+FetchContent_MakeAvailable(spdlog)
+message(STATUS "spdlog dependency is now available.")
+# ----------------------------------------------------------------
+
+# ====================================================================
+# Project Structure
+# ====================================================================
+message(STATUS "Configuring project subdirectories...")
 add_subdirectory(libs)
 add_subdirectory(apps)
 
-# 7. Enable testing with CTest
+# ====================================================================
+# Testing
+# ====================================================================
 enable_testing()
 add_subdirectory(tests)
+
+message(STATUS "Configuration successful!")

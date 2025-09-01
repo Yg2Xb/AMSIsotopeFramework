@@ -1,19 +1,13 @@
-# CMakeLists.txt for the tests directory
-
-# 1. Define the test executable and its source files
-add_executable(runUnitTests
+# Define the test executable
+add_executable(run_tests
     test_Logger.cpp
 )
 
-# 2. Link the test executable against our toolbox library
-target_link_libraries(runUnitTests
+# Link tests against the libraries they are testing
+target_link_libraries(run_tests
     PRIVATE
         IsoToolbox
 )
 
-# 3. Register the executable as a test with CTest.
-#    NAME sets the name of the test, COMMAND is the program to run.
-add_test(
-    NAME LoggerTest
-    COMMAND runUnitTests
-)
+# Add the test to be run by 'ctest'
+add_test(NAME TestLogger COMMAND run_tests)

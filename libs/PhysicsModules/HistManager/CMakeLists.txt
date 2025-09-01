@@ -1,15 +1,19 @@
-# CMakeLists.txt for the HistManager library
-add_library(HistManager SHARED
-    src/HistManager.cpp
-)
+add_library(HistManager)
+
 target_include_directories(HistManager
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
+
+target_sources(HistManager
+    PRIVATE
+        src/HistManager.cpp
+)
+
 target_link_libraries(HistManager
     PUBLIC
-        DataModel
-        IsoToolbox # <-- 新增
+        # Our headers include TH1.h, so ROOT::Hist must be public.
+        # We also need IsoToolbox for ConfigManager, etc.
+        IsoToolbox
         ROOT::Hist
-        ROOT::Core
 )

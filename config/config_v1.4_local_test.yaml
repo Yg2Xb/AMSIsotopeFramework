@@ -1,0 +1,23 @@
+# test_config.yaml
+run_settings:
+  target_nucleus: "Beryllium"
+  max_events: 10000
+
+# 激活背景分析产品
+active_templates:
+  - "ISS.BKG.H2"     # 源粒子计数
+  - "ISS.BKG.H3"     # 碎片产物计数
+
+# 自定义背景源
+template_config:
+  background_sources: ["Carbon", "Nitrogen", "Oxygen"]
+
+analysis_chain:
+  chain_id: "test_bkg_analysis"
+  rigidity_version: "v1.0"
+  velocity_version: "v1.0"
+  cut_version: "v1.0"
+
+samples_to_process:
+  - name: "test_sample"
+    type: "ISS"

@@ -307,5 +307,5 @@ TF1* splineFit(TGraph* graph, double* xpoints, int npoint, int qOption, TString 
     return spfit_func;
 }
 
-}
-} // namespace AMS_Iso
+} // namespace Tools
+} // namespace IsoToolbox

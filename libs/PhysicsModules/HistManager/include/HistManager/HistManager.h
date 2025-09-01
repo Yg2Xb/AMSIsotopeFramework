@@ -1,43 +1,36 @@
-#ifndef HIST_MANAGER_H
-#define HIST_MANAGER_H
+// libs/PhysicsModules/HistManager/include/HistManager/HistManager.h
+#pragma once
 
+#include "TFile.h"
+#include "TH1.h"
+#include "TH2.h"
+#include "IsoToolbox/AnalysisContext.h"
+#include "IsoToolbox/BinningManager.h"
+#include "IsoToolbox/ProductRegistry.h"
 #include <map>
 #include <string>
 #include <memory>
-#include "TH1.h"
 
-// Forward declarations
-class ConfigManager;
-class AnalysisContext;
-class BinningManager;
+namespace IsoToolbox {
 
 class HistManager {
 public:
-    HistManager() = default;
-    ~HistManager() = default;
+    HistManager();
+    ~HistManager();
 
-    // Disable copy and move semantics
-    HistManager(const HistManager&) = delete;
-    HistManager& operator=(const HistManager&) = delete;
-    HistManager(HistManager&&) = delete;
-    HistManager& operator=(HistManager&&) = delete;
-
-    /**
-     * @brief Books all histograms defined in the configuration file.
-     * It intelligently creates per-isotope histograms based on their category.
-     */
-    void BookHistograms(const ConfigManager& config, const AnalysisContext* context, const BinningManager* binningManager);
-
+    // 新的简化接口 - 移除ConfigManager依赖
+    void BookHistograms(const AnalysisContext* context, const BinningManager* binningManager);
+    
     void Fill1D(const std::string& name, double value, double weight = 1.0);
-    void Fill2D(const std::string& name, double x, double y, double weight = 1.0);
-
-    void SaveHistograms(const std::string& outputFileName);
+    void Fill2D(const std::string& name, double x_val, double y_val, double weight = 1.0);
+    void SaveHistograms(const std::string& output_path);
 
 private:
-    template<typename T>
-    std::shared_ptr<T> GetHist(const std::string& name);
-
-    std::map<std::string, std::shared_ptr<TH1>> m_histograms;
+    std::map<std::string, std::unique_ptr<TH1>> m_hists;
+    
+    void CreateHistogram(const HistogramBlueprint& blueprint, 
+                        const std::vector<double>& x_bins,
+                        const std::vector<double>& y_bins = {});
 };
 
-#endif // HIST_MANAGER_H
+} // namespace IsoToolbox

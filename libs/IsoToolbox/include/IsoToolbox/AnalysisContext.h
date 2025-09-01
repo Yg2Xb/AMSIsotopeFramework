@@ -3,50 +3,54 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <IsoToolbox/ConfigManager.h>
+#include "IsoToolbox/PhysicsConstants.h" // 包含真实的类型定义
+#include "yaml-cpp/yaml.h"
 
 namespace IsoToolbox {
 
-// --- Data Structures that define the analysis context ---
-
-// BUG FIX: Renamed from 'Isotope' to 'IsotopeDef' to avoid redefinition conflict
-// with the class in PhysicsConstants.h
-struct IsotopeDef {
-    std::string name;
-    int mass;
+// 结构体：定义了分析链中使用的具体物理模型版本
+struct AnalysisChain {
+    std::string chain_id;
+    std::string rigidity_version;
+    std::string velocity_version;
+    std::string cut_version;
 };
 
-struct ParticleInfo {
+// 结构体：定义了要处理的数据样本信息
+struct SampleInfo {
     std::string name;
-    int charge;
-    std::vector<IsotopeDef> isotopes;
-};
-
-struct Sample {
-    std::string name;
-    std::string type;
-    std::vector<std::string> files;
-    std::vector<std::string> histograms;
+    std::string type; // "ISS" or "MC"
 };
 
 class AnalysisContext {
 public:
-    // BUG FIX: Added a new constructor that takes the config file path directly.
-    // This simplifies instantiation and resolves the constructor mismatch error in main.
-    AnalysisContext(const std::string& config_path);
+    // 构造函数：接收配置文件路径，并加载所有分析上下文
+    explicit AnalysisContext(const std::string& config_path);
     
-    AnalysisContext(std::shared_ptr<ConfigManager> config);
+    // 修正：返回类型为 Isotope, 这是 PhysicsConstants 中定义的真实类型
+    const Isotope& GetParticleInfo() const;
 
-    const ParticleInfo& GetParticleInfo() const;
-    const std::vector<Sample>& GetSamplesToProcess() const;
-    const Sample& GetSample(const std::string& name) const;
+    // 获取当前选择的分析链配置
+    const AnalysisChain& GetAnalysisChain() const;
+    
+    // 获取待处理样本的信息
+    const std::vector<SampleInfo>& GetSamplesToProcess() const;
+
+    // 获取通用的运行设置
+    const YAML::Node GetRunSettings() const;
 
 private:
     void parseConfig();
+    void loadParticleData(const std::string& particleName);
 
-    std::shared_ptr<ConfigManager> m_configManager;
-    ParticleInfo m_particleInfo;
-    std::vector<Sample> m_samples;
+    YAML::Node m_configNode; // 持有整个配置文件的内容
+    
+    // 修正：成员变量的类型必须是 Isotope
+    // 使用 std::unique_ptr 来存储，因为它没有默认构造函数
+    std::unique_ptr<Isotope> m_particleInfo; 
+    
+    AnalysisChain m_analysisChain;
+    std::vector<SampleInfo> m_samples;
 };
 
 } // namespace IsoToolbox

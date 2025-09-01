@@ -1,56 +1,45 @@
-#ifndef BINNINIG_MANAGER_H
-#define BINNINIG_MANAGER_H
+#pragma once
 
-#include <string>
+#include "IsoToolbox/AnalysisContext.h"
 #include <vector>
+#include <string>
 #include <map>
 
-// Forward declarations to reduce header dependencies
-class AnalysisContext;
+namespace IsoToolbox {
 
-/**
- * @class BinningManager
- * @brief Manages the creation of isotope-specific binning schemes.
- *
- * This class is responsible for generating and providing binning arrays
- * (e.g., Ek/n bins) based on a master set of rigidity bins. It fetches
- * information about the target nucleus and its isotopes from the AnalysisContext
- * and performs the necessary physics calculations.
- */
-class BinningManager {
-public:
-    /**
-     * @brief Constructor.
-     * @param context A non-null pointer to the global AnalysisContext.
-     */
-    explicit BinningManager(const AnalysisContext* context);
-    ~BinningManager() = default;
-
-    // Disable copy and move semantics to prevent slicing and ownership issues
-    BinningManager(const BinningManager&) = delete;
-    BinningManager& operator=(const BinningManager&) = delete;
-    BinningManager(BinningManager&&) = delete;
-    BinningManager& operator=(BinningManager&&) = delete;
-
-    /**
-     * @brief Initializes the manager by generating all required bin schemes.
-     * This must be called after the AnalysisContext is fully initialized.
-     */
-    void Initialize();
-
-    /**
-     * @brief Retrieves the Ek/n binning for a specific isotope.
-     * @param isotopeName The name of the isotope (e.g., "Be7").
-     * @return A const reference to the vector of bin edges. Returns an empty vector if not found.
-     */
-    const std::vector<double>& GetEkPerNucleonBins(const std::string& isotopeName) const;
-
-private:
-    void GenerateEkPerNucleonBins();
-
-    const AnalysisContext* m_context;
-    std::map<std::string, std::vector<double>> m_ekPerNucleonBins;
-    std::vector<double> m_emptyBins; // Return this if isotope not found to avoid dangling refs
+// 存储单个同位素的分档方案
+struct IsotopeBinning {
+    std::vector<double> ek_bins;
+    std::vector<double> velocity_bins;
 };
 
-#endif // BINNINIG_MANAGER_H
+class BinningManager {
+public:
+    explicit BinningManager(AnalysisContext* context);
+
+    void Initialize();
+
+    const IsotopeBinning& GetIsotopeBinning(const std::string& isotope_name) const;
+    const std::vector<double>& GetRigidityBinning() const;
+    // 新增：智能获取分bin
+    std::vector<double> GetBinning(const std::string& binning_type,
+                                  const std::string& isotope_name = "",
+                                  const std::string& detector = "") const;
+                                  
+    // 新增：获取电荷分bin（用于背景分析）
+    std::vector<double> GetChargeBinning(const std::string& source_type) const;
+
+private:
+    void LoadRigidityBins();
+    void GenerateEkPerNucleonBins();
+
+    AnalysisContext* m_context;
+    std::vector<double> m_rigidity_bins;
+    // 使用map来存储每种同位素的专属分bin方案
+    std::map<std::string, IsotopeBinning> m_isotope_binnings;
+    // 新增：不同源粒子的电荷分bin缓存
+    std::map<std::string, std::vector<double>> m_charge_binnings;
+    void LoadChargeBinnings();
+};
+
+} // namespace IsoToolbox

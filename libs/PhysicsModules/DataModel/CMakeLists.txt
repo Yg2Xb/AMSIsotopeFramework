@@ -1,19 +1,20 @@
-# CMakeLists.txt for the DataModel library
+add_library(DataModel)
 
-# 1. Define the library and its source files
-add_library(DataModel SHARED
-    src/AMSDstTreeA.cpp   
-)
-
-# 2. Specify the public include directory
 target_include_directories(DataModel
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-# 3. Link the library against ROOT components
+target_sources(DataModel
+    PRIVATE
+        src/AMSDstTreeA.cpp
+)
+
 target_link_libraries(DataModel
     PUBLIC
-        ROOT::Tree
+        # We depend on ROOT for TTree, and our header includes ROOT headers.
         ROOT::Core
+        # --- FIX ---
+        # Added ROOT::Tree, which is required for TTree functionality used in AMSDstTreeA
+        ROOT::Tree
 )

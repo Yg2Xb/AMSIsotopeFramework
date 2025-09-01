@@ -1,107 +1,133 @@
+// libs/PhysicsModules/HistManager/src/HistManager.cpp
 #include "HistManager/HistManager.h"
-#include "IsoToolbox/ConfigManager.h"
-#include "IsoToolbox/AnalysisContext.h"
-#include "IsoToolbox/BinningManager.h"
 #include "IsoToolbox/Logger.h"
-
-#include "TFile.h"
-#include "TH1D.h"
-#include "TH2D.h"
 #include <stdexcept>
 
-void HistManager::BookHistograms(const ConfigManager& config, const AnalysisContext* context, const BinningManager* binningManager) {
-    LOG_INFO("Booking histograms...");
+namespace IsoToolbox {
 
-    if (!context || !binningManager) {
-        throw std::runtime_error("HistManager requires valid AnalysisContext and BinningManager.");
-    }
+HistManager::HistManager() {}
+HistManager::~HistManager() {}
 
-    auto histConfigs = config.GetNode("histograms");
-    if (!histConfigs) {
-        LOG_WARNING("No 'histograms' section found in config file. No histograms will be booked.");
+void HistManager::BookHistograms(const AnalysisContext* context, const BinningManager* binningManager) {
+    Logger::Info("Booking histograms using ProductRegistry...");
+    
+    auto& registry = ProductRegistry::GetInstance();
+    
+    // 从AnalysisContext获取激活的模板
+    std::vector<std::string> active_templates;
+    try {
+        const auto& runSettings = context->GetRunSettings();
+        if (runSettings["active_templates"]) {
+            active_templates = runSettings["active_templates"].as<std::vector<std::string>>();
+        } else {
+            Logger::Warn("No 'active_templates' found in config, using defaults");
+            active_templates = {"ISS.BKG.H2", "ISS.BKG.H3"}; // 默认激活简单的1D直方图
+        }
+    } catch (const std::exception& e) {
+        Logger::Error("Failed to load active templates: {}", e.what());
         return;
     }
-
-    for (const auto& histNode : histConfigs) {
-        std::string name = histNode["name"].as<std::string>();
-        std::string type = histNode["type"].as<std::string>();
-        std::string title = histNode["title"].as<std::string>();
-        std::string category = histNode["category"] ? histNode["category"].as<std::string>() : "default";
-
-        if (category == "per_isotope_ek_bin") {
-            const auto& isotopes = context->GetIsotopes();
-            for (const auto& isotope : isotopes) {
-                std::string hist_name = name + "_" + isotope.name;
-                std::string hist_title = title + " (" + isotope.name + ")";
-
-                const auto& ek_bins = binningManager->GetEkPerNucleonBins(isotope.name);
-                if (ek_bins.size() < 2) {
-                    LOG_ERROR("Skipping histogram %s for isotope %s: requires at least 2 bin edges, but got %zu.", name.c_str(), isotope.name.c_str(), ek_bins.size());
-                    continue;
-                }
-
-                if (type == "TH2D") {
-                    int nbinsx = histNode["nbinsx"].as<int>();
-                    double xlow = histNode["xlow"].as<double>();
-                    double xup = histNode["xup"].as<double>();
-                    m_histograms[hist_name] = std::make_shared<TH2D>(hist_name.c_str(), hist_title.c_str(), nbinsx, xlow, xup, ek_bins.size() - 1, ek_bins.data());
-                    LOG_DEBUG("Booked per-isotope TH2D: %s", hist_name.c_str());
-                } else if (type == "TH1D") {
-                     m_histograms[hist_name] = std::make_shared<TH1D>(hist_name.c_str(), hist_title.c_str(), ek_bins.size() - 1, ek_bins.data());
-                     LOG_DEBUG("Booked per-isotope TH1D: %s", hist_name.c_str());
-                }
-            }
-        } else { // Default category for non-isotope-specific histograms
-            if (type == "TH1D") {
-                int nbins = histNode["nbins"].as<int>();
-                double low = histNode["low"].as<double>();
-                double up = histNode["up"].as<double>();
-                m_histograms[name] = std::make_shared<TH1D>(name.c_str(), title.c_str(), nbins, low, up);
-                LOG_DEBUG("Booked default TH1D: %s", name.c_str());
-            }
-            // Add other types like TH2D if needed for the 'default' category
+    
+    // 获取所有激活的产品
+    auto blueprints = registry.GetActiveProducts(active_templates, context);
+    
+    // 为每个产品创建直方图
+    for (const auto& blueprint : blueprints) {
+        std::vector<double> x_bins, y_bins;
+        
+        // 根据binning_type获取合适的分bin
+        if (blueprint.binning_type == "ek_per_nucleon") {
+            // 1D直方图：y轴是ek/n
+            y_bins = binningManager->GetBinning("ek_per_nucleon");
+            
+        } else if (blueprint.binning_type == "charge_ek_2d") {
+            // 2D直方图：x轴是电荷，y轴是ek/n
+            x_bins = binningManager->GetChargeBinning(blueprint.source_name);
+            y_bins = binningManager->GetBinning("ek_per_nucleon");
+            
+        } else if (blueprint.binning_type == "invmass_ek_2d") {
+            // 2D直方图：x轴是1/M，y轴是ek/n
+            x_bins = {0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5}; // 1/M bins
+            y_bins = binningManager->GetBinning("ek_per_nucleon");
         }
+        
+        CreateHistogram(blueprint, x_bins, y_bins);
     }
-    LOG_INFO("All histograms booked.");
+    
+    Logger::Info("Booked {} histograms", m_hists.size());
 }
 
-template<typename T>
-std::shared_ptr<T> HistManager::GetHist(const std::string& name) {
-    auto it = m_histograms.find(name);
-    if (it == m_histograms.end()) {
-        LOG_WARNING("Histogram '%s' not found.", name.c_str());
-        return nullptr;
+void HistManager::CreateHistogram(const HistogramBlueprint& blueprint, 
+                                 const std::vector<double>& x_bins,
+                                 const std::vector<double>& y_bins) {
+    if (blueprint.type == "TH1F") {
+        // 1D直方图使用y_bins作为主轴
+        if (y_bins.empty()) {
+            Logger::Error("No bins provided for 1D histogram: {}", blueprint.name);
+            return;
+        }
+        
+        m_hists[blueprint.name] = std::make_unique<TH1F>(
+            blueprint.name.c_str(), 
+            blueprint.title.c_str(), 
+            y_bins.size() - 1, 
+            y_bins.data()
+        );
+        
+    } else if (blueprint.type == "TH2F") {
+        // 2D直方图
+        if (x_bins.empty() || y_bins.empty()) {
+            Logger::Error("Insufficient bins for 2D histogram: {}", blueprint.name);
+            return;
+        }
+        
+        m_hists[blueprint.name] = std::make_unique<TH2F>(
+            blueprint.name.c_str(), 
+            blueprint.title.c_str(), 
+            x_bins.size() - 1, x_bins.data(),
+            y_bins.size() - 1, y_bins.data()
+        );
     }
-    auto hist = std::dynamic_pointer_cast<T>(it->second);
-    if (!hist) {
-        LOG_WARNING("Histogram '%s' found, but has incorrect type.", name.c_str());
-        return nullptr;
-    }
-    return hist;
+    
+    Logger::Debug("Created histogram: {}", blueprint.name);
 }
 
 void HistManager::Fill1D(const std::string& name, double value, double weight) {
-    if (auto hist = GetHist<TH1D>(name)) {
-        hist->Fill(value, weight);
+    auto it = m_hists.find(name);
+    if (it != m_hists.end()) {
+        it->second->Fill(value, weight);
+    } else {
+        Logger::Warn("Histogram '{}' not found for Fill1D.", name);
     }
 }
 
-void HistManager::Fill2D(const std::string& name, double x, double y, double weight) {
-    if (auto hist = GetHist<TH2D>(name)) {
-        hist->Fill(x, y, weight);
+void HistManager::Fill2D(const std::string& name, double x_val, double y_val, double weight) {
+    auto it = m_hists.find(name);
+    if (it != m_hists.end()) {
+        auto* hist2d = dynamic_cast<TH2*>(it->second.get());
+        if (hist2d) {
+            hist2d->Fill(x_val, y_val, weight);
+        } else {
+            Logger::Error("Histogram '{}' is not a 2D histogram.", name);
+        }
+    } else {
+        Logger::Warn("Histogram '{}' not found for Fill2D.", name);
     }
 }
 
-void HistManager::SaveHistograms(const std::string& outputFileName) {
-    auto outFile = std::make_unique<TFile>(outputFileName.c_str(), "RECREATE");
-    if (!outFile || outFile->IsZombie()) {
-        LOG_ERROR("Failed to create output file: %s", outputFileName.c_str());
-        return;
+void HistManager::SaveHistograms(const std::string& output_path) {
+    TFile* file = TFile::Open(output_path.c_str(), "RECREATE");
+    if (!file || file->IsZombie()) {
+        throw std::runtime_error("Failed to open output file: " + output_path);
     }
-    outFile->cd();
-    for (const auto& pair : m_histograms) {
+    
+    for (const auto& pair : m_hists) {
         pair.second->Write();
     }
-    outFile->Close();
-    LOG_INFO("Histograms successfully saved to %s", outputFileName.c_str());
+    
+    file->Close();
+    delete file;
+    Logger::Info("Histograms saved to {}", output_path);
 }
+
+} // namespace IsoToolbox

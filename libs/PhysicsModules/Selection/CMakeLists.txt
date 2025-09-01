@@ -1,15 +1,19 @@
-# CMakeLists.txt for the Selection library
-add_library(Selection SHARED
-    src/CutBase.cpp # <-- ADD this new source file
-    src/RTICut.cpp
-)
+add_library(Selection)
+
 target_include_directories(Selection
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
+
+target_sources(Selection
+    PRIVATE
+        src/CutBase.cpp
+        src/RTICut.cpp
+)
+
 target_link_libraries(Selection
     PUBLIC
+        # Selection modules will depend heavily on the data model and tools
         DataModel
-        IsoToolbox # <-- 新增
-        ROOT::Core
+        IsoToolbox
 )

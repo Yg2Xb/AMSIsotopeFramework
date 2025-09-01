@@ -1,69 +1,64 @@
-#include <IsoToolbox/AnalysisContext.h>
+#include "IsoToolbox/AnalysisContext.h"
 #include <stdexcept>
 
 namespace IsoToolbox {
 
-// BUG FIX: Implementation for the new convenience constructor.
-AnalysisContext::AnalysisContext(const std::string& config_path) {
-    // This smart pointer uses a no-op deleter because the ConfigManager is a singleton
-    // and its lifetime is managed by its static instance, not by this shared_ptr.
-    m_configManager = std::shared_ptr<ConfigManager>(&ConfigManager::GetInstance(), [](auto*){});
-    if (!m_configManager->Load(config_path)) {
-        throw std::runtime_error("AnalysisContext: Failed to load config file: " + config_path);
+AnalysisContext::AnalysisContext(const std::string& config_path) : m_particleInfo(nullptr) { // 初始化 unique_ptr
+    try {
+        m_configNode = YAML::LoadFile(config_path);
+    } catch (const YAML::Exception& e) {
+        throw std::runtime_error("Failed to load or parse config file '" + config_path + "': " + e.what());
     }
-    parseConfig();
-}
-
-AnalysisContext::AnalysisContext(std::shared_ptr<ConfigManager> config) : m_configManager(config) {
     parseConfig();
 }
 
 void AnalysisContext::parseConfig() {
-    // FIX: Access YAML nodes sequentially instead of using a single dot-separated string.
-    const auto& config = m_configManager->GetRootNode();
+    // 1. 解析要分析的目标粒子名称
+    std::string particle_name = m_configNode["run_settings"]["target_nucleus"].as<std::string>();
+    
+    // 2. 从 C++ 代码中的 PhysicsConstants 加载该粒子的固定物理信息
+    loadParticleData(particle_name);
 
-    // Parse particle info
-    std::string particle_name = config["current_particle"].as<std::string>();
-    m_particleInfo.name = particle_name;
+    // 3. 解析用户选择的、灵活可变的“分析链”
+    const auto& chain_node = m_configNode["analysis_chain"];
+    m_analysisChain.chain_id           = chain_node["chain_id"].as<std::string>();
+    m_analysisChain.rigidity_version = chain_node["rigidity_version"].as<std::string>();
+    m_analysisChain.velocity_version = chain_node["velocity_version"].as<std::string>();
+    m_analysisChain.cut_version      = chain_node["cut_version"].as<std::string>();
 
-    const auto& particle_def_node = config["particle_definitions"][particle_name];
-    if (!particle_def_node) {
-        throw std::runtime_error("Particle definition not found for: " + particle_name);
-    }
-
-    m_particleInfo.charge = particle_def_node["charge"].as<int>();
-    auto isotopes_nodes = particle_def_node["isotopes"];
-    for (const auto& node : isotopes_nodes) {
-        m_particleInfo.isotopes.push_back({node["name"].as<std::string>(), node["mass"].as<int>()});
-    }
-
-    // Parse samples
-    auto samples_nodes = config["samples_to_process"];
+    // 4. 解析待处理的数据样本列表
+    const auto& samples_nodes = m_configNode["samples_to_process"];
     for (const auto& node : samples_nodes) {
         m_samples.push_back({
             node["name"].as<std::string>(),
-            node["type"].as<std::string>(),
-            node["files"].as<std::vector<std::string>>(),
-            node["histograms"].as<std::vector<std::string>>(),
+            node["type"].as<std::string>()
         });
     }
 }
 
-const ParticleInfo& AnalysisContext::GetParticleInfo() const {
-    return m_particleInfo;
+// 修正后的逻辑：直接获取并存储由 PhysicsConstants 提供的 Isotope 对象
+void AnalysisContext::loadParticleData(const std::string& particleName) {
+    // 创建 Isotope 类的一个新实例并将其所有权转移给 m_particleInfo
+    m_particleInfo = std::make_unique<Isotope>(PhysicsConstants::GetIsotope(particleName));
 }
 
-const std::vector<Sample>& AnalysisContext::GetSamplesToProcess() const {
+const Isotope& AnalysisContext::GetParticleInfo() const {
+    if (!m_particleInfo) {
+        throw std::runtime_error("ParticleInfo has not been initialized.");
+    }
+    return *m_particleInfo;
+}
+
+const AnalysisChain& AnalysisContext::GetAnalysisChain() const {
+    return m_analysisChain;
+}
+
+const std::vector<SampleInfo>& AnalysisContext::GetSamplesToProcess() const {
     return m_samples;
 }
 
-const Sample& AnalysisContext::GetSample(const std::string& name) const {
-    for (const auto& sample : m_samples) {
-        if (sample.name == name) {
-            return sample;
-        }
-    }
-    throw std::runtime_error("Sample with name '" + name + "' not found in configuration.");
+const YAML::Node AnalysisContext::GetRunSettings() const {
+    return m_configNode["run_settings"];
 }
 
 } // namespace IsoToolbox

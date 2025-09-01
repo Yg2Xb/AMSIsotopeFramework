@@ -1,109 +1,124 @@
+// apps/process/src/main.cpp
 #include <iostream>
 #include <string>
 #include <vector>
 #include <memory>
 #include <exception>
+#include <fstream>
 
-#include "TFile.h"
-#include "TTree.h"
+#include "TChain.h"
+#include "nlohmann/json.hpp"
 
-#include "IsoToolbox/Logger.h"
-#include "IsoToolbox/ConfigManager.h"
 #include "IsoToolbox/AnalysisContext.h"
 #include "IsoToolbox/BinningManager.h"
-#include "PhysicsModules/DataModel/AMSDstTreeA.h"
-#include "PhysicsModules/HistManager/HistManager.h"
+#include "IsoToolbox/Logger.h"
+#include "IsoToolbox/ProductRegistry.h"  // 新增
+#include "DataModel/AMSDstTreeA.h"
+#include "HistManager/HistManager.h"
+
+using json = nlohmann::json;
 
 int main(int argc, char* argv[]) {
-    // Set logger level, e.g., to DEBUG for more verbose output
-    Logger::GetInstance().SetLogLevel(LogLevel::INFO);
+    IsoToolbox::Logger::GetInstance().SetLevel(IsoToolbox::Logger::Level::DEBUG);
 
-    if (argc != 3) {
-        LOG_CRITICAL("Usage: %s <config_file> <input_file>", argv[0]);
+    if (argc != 4 || std::string(argv[2]) != "--task") {
+        IsoToolbox::Logger::Error("Usage: {} <config_file> --task <task_file.json>", argv[0]);
         return 1;
     }
 
     std::string configFile = argv[1];
-    std::string inputFile = argv[2];
+    std::string taskFile = argv[3];
 
     try {
-        // 1. ====================== INITIALIZATION PHASE ======================
-        LOG_INFO("======= AMS Isotope Analysis Framework =======");
+        IsoToolbox::Logger::Info("======= AMS Isotope Analysis Framework - IsoProcess =======");
+        IsoToolbox::Logger::Info("Master Config: {}", configFile);
+        IsoToolbox::Logger::Info("Task File: {}", taskFile);
 
-        // -- Load Configuration
-        ConfigManager config(configFile);
+        // 1. 解析任务文件 (JSON)
+        std::ifstream f(taskFile);
+        if (!f.is_open()) {
+            throw std::runtime_error("Could not open task file: " + taskFile);
+        }
+        json task_data = json::parse(f);
+        
+        const std::vector<std::string> inputFiles = task_data["input_files"];
+        const std::string outputFile = task_data["output_file"];
+        const std::string sampleName = task_data["sample_name"];
 
-        // -- Setup Analysis Context (The brain of the operation)
-        auto context = std::make_shared<AnalysisContext>();
-        context->SetTargetNucleus(config.Get<std::string>("run_settings.target_nucleus"));
-        context->Initialize();
-        LOG_INFO("Analysis Target: %s (Z=%d)", context->GetTargetNucleus().c_str(), context->GetChargeZ());
-
-        // -- Setup Binning Manager (The ruler maker)
-        auto binningManager = std::make_shared<BinningManager>(context.get());
+        // 2. 创建核心分析组件
+        auto context = std::make_shared<IsoToolbox::AnalysisContext>(configFile);
+        auto binningManager = std::make_shared<IsoToolbox::BinningManager>(context.get());
+        auto histManager = std::make_shared<IsoToolbox::HistManager>();
+        
+        // 3. 初始化组件
         binningManager->Initialize();
+        
+        // 确保ProductRegistry已注册模板
+        auto& registry = IsoToolbox::ProductRegistry::GetInstance();
+        
+        // 使用新的简化接口预订直方图
+        histManager->BookHistograms(context.get(), binningManager.get());
+        
+        const auto& particleInfo = context->GetParticleInfo();
+        const auto& analysisChain = context->GetAnalysisChain();
+        const auto& runSettings = context->GetRunSettings();
 
-        // -- Book Histograms (The data containers)
-        auto histManager = std::make_shared<HistManager>();
-        histManager->BookHistograms(config, context.get(), binningManager.get());
+        IsoToolbox::Logger::Info("Processing Sample: {}", sampleName);
+        IsoToolbox::Logger::Info("Analysis Target: {} (Z={})", particleInfo.GetName(), particleInfo.GetCharge());
+        IsoToolbox::Logger::Info("Analysis Chain -> Rigidity: {}, Velocity: {}, Cuts: {}",
+                                 analysisChain.rigidity_version, 
+                                 analysisChain.velocity_version, 
+                                 analysisChain.cut_version);
 
-        // -- Prepare Input Data
-        auto inFile = std::make_unique<TFile>(inputFile.c_str(), "READ");
-        if (!inFile || inFile->IsZombie()) {
-            throw std::runtime_error("Error opening input file: " + inputFile);
+        // 4. 事件循环
+        auto chain = std::make_unique<TChain>("amstreea");
+        for (const auto& inputFile : inputFiles) {
+            chain->Add(inputFile.c_str());
         }
-        TTree* tree = static_cast<TTree*>(inFile->Get("AMSDst"));
-        if (!tree) {
-            throw std::runtime_error("Could not find TTree 'AMSDst' in file: " + inputFile);
-        }
-        AMSDstTreeA dst(tree);
+        
+        AMSDstTreeA dst(chain.get());
+        long long nEntries = chain->GetEntries();
+        if (nEntries == 0) {
+            IsoToolbox::Logger::Warn("No events found in the input files for this task. Generating empty output.");
+        } else {
+            IsoToolbox::Logger::Info("Starting event loop for {} events...", nEntries);
+            long long maxEvents = runSettings["max_events"].as<long long>(-1);
+            if (maxEvents > 0 && maxEvents < nEntries) nEntries = maxEvents;
 
-        // 2. ====================== EVENT LOOP PHASE ======================
-        LOG_INFO("Starting event loop for %s...", inputFile.c_str());
-        long long nEntries = tree->GetEntries();
-        long long maxEvents = config.Get<long long>("run_settings.max_events", -1);
-        if (maxEvents > 0 && maxEvents < nEntries) {
-            nEntries = maxEvents;
-        }
-
-        for (long long i = 0; i < nEntries; ++i) {
-            tree->GetEntry(i);
-            if (i > 0 && i % 100000 == 0) {
-                LOG_INFO("Processing event %lld / %lld (%.1f%%)", i, nEntries, (double)i / nEntries * 100.0);
+            for (long long i = 0; i < nEntries; ++i) {
+                chain->GetEntry(i);
+                if (i > 0 && i % 100000 == 0) {
+                    IsoToolbox::Logger::Info("  ... processing event {} / {}", i, nEntries);
+                }
+                
+                // 示例：填充背景分析直方图
+                // 这里应该根据你的事件选择逻辑来填充相应的直方图
+                
+                // 模拟一些事件数据填充
+                for (const auto& source : {"Carbon", "Nitrogen", "Oxygen"}) {
+                    for (const auto& detector : {"TOF", "NaF", "AGL"}) {
+                        double fake_ek = (i % 1000) / 100.0 + 0.5;  // 0.5-10.5 GeV/n
+                        
+                        // 填充ISS.BKG.H2 (源粒子计数)
+                        std::string hist_name = "ISS_BKG_H2_" + std::string(source) + "_" + std::string(detector);
+                        histManager->Fill1D(hist_name, fake_ek);
+                        
+                        // 填充ISS.BKG.H3 (碎片产物计数)
+                        hist_name = "ISS_BKG_H3_" + std::string(source) + "_" + std::string(detector);
+                        histManager->Fill1D(hist_name, fake_ek);
+                    }
+                }
             }
-
-            histManager->Fill1D("Event_Count_Total", 1.0);
-
-            // ===============================================================
-            // NEXT STEP: This is where the SELECTION logic will be added.
-            // A 'SelectionManager' will be created and called here.
-            // if (!selectionManager.ProcessEvent(dst)) continue;
-            // ===============================================================
-
-            // For now, fill histograms with fake data to test the system.
-            for (const auto& isotope : context->GetIsotopes()) {
-                // FAKE physics values for testing
-                double fake_ek_per_nucleon = (i % 1000) / 100.0; // GeV/n
-                double fake_inv_mass = (i % 200) / 400.0;
-
-                std::string h1_name = "ISS_ID_H1_" + isotope.name;
-                histManager->Fill1D(h1_name, fake_ek_per_nucleon);
-
-                std::string h2_name = "ISS_ID_H2_" + isotope.name;
-                histManager->Fill2D(h2_name, fake_inv_mass, fake_ek_per_nucleon);
-            }
         }
-        LOG_INFO("Event loop finished. Processed %lld events.", nEntries);
-
-        // 3. ====================== FINALIZATION PHASE ======================
-        std::string outputFile = config.Get<std::string>("run_settings.output_file");
+        
+        IsoToolbox::Logger::Info("Event loop finished. Processed {} events.", nEntries);
         histManager->SaveHistograms(outputFile);
 
     } catch (const std::exception& e) {
-        LOG_CRITICAL("An unrecoverable error occurred: %s", e.what());
+        IsoToolbox::Logger::Error("An unrecoverable error occurred: {}", e.what());
         return 1;
     }
 
-    LOG_INFO("Analysis finished successfully.");
+    IsoToolbox::Logger::Info("Task finished successfully.");
     return 0;
 }
