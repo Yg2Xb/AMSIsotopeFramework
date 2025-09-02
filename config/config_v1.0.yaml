@@ -23,7 +23,7 @@ samples_to_process:
     # condor 模式使用硬编码的官方路径
     condor_path_pattern: "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/*.root"
     # local 模式使用单个文件用于快速测试
-    local_path_pattern: "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1627515134_10.root"
+    local_path_pattern: "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1627*_10.root"
       
   - name: "MC_Be7"
     type: "MC"

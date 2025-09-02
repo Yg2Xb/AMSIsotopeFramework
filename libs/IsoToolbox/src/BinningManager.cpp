@@ -27,11 +27,10 @@ void BinningManager::LoadRigidityBins() {
 void BinningManager::GenerateEkPerNucleonBins() {
     const auto& particleInfo = m_context->GetParticleInfo();
     
-    // 修正: 通过公共接口 GetCharge() 和 GetName() 访问数据
     int chargeZ = particleInfo.GetCharge();
     Logger::Debug("Generating Ek/n bins for nucleus: {}", particleInfo.GetName());
 
-    // 修正: 遍历同位素质量信息需要通过 GetMasses() 和 GetIsotopeCount()
+    // 为每个同位素生成专属的Ek/n分bin
     const auto& masses = particleInfo.GetMasses();
     for (int i = 0; i < particleInfo.GetIsotopeCount(); ++i) {
         if (masses[i] == 0) continue; // 跳过无效的质量数
@@ -43,6 +42,44 @@ void BinningManager::GenerateEkPerNucleonBins() {
 
         m_isotope_binnings[isotope_name].ek_bins = BinningUtils::ConvertRigidityToEk(m_rigidity_bins, massA, chargeZ);
     }
+}
+
+std::vector<double> BinningManager::GenerateDefaultNarrowEkBins() const {
+    // 科研惯例：使用4/7质荷比生成默认的窄带Ek/n分bin
+    const int massA = 7;
+    const int chargeZ = 4;
+    
+    return BinningUtils::ConvertRigidityToEk(m_rigidity_bins, massA, chargeZ);
+}
+
+std::vector<double> BinningManager::GenerateChargeBins(int central_z) const {
+    // 生成Z±2范围，400个bin的电荷分bin
+    const double z_min = central_z - 2.0;
+    const double z_max = central_z + 2.0;
+    const int n_bins = 400;
+    
+    std::vector<double> charge_bins;
+    for (int i = 0; i <= n_bins; ++i) {
+        double z = z_min + (z_max - z_min) * i / n_bins;
+        charge_bins.push_back(z);
+    }
+    
+    return charge_bins;
+}
+
+std::vector<double> BinningManager::GenerateInvMassBins() const {
+    // 1/M分bin：0.0到0.5，200个bin
+    const double inv_mass_min = 0.0;
+    const double inv_mass_max = 0.5;
+    const int n_bins = 200;
+    
+    std::vector<double> inv_mass_bins;
+    for (int i = 0; i <= n_bins; ++i) {
+        double inv_mass = inv_mass_min + (inv_mass_max - inv_mass_min) * i / n_bins;
+        inv_mass_bins.push_back(inv_mass);
+    }
+    
+    return inv_mass_bins;
 }
 
 const IsotopeBinning& BinningManager::GetIsotopeBinning(const std::string& isotope_name) const {
@@ -57,37 +94,51 @@ const std::vector<double>& BinningManager::GetRigidityBinning() const {
     return m_rigidity_bins;
 }
 
-// libs/IsoToolbox/src/BinningManager.cpp 添加实现
 std::vector<double> BinningManager::GetBinning(const std::string& binning_type,
                                               const std::string& isotope_name,
                                               const std::string& detector) const {
     if (binning_type == "ek_per_nucleon") {
         if (!isotope_name.empty()) {
+            // 使用特定同位素的分bin
             const auto& isotope_binning = GetIsotopeBinning(isotope_name);
             return isotope_binning.ek_bins;
         } else {
-            // 返回通用的narrow bins
-            return {0.42, 0.51, 0.61, 0.73, 0.86, 1.00, 1.17, 1.35, 1.55, 1.77, 2.01, 2.28, 2.57, 2.88, 3.23, 3.60, 4.00, 4.44, 4.91, 5.42, 5.99, 6.56, 7.18, 7.86, 8.60, 9.40, 10.25, 11.16, 12.13, 14.35, 16.38};
+            // 使用默认的窄带分bin（4/7质荷比）
+            if (m_default_narrow_ek_bins.empty()) {
+                m_default_narrow_ek_bins = GenerateDefaultNarrowEkBins();
+            }
+            return m_default_narrow_ek_bins;
         }
     } else if (binning_type == "rigidity") {
         return GetRigidityBinning();
+    } else if (binning_type == "invmass") {
+        // 1/M分bin：0.0到0.5，200个bin
+        static std::vector<double> inv_mass_bins = GenerateInvMassBins();
+        return inv_mass_bins;
     }
     
     return {};
 }
 
 std::vector<double> BinningManager::GetChargeBinning(const std::string& source_type) const {
-    // 根据源粒子类型返回合适的电荷分bin
-    if (source_type == "Carbon") {
-        return {3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0, 6.2, 6.4, 6.6, 6.8, 7.0};
-    } else if (source_type == "Nitrogen") {
-        return {4.0, 4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0, 6.2, 6.4, 6.6, 6.8, 7.0, 7.2, 7.4, 7.6, 7.8, 8.0};
-    } else if (source_type == "Oxygen") {
-        return {5.0, 5.2, 5.4, 5.6, 5.8, 6.0, 6.2, 6.4, 6.6, 6.8, 7.0, 7.2, 7.4, 7.6, 7.8, 8.0, 8.2, 8.4, 8.6, 8.8, 9.0};
+    // 检查缓存
+    auto it = m_charge_binnings.find(source_type);
+    if (it != m_charge_binnings.end()) {
+        return it->second;
     }
     
-    // 默认通用电荷分bin
-    return {3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0};
+    // 智能查找：利用PhysicsConstants获取电荷数
+    int central_z = 6; // 默认值
+    try {
+        const auto& isotope = PhysicsConstants::GetIsotope(source_type);
+        central_z = isotope.GetCharge();
+    } catch (const std::exception& e) {
+        Logger::Warn("Source type '{}' not found in PhysicsConstants, using default Z=6", source_type);
+    }
+    
+    // 生成并缓存电荷分bin
+    m_charge_binnings[source_type] = GenerateChargeBins(central_z);
+    return m_charge_binnings[source_type];
 }
 
 } // namespace IsoToolbox

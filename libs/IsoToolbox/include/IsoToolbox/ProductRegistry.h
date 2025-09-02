@@ -12,7 +12,9 @@ namespace IsoToolbox {
 struct ProductTemplate {
     std::string template_id;           // "ISS.BKG.H1"
     std::string name_pattern;          // "ISS_BKG_H1_{source}_{charge_type}_{detector}"
-    std::string title_pattern;         // "L1 charge for {source} {charge_type} vs E_k/n in {detector}"
+    std::string title_pattern;         // "L1 charge for {source} {charge_type} vs E_{k}/n in {detector}"  // 🎯 更新注释
+    std::string x_title;               // "{detector} E_{k}/n [GeV/nucleon]"  // 🎯 更新注释示例
+    std::string y_title;               // "{detector} Charge [a.u.]"          // 🎯 更新注释示例
     std::string type;                  // "TH1F", "TH2F"
     std::string binning_type;          // "ek_per_nucleon", "charge_ek_2d"
     
@@ -24,7 +26,9 @@ struct ProductTemplate {
 struct HistogramBlueprint {
     std::string product_id;      // "ISS.BKG.H1"
     std::string name;           // "ISS_BKG_H1_Carbon_Signal_TOF"
-    std::string title;          // "L1 charge for Carbon Signal vs E_k/n in TOF"
+    std::string title;          // "L1 charge for Carbon Signal vs E_{k}/n in TOF"  // 🎯 更新注释
+    std::string x_title;        // "TOF E_{k}/n [GeV/nucleon]"     // 🎯 更新注释示例
+    std::string y_title;        // "TOF Charge [a.u.]"             // 🎯 更新注释示例
     std::string type;           // "TH1F"
     std::string binning_type;   // "ek_per_nucleon"
     
@@ -62,6 +66,9 @@ private:
                                const std::map<std::string, std::string>& replacements) const;
                                
     std::vector<std::string> GetSourceList(const AnalysisContext* context) const;
+    
+    std::vector<std::string> GetIsotopeList(const AnalysisContext* context) const;
+
 };
 
 } // namespace IsoToolbox

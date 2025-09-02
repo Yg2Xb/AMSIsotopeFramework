@@ -1,11 +1,33 @@
 #include "IsoToolbox/AnalysisContext.h"
+#include "IsoToolbox/Logger.h"  // 添加Logger头文件
 #include <stdexcept>
 
 namespace IsoToolbox {
 
-AnalysisContext::AnalysisContext(const std::string& config_path) : m_particleInfo(nullptr) { // 初始化 unique_ptr
+AnalysisContext::AnalysisContext(const std::string& config_path) : m_particleInfo(nullptr) {
     try {
         m_configNode = YAML::LoadFile(config_path);
+        
+        // 🔍 添加完整配置调试输出
+        Logger::Debug("=== Full YAML Config Debug ===");
+        YAML::Emitter emitter;
+        emitter << m_configNode;
+        Logger::Debug("Raw YAML content:\n{}", emitter.c_str());
+        
+        // 🔍 检查关键节点是否存在
+        Logger::Debug("=== Key Nodes Check ===");
+        Logger::Debug("Has 'run_settings': {}", m_configNode["run_settings"] ? "YES" : "NO");
+        Logger::Debug("Has 'template_config': {}", m_configNode["template_config"] ? "YES" : "NO");
+        Logger::Debug("Has 'active_templates': {}", m_configNode["active_templates"] ? "YES" : "NO");
+        
+        if (m_configNode["template_config"] && m_configNode["template_config"]["background_sources"]) {
+            auto sources = m_configNode["template_config"]["background_sources"].as<std::vector<std::string>>();
+            Logger::Debug("Found background_sources in AnalysisContext: [{}]", fmt::join(sources, ", "));
+        } else {
+            Logger::Warn("background_sources NOT found in AnalysisContext!");
+        }
+        Logger::Debug("=== End Config Debug ===");
+        
     } catch (const YAML::Exception& e) {
         throw std::runtime_error("Failed to load or parse config file '" + config_path + "': " + e.what());
     }
@@ -19,7 +41,7 @@ void AnalysisContext::parseConfig() {
     // 2. 从 C++ 代码中的 PhysicsConstants 加载该粒子的固定物理信息
     loadParticleData(particle_name);
 
-    // 3. 解析用户选择的、灵活可变的“分析链”
+    // 3. 解析用户选择的、灵活可变的"分析链"
     const auto& chain_node = m_configNode["analysis_chain"];
     m_analysisChain.chain_id           = chain_node["chain_id"].as<std::string>();
     m_analysisChain.rigidity_version = chain_node["rigidity_version"].as<std::string>();
@@ -36,9 +58,7 @@ void AnalysisContext::parseConfig() {
     }
 }
 
-// 修正后的逻辑：直接获取并存储由 PhysicsConstants 提供的 Isotope 对象
 void AnalysisContext::loadParticleData(const std::string& particleName) {
-    // 创建 Isotope 类的一个新实例并将其所有权转移给 m_particleInfo
     m_particleInfo = std::make_unique<Isotope>(PhysicsConstants::GetIsotope(particleName));
 }
 
@@ -57,8 +77,10 @@ const std::vector<SampleInfo>& AnalysisContext::GetSamplesToProcess() const {
     return m_samples;
 }
 
+// 🔧 关键修改：返回完整配置，而不只是run_settings子节点
 const YAML::Node AnalysisContext::GetRunSettings() const {
-    return m_configNode["run_settings"];
+    Logger::Debug("GetRunSettings() called, returning full config with {} top-level entries", m_configNode.size());
+    return m_configNode;  // 返回完整配置！
 }
 
 } // namespace IsoToolbox

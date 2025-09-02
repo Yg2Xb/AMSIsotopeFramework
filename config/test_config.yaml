@@ -1,0 +1,35 @@
+# config/test_config.yaml
+run_settings:
+  target_nucleus: "Beryllium"
+  max_events: 1000
+  # 🎯 新增：运行模式控制
+  analysis_mode: "ISS"  # 或者 "MC"
+
+# 启用S=5（Be到O）
+template_config:
+  background_sources: ["Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"]
+  # 🎯 新增：目标同位素列表（MC模式用）
+  target_isotopes: ["Be7", "Be9", "Be10"]
+
+# 🎯 修改：根据模式自动选择模板
+active_templates:
+  ISS:
+    - "ISS.BKG.H1"
+    - "ISS.BKG.H2" 
+    - "ISS.BKG.H3"
+    - "ISS.BKG.H4"
+  MC:
+    - "MC.BKG.H1"
+    - "MC.BKG.H2"
+    - "MC.BKG.H3a"
+    - "MC.BKG.H3b"
+
+analysis_chain:
+  chain_id: "test"
+  rigidity_version: "v1.0"
+  velocity_version: "v1.0" 
+  cut_version: "v1.0"
+
+samples_to_process:
+  - name: "test_sample"
+    type: "ISS"

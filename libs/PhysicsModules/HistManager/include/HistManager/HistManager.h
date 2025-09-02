@@ -1,4 +1,3 @@
-// libs/PhysicsModules/HistManager/include/HistManager/HistManager.h
 #pragma once
 
 #include "TFile.h"

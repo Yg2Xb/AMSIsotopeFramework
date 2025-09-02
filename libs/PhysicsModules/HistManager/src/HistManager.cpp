@@ -1,4 +1,3 @@
-// libs/PhysicsModules/HistManager/src/HistManager.cpp
 #include "HistManager/HistManager.h"
 #include "IsoToolbox/Logger.h"
 #include <stdexcept>
@@ -37,7 +36,7 @@ void HistManager::BookHistograms(const AnalysisContext* context, const BinningMa
         
         // 根据binning_type获取合适的分bin
         if (blueprint.binning_type == "ek_per_nucleon") {
-            // 1D直方图：y轴是ek/n
+            // 1D直方图：使用默认的窄带Ek/n分bin
             y_bins = binningManager->GetBinning("ek_per_nucleon");
             
         } else if (blueprint.binning_type == "charge_ek_2d") {
@@ -47,7 +46,7 @@ void HistManager::BookHistograms(const AnalysisContext* context, const BinningMa
             
         } else if (blueprint.binning_type == "invmass_ek_2d") {
             // 2D直方图：x轴是1/M，y轴是ek/n
-            x_bins = {0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5}; // 1/M bins
+            x_bins = binningManager->GetBinning("invmass");
             y_bins = binningManager->GetBinning("ek_per_nucleon");
         }
         
@@ -60,36 +59,48 @@ void HistManager::BookHistograms(const AnalysisContext* context, const BinningMa
 void HistManager::CreateHistogram(const HistogramBlueprint& blueprint, 
                                  const std::vector<double>& x_bins,
                                  const std::vector<double>& y_bins) {
-    if (blueprint.type == "TH1F") {
-        // 1D直方图使用y_bins作为主轴
-        if (y_bins.empty()) {
-            Logger::Error("No bins provided for 1D histogram: {}", blueprint.name);
-            return;
-        }
+    
+    // 🎯 直方图创建函数映射表（只支持TH1F和TH2F）
+    static const std::map<std::string, std::function<TH1*(const HistogramBlueprint&, 
+                                                          const std::vector<double>&, 
+                                                          const std::vector<double>&)>> creators = {
+        {"TH1F", [](const auto& bp, const auto& x_bins, const auto& y_bins) -> TH1* {
+            if (y_bins.empty()) {
+                Logger::Error("No bins provided for 1D histogram: {}", bp.name);
+                return nullptr;
+            }
+            return new TH1F(bp.name.c_str(), bp.title.c_str(), 
+                           y_bins.size() - 1, y_bins.data());
+        }},
         
-        m_hists[blueprint.name] = std::make_unique<TH1F>(
-            blueprint.name.c_str(), 
-            blueprint.title.c_str(), 
-            y_bins.size() - 1, 
-            y_bins.data()
-        );
-        
-    } else if (blueprint.type == "TH2F") {
-        // 2D直方图
-        if (x_bins.empty() || y_bins.empty()) {
-            Logger::Error("Insufficient bins for 2D histogram: {}", blueprint.name);
-            return;
-        }
-        
-        m_hists[blueprint.name] = std::make_unique<TH2F>(
-            blueprint.name.c_str(), 
-            blueprint.title.c_str(), 
-            x_bins.size() - 1, x_bins.data(),
-            y_bins.size() - 1, y_bins.data()
-        );
+        {"TH2F", [](const auto& bp, const auto& x_bins, const auto& y_bins) -> TH1* {
+            if (x_bins.empty() || y_bins.empty()) {
+                Logger::Error("Insufficient bins for 2D histogram: {}", bp.name);
+                return nullptr;
+            }
+            return new TH2F(bp.name.c_str(), bp.title.c_str(), 
+                           x_bins.size() - 1, x_bins.data(),
+                           y_bins.size() - 1, y_bins.data());
+        }}
+    };
+    
+    // 🎯 查找并创建
+    auto creator_it = creators.find(blueprint.type);
+    if (creator_it == creators.end()) {
+        Logger::Error("Unsupported histogram type: {} (only TH1F and TH2F supported)", blueprint.type);
+        return;
     }
     
-    Logger::Debug("Created histogram: {}", blueprint.name);
+    TH1* hist = creator_it->second(blueprint, x_bins, y_bins);
+    if (!hist) return;
+    
+    // 🎯 统一设置轴标题
+    hist->GetXaxis()->SetTitle(blueprint.x_title.c_str());
+    hist->GetYaxis()->SetTitle(blueprint.y_title.c_str());
+    
+    m_hists[blueprint.name] = std::unique_ptr<TH1>(hist);
+    Logger::Debug("Created {} histogram: {} with axes ['{}', '{}']", 
+                  blueprint.type, blueprint.name, blueprint.x_title, blueprint.y_title);
 }
 
 void HistManager::Fill1D(const std::string& name, double value, double weight) {

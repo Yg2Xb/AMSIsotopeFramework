@@ -12,7 +12,7 @@
 #include "IsoToolbox/AnalysisContext.h"
 #include "IsoToolbox/BinningManager.h"
 #include "IsoToolbox/Logger.h"
-#include "IsoToolbox/ProductRegistry.h"  // 新增
+#include "IsoToolbox/ProductRegistry.h"
 #include "DataModel/AMSDstTreeA.h"
 #include "HistManager/HistManager.h"
 
@@ -63,6 +63,21 @@ int main(int argc, char* argv[]) {
         const auto& analysisChain = context->GetAnalysisChain();
         const auto& runSettings = context->GetRunSettings();
 
+        // 4. 从配置中读取背景源列表
+        std::vector<std::string> background_sources;
+        if (runSettings["template_config"] && runSettings["template_config"]["background_sources"]) {
+            background_sources = runSettings["template_config"]["background_sources"].as<std::vector<std::string>>();
+            IsoToolbox::Logger::Info("Using background sources from config: [{}]", fmt::join(background_sources, ", "));
+        } else {
+            // 默认值作为后备
+            background_sources = {"Carbon", "Nitrogen", "Oxygen"};
+            IsoToolbox::Logger::Warn("template_config.background_sources not found, using defaults: [{}]", 
+                                   fmt::join(background_sources, ", "));
+        }
+        
+        // 5. 探测器列表
+        std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
+
         IsoToolbox::Logger::Info("Processing Sample: {}", sampleName);
         IsoToolbox::Logger::Info("Analysis Target: {} (Z={})", particleInfo.GetName(), particleInfo.GetCharge());
         IsoToolbox::Logger::Info("Analysis Chain -> Rigidity: {}, Velocity: {}, Cuts: {}",
@@ -70,7 +85,7 @@ int main(int argc, char* argv[]) {
                                  analysisChain.velocity_version, 
                                  analysisChain.cut_version);
 
-        // 4. 事件循环
+        // 6. 事件循环
         auto chain = std::make_unique<TChain>("amstreea");
         for (const auto& inputFile : inputFiles) {
             chain->Add(inputFile.c_str());
@@ -82,7 +97,7 @@ int main(int argc, char* argv[]) {
             IsoToolbox::Logger::Warn("No events found in the input files for this task. Generating empty output.");
         } else {
             IsoToolbox::Logger::Info("Starting event loop for {} events...", nEntries);
-            long long maxEvents = runSettings["max_events"].as<long long>(-1);
+            long long maxEvents = runSettings["run_settings"]["max_events"].as<long long>(-1);
             if (maxEvents > 0 && maxEvents < nEntries) nEntries = maxEvents;
 
             for (long long i = 0; i < nEntries; ++i) {
@@ -91,21 +106,32 @@ int main(int argc, char* argv[]) {
                     IsoToolbox::Logger::Info("  ... processing event {} / {}", i, nEntries);
                 }
                 
-                // 示例：填充背景分析直方图
-                // 这里应该根据你的事件选择逻辑来填充相应的直方图
+                // 模拟事件数据
+                double fake_ek = (i % 1000) / 100.0 + 0.5;  // 0.5-10.5 GeV/n
+                double fake_charge = 4.0 + (i % 100) / 100.0; // 4.0-5.0
+                double fake_invmass = 0.1 + (i % 50) / 500.0;  // 0.1-0.2
                 
-                // 模拟一些事件数据填充
-                for (const auto& source : {"Carbon", "Nitrogen", "Oxygen"}) {
-                    for (const auto& detector : {"TOF", "NaF", "AGL"}) {
-                        double fake_ek = (i % 1000) / 100.0 + 0.5;  // 0.5-10.5 GeV/n
+                for (const auto& source : background_sources) {
+                    for (const auto& detector : detectors) {
                         
-                        // 填充ISS.BKG.H2 (源粒子计数)
-                        std::string hist_name = "ISS_BKG_H2_" + std::string(source) + "_" + std::string(detector);
-                        histManager->Fill1D(hist_name, fake_ek);
+                        // 填充 ISS.BKG.H1 (2D: 电荷 vs Ek/n) - 需要3种电荷类型
+                        std::vector<std::string> charge_types = {"Signal", "Template", "L2Template"};
+                        for (const auto& charge_type : charge_types) {
+                            std::string h1_name = "ISS_BKG_H1_" + source + "_" + charge_type + "_" + detector;
+                            histManager->Fill2D(h1_name, fake_charge, fake_ek);  // x=charge, y=ek
+                        }
                         
-                        // 填充ISS.BKG.H3 (碎片产物计数)
-                        hist_name = "ISS_BKG_H3_" + std::string(source) + "_" + std::string(detector);
-                        histManager->Fill1D(hist_name, fake_ek);
+                        // 填充 ISS.BKG.H2 (1D: 源粒子计数)
+                        std::string h2_name = "ISS_BKG_H2_" + source + "_" + detector;
+                        histManager->Fill1D(h2_name, fake_ek);
+                        
+                        // 填充 ISS.BKG.H3 (1D: L2碎片计数)  
+                        std::string h3_name = "ISS_BKG_H3_" + source + "_" + detector;
+                        histManager->Fill1D(h3_name, fake_ek);
+                        
+                        // 填充 ISS.BKG.H4 (2D: 1/M vs Ek/n)
+                        std::string h4_name = "ISS_BKG_H4_" + source + "_" + detector;
+                        histManager->Fill2D(h4_name, fake_invmass, fake_ek);  // x=1/M, y=ek
                     }
                 }
             }
