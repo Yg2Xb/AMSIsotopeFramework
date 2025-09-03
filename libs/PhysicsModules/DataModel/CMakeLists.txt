@@ -5,16 +5,19 @@ target_include_directories(DataModel
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
+# --- MODIFIED ---
+# We now compile both AMSDstTreeA.cpp (which contains the Init function)
+# and the new AMSEventBuilder.cpp.
 target_sources(DataModel
     PRIVATE
-        src/AMSDstTreeA.cpp
+        src/AMSDstTreeA.cpp 
+        src/AMSEventBuilder.cpp
 )
 
 target_link_libraries(DataModel
     PUBLIC
-        # We depend on ROOT for TTree, and our header includes ROOT headers.
         ROOT::Core
-        # --- FIX ---
-        # Added ROOT::Tree, which is required for TTree functionality used in AMSDstTreeA
         ROOT::Tree
+        IsoToolbox
 )
+

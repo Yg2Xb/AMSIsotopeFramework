@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Selection/CutBase.h> // This now brings in the correct definition
+#include <Selection/CutBase.h> 
 
 namespace IsoToolbox {
     class AnalysisContext;
@@ -12,8 +12,9 @@ class RTICut : public CutBase {
 public:
     RTICut(const IsoToolbox::AnalysisContext& context);
     
-    // FIX: Removed the incorrect "DataModel::" namespace prefix to match the base class.
-    bool IsPass(AMSDstTreeA* data) const override;
+    // --- MODIFIED ---
+    // The IsPass override now correctly matches the new base class signature.
+    bool IsPass(const StandardizedEvent& event) const override;
 };
 
 }

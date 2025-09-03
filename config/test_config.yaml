@@ -1,35 +1,33 @@
-# config/test_config.yaml
+# Analysis Framework Configuration Version 1.0
 run_settings:
   target_nucleus: "Beryllium"
-  max_events: 1000
-  # 🎯 新增：运行模式控制
-  analysis_mode: "ISS"  # 或者 "MC"
+  max_events: 1000000
 
-# 启用S=5（Be到O）
-template_config:
-  background_sources: ["Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"]
-  # 🎯 新增：目标同位素列表（MC模式用）
-  target_isotopes: ["Be7", "Be9", "Be10"]
-
-# 🎯 修改：根据模式自动选择模板
-active_templates:
-  ISS:
-    - "ISS.BKG.H1"
-    - "ISS.BKG.H2" 
-    - "ISS.BKG.H3"
-    - "ISS.BKG.H4"
-  MC:
-    - "MC.BKG.H1"
-    - "MC.BKG.H2"
-    - "MC.BKG.H3a"
-    - "MC.BKG.H3b"
-
+# Define the analysis chain: a specific combination of physics models and reconstruction algorithms
 analysis_chain:
-  chain_id: "test"
-  rigidity_version: "v1.0"
-  velocity_version: "v1.0" 
-  cut_version: "v1.0"
+  chain_id: "GBLv6_TOFv1_IHEPQv2"
+  rigidity_version: "GBL_v6_InnerSpan"
+  beta_version: "TOF_BetaH_v1" # Changed from velocity_version
+  cut_version: "IHEPQ_v2"
 
+# Define all data samples known to this configuration
 samples_to_process:
-  - name: "test_sample"
+  - name: "ISS_Beryllium"
     type: "ISS"
+    condor_path_pattern: "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/*.root"
+    local_path_pattern: "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1627*_10.root"
+      
+  - name: "MC_Be7"
+    type: "MC"
+    condor_path_pattern: "/eos/ams/group/mit/amsd69n_Be7MCB1308l1_4_8000605N0/*.root"
+    local_path_pattern: "/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/16275*.root"
+
+# ... (other samples remain the same) ...
+
+# Histogram definitions.
+histograms:
+  - name: "ISS_ID_H1"
+    type: "TH1D"
+    title: "Event counts of each isotope vs Ek/n"
+    category: "per_isotope_ek_bin"
+# ... (other histogram definitions remain the same) ...
