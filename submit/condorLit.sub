@@ -1,0 +1,13 @@
+Universe  = vanilla
+executable  = /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/ISSLit.sh
+output      = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_$(Cluster).$(Process)
+error       = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_$(Cluster).$(Process)
+log         = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_$(Cluster)
++AMSPublic = True
++JobFlavour = "workday"
+transfer_output_files = ""
+
+queue arguments from /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/list_jobs.txt
+
+
+

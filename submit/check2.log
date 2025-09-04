@@ -1,0 +1,16 @@
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.159.000) 07/07 06:47:22 Error from starter on slot1_12@b9p16p7553.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_12@b9p16p7553.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.163.000) 07/07 06:47:24 Error from starter on slot1_33@b9p19p8687.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_33@b9p19p8687.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.756.000) 07/07 06:50:44 Error from starter on slot1_12@b9p16p7553.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_12@b9p16p7553.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.869.000) 07/07 06:51:23 Error from starter on slot1_30@b9p16p0894.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_30@b9p16p0894.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.995.000) 07/07 06:52:04 Error from starter on slot1_27@b9p19p8687.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_27@b9p19p8687.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.1258.000) 07/07 06:53:31 Error from starter on slot1_32@b9p16p0894.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_32@b9p16p0894.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:021 (7900007.1323.000) 07/07 06:53:53 Error from starter on slot1_33@b9p19p8687.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900007:	Error from slot1_33@b9p19p8687.cern.ch: Create_Process failed to register the job with the ProcD
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900662:021 (7900662.221.000) 07/07 10:37:55 Error from starter on slot1_27@b9p16p8556.cern.ch:
+/afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_7900662:	Error from slot1_27@b9p16p8556.cern.ch: Create_Process failed to register the job with the ProcD

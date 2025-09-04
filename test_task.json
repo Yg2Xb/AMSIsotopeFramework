@@ -1,5 +1,0 @@
-{
-    "sample_name": "test_sample",
-    "input_files": ["/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1627*_10.root"],
-    "output_file": "test_output.root"
-}

@@ -1,0 +1,9 @@
+Universe  = vanilla
+executable  = /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/MCN14.sh
+output      = /afs/cern.ch/work/z/zuhao/public/yanzx/logMC/output_$(Cluster).$(Process)
+error       = /afs/cern.ch/work/z/zuhao/public/yanzx/logMC/output_$(Cluster).$(Process)
+log         = /afs/cern.ch/work/z/zuhao/public/yanzx/logMC/log_$(Cluster)
++AMSPublic = True
++JobFlavour = "longlunch"
+transfer_output_files = ""
+queue arguments from /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/list_MC_N14.txt
