@@ -1,0 +1,10 @@
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581103744_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581117677_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581131609_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581145542_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581159474_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581173407_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581187339_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581201272_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581215204_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1581229137_10.root

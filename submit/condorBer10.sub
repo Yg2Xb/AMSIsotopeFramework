@@ -1,5 +1,5 @@
 Universe  = vanilla
-executable  = /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/ISSBer10.sh
+executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBe.sh
 output      = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_$(Cluster).$(Process)
 error       = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_$(Cluster).$(Process)
 log         = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_$(Cluster)
@@ -7,7 +7,7 @@ log         = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_$(Cluster)
 +JobFlavour = "workday"
 transfer_output_files = ""
 
-queue arguments from /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/list_jobs_yzx.txt
+queue arguments from /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_jobs_yzx.txt
 
 
 

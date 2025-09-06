@@ -4,9 +4,9 @@
 args=("$@")
 # 添加库路径
 # Source the necessary scripts
-source /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/useful/BashFunction.sh
-source /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/useful/amsvar_all.sh
-export LD_LIBRARY_PATH=/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/lithium/selection/build/lib:$LD_LIBRARY_PATH
+source /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/useful/BashFunction.sh
+source /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/useful/amsvar_all.sh
+export LD_LIBRARY_PATH=/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/lib:$LD_LIBRARY_PATH
 
 # 恢复传入的参数
 set -- "${args[@]}"
@@ -25,6 +25,6 @@ fi
 for line in "$@"; do
     echo "Processing file: $line"
     basename_of_file=$(basename "$line")
-    /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/lithium/selection/build/bin/main_exe \
-        /eos/ams/user/z/zuhao/yanzx/Isotope/MC/B10 "$basename_of_file" "$line" "5|MC" 10
+    /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/main_exe \
+        /eos/user/z/zixuan/Isotope/MC/B10 "$basename_of_file" "$line" "5|MC" 10
 done

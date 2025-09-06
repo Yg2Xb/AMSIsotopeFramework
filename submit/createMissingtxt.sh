@@ -2,8 +2,8 @@
 
 # 定义目录
 INPUT_DIR="/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8"
-OUTPUT_BASE="/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist"
-ISS_BASE="/eos/ams/user/z/zuhao/yanzx/Isotope/Data/ISS"
+OUTPUT_BASE="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist"
+ISS_BASE="/eos/user/z/zixuan/Isotope/ISS"
 
 # 确保输出目录存在
 mkdir -p "$OUTPUT_BASE"

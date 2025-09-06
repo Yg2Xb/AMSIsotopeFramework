@@ -4,9 +4,9 @@
 INPUT_DIR="/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8"
 
 # 输出目录
-BER7_DIR="/eos/ams/user/z/zuhao/yanzx/Isotope/Data/ISS/Ber7"
-BER9_DIR="/eos/ams/user/z/zuhao/yanzx/Isotope/Data/ISS/Ber9"
-BER10_DIR="/eos/ams/user/z/zuhao/yanzx/Isotope/Data/ISS/Ber10"
+BER7_DIR="/eos/user/z/zixuan/Isotope/ISS/Be"
+BER9_DIR="/eos/user/z/zixuan/Isotope/ISS/Be"
+BER10_DIR="/eos/user/z/zixuan/Isotope/ISS/Be"
 
 # 使用basename来只比较文件名
 for dir in "$BER7_DIR" "$BER9_DIR" "$BER10_DIR"; do
