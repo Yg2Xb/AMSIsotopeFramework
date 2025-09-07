@@ -1,7 +1,6 @@
 #include "IsotopeAnalyzer.h"
-#include "ProductRegistry.h"
 #include "BinningManager.h"
-#include "HistManager.h"      // 确保包含了 HistManager 的完整定义
+#include "HistManager.h"      // 使用我们新实现的 HistManager
 #include "basic_var.h"        // 确保 getIsotopeVar 可用
 #include <iostream>
 #include <stdexcept>
@@ -21,6 +20,7 @@ void IsotopeAnalyzer::setConfig(const TString& outDir, const TString& outName,
     outName_ = outName;
     inData_ = inData;
     inOptions_ = inOptions;
+    isISS_ = !inOptions.Contains("|MC");
 
     int charge = std::stoi(inOptions.Data());
     if (charge > 0 && charge <= Constants::ELEMENT_COUNT) {
@@ -28,8 +28,7 @@ void IsotopeAnalyzer::setConfig(const TString& outDir, const TString& outName,
     } else {
         throw std::runtime_error("Invalid charge specified in options: " + std::to_string(charge));
     }
-    
-    isISS_ = !inData_.Contains("MC");
+
     UseMass_ = (UseMass != -1) ? UseMass : (isotope ? isotope->getMass(0) : -1);
 
     std::cout << "Analyzer configured for: " << isotope->getName()
@@ -56,24 +55,21 @@ void IsotopeAnalyzer::readDataFrom(TChain* chain, const TString& filename) {
 
 void IsotopeAnalyzer::initialize() {
     // 1. 初始化 Binning 管理器，加载所有预定义的分箱
-    // MODIFIED: 调用无参数版本的 Initialize
     BinningManager::GetInstance().Initialize();
 
-    // 2. 创建 HistManager
+    // 2. 定义分析链
+    active_chains_ = {"L1Inner", "UnbiasedL1Inner"};
+
+    // 3. 创建 HistManager （替代原来的 ProductRegistry）
     TString output_filename = outDir_ + "/" + outName_ + ".root";
-    m_histManager = std::make_unique<HistManager>(output_filename.Data());
-    
-    // 3. 将自身信息传递给注册表
-    ProductRegistry::GetInstance().SetAnalyzerInfo(this);
+    m_histManager = std::make_unique<HistManager>(output_filename.Data(),
+                                                  isISS_,
+                                                  active_chains_,
+                                                  isotope->getCharge(),
+                                                  isotope,
+                                                  UseMass_);
 
-    // 4. 定义分析链并注册所有产品蓝图
-    active_chains_ = {"L1Inner", "Unbiased"};
-    ProductRegistry::GetInstance().RegisterProducts(!isISS_, active_chains_);
-
-    // 5. 让 HistManager 根据蓝图创建所有直方图
-    m_histManager->CreateProducts(ProductRegistry::GetInstance().GetBlueprints());
-
-    // 6. 设置数据链
+    // 4. 设置数据链
     dataChain = std::make_unique<TChain>("amstreea");
     readDataFrom(dataChain.get(), inData_);
 
@@ -88,29 +84,20 @@ void IsotopeAnalyzer::write() {
 }
 
 void IsotopeAnalyzer::cleanup() {
-    // 目前没有需要清理的动态资源，保留为空
     std::cout << "Analysis finished." << std::endl;
 }
 
 TH1* IsotopeAnalyzer::getHist(const std::string& name) const {
-    if (!m_histManager) {
-        throw std::runtime_error("FATAL: HistManager is not initialized in IsotopeAnalyzer.");
-    }
-    TH1* hist = m_histManager->GetHistogram(name);
-    if (!hist) {
-        std::string error_msg = "FATAL: Histogram with name '" + name + "' was requested but not found.";
-        throw std::runtime_error(error_msg);
-    }
-    return hist;
+    throw std::runtime_error("Direct getHist(name) is not supported anymore. "
+                             "Please access histograms through HistManager arrays.");
 }
 
 TH1F* IsotopeAnalyzer::getHist1F(const std::string& name) const {
-    return dynamic_cast<TH1F*>(getHist(name));
+    return nullptr; // 不再支持
 }
 
 TH2F* IsotopeAnalyzer::getHist2F(const std::string& name) const {
-    return dynamic_cast<TH2F*>(getHist(name));
+    return nullptr; // 不再支持
 }
 
 } // namespace AMS_Iso
-

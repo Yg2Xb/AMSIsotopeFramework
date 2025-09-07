@@ -24,6 +24,8 @@ namespace AMS_Iso {
 struct TrackerStatus {
     std::array<bool, Tracker::LAYER_COUNT> hasHit;     // 是否有击中
     std::array<bool, Tracker::LAYER_COUNT> hasXHit;    // 是否有X方向击中
+    std::array<bool, Tracker::LAYER_COUNT> hasYHit;    // 是否有X方向击中
+    std::array<bool, Tracker::LAYER_COUNT> hasXYHit;    // 是否有X方向击中
     int innerLayerHits;                                // 内层击中数
     double rigidity;                                   // 刚度值
     double L38InnerAveQ;
@@ -31,6 +33,8 @@ struct TrackerStatus {
     TrackerStatus() 
         : hasHit{}
         , hasXHit{}
+        , hasYHit{}
+        , hasXYHit{}
         , innerLayerHits(0)
         , rigidity(0.0) 
         , L38InnerAveQ(0.0) 

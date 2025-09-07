@@ -45,14 +45,7 @@ int main(int argc, char *argv[]) {
         selectdata processor(analyzer.getDataChain());
         processor.SetAnalyzer(&analyzer);
         
-        // 根据数据类型处理数据
-        if (analyzer.isISS()) {
-            std::cout << "Processing ISS data..." << std::endl;
-            processor.LoopISS();
-        } else {
-            std::cout << "Processing MC data..." << std::endl;
-            processor.LoopMC();
-        }
+        processor.Loop();
         
         // 保存结果
         analyzer.write();

@@ -121,6 +121,10 @@ if [[ "$UICC" == "2023" ]]; then
     
     # 确保 Intel 编译器路径在 PATH 的最前面
     export PATH=$INTELDIR/compiler/latest/linux/bin/intel64:$PATH
+    
+    # 【增加这一行】把Intel的库路径添加到LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$INTELDIR/compiler/latest/linux/lib:$LD_LIBRARY_PATH
+
 elif [[ "$UICC" > "0" ]]; then
     export INTELSW=/cvmfs/projects.cern.ch
     export INTELDIR=$INTELSW/intelsw/oneAPI/linux/x86_64/2024
@@ -151,6 +155,6 @@ if [[ -z "$AMSWD" ]]; then
 fi
 
 # Add any additional paths specific to your project
-if [ -d "/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/lithium/selection/external_libs" ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/lithium/selection/external_libs
+if [ -d "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/external_libs" ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/external_libs
 fi

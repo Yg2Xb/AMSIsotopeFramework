@@ -101,12 +101,10 @@ set(ANALYSIS_SOURCES
     src/ModelManager.cpp
     src/RICHCut.cpp
     src/RTICut.cpp
-    src/selectdata_mc.cpp      # <-- 已修正
-    src/selectdata_iss.cpp     # <-- 已修正
+    src/selectdata.cpp      
     src/TOFCut.cpp
     src/Tool.cpp
     src/TrackerCut.cpp
-    src/ProductRegistry.cpp
     src/BinningManager.cpp
     src/HistManager.cpp
 )

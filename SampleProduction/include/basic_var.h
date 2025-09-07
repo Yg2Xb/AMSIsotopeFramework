@@ -12,6 +12,8 @@
 #include <string>
 #include <stdexcept>
 #include <vector>
+#include "TString.h"
+#include "TChain.h"
 
 namespace AMS_Iso {
 	
