@@ -5,9 +5,9 @@
 #include "TString.h"
 #include <tuple>
 #include <vector>
-#include <functional> // Added for std::function
+#include <functional>
 
-namespace AMS_Iso {
+using namespace AMS_Iso;
 
 static inline const std::vector<double>& safeBins(const std::string& key) {
     try {
@@ -53,8 +53,11 @@ HistManager::HistManager(const std::string& output_filename,
     int NcutGroups = cut_groups.size();
     int NnumDen = num_den.size();
     int NgeneRec = gene_rec.size();
+    std::cout<<"DEBUG: Niso="<<Niso<<" charge="<<charge<<std::endl;
+    std::cout<<"DEBUG: iso ptr="<<iso<<std::endl;
     
     // ---------------- ID 区域 ----------------
+    std::cout<<"DEBUG: ID Hists"<<std::endl;
     if (isISS) {
         ISS_IDH1.resize(Nchain);
         for (int c = 0; c < Nchain; ++c) {
@@ -133,7 +136,7 @@ HistManager::HistManager(const std::string& output_filename,
 
         auto rigBins = safeBins("Rigidity");
         auto ekBins = safeBins("EkPerNucleon");
-        auto betagammaBins = binMgr.GetBetaGammaBins(5, 10);
+        auto betagammaBins = binMgr.GetBetaGammaBins(charge, UseMass);
 
         // Δβ: X=Δβ, Y=rig/ek/bg
         IDH5a[c] = createHist<TH2F>(
@@ -163,6 +166,7 @@ HistManager::HistManager(const std::string& output_filename,
     }
 
     // ---------------- BKG 区域 ----------------
+    std::cout<<"DEBUG: BKG Hists"<<std::endl;
     if (isISS) {
         ISS_BKGH1.resize(Nchain);
         ISS_BKGH2.resize(Nchain);
@@ -171,11 +175,11 @@ HistManager::HistManager(const std::string& output_filename,
         for (int c = 0; c < Nchain; ++c) {
             ISS_BKGH1[c].resize(Nsrc);
             ISS_BKGH2[c].resize(Nsrc);
-            ISS_BKGH3[c].resize(Ndet);
+            ISS_BKGH3[c].resize(Nsrc);
             ISS_BKGH4[c].resize(Nsrc);
             for (int s = 0; s < Nsrc; ++s) {
                 ISS_BKGH1[c][s].resize(Ndet);
-                ISS_BKGH2[c][s].resize(Nct);
+                ISS_BKGH2[c][s].resize(Ndet);
                 ISS_BKGH3[c][s].resize(Ndet);
                 ISS_BKGH4[c][s].resize(Ndet);
                 for (int d = 0; d < Ndet; ++d) {
@@ -185,8 +189,8 @@ HistManager::HistManager(const std::string& output_filename,
                         Form("%s %s L1 Source %s counts;%s E_{k}/n [GeV/n];Counts",
                              chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), detectors[d].c_str()),
                         ekBins.size() - 1, ekBins.data());
+                    ISS_BKGH2[c][s][d].resize(Nct);
                     for (int t = 0; t < Nct; ++t) {
-                        ISS_BKGH2[c][s][t].resize(Ndet);
                         const char* x_title = "TrackerLayer Charge";
                         int x_bins = 400;
                         double x_min = charge - 2;
@@ -196,7 +200,7 @@ HistManager::HistManager(const std::string& output_filename,
                             x_min = 3;
                             x_max = 9;
                         }
-                        ISS_BKGH2[c][s][t][d] = createHist<TH2F>(
+                        ISS_BKGH2[c][s][d][t] = createHist<TH2F>(
                             Form("%s_ISS_BKG_H2_%s_%s_%s", chains[c].c_str(), sources[s].c_str(), charge_types[t].c_str(), detectors[d].c_str()),
                             Form("%s %s %s %s charge vs E_{k}/n;%s;%s E_{k}/n [GeV/n]",
                                  chains[c].c_str(), detectors[d].c_str(), charge_types[t].c_str(), sources[s].c_str(), x_title, detectors[d].c_str()),
@@ -254,6 +258,7 @@ HistManager::HistManager(const std::string& output_filename,
     }
 
     // ---------------- FLUX 区域 ----------------
+    std::cout<<"DEBUG: Flux Hists"<<std::endl;
     FLUXH1.resize(Nchain);
     for (int c = 0; c < Nchain; ++c) {
         FLUXH1[c].resize(NcutGroups);
@@ -330,6 +335,7 @@ HistManager::HistManager(const std::string& output_filename,
             }
         }
     }
+    std::cout<<"DEBUG Finish Hist Defination="<<std::endl;
 }
 
 void HistManager::Save() {
@@ -384,48 +390,46 @@ void HistManager::Save() {
     };
     
     // ID histograms
-    write3D(IDH2);  // [chain][det][iso]
-    write2D(IDH3);  // [chain][det]
+    write3D(IDH2);
+    write2D(IDH3);
     
-    write1D(IDH4a); // [chain]
-    write1D(IDH4b); // [chain]
-    write1D(IDH5a); // [chain]
-    write1D(IDH5b); // [chain]
-    write1D(IDH6a); // [chain]
-    write1D(IDH6b); // [chain]
-    write1D(IDH7a); // [chain]
-    write1D(IDH7b); // [chain]
+    write1D(IDH4a);
+    write1D(IDH4b);
+    write1D(IDH5a);
+    write1D(IDH5b);
+    write1D(IDH6a);
+    write1D(IDH6b);
+    write1D(IDH7a);
+    write1D(IDH7b);
     
-    if (!ISS_IDH1.empty()) write3D(ISS_IDH1);  // [chain][det][iso]
-    if (!MC_IDH1.empty()) write2D(MC_IDH1);    // [chain][det]
+    if (!ISS_IDH1.empty()) write3D(ISS_IDH1);
+    if (!MC_IDH1.empty()) write2D(MC_IDH1);
 
     // BKG histograms
     if (!ISS_BKGH1.empty()) {
-        write3D(ISS_BKGH1);  // [chain][source][det]
-        write4D(ISS_BKGH2);  // [chain][source][charge_type][det]
-        write3D(ISS_BKGH3);  // [chain][source][det]
-        write3D(ISS_BKGH4);  // [chain][source][det]
+        write3D(ISS_BKGH1);
+        write4D(ISS_BKGH2);
+        write3D(ISS_BKGH3);
+        write3D(ISS_BKGH4);
     }
     if (!MC_BKGH1.empty()) {
-        write2D(MC_BKGH1);   // [chain][det]
-        write3D(MC_BKGH2);   // [chain][det][iso]
-        write3D(MC_BKGH3a);  // [chain][det][iso]
-        write3D(MC_BKGH3b);  // [chain][det][iso]
+        write2D(MC_BKGH1);
+        write3D(MC_BKGH2);
+        write3D(MC_BKGH3a);
+        write3D(MC_BKGH3b);
     }
 
     // FLUX histograms
-    write5D(FLUXH1);  // [chain][cut_group][num_den][det][iso/1]
+    write5D(FLUXH1);
     
     if (!ISS_FLUXH2.empty()) {
-        write1D(ISS_FLUXH2); // [1]
-        write3D(ISS_FLUXH3); // [chain][det][iso]
+        write1D(ISS_FLUXH2);
+        write3D(ISS_FLUXH3);
     }
     if (!MC_FLUXH2.empty()) {
-        write4D(MC_FLUXH2);  // [chain][cut_group][det][gen_or_rec]
-        write1D(MC_FLUXH3);  // [1]
+        write4D(MC_FLUXH2);
+        write1D(MC_FLUXH3);
     }
 
     std::cout << "HistManager: all histograms saved." << std::endl;
 }
-
-} // namespace AMS_Iso

@@ -39,15 +39,11 @@ int main(int argc, char *argv[]) {
         );
         
         // 初始化分析器
-        std::cout<<"here!!!!!!!!!!!!!!!!!!!!"<<std::endl; 
         analyzer.initialize();
-        std::cout<<"here!!!!!!!!!!!!!!!!!!!!"<<std::endl; 
         
         // 创建数据处理对象
         selectdata processor(analyzer.getDataChain());
-        std::cout<<"here!!!!!!!!!!!!!!!!!!!!"<<std::endl; 
         processor.SetAnalyzer(&analyzer);
-        std::cout<<"here!!!!!!!!!!!!!!!!!!!!"<<std::endl; 
         processor.Loop();
         
         // 保存结果
