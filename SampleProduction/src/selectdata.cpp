@@ -45,7 +45,7 @@ void selectdata::Loop() {
 	UInt_t current_run=0, min_event=0, max_event=0; int event_count=1;
 	std::vector<double> mc_events;
 
-	double MC_weight_NucFlux = 1.;
+	double weight_NucFlux = 1.;
 	double cutOffRig = -1, TOFBeta = -1, richBeta = -1;
 	double rig_chain[2] = {-1, -1};
 	double beta_det[3] = {-1, -1, -1};
@@ -55,7 +55,7 @@ void selectdata::Loop() {
     std::map<std::pair<int,int>, int> ZAMap;
     for(int n=0; n<Constants::N_nuc; ++n) ZAMap[{Constants::nuclei_Z[n], Constants::nuclei_A[n]}] = n;
     // --- Lambda 查询函数 ---
-    auto getBeyondBeta = [&](int det, int Z, int A){
+    auto getBeyondBetaCutoffCut = [&](int det, int Z, int A){
         if(det<0 || det>=3) return false;
         auto it = ZAMap.find({Z,A});
         if(it==ZAMap.end()) return false;
@@ -171,11 +171,11 @@ void selectdata::Loop() {
 		ek_det[1] = rich_NaF ? Tools::betaToKineticEnergy(richBeta) : -9;  
 		ek_det[2] = (!rich_NaF) ? Tools::betaToKineticEnergy(richBeta) : -9;
 		//ok
-		MC_weight_NucFlux = isISS ? 1.0 : Tools::calculateWeight(mmom, mch, UseMass, isISS);
+		weight_NucFlux = isISS ? 1.0 : Tools::calculateWeight(mmom, mch, UseMass, isISS);
 		if(isISS && jentry%100000==0) 
 		{
 			std::cout<<"mmom="<<mmom<<",mch="<<mch<<",UseMass="<<UseMass<<std::endl;
-			std::cout<<"MC_weight_NucFlux="<<MC_weight_NucFlux<<std::endl;
+			std::cout<<"weight_NucFlux="<<weight_NucFlux<<std::endl;
 		}
 		//---------------------------
 
@@ -223,21 +223,40 @@ void selectdata::Loop() {
         }
 
 		// --- ID  histogram 填充 ---
-		// --- ISS ID histogram 填充 ---
-		//ISS_ID1
-		for(int c = 0; c < 2; c++){ // UnbiasedL1Inner, L1Inner
-			for(int d = 0; d < 3; d++){ // TOF, NaF, AGL
-				for(int i = 0; i < iso->getIsotopeCount(); i++){
-					//...
-				}
-			}
-		}
-		// --- MC ID histogram 填充 ---
+
 		// --- BKG  histogram 填充 ---
-		// --- ISS BKG histogram 填充 ---
-		// --- MC BKG histogram 填充 ---
 		// --- FLUX  histogram 填充 ---
-		// --- ISS FLUX histogram 填充 ---
+        
+        if(isISS){
+		    // --- ISS ID histogram 填充 ---
+		    //ISS_ID1
+            for(int c = 0; c < 2; c++){ // UnbiasedL1Inner, L1Inner
+                for(int d = 0; d < 3; d++){ // TOF, NaF, AGL
+                    for(int i = 0; i < iso->getIsotopeCount(); i++){
+                        if(getBeyondBetaCutoffCut(d, charge, iso->getMass(i)) && TwoAccTrackerCutResult[c] && BetaDetectorCutResult[d]){
+                            histManager->ISS_IDH1[c][d][i]->Fill(ek_det[d]);
+                        }
+                    }
+                }
+            }
+		    // --- ISS BKG histogram 填充 ---
+
+            // --- ISS FLUX histogram 填充 ---
+        
+        } 
+		// --- MC ID histogram 填充 ---
+        if(!isISS)
+        {
+            for (int c = 0; c < Nchain; ++c) {
+                for (int d = 0; d < Ndet; ++d) {
+                    if(){
+                        histManager->MC_IDH1[c][d];
+                    }
+            }
+        }
+        }
+		// --- MC BKG histogram 填充 ---
+		
 		// --- MC FLUX histogram 填充 ---
 		if (!isISS){
 			double generatedRig = (mch!=0)?(mmom/mch):0;
