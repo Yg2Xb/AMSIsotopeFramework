@@ -32,7 +32,7 @@ public:
     std::vector<std::vector<std::vector<H1Ptr>>> ISS_IDH1; // [chain][det][iso]
     std::vector<std::vector<H2Ptr>> MC_IDH1; // [chain][det]
 
-    std::vector<std::vector<std::vector<H2Ptr>>> IDH2; // [chain][det][iso/1]
+    std::vector<std::vector<std::vector<H2Ptr>>> IDH2; // [chain][det][iso/mc=1]
     std::vector<std::vector<H2Ptr>> IDH3; // [chain][det]
     std::vector<H1Ptr> IDH4a; // [chain]
     std::vector<H1Ptr> IDH4b; // [chain]
@@ -60,7 +60,7 @@ public:
 
     // iss
     std::vector<H1Ptr> ISS_FLUXH2; // rig expoT, only 1
-    std::vector<std::vector<std::vector<H1Ptr>>> ISS_FLUXH3; // ek expoT, [det][iso]
+    std::vector<std::vector<H1Ptr>> ISS_FLUXH3; // ek expoT, [det][iso]
 
     // MC 独有
     std::vector<std::vector<std::vector<std::vector<H1Ptr>>>> MC_FLUXH2; // acceptance num, [chain][cut_group][det][gen or rec]

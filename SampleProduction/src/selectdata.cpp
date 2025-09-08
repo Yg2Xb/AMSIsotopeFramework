@@ -47,9 +47,20 @@ void selectdata::Loop() {
 
 	double MC_weight_NucFlux = 1.;
 	double cutOffRig = -1, TOFBeta = -1, richBeta = -1;
-    double rig_chain[2] = {-1, -1};
+	double rig_chain[2] = {-1, -1};
 	double beta_det[3] = {-1, -1, -1};
 	double ek_det[3] = {-1, -1, -1};
+
+    bool beyondBetaCutoff[3][Constants::N_nuc];
+    std::map<std::pair<int,int>, int> ZAMap;
+    for(int n=0; n<Constants::N_nuc; ++n) ZAMap[{Constants::nuclei_Z[n], Constants::nuclei_A[n]}] = n;
+    // --- Lambda 查询函数 ---
+    auto getBeyondBeta = [&](int det, int Z, int A){
+        if(det<0 || det>=3) return false;
+        auto it = ZAMap.find({Z,A});
+        if(it==ZAMap.end()) return false;
+        return beyondBetaCutoff[det][it->second];
+    };
 
 	for (Long64_t jentry=0;jentry<nentries;++jentry){
 		Long64_t ientry = LoadTree(jentry); 
@@ -94,7 +105,7 @@ void selectdata::Loop() {
 		TOFBeta = tof_cut.getBeta();
 
 		// --- ISS 曝光时间 histogram 填充 ---
-        //ok
+		//ok
 		if (isISS && (std::find(timeTag.begin(), timeTag.end(), time[0]) == timeTag.end())) {
 			float exposureTime = rti_cut.calculateExposure().value;
 			TH1F* h_exp_rig = histManager->ISS_FLUXH2[0].get();
@@ -131,7 +142,7 @@ void selectdata::Loop() {
 		}
 
 		// --- MC RICH beta 修正 ---
-        //ok
+		//ok
 		bool yanzx_dst = isISS ? true : false;
 		if(!yanzx_dst){
 			auto modiRichPos = rich_cut.getModifiedPosition(true); 
@@ -151,74 +162,76 @@ void selectdata::Loop() {
 			richBeta = corr_cali_richBeta;
 		}
 		if(!isISS) richBeta = Tools::GetSmearRichBeta(charge, richBeta, rich_NaF);
-        //ok
-        beta_det[0] = TOFBeta;
-        beta_det[1] = rich_NaF ? richBeta : -9;
-        beta_det[2] = !rich_NaF ? richBeta : -9;
-        
-        ek_det[0] = Tools::betaToKineticEnergy(TOFBeta);
-        ek_det[1] = rich_NaF ? Tools::betaToKineticEnergy(richBeta) : -9;  
-        ek_det[2] = (!rich_NaF) ? Tools::betaToKineticEnergy(richBeta) : -9;
-        //ok
+		//ok
+		beta_det[0] = TOFBeta;
+		beta_det[1] = rich_NaF ? richBeta : -9;
+		beta_det[2] = !rich_NaF ? richBeta : -9;
+
+		ek_det[0] = Tools::betaToKineticEnergy(TOFBeta);
+		ek_det[1] = rich_NaF ? Tools::betaToKineticEnergy(richBeta) : -9;  
+		ek_det[2] = (!rich_NaF) ? Tools::betaToKineticEnergy(richBeta) : -9;
+		//ok
 		MC_weight_NucFlux = isISS ? 1.0 : Tools::calculateWeight(mmom, mch, UseMass, isISS);
-        if(isISS && jentry%100000==0) 
-        {
-            std::cout<<"mmom="<<mmom<<",mch="<<mch<<",UseMass="<<UseMass<<std::endl;
-            std::cout<<"MC_weight_NucFlux="<<MC_weight_NucFlux<<std::endl;
-        }
-        //---------------------------
-        
-        //ok--- Cut application
-        auto TrackerCutResult = tracker_cut.cutTracker(charge, isISS);
+		if(isISS && jentry%100000==0) 
+		{
+			std::cout<<"mmom="<<mmom<<",mch="<<mch<<",UseMass="<<UseMass<<std::endl;
+			std::cout<<"MC_weight_NucFlux="<<MC_weight_NucFlux<<std::endl;
+		}
+		//---------------------------
+
+		//ok--- Cut application
+		auto TrackerCutResult = tracker_cut.cutTracker(charge, isISS);
 		bool TwoAccTrackerCutResult[2] = {
-            tracker_cut.TwoAccTrackerCut(charge, isISS).details[0],
-            tracker_cut.TwoAccTrackerCut(charge, isISS).details[1]
-        } 
-        auto BetaDetectorCutResult[3] = {
-            tof_cut.cutTOF(charge, isISS);
-            isNaF && rich_cut.cutRICH(charge, isISS, true);
-            !isNaF && rich_cut.cutRICH(charge, isISS, true);
-        };
-		
-        bool beyondCutoffRig[2] = {true,true}; // UnbiasedL1Inner, L1Inner
+			tracker_cut.TwoAccTrackerCut(charge, isISS).details[0],
+			tracker_cut.TwoAccTrackerCut(charge, isISS).details[1]
+		}; 
+		bool BetaDetectorCutResult[3] = {
+			tof_cut.cutTOF(charge, isISS).total,
+			rich_NaF && rich_cut.cutRICH(charge, isISS, true).total,
+			!rich_NaF && rich_cut.cutRICH(charge, isISS, true).total
+		};
+
+		bool beyondCutoffRig[2] = {true,true}; // UnbiasedL1Inner, L1Inner
 		if (isISS){
-            for(int c = 0; c < 2; c++){
-                if(rig_chain[c]>0){
-                    TH1F* h_exp_rig = histManager->ISS_FLUXH2[0].get();
-                    double binLow = h_exp_rig ? h_exp_rig->GetBinLowEdge(h_exp_rig->FindBin(rig_chain[c])) : -1;
-                    beyondCutoffRig[c] = binLow > Constants::SAFE_FACTOR_RIG * cutOffRig;
+			for(int c = 0; c < 2; c++){
+				if(rig_chain[c]>0){
+					TH1F* h_exp_rig = histManager->ISS_FLUXH2[0].get();
+					double binLow = h_exp_rig ? h_exp_rig->GetBinLowEdge(h_exp_rig->FindBin(rig_chain[c])) : -1;
+					beyondCutoffRig[c] = binLow > Constants::SAFE_FACTOR_RIG * cutOffRig;
+				}
+			}
+		}
+
+        for(int d = 0; d < 3; ++d){ // detector
+            for(int n = 0; n < Constants::N_nuc; ++n){ // 核
+                int Z = Constants::nuclei_Z[n]; int A = Constants::nuclei_A[n];
+                auto betaBins = binMgr.GetBetaBins(Z,A);
+                if(beta_det[d] >= 1){
+                    beyondBetaCutoff[d][n] = true;
+                    continue;
+                }
+                int betaBin = Tools::findBin(betaBins, beta_det[d]);
+                if(betaBin >= 0){
+                    double betaLow = betaBins[betaBin];
+                    beyondBetaCutoff[d][n] = Tools::isBeyondCutoff(
+                        betaLow, cutOffRig, Detector::BetaTypes[d].getSafetyFactor(), Z, A, !isISS
+                    );
+                } else {
+                    beyondBetaCutoff[d][n] = false;
                 }
             }
         }
-        
-        bool beyondBetaCutoff[3][8] = { {true,true,true,true,true}, {true,true,true,true,true}, {true,true,true,true,true} }; // [TOF, NaF, AGL] * [Be7 9 10; B10 11; C12; N14; O16]
-        if(isISS){
-            for(int d = 0; d < 3; d++){
-                    //get beta bin for each charge and mass(convert by rig bin, using binning manager)
-                    int betaBin = -1;
-                    for(int i = 0; i < iso->getIsotopeCount(); i++){
-                        int mass_use = iso->getMass(i);
-                        int charge_use = iso->getCharge(i);
-                        auto betaBins = binMgr.GetBetaBin(charge_use, mass_use);
-                        betaBin = Tools::findBin(betaBins, beta_det[d]);
-                        if(betaBin>=0){
-                            double betaLow = betaBins[betaBin];
-                            beyondBetaCutoff[d][i] = Tools::isBeyondCutoff(betaLow, cutOffRig, Detector::BetaTypes[d].getSafetyFactor(), charge_use, mass_use, !isISS);
-                        }
-
-            }
-        }
-
 
 		// --- ID  histogram 填充 ---
 		// --- ISS ID histogram 填充 ---
-        //ISS_ID1
-        for(int c = 0; c < 2; c++){ // UnbiasedL1Inner, L1Inner
-            if(TwoAccTrackerCutResult[c] && beyondCutoffRig[c]){
-                TH1F* h_id = histManager->ISS_ID1[c].get();
-                if(h_id) h_id->Fill(rig_chain[c], MC_weight_NucFlux);
-            }
-        }
+		//ISS_ID1
+		for(int c = 0; c < 2; c++){ // UnbiasedL1Inner, L1Inner
+			for(int d = 0; d < 3; d++){ // TOF, NaF, AGL
+				for(int i = 0; i < iso->getIsotopeCount(); i++){
+					//...
+				}
+			}
+		}
 		// --- MC ID histogram 填充 ---
 		// --- BKG  histogram 填充 ---
 		// --- ISS BKG histogram 填充 ---
@@ -233,7 +246,7 @@ void selectdata::Loop() {
 				for (size_t cg=0;cg<3;++cg){
 					for (size_t nd=0;nd<2;++nd){
 						for (size_t d=0;d<3;++d){
-                            //...
+							//...
 						}
 					}
 				}
@@ -291,7 +304,8 @@ void selectdata::Loop() {
 		std::cout << "[INFO] Filled MC_FLUXH3 (generated spectrum based on flux "
 			<< fluxName << ")" << std::endl;
 	}
-	
-    AMS_Iso::Tools::cleanupFluxFunctions();
+
+	AMS_Iso::Tools::cleanupFluxFunctions();
 	std::cout<<"Event processing completed"<<std::endl;
 }
+

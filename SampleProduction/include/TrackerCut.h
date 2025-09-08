@@ -73,10 +73,14 @@ public:
                              bool forEfficiency = false, bool forBackground = false) const;
 
     // 综合切割
-    CutResult<9> cutTracker(int charge, bool isISS = true) const;
+    CutResult<10> cutTracker(int charge, bool isISS = true) const;
     CutResult<2> cutUnphysical(int charge, bool isISS = true) const;
     CutResult<2> getDenominatorL1PickUp(int charge, bool isISS) const;
     CutResult<6> chargeTempFitCut(int charge, bool isISS, bool isNormalL1 = false) const;
+
+    bool TrackerCut::AccUndepCut(int charge, bool isISS) const ;
+    bool TrackerCut::QandBkgUndepCut(int charge, bool isISS) const ;
+    CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS)  const;
 
     // 辅助函数
     double getRadius(bool isUnphysical, int layer) const;
