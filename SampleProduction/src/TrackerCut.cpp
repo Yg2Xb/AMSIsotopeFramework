@@ -297,13 +297,10 @@ CutResult<9> TrackerCut::cutTracker(int charge, bool isISS) const {
     auto utofQ = cutUTOFQ(charge, isISS);
     auto bg = cutBackground(charge, isISS);
 
-    // 直接返回CutResult
     return CutResult<9>({
-        // 总结果
         physTrig.total && basicFid.total && innerTrk.total && 
         innerQ.total && unbiasedL1Cut.total && utofQ.total && bg.total,
         
-        // 各个独立cut结果
         physTrig.total,
         basicFid.total,
         innerTrk.total,
@@ -311,10 +308,10 @@ CutResult<9> TrackerCut::cutTracker(int charge, bool isISS) const {
         unbiasedL1Cut.total,
         utofQ.total,
         bg.total,
+        L1Cut.total, 
         
-        // 无背景reduction
         physTrig.total && basicFid.total && innerTrk.total && 
-        innerQ.total && unbiasedL1Cut.total && utofQ.total
+        innerQ.total && L1Cut.total && utofQ.total && bg.total
     }, false);
 }
 
@@ -397,5 +394,34 @@ CutResult<6> TrackerCut::chargeTempFitCut(int charge, bool isISS, bool isNormalL
 
     return CutResult<6>(cuts, false);
 }
+
+bool TrackerCut::AccUndepCut(int charge, bool isISS) const {
+    if (!event_) return false;
+
+    auto physTrig = cutPhysTrigger(isISS);
+    auto basicFid = cutBasicAndFiducial(isISS);
+    auto innerTrk = cutInnerTracker(charge, isISS);
+    auto innerQ = cutInnerQ(charge, isISS);
+    auto utofQ = cutUTOFQ(charge, isISS);
+    auto bg = cutBackground(charge, isISS);
+
+    return physTrig.total && basicFid.total && innerTrk.total && 
+           innerQ.total && utofQ.total && bg.details[0];
+}
+
+CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS) const {
+    if (!event_) return CutResult<2>();
+
+    std::array<bool, 2> cuts{
+        //Unbiased L1
+        TrackerCut::AccUndepCut(int charge, bool isISS) && cutL1Unbiased(charge, isISS),
+        //Normal L1
+        TrackerCut::AccUndepCut(int charge, bool isISS) && cutL1Norm(charge, isISS) 
+    };
+
+    return CutResult<2>(cuts, false);
+}
+
+
 
 } // namespace AMS_Iso

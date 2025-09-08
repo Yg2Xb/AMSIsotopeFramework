@@ -289,22 +289,19 @@ HistManager::HistManager(const std::string& output_filename,
         auto rigBins = safeBins("Rigidity");
         ISS_FLUXH2[0] = createHist<TH1F>(
             "ISS_FLUX_H2", "ISS Exposure time;Rigidity [GV];Exposure Time [s]", rigBins.size() - 1, rigBins.data());
-        ISS_FLUXH3.resize(Nchain);
-        for (int c = 0; c < Nchain; ++c) {
-            ISS_FLUXH3[c].resize(Ndet);
+            ISS_FLUXH3.resize(Ndet);
             for (int d = 0; d < Ndet; ++d) {
-                ISS_FLUXH3[c][d].resize(Niso);
+                ISS_FLUXH3[d].resize(Niso);
                 for (int i = 0; i < Niso; ++i) {
                     int mass = iso->getMass(i);
                     auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
-                    ISS_FLUXH3[c][d][i] = createHist<TH1F>(
-                        Form("%s_ISS_FLUX_H3_%s_Mass%d", chains[c].c_str(), detectors[d].c_str(), mass),
-                        Form("%s %s Exposure time;E_{k}/n [GeV/n];Exposure Time [s]",
-                             chains[c].c_str(), detectors[d].c_str()),
+                    ISS_FLUXH3[d][i] = createHist<TH1F>(
+                        Form("ISS_FLUX_H3_%s_Mass%d", detectors[d].c_str(), mass),
+                        Form("%s Mass%d Exposure time;E_{k}/n [GeV/n];Exposure Time [s]",
+                             detectors[d].c_str(), mass),
                         ekBins.size() - 1, ekBins.data());
                 }
             }
-        }
     } else {
         MC_FLUXH2.resize(Nchain);
         MC_FLUXH3.resize(1);
@@ -423,7 +420,7 @@ void HistManager::Save() {
     
     if (!ISS_FLUXH2.empty()) {
         write1D(ISS_FLUXH2);
-        write3D(ISS_FLUXH3);
+        write2D(ISS_FLUXH3);
     }
     if (!MC_FLUXH2.empty()) {
         write4D(MC_FLUXH2);

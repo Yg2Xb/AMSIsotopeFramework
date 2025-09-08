@@ -132,13 +132,14 @@ std::string selectFluxName(int charge, int mass) {
 double calculateWeight(double mmom, int charge, int mass, bool isISS) {
     if (isISS) return 1.0;
     if (charge == 0) {
-        std::cerr << "[ERROR] Charge is zero, set weight=0." << std::endl;
+        //std::cerr << "[ERROR] Charge is zero, set weight=0." << std::endl;
         return 0.0;
     }
 
     double geneRig = mmom / charge;
     if (geneRig < geneRig_low || geneRig > geneRig_up) {
-        std::cerr << "[WARN] rigidity out of range: " << geneRig << std::endl;
+        //std::cerr << "[WARN] rigidity out of range: " << geneRig << std::endl;
+        return 0.0;
     }
 
     std::string name = selectFluxName(charge, mass);
@@ -274,9 +275,10 @@ int findBin(std::vector<double> Rbins_beta, double beta) {
     }
     return -1;
 }
+
 bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, int charge, int UseMass,  bool isMC) {
     if (isMC) return true;
-    if (!isValidBeta(beta_low)) return false;
+    if (beta_low > 1) return true;
         
     double cutoffBeta = rigidityToBeta(cutoffRig, charge, UseMass, false);
     if (!isValidBeta(cutoffBeta)) return false;
