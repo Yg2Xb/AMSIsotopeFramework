@@ -1,0 +1,8 @@
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_1937.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_1946.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_1948.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_1958.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_1965.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_2020.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_2734.txt
+/afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/joblist/YanzxDST/job_list_2945.txt
