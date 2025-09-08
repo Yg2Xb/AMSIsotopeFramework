@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
             argv[2],                    // outName
             argv[3],                    // inData
             argv[4],                    // charge and options
-            argc >= 6 ? atoi(argv[5]) : -1  // UseMass (optional)
+            atoi(argv[5])  // UseMass 
         );
         
         // 初始化分析器
