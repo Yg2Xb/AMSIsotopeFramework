@@ -61,7 +61,7 @@ void IsotopeAnalyzer::initialize() {
     active_chains_ = {"L1Inner", "UnbiasedL1Inner"};
 
     // 3. 创建 HistManager （替代原来的 ProductRegistry）
-    TString output_filename = outDir_ + "/" + outName_ + ".root";
+    TString output_filename = outDir_ + "/" + outName_;
     m_histManager = std::make_unique<HistManager>(output_filename.Data(),
                                                   isISS_,
                                                   active_chains_,

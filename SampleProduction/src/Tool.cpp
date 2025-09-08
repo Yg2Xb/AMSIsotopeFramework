@@ -17,59 +17,100 @@
 #include <iostream>
 #include "TFile.h"
 #include "Tool.h"
+#include <TFile.h>
 
 namespace AMS_Iso {
 namespace Tools {
 
-const double geneRig_low = 1.0;
-const double geneRig_up  = 2000.0;
+const double geneRig_low = 0.9;
+const double geneRig_up  = 3300.0;
 
 TF1 f_MC("f_MC", "1/x", geneRig_low, geneRig_up);
 TF1 f_Reweight("f_Reweight", "pow(x, -2.7)", geneRig_low, geneRig_up);
 const double MC_norm = f_MC.Integral(geneRig_low, geneRig_up);
 const double Reweight_norm = f_Reweight.Integral(geneRig_low, geneRig_up);
 
-// 修改：移除 static 关键字
-std::map<std::string, TF1*> fluxMap;
+// 使用智能指针管理 TF1
+std::map<std::string, std::shared_ptr<TF1>> fluxMap;
 std::map<std::string, double> fluxNorm;
 
-// 修改：移除 static 关键字
-std::map<std::string, TF1*>& getFluxMap() {
-    return fluxMap;
-}
+// 线程安全标志
+std::once_flag fluxInitFlag;
 
-// 修改：移除 static 关键字
-std::map<std::string, double>& getFluxNorm() {
-    return fluxNorm;
-}
+std::map<std::string, std::shared_ptr<TF1>>& getFluxMap() { return fluxMap; }
+std::map<std::string, double>& getFluxNorm() { return fluxNorm; }
 
 void initFluxFunctions(const std::string& filename) {
-    TFile fin(filename.c_str(),"READ");
-    if (!fin.IsOpen()) {
-        std::cerr << "[ERROR] cannot open flux file: " << filename << std::endl;
-        return;
-    }
-
-    std::vector<std::string> names = {"Be","Be7","Be9","Be10",
-                                      "B","B10","B11",
-                                      "C","N","O"};
-
-    for (auto& n : names) {
-        TF1* f = dynamic_cast<TF1*>(fin.Get(n.c_str()));
-        if (!f) {
-            std::cerr << "[WARN] flux TF1 " << n << " not found in file!" << std::endl;
-            continue;
+    std::call_once(fluxInitFlag, [&](){
+        TFile fin(filename.c_str(), "READ");
+        if (!fin.IsOpen()) {
+            std::cerr << "[ERROR] cannot open flux file: " << filename << std::endl;
+            return;
         }
-        TF1* f_clone = (TF1*) f->Clone((n+"_clone").c_str());
-        getFluxMap()[n] = f_clone;
-        getFluxNorm()[n] = f_clone->Integral(geneRig_low, geneRig_up);
-        std::cout << "[INIT] Loaded flux TF1: " << n 
-                  << "  norm=" << getFluxNorm()[n] << std::endl;
-    }
-    fin.Close();
+
+        // 先处理 Be 和 B 的总通量
+        TF1* f_Be = dynamic_cast<TF1*>(fin.Get("Be"));
+        TF1* f_B = dynamic_cast<TF1*>(fin.Get("B"));
+
+        double integral_Be = 0;
+        if (f_Be) {
+            integral_Be = f_Be->Integral(geneRig_low, geneRig_up);
+            std::cout<<integral_Be<<std::endl;
+            // 保存总通量函数
+            fluxMap["Be"] = std::shared_ptr<TF1>(static_cast<TF1*>(f_Be->Clone("Be_clone")));
+            fluxNorm["Be"] = integral_Be;
+        } else {
+            std::cerr << "[WARN] flux TF1 Be not found in file!" << std::endl;
+        }
+
+        double integral_B = 0;
+        if (f_B) {
+            integral_B = f_B->Integral(geneRig_low, geneRig_up);
+            // 保存总通量函数
+            fluxMap["B"] = std::shared_ptr<TF1>(static_cast<TF1*>(f_B->Clone("B_clone")));
+            fluxNorm["B"] = integral_B;
+        } else {
+            std::cerr << "[WARN] flux TF1 B not found in file!" << std::endl;
+        }
+
+        // 再处理所有同位素
+        std::vector<std::string> names = {"Be7","Be9","Be10", "B10","B11", "C","N","O"};
+        for (auto& n : names) {
+            TF1* f = dynamic_cast<TF1*>(fin.Get(n.c_str()));
+            if (!f) {
+                std::cerr << "[WARN] flux TF1 " << n << " not found in file!" << std::endl;
+                continue;
+            }
+            auto f_clone = std::shared_ptr<TF1>(static_cast<TF1*>(f->Clone((n+"_clone").c_str())));
+            fluxMap[n] = f_clone;
+
+            if (n == "Be7" || n == "Be9" || n == "Be10") {
+                // 按比例计算 Be 同位素的 norm
+                if (n == "Be7") fluxNorm[n] = integral_Be * 0.7;
+                if (n == "Be9") fluxNorm[n] = integral_Be * 0.2;
+                if (n == "Be10") fluxNorm[n] = integral_Be * 0.1;
+            } else if (n == "B10" || n == "B11") {
+                // 按比例计算 B 同位素的 norm
+                if (n == "B10") fluxNorm[n] = integral_B * 0.3;
+                if (n == "B11") fluxNorm[n] = integral_B * 0.7;
+            } else {
+                // 其他元素按原始方式计算 norm
+                fluxNorm[n] = f_clone->Integral(geneRig_low, geneRig_up);
+            }
+            std::cout << "[INIT] Loaded flux TF1: " << n 
+                      << "  norm=" << fluxNorm[n] << std::endl;
+        }
+
+        fin.Close();
+    });
 }
 
-// 修改: 移除 static 关键字
+void cleanupFluxFunctions() {
+    fluxMap.clear();
+    fluxNorm.clear();
+    // 注意：std::once_flag 无法重置，如果需要重新 init，需要换方案
+}
+
 std::string selectFluxName(int charge, int mass) {
     if (charge==4) {
         if (mass==7) return "Be7";
@@ -85,7 +126,6 @@ std::string selectFluxName(int charge, int mass) {
     if (charge==6) return "C";
     if (charge==7) return "N";
     if (charge==8) return "O";
-
     return "";
 }
 
@@ -102,14 +142,13 @@ double calculateWeight(double mmom, int charge, int mass, bool isISS) {
     }
 
     std::string name = selectFluxName(charge, mass);
-    if (name.empty() || getFluxMap().find(name)==getFluxMap().end()) {
-        std::cerr << "[ERROR] flux TF1 not found for (Z="
-                  << charge << ", A=" << mass << ")" << std::endl;
+    if (name.empty() || fluxMap.find(name) == fluxMap.end()) {
+        std::cerr << "[ERROR] flux TF1 not found for (Z=" << charge << ", A=" << mass << ")" << std::endl;
         return 0.0;
     }
 
-    TF1* f_flux = getFluxMap()[name];
-    double flux_norm = getFluxNorm()[name];
+    auto f_flux = fluxMap[name];
+    double flux_norm = fluxNorm[name];
 
     double mc_val   = f_MC.Eval(geneRig) / MC_norm;
     double flux_val = f_flux->Eval(geneRig) / flux_norm;
@@ -199,8 +238,8 @@ double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
     
     double factor = (a * MASS_UNIT) / z;
-    double term = std::pow(ek_per_nucleon / MASS_UNIT + 1, 2) - 1;
-    return factor * std::sqrt(term);
+    double ek_term = ek_per_nucleon / MASS_UNIT + 1;
+    return factor * std::sqrt(ek_term * ek_term - 1);
 }
 
 double dR_dEk(double ek_per_nucleon, int z, int a) {

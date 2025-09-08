@@ -39,6 +39,7 @@ void selectdata::Loop() {
     ModelManager::init("/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/model_data.root",
                         "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/model_mc.root");
     std::cout<<"model n:"<<ModelManager::model[0][0].index_correction.GetEntries()<<std::endl;
+    AMS_Iso::Tools::initFluxFunctions();
 
     std::vector<unsigned int> timeTag;
     UInt_t current_run=0, min_event=0, max_event=0; int event_count=1;
@@ -51,6 +52,10 @@ void selectdata::Loop() {
         Long64_t ientry = LoadTree(jentry); 
         if (ientry<0) break;
         fChain->GetEntry(jentry);
+
+        // --- Monitor ---
+        if (jentry % 1000000 == 0)
+            std::cout<<"Processing entry "<<jentry<<"/"<<nentries<<std::endl;
 
         // --- MC run-event 统计 ---
         if(!isISS){
@@ -74,6 +79,9 @@ void selectdata::Loop() {
         TrackerCut tracker_cut(this);
         TOFCut tof_cut(this);
         RICHCut rich_cut(this);
+        
+        // Apply RTI cuts for ISS data
+        if (isISS && !rti_cut.cutRTI().total) continue;
 
         // Calculate basic variables
         InnerRig = tracker_cut.getRigidity();
@@ -81,9 +89,6 @@ void selectdata::Loop() {
         cutOffRig = rti_cut.getCutoffRigidity();
         richBeta = rich_cut.getBeta();
         TOFBeta = tof_cut.getBeta();
-        
-        // Apply RTI cuts for ISS data
-        if (isISS && !rti_cut.cutRTI().total) continue;
 
         // --- ISS 曝光时间 histogram 填充 ---
         if (isISS && (std::find(timeTag.begin(), timeTag.end(), time[0]) == timeTag.end())) {
@@ -124,23 +129,6 @@ void selectdata::Loop() {
             timeTag.push_back(time[0]);
         }
 
-        // --- MC run-event 统计 ---
-        if(!isISS){
-            if (current_run != run){
-                if (current_run != 0){
-                    mc_events.push_back(max_event - min_event + 1 + (max_event - min_event + 1)/event_count);
-                }
-                current_run = run; min_event = event; max_event = event; event_count = 1;
-            } else {
-                min_event = std::min(min_event, event);
-                max_event = std::max(max_event, event);
-                event_count++;
-                if (jentry == nentries-1){
-                    mc_events.push_back(max_event - min_event + 1 + (max_event - min_event + 1)/event_count);
-                }
-            }
-        }
-
         // --- MC RICH beta 修正 ---
         bool yanzx_dst = isISS ? true : false;
         if(!yanzx_dst){
@@ -162,9 +150,6 @@ void selectdata::Loop() {
         }
         if(!isISS) richBeta = Tools::GetSmearRichBeta(charge, richBeta, rich_NaF);
 
-        // --- Monitor ---
-        if (jentry % 1000000 == 0)
-            std::cout<<"Processing entry "<<jentry<<"/"<<nentries<<std::endl;
 
         double NaFBeta = rich_NaF ? richBeta : -1;
         double AGLBeta = !rich_NaF ? richBeta : -1;
@@ -219,14 +204,14 @@ void selectdata::Loop() {
             }
         }
     }
-
+    
     // --- MC total events ---
     if (!isISS) {
         std::string fluxName = Tools::selectFluxName(charge, UseMass);
         TF1* f_flux = nullptr;
         double flux_norm = 1.0;
         if (!fluxName.empty() && Tools::getFluxMap().count(fluxName)) {
-            f_flux = Tools::getFluxMap()[fluxName];
+            f_flux = Tools::getFluxMap()[fluxName].get(); 
             flux_norm = Tools::getFluxNorm()[fluxName];
         } else {
             std::cerr << "[ERROR] No flux TF1 for (Z="<<charge<<", A="<<UseMass<<")"<<std::endl;
@@ -270,6 +255,6 @@ void selectdata::Loop() {
         std::cout << "[INFO] Filled MC_FLUXH3 (generated spectrum based on flux "
                   << fluxName << ")" << std::endl;
     }
-
+    AMS_Iso::Tools::cleanupFluxFunctions();
     std::cout<<"Event processing completed"<<std::endl;
 }

@@ -22,6 +22,7 @@ public:
 
     // Initialization
     static ModelManager *init(TString filename_data, TString filename_mc);
+    static void cleanup(); // 新增的清理函数
     static float corrected_beta(float beta,
                               Rad radiator,
                               float run,

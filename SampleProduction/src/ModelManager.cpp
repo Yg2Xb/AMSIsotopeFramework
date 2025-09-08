@@ -1,5 +1,6 @@
-#include "ModelManager.h"
 #include <cmath>
+#include "ModelManager.h"
+#include "GAMModel.h"
 
 // Initialize static members
 GAMModel ModelManager::model[2][2];
@@ -14,41 +15,54 @@ ModelManager* ModelManager::init(TString filename_data, TString filename_mc) {
     ///////////////// DATA CORRECTION /////////////////
     {
         TFile fin(filename_data);
-        GAMModel *m = (GAMModel *)fin.Get("model_z_agl");
-        if (!m) {
+        GAMModel *m_agl = (GAMModel *)fin.Get("model_z_agl");
+        if (!m_agl) {
             std::cerr << "ModelManager::init -- File " << filename_data << " does not contains model_z_agl" << std::endl;
             exit(1);
         }
-        model[0][0] = *m;
+        // 使用 Clone() 方法进行深拷贝
+        model[0][0] = *(GAMModel*)m_agl->Clone();
 
-        m = (GAMModel *)fin.Get("model_z_naf");
-        if (!m) {
+        GAMModel *m_naf = (GAMModel *)fin.Get("model_z_naf");
+        if (!m_naf) {
             std::cerr << "ModelManager::init -- File " << filename_data << " does not contains model_z_naf" << std::endl;
             exit(1);
         }
-        model[0][1] = *m;
+        // 使用 Clone() 方法进行深拷贝
+        model[0][1] = *(GAMModel*)m_naf->Clone();
     }
 
     ///////////////// MC CORRECTION /////////////////
     {
         TFile fin(filename_mc);
-        GAMModel *m = (GAMModel *)fin.Get("model_z_agl");
-        if (!m) {
+        GAMModel *m_agl = (GAMModel *)fin.Get("model_z_agl");
+        if (!m_agl) {
             std::cerr << "ModelManager::init -- File " << filename_mc << " does not contains model_z_agl" << std::endl;
             exit(1);
         }
-        model[1][0] = *m;
+        // 使用 Clone() 方法进行深拷贝
+        model[1][0] = *(GAMModel*)m_agl->Clone();
 
-        m = (GAMModel *)fin.Get("model_z_naf");
-        if (!m) {
+        GAMModel *m_naf = (GAMModel *)fin.Get("model_z_naf");
+        if (!m_naf) {
             std::cerr << "ModelManager::init -- File " << filename_mc << " does not contains model_z_naf" << std::endl;
             exit(1);
         }
-        model[1][1] = *m;
+        // 使用 Clone() 进行深拷贝
+        model[1][1] = *(GAMModel*)m_naf->Clone();
     }
 
     head = new ModelManager;
     return head;
+}
+
+void ModelManager::cleanup() {
+    // 静态对象在程序退出时会自动清理
+    // 这里只需清理动态分配的head
+    if (head) {
+        delete head;
+        head = nullptr;
+    }
 }
 
 float ModelManager::corrected_beta(float beta,

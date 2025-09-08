@@ -26,10 +26,6 @@ public:
                 const IsotopeVar* iso,
                 int UseMass);
 
-    // 析构函数，智能指针会自动清理，这里无需手动操作
-    ~HistManager() = default;
-
-    // 保存所有直方图到文件
     void Save();
 
     // ======== ID 区域 ========
@@ -76,7 +72,15 @@ private:
     // 辅助函数，用于简化直方图的创建
     template <typename HistType, typename... Args>
     std::unique_ptr<HistType> createHist(Args&&... args) {
-        return std::make_unique<HistType>(std::forward<Args>(args)...);
+        // 1. 使用 new 创建直方图的裸指针
+        auto hist = new HistType(std::forward<Args>(args)...);
+        
+        // 2. 关键步骤：阻止 ROOT 的 TFile/TDirectory 获取所有权
+        // 这使得 std::unique_ptr 成为内存的唯一管理者
+        hist->SetDirectory(nullptr);
+        
+        // 3. 将裸指针包装在 unique_ptr 中并返回
+        return std::unique_ptr<HistType>(hist);
     }
 };
 

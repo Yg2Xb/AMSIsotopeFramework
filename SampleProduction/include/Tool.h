@@ -17,22 +17,21 @@
 #include <random>
 #include <iostream>  // 为了使用 std::cerr
 #include <TF1.h>  // 为了使用 TF1
+#include <map>
 
 namespace AMS_Iso {
 
 template<size_t N>
 struct CutResult {
-    bool total;           
+    bool total;
     std::array<bool, N> details;
 
     CutResult() : total(false), details{} {}
     
-    explicit CutResult(const std::array<bool, N>& cuts, 
-                      bool calculateTotal = true) 
+    explicit CutResult(const std::array<bool, N>& cuts, bool calculateTotal = true) 
         : details(cuts) {
         total = calculateTotal ? 
-                std::all_of(details.begin(), details.end(), 
-                            [](bool b) { return b; }) 
+                std::all_of(details.begin(), details.end(), [](bool b){ return b; }) 
                 : cuts[0];
     }
 };
@@ -40,7 +39,7 @@ struct CutResult {
 namespace Tools {
 
 // 物理常量
-inline constexpr double MASS_UNIT = 0.9315;  // 核子平均质量
+inline constexpr double MASS_UNIT = 0.9315;
 
 // for reweight
 extern const double geneRig_low;
@@ -50,12 +49,16 @@ extern TF1 f_Reweight;
 extern const double MC_norm;
 extern const double Reweight_norm;
 
-// 初始化并加载 AMS Flux TF1（需要先调用一次）
-void initFluxFunctions(const std::string& filename);
+// 初始化 AMS Flux TF1（线程安全，只执行一次）
+void initFluxFunctions(const std::string& filename = "/eos/user/z/zixuan/Isotope/FluxSmooth/FluxSmooth.root");
 
-// 修改: 移除 static 关键字
-std::map<std::string, TF1*>& getFluxMap();
+// 可选清理函数
+void cleanupFluxFunctions();
+
+// 获取 flux TF1 映射
+std::map<std::string, std::shared_ptr<TF1>>& getFluxMap();
 std::map<std::string, double>& getFluxNorm();
+
 std::string selectFluxName(int charge, int mass);
 
 // 计算事件权重

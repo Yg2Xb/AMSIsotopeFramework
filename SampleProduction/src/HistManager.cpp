@@ -100,17 +100,16 @@ HistManager::HistManager(const std::string& output_filename,
     IDH6b.resize(Nchain);
     IDH7a.resize(Nchain);
     IDH7b.resize(Nchain);
-
     for (int c = 0; c < Nchain; ++c) {
         IDH2[c].resize(Ndet);
         IDH3[c].resize(Ndet);
         for (int d = 0; d < Ndet; ++d) {
+            IDH2[c][d].resize(Niso);
             for (int i = 0; i < Niso; ++i) {
                 int mass = isISS ? iso->getMass(i) : UseMass;
                 auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
-                IDH2[c][d].resize(Niso);
                 IDH2[c][d][i] = createHist<TH2F>(
-                    Form("%s_ID_H2_%s_%d", chains[c].c_str(), detectors[d].c_str(), mass),
+                    Form("%s_ID_H2_%s_Mass%d", chains[c].c_str(), detectors[d].c_str(), mass),
                     Form("%s %s UseMass%d 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]",
                          chains[c].c_str(), detectors[d].c_str(), mass, detectors[d].c_str(), detectors[d].c_str()),
                     200, 0, 0.5, ekBins.size() - 1, ekBins.data());
@@ -272,7 +271,7 @@ HistManager::HistManager(const std::string& output_filename,
                         int mass = isISS ? iso->getMass(i) : UseMass;
                         auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
                         FLUXH1[c][cg][nd][d][i] = createHist<TH1F>(
-                            Form("%s_FLUX_H1_%s_%s_%s_%d",
+                            Form("%s_FLUX_H1_%s_%s_%s_Mass%d",
                                  chains[c].c_str(), cut_groups[cg].c_str(),
                                  num_den[nd].c_str(), detectors[d].c_str(), mass),
                             Form("%s %s %s %s Mass%d counts;%s E_{k}/n [GeV/n];Counts",
@@ -432,4 +431,5 @@ void HistManager::Save() {
     }
 
     std::cout << "HistManager: all histograms saved." << std::endl;
+    m_outputFile->Close(); 
 }

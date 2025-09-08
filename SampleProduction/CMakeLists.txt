@@ -5,8 +5,11 @@ cmake_minimum_required(VERSION 3.20.2)
 set(PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR}/../..)
 
 # 设置编译器
-set(CMAKE_CXX_COMPILER "/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin/icpx")
-set(CMAKE_C_COMPILER "/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin/icx")
+#set(CMAKE_CXX_COMPILER "/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin/icpx")
+#set(CMAKE_C_COMPILER  "/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin/icx")
+
+# ⚠️ 建议在开启 ASan 时用 g++/gcc，而不是 Intel 编译器
+# cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc ..
 
 # Declaring the project
 project(SampleProduction LANGUAGES CXX)
@@ -14,7 +17,6 @@ project(SampleProduction LANGUAGES CXX)
 ###########################################
 # Basic Settings
 ###########################################
-# 保持使用 C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -41,11 +43,10 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-# 设置编译标志
-# MODIFIED: Added warning flags
+# 基本编译标志
 set(CMAKE_CXX_FLAGS "-O3 ${ROOT_CFLAGS} -std=c++17 -Wall -Wextra")
 
-# 输出目录设置
+# 输出目录
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -57,13 +58,19 @@ find_package(ROOT REQUIRED COMPONENTS
     Core RIO Net Hist Graf Graf3d Gpad Tree Matrix Physics MathCore Thread
 )
 
-# ADDED: Dependency check
 if(NOT ROOT_FOUND)
     message(FATAL_ERROR "ROOT not found")
 endif()
-
-
 include(${ROOT_USE_FILE})
+
+###########################################
+# Enable AddressSanitizer in Debug
+###########################################
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Building with AddressSanitizer enabled")
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
+    add_link_options(-fsanitize=address)
+endif()
 
 ###########################################
 # GAMModel Library
@@ -94,7 +101,6 @@ target_link_libraries(GAMModel
 ###########################################
 # Main Analysis Library
 ###########################################
-# 收集所有源文件
 set(ANALYSIS_SOURCES
     src/basic_var.cpp
     src/IsotopeAnalyzer.cpp
@@ -109,7 +115,6 @@ set(ANALYSIS_SOURCES
     src/HistManager.cpp
 )
 
-# 创建主分析库
 add_library(isotope_analysis SHARED ${ANALYSIS_SOURCES})
 
 target_include_directories(isotope_analysis
@@ -149,15 +154,15 @@ set_target_properties(SampleProduction PROPERTIES
     INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
-# 添加PIC标志
+# Add PIC
 set_target_properties(GAMModel PROPERTIES POSITION_INDEPENDENT_CODE ON)
 set_target_properties(isotope_analysis PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-# ADDED: Testing support
+# Testing support
 enable_testing()
 
 ###########################################
-# Debug Information
+# Debug Info
 ###########################################
 message(STATUS "Project: ${PROJECT_NAME}")
 message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
