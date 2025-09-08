@@ -109,11 +109,6 @@ namespace Binning {
     // wei jh ek bin
     extern const std::array<double, 23> EkWideBin;
     extern const std::array<double, 15> BkgEkWideBin;
-    
-    // Kinetic energy bins
-    extern const std::array<std::array<std::array<double, Constants::RIGIDITY_BINS + 1>, 
-                                     Constants::MAX_ISOTOPES>, 
-                           Constants::ELEMENT_COUNT> KineticEnergyBins;
 
     // Run parameters
     inline constexpr double RunBegin = 1304179200;

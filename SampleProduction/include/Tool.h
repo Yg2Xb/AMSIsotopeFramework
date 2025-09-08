@@ -1,10 +1,10 @@
 /***********************************************************
- *  File: Tool.h
+ * File: Tool.h
  *
- *  Modern C++ header file for AMS analysis tools.
+ * Modern C++ header file for AMS analysis tools.
  *
- *  History:
- *    20241029 - created by ZX.Yan
+ * History:
+ * 20241029 - created by ZX.Yan
  ***********************************************************/
 
 #pragma once
@@ -14,6 +14,7 @@
 #include <numeric>  // 为 std::accumulate
 #include <optional>
 #include <bitset>
+#include <random>
 #include <iostream>  // 为了使用 std::cerr
 #include <TF1.h>  // 为了使用 TF1
 
@@ -21,21 +22,17 @@ namespace AMS_Iso {
 
 template<size_t N>
 struct CutResult {
-    bool total;                  
+    bool total;           
     std::array<bool, N> details;
 
-    // 默认构造函数
     CutResult() : total(false), details{} {}
     
-    // 主构造函数
-    // isPrecomputedTotal = true (默认): 计算所有details的AND结果
-    // isPrecomputedTotal = false: 使用cuts[0]作为total
     explicit CutResult(const std::array<bool, N>& cuts, 
                       bool calculateTotal = true) 
         : details(cuts) {
         total = calculateTotal ? 
                 std::all_of(details.begin(), details.end(), 
-                           [](bool b) { return b; }) 
+                            [](bool b) { return b; }) 
                 : cuts[0];
     }
 };
@@ -43,14 +40,26 @@ struct CutResult {
 namespace Tools {
 
 // 物理常量
-inline constexpr double MASS_UNIT = 0.931;  // 核子平均质量
+inline constexpr double MASS_UNIT = 0.9315;  // 核子平均质量
+
 // for reweight
-extern const double geneRig_low;     
-extern const double geneRig_up;  
+extern const double geneRig_low;
+extern const double geneRig_up;
 extern TF1 f_MC;
 extern TF1 f_Reweight;
 extern const double MC_norm;
 extern const double Reweight_norm;
+
+// 初始化并加载 AMS Flux TF1（需要先调用一次）
+void initFluxFunctions(const std::string& filename);
+
+// 修改: 移除 static 关键字
+std::map<std::string, TF1*>& getFluxMap();
+std::map<std::string, double>& getFluxNorm();
+std::string selectFluxName(int charge, int mass);
+
+// 计算事件权重
+double calculateWeight(double mmom, int charge, int mass, bool isISS);
 
 // 坐标计算结果类型
 struct Point2D {
@@ -65,9 +74,9 @@ double calculateAverage(const double* values,
 
 // 位置修正
 void modifyPositionByZ(double targetZ,
-                      std::array<double, 3>& position,
-                      double theta,
-                      double phi);
+                       std::array<double, 3>& position,
+                       double theta,
+                       double phi);
 
 // 动能和Beta转换
 double betaToKineticEnergy(double beta);
@@ -93,14 +102,24 @@ double CorrectCalibrationBiasInData(double beta, bool naf_rad);
 
 // 位置计算函数
 std::optional<Point2D> calculateXYAtZ(const Float_t positions[9][3],
-                                    const Float_t directions[9][3],
-                                    double zpl,
-                                    int trackIndex);
+                                      const Float_t directions[9][3],
+                                      double zpl,
+                                      int trackIndex);
 
 std::optional<Point2D> calculateXYAtNaFZ(const std::array<double, 3>& pos1,
-                                        const std::array<double, 3>& pos2,
-                                        double nafZ);
+                                         const std::array<double, 3>& pos2,
+                                         double nafZ);
 
-double calculateWeight(double mmom, int charge, bool isISS);
+// Function to get the RICH width based on particle charge and radiator type.
+// iz: particle charge Z
+// isNaF: true for NaF, false for AGL
+double GetRichWidth(int iz, bool isNaF);
+// Function to get the smeared RICH beta value.
+// iz: particle charge Z
+// beta: CIEMAT beta after applying corrections
+// seed: a random number for each event (e.g., Run + Event number)
+// isNaF: true for NaF, false for AGL
+double GetSmearRichBeta(int iz, double beta, bool isNaF);
+
 } // namespace Tools
 } // namespace AMS_Iso

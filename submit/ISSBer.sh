@@ -24,7 +24,7 @@ fi
 # 逐行读取文件并处理
 while IFS= read -r line; do
     echo "Processing file: $line"
-     /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/main_exe \
-        /eos/user/z/zixuan/Isotope/ISS/Ber \
+     /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/SampleProduction \
+        /eos/user/z/zixuan/Isotope/ISS/Be \
         "$(basename "$line")" "$line" 4 7
 done < "$1"

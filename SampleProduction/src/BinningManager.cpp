@@ -29,12 +29,15 @@ void BinningManager::Initialize() {
     
     m_bin_map["EkPerNucleon"] = ConvertRigidityToEk(rigidity_bins_vec, 2, 4);
     m_bin_map["Beta"] = ConvertRigidityToBeta(rigidity_bins_vec, 2, 4);
+    m_bin_map["BetaGamma"] = ConvertRigidityToBetaGamma(rigidity_bins_vec, 2, 4);
 
     m_bin_map["InverseMass"] = {}; 
-    m_bin_map["DeltaBeta"] = {};   
-    m_bin_map["BetaGamma"] = {};   
+    m_bin_map["1/NaFBeta"] = {};   
+    m_bin_map["1/AGLBeta"] = {};   
+    m_bin_map["DeltaNaFBeta"] = {};   
+    m_bin_map["DeltaAGLBeta"] = {};   
+    m_bin_map["DeltaTOFBeta"] = {};   
     m_bin_map["Charge"] = {};      
-    m_bin_map["EkGen"] = {};       
 
     for (int charge = 1; charge <= Constants::ELEMENT_COUNT; ++charge) {
         const auto& isotope_info = getIsotopeVar(charge);
@@ -53,16 +56,9 @@ void BinningManager::Initialize() {
             if (m_bin_map.find(beta_bin_key) == m_bin_map.end()) {
                  m_bin_map[beta_bin_key] = ConvertRigidityToBeta(rigidity_bins_vec, charge, current_mass);
             }
-
-            // --- 计算并缓存该同位素专属的 Beta bin (源于KineticEnergyBins, 用于曝光时间) ---
-            if (m_isotope_beta_bins.find(current_mass) == m_isotope_beta_bins.end()) {
-                const auto& ek_bins_for_isotope_arr = Binning::KineticEnergyBins[charge - 1][i];
-                std::vector<double> ek_bins_for_isotope_vec;
-                ek_bins_for_isotope_vec.reserve(Constants::RIGIDITY_BINS + 1);
-                for(int j = 0; j <= Constants::RIGIDITY_BINS; ++j) {
-                    ek_bins_for_isotope_vec.push_back(ek_bins_for_isotope_arr[j]);
-                }
-                m_isotope_beta_bins[current_mass] = ConvertEkToBeta(ek_bins_for_isotope_vec);
+            std::string betagamma_bin_key = "BetaGamma_" + isotope_name;
+            if (m_bin_map.find(betagamma_bin_key) == m_bin_map.end()) {
+                 m_bin_map[betagamma_bin_key] = ConvertRigidityToBetaGamma(rigidity_bins_vec, charge, current_mass);
             }
         }
     }
@@ -101,6 +97,13 @@ const std::vector<double>& BinningManager::GetBetaBins(int charge, int mass) con
     return Get(beta_bin_key);
 }
 
+const std::vector<double>& BinningManager::GetBetaGammaBins(int charge, int mass) const {
+    const auto& isotope_info = getIsotopeVar(charge);
+    std::string isotope_name = isotope_info.getName() + std::to_string(mass);
+    std::string betagamma_bin_key = "BetaGamma_" + isotope_name;
+    return Get(betagamma_bin_key);
+}
+
 
 // --- 静态工具函数实现 ---
 std::vector<double> BinningManager::ConvertRigidityToEk(const std::vector<double>& rig_bins, int charge, int mass) {
@@ -121,6 +124,18 @@ std::vector<double> BinningManager::ConvertRigidityToBeta(const std::vector<doub
         beta_bins.push_back(Tools::rigidityToBeta(R, charge, mass, false));
     }
     return beta_bins;
+}
+
+std::vector<double> BinningManager::ConvertRigidityToBetaGamma(const std::vector<double>& rig_bins, int charge, int mass) {
+    if (charge == 0 || mass == 0) throw std::runtime_error("Charge and mass cannot be zero for Beta conversion.");
+    std::vector<double> betagamma_bins;
+    betagamma_bins.reserve(rig_bins.size());
+    for (double R : rig_bins) {
+        double converted_beta = Tools::rigidityToBeta(R, charge, mass, false);
+        double beta_gamma = converted_beta / std::sqrt(1 - converted_beta * converted_beta);
+        betagamma_bins.push_back(beta_gamma); 
+    }
+    return betagamma_bins;
 }
 
 std::vector<double> BinningManager::ConvertEkToBeta(const std::vector<double>& ek_bins) {
