@@ -25,7 +25,6 @@ void BinningManager::Initialize() {
 
     const auto& ek_wide_arr = Binning::EkWideBin;
     std::vector<double> ek_wide_vec(ek_wide_arr.begin(), ek_wide_arr.end());
-    m_bin_map["BetaFromEkWide"] = ConvertEkToBeta(ek_wide_vec);
     
     m_bin_map["EkPerNucleon"] = ConvertRigidityToEk(rigidity_bins_vec, 2, 4);
     m_bin_map["Beta"] = ConvertRigidityToBeta(rigidity_bins_vec, 2, 4);
@@ -73,14 +72,6 @@ const std::vector<double>& BinningManager::Get(const std::string& name) const {
         return it->second;
     }
     throw std::runtime_error("Binning with name '" + name + "' not found in BinningManager.");
-}
-
-const std::vector<double>& BinningManager::GetIsotopeBetaBins(int mass) const {
-    auto it = m_isotope_beta_bins.find(mass);
-    if (it != m_isotope_beta_bins.end()) {
-        return it->second;
-    }
-    throw std::runtime_error("Beta binning for mass " + std::to_string(mass) + " not found in BinningManager cache.");
 }
 
 const std::vector<double>& BinningManager::GetEkPerNucleonBins(int charge, int mass) const {
@@ -138,14 +129,6 @@ std::vector<double> BinningManager::ConvertRigidityToBetaGamma(const std::vector
     return betagamma_bins;
 }
 
-std::vector<double> BinningManager::ConvertEkToBeta(const std::vector<double>& ek_bins) {
-    std::vector<double> beta_bins;
-    beta_bins.reserve(ek_bins.size());
-    for (double ek : ek_bins) {
-        beta_bins.push_back(Tools::kineticEnergyToBeta(ek));
-    }
-    return beta_bins;
-}
 
 } // namespace AMS_Iso
 

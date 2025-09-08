@@ -104,7 +104,7 @@ void selectdata::Loop() {
                 for (int d=0; d<3; ++d){
                     for (int i=0;i<iso->getIsotopeCount();++i){
                         int mass=iso->getMass(i);
-                        const auto& rb=binMgr.GetIsotopeBetaBins(mass);
+                        const auto& rb=binMgr.GetBetaBins(charge, mass);
                         double betaCO = Tools::rigidityToBeta(cutOffRig, charge, mass, false);
                         double betaCut = (d==0?Detector::BetaTypes[0].getSafetyFactor():d==1?Detector::BetaTypes[1].getSafetyFactor():Detector::BetaTypes[2].getSafetyFactor())*betaCO;
                         TH1F* h=histManager->ISS_FLUXH3[c][d][i].get();

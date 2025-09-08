@@ -16,8 +16,6 @@ public:
     
     // 按名称获取通用分箱
     const std::vector<double>& Get(const std::string& name) const;
-    // 按质量数获取Beta分箱 (源于KineticEnergyBins，主要用于曝光时间)
-    const std::vector<double>& GetIsotopeBetaBins(int mass) const;
 
     // ADDED: 新增查询函数，方便通过(Z,A)获取专属的Ek/n分箱
     const std::vector<double>& GetEkPerNucleonBins(int charge, int mass) const;
@@ -34,7 +32,6 @@ public:
     static std::vector<double> ConvertRigidityToEk(const std::vector<double>& rig_bins, int charge, int mass);
     static std::vector<double> ConvertRigidityToBeta(const std::vector<double>& rig_bins, int charge, int mass);
     static std::vector<double> ConvertRigidityToBetaGamma(const std::vector<double>& rig_bins, int charge, int mass);
-    static std::vector<double> ConvertEkToBeta(const std::vector<double>& ek_bins);
 
 private:
     BinningManager() = default;
