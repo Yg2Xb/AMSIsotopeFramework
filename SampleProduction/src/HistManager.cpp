@@ -13,8 +13,8 @@ static inline const std::vector<double>& safeBins(const std::string& key) {
     try {
         const auto& bins = BinningManager::GetInstance().Get(key);
         if (!bins.empty()) return bins;
-    } catch (const std::out_of_range& e) {
-        std::cerr << "Warning: Binning key '" << key << "' not found. Using default bins." << std::endl;
+    } catch (const std::exception& e) { // 放宽异常类型，兼容 runtime_error
+        std::cerr << "Warning: Binning key '" << key << "' not found. Using default bins. Msg: " << e.what() << std::endl;
     } catch (...) {
         std::cerr << "Warning: Unknown error getting bins for key '" << key << "'. Using default bins." << std::endl;
     }
@@ -45,20 +45,25 @@ HistManager::HistManager(const std::string& output_filename,
     const std::vector<std::string> sources = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
     const std::vector<std::string> gene_rec = {"Gene", "Rec"};
 
-    int Nchain = chains.size();
-    int Ndet = detectors.size();
-    int Niso = isISS ? iso->getIsotopeCount() : 1;
-    int Nsrc = sources.size();
-    int Nct = charge_types.size();
-    int NcutGroups = cut_groups.size();
-    int NnumDen = num_den.size();
-    int NgeneRec = gene_rec.size();
+    // 固定的 Be 碎裂产物同位素 A 列表
+    const std::vector<int> BeFragA = {7, 9, 10};
+
+    int Nchain = static_cast<int>(chains.size());
+    int Ndet = static_cast<int>(detectors.size());
+    int Niso = isISS ? iso->getIsotopeCount() : 1; // ISS: 输入元素的同位素数；MC: 1（用于 IDH2/3 等保持结构）
+    int Nsrc = static_cast<int>(sources.size());
+    int Nct = static_cast<int>(charge_types.size());
+    int NcutGroups = static_cast<int>(cut_groups.size());
+    int NnumDen = static_cast<int>(num_den.size());
+    int NgeneRec = static_cast<int>(gene_rec.size());
+
     std::cout<<"DEBUG: Niso="<<Niso<<" charge="<<charge<<std::endl;
     std::cout<<"DEBUG: iso ptr="<<iso<<std::endl;
     
     // ---------------- ID 区域 ----------------
     std::cout<<"DEBUG: ID Hists"<<std::endl;
     if (isISS) {
+        // ISS_IDH1: 每个链、每个探测器、每个输入元素的同位素，使用该(Z,A)专属的 Ek/n 分箱
         ISS_IDH1.resize(Nchain);
         for (int c = 0; c < Nchain; ++c) {
             ISS_IDH1[c].resize(Ndet);
@@ -68,24 +73,30 @@ HistManager::HistManager(const std::string& output_filename,
                     int mass = iso->getMass(i);
                     auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
                     ISS_IDH1[c][d][i] = createHist<TH1F>(
-                        Form("%s_ISS_ID_H1_%s_Mass%d", chains[c].c_str(), detectors[d].c_str(), mass),
-                        Form("%s %s Mass%d isotope counts;Counts;%s E_{k}/n [GeV/n]",
+                        Form("%s_ISS_ID_H1_%s_Mass%dBin", chains[c].c_str(), detectors[d].c_str(), mass),
+                        Form("%s %s Mass%dBin isotope counts;Counts;%s E_{k}/n [GeV/n]",
                              chains[c].c_str(), detectors[d].c_str(), mass, detectors[d].c_str()),
-                        ekBins.size() - 1, ekBins.data());
+                        static_cast<int>(ekBins.size()) - 1, ekBins.data());
                 }
             }
         }
     } else {
+        // MC_IDH1: 扩展为 Niso 维度（对输入元素的每个同位素 A 分别建模板，X=1/Mass，Y=Ek/n(A,Z)）
+        int NisoMC = iso->getIsotopeCount();
         MC_IDH1.resize(Nchain);
         for (int c = 0; c < Nchain; ++c) {
             MC_IDH1[c].resize(Ndet);
             for (int d = 0; d < Ndet; ++d) {
-                auto ekBins = binMgr.GetEkPerNucleonBins(charge, UseMass);
-                MC_IDH1[c][d] = createHist<TH2F>(
-                    Form("%s_MC_ID_H1_%s", chains[c].c_str(), detectors[d].c_str()),
-                    Form("%s %s Mass%dIsotope MC 1/Mass template;%s 1/Mass;%s E_{k}/n [GeV/n]",
-                         chains[c].c_str(), detectors[d].c_str(), UseMass, detectors[d].c_str(), detectors[d].c_str()),
-                    200, 0, 0.5, ekBins.size() - 1, ekBins.data());
+                MC_IDH1[c][d].resize(NisoMC);
+                for (int i = 0; i < NisoMC; ++i) {
+                    int mass_i = iso->getMass(i);
+                    auto ekBins_i = binMgr.GetEkPerNucleonBins(charge, mass_i);
+                    MC_IDH1[c][d][i] = createHist<TH2F>(
+                        Form("%s_MC_ID_H1_%s_Mass%dBin", chains[c].c_str(), detectors[d].c_str(), mass_i),
+                        Form("%s %s Mass%dBin Isotope MC 1/Mass template;%s 1/Mass;%s E_{k}/n [GeV/n]",
+                             chains[c].c_str(), detectors[d].c_str(), mass_i, detectors[d].c_str(), detectors[d].c_str()),
+                        200, 0, 0.5, static_cast<int>(ekBins_i.size()) - 1, ekBins_i.data());
+                }
             }
         }
     }
@@ -106,21 +117,21 @@ HistManager::HistManager(const std::string& output_filename,
         for (int d = 0; d < Ndet; ++d) {
             IDH2[c][d].resize(Niso);
             for (int i = 0; i < Niso; ++i) {
-                int mass = isISS ? iso->getMass(i) : UseMass;
+                int mass = iso->getMass(i);
                 auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
                 IDH2[c][d][i] = createHist<TH2F>(
-                    Form("%s_ID_H2_%s_Mass%d", chains[c].c_str(), detectors[d].c_str(), mass),
-                    Form("%s %s UseMass%d 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]",
+                    Form("%s_ID_H2_%s_Mass%dBin", chains[c].c_str(), detectors[d].c_str(), mass),
+                    Form("%s %s UseMass%dBin 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]",
                          chains[c].c_str(), detectors[d].c_str(), mass, detectors[d].c_str(), detectors[d].c_str()),
-                    200, 0, 0.5, ekBins.size() - 1, ekBins.data());
+                    200, 0, 0.5, static_cast<int>(ekBins.size()) - 1, ekBins.data());
             }
-            int mass = iso->getMass(Niso-1); // Heaviest isotope
-            auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
+            int mass_heaviest = iso->getMass(Niso-1); // Heaviest isotope
+            auto ekBinsH = binMgr.GetEkPerNucleonBins(charge, mass_heaviest);
             IDH3[c][d] = createHist<TH2F>(
                 Form("%s_ID_H3_%s", chains[c].c_str(), detectors[d].c_str()),
                 Form("%s %s Heaviest iso 1/Mass;%s 1/Mass;%s E_{k}/n [GeV/n]",
                      chains[c].c_str(), detectors[d].c_str(), detectors[d].c_str(), detectors[d].c_str()),
-                200, 0, 0.5, ekBins.size() - 1, ekBins.data());
+                200, 0, 0.5, static_cast<int>(ekBinsH.size()) - 1, ekBinsH.data());
         }
         // RICH
         int idx = charge - 1;
@@ -134,34 +145,34 @@ HistManager::HistManager(const std::string& output_filename,
             Detector::RichBins[1][idx], 1.0 - Detector::RichAxis[1], 1.0 + Detector::RichAxis[1]);
 
         auto rigBins = safeBins("Rigidity");
-        auto ekBins = safeBins("EkPerNucleon");
+        auto ekBinsStd = safeBins("EkPerNucleon");
         auto betagammaBins = binMgr.GetBetaGammaBins(charge, UseMass);
 
         // Δβ: X=Δβ, Y=rig/ek/bg
         IDH5a[c] = createHist<TH2F>(
             Form("%s_ID_H5a", chains[c].c_str()),
             "NaF-Tracker #Delta(1/#beta);NaF-Tracker #Delta(1/#beta);Rigidity [GV]",
-            400, -0.2, 0.2, rigBins.size() - 1, rigBins.data());
+            400, -0.2, 0.2, static_cast<int>(rigBins.size()) - 1, rigBins.data());
         IDH5b[c] = createHist<TH2F>(
             Form("%s_ID_H5b", chains[c].c_str()),
             "AGL-Tracker #Delta(1/#beta);AGL-Tracker #Delta(1/#beta);Rigidity [GV]",
-            400, -0.2, 0.2, rigBins.size() - 1, rigBins.data());
+            400, -0.2, 0.2, static_cast<int>(rigBins.size()) - 1, rigBins.data());
         IDH6a[c] = createHist<TH2F>(
             Form("%s_ID_H6a", chains[c].c_str()),
             "TOF-NaF #Delta(1/#beta);#TOF-NaF Delta(1/#beta);NaF E_{k}/n [GeV/n]",
-            400, -0.2, 0.2, ekBins.size() - 1, ekBins.data());
+            400, -0.2, 0.2, static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
         IDH6b[c] = createHist<TH2F>(
             Form("%s_ID_H6b", chains[c].c_str()),
             "TOF-AGL #Delta(1/#beta);TOF-AGL #Delta(1/#beta);AGL E_{k}/n [GeV/n]",
-            400, -0.2, 0.2, ekBins.size() - 1, ekBins.data());
+            400, -0.2, 0.2, static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
         IDH7a[c] = createHist<TH2F>(
             Form("%s_ID_H7a", chains[c].c_str()),
             "TOF-NaF #Delta(1/#beta);TOF-NaF #Delta(1/#beta);NaF #beta#gamma",
-            400, -0.2, 0.2, betagammaBins.size() - 1, betagammaBins.data());
+            400, -0.2, 0.2, static_cast<int>(betagammaBins.size()) - 1, betagammaBins.data());
         IDH7b[c] = createHist<TH2F>(
             Form("%s_ID_H7b", chains[c].c_str()),
             "TOF-AGL #Delta(1/#beta);TOF-AGL #Delta(1/#beta);AGL #beta#gamma",
-            400, -0.2, 0.2, betagammaBins.size() - 1, betagammaBins.data());
+            400, -0.2, 0.2, static_cast<int>(betagammaBins.size()) - 1, betagammaBins.data());
     }
 
     // ---------------- BKG 区域 ----------------
@@ -182,12 +193,15 @@ HistManager::HistManager(const std::string& output_filename,
                 ISS_BKGH3[c][s].resize(Ndet);
                 ISS_BKGH4[c][s].resize(Ndet);
                 for (int d = 0; d < Ndet; ++d) {
-                    auto ekBins = safeBins("EkPerNucleon");
+                    // H1：源计数（仍使用标准 Ek 分箱，作为总体参考）
+                    auto ekBinsStd = safeBins("EkPerNucleon");
                     ISS_BKGH1[c][s][d] = createHist<TH1F>(
                         Form("%s_ISS_BKG_H1_%s_%s", chains[c].c_str(), sources[s].c_str(), detectors[d].c_str()),
                         Form("%s %s L1 Source %s counts;%s E_{k}/n [GeV/n];Counts",
                              chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), detectors[d].c_str()),
-                        ekBins.size() - 1, ekBins.data());
+                        static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
+
+                    // H2：不同 charge_type 的 charge vs Ek/n（仍为总体参考）
                     ISS_BKGH2[c][s][d].resize(Nct);
                     for (int t = 0; t < Nct; ++t) {
                         const char* x_title = "TrackerLayer Charge";
@@ -203,24 +217,33 @@ HistManager::HistManager(const std::string& output_filename,
                             Form("%s_ISS_BKG_H2_%s_%s_%s", chains[c].c_str(), sources[s].c_str(), charge_types[t].c_str(), detectors[d].c_str()),
                             Form("%s %s %s %s charge vs E_{k}/n;%s;%s E_{k}/n [GeV/n]",
                                  chains[c].c_str(), detectors[d].c_str(), charge_types[t].c_str(), sources[s].c_str(), x_title, detectors[d].c_str()),
-                            x_bins, x_min, x_max, ekBins.size() - 1, ekBins.data());
+                            x_bins, x_min, x_max, static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
                     }
+
+                    // H3：碎裂计数（总体参考）
                     ISS_BKGH3[c][s][d] = createHist<TH1F>(
                         Form("%s_ISS_BKG_H3_%s_%s", chains[c].c_str(), sources[s].c_str(), detectors[d].c_str()),
                         Form("%s %s L1%s L2 frag counts;%s E_{k}/n [GeV/n];Counts",
                              chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), detectors[d].c_str()),
-                        ekBins.size() - 1, ekBins.data());
-                    ISS_BKGH4[c][s][d] = createHist<TH2F>(
-                        Form("%s_ISS_BKG_H4_%s_%s", chains[c].c_str(), sources[s].c_str(), detectors[d].c_str()),
-                        Form("%s %s L1%s L2frag 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]",
-                             chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), detectors[d].c_str(), detectors[d].c_str()),
-                        200, 0, 0.5, ekBins.size() - 1, ekBins.data());
+                        static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
+
+                    // H4：碎裂 1/Mass vs Ek/n，按 Be 碎裂产物三种同位素维度展开，Ek 分箱按(Z=4, A=7/9/10)专属
+                    ISS_BKGH4[c][s][d].resize(static_cast<int>(BeFragA.size()));
+                    for (size_t bi = 0; bi < BeFragA.size(); ++bi) {
+                        int A = BeFragA[bi];
+                        auto ekBinsBe = binMgr.GetEkPerNucleonBins(4 /*Be*/, A);
+                        ISS_BKGH4[c][s][d][bi] = createHist<TH2F>(
+                            Form("%s_ISS_BKG_H4_%s_%s_Mass%dBin", chains[c].c_str(), sources[s].c_str(), detectors[d].c_str(), A),
+                            Form("%s %s L1%s L2frag 1/Mass vs E_{k}/n (Be Mass%dBin);%s 1/Mass;%s E_{k}/n [GeV/n]",
+                                 chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), A, detectors[d].c_str(), detectors[d].c_str()),
+                            200, 0, 0.5, static_cast<int>(ekBinsBe.size()) - 1, ekBinsBe.data());
+                    }
                 }
             }
         }
     } else { // MC
-        int NisoBKG = iso->getIsotopeCount();
-        auto ekBins = safeBins("EkPerNucleon");
+        int NisoBKG = static_cast<int>(BeFragA.size());
+        auto ekBinsStd = safeBins("EkPerNucleon");
 
         MC_BKGH1.resize(Nchain);
         for (int c = 0; c < Nchain; ++c) {
@@ -230,10 +253,10 @@ HistManager::HistManager(const std::string& output_filename,
                     Form("%s_MC_BKG_H1_%s", chains[c].c_str(), detectors[d].c_str()),
                     Form("%s %s MC input counts;%s E_{k}/n [GeV/n];Counts",
                          chains[c].c_str(), detectors[d].c_str(), detectors[d].c_str()),
-                    ekBins.size() - 1, ekBins.data());
+                    static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
             }
         }
-        
+
         auto createMcBkgHists = [&](auto& container, const std::string& prefix, const std::string& titleFmt) {
             container.resize(Nchain);
             for (int c = 0; c < Nchain; ++c) {
@@ -241,19 +264,20 @@ HistManager::HistManager(const std::string& output_filename,
                 for (int d = 0; d < Ndet; ++d) {
                     container[c][d].resize(NisoBKG);
                     for (int i = 0; i < NisoBKG; ++i) {
-                        int mass = iso->getMass(i);
+                        int massA = BeFragA[i];
+                        auto ekBinsBe = binMgr.GetEkPerNucleonBins(4 /*Be*/, massA);
                         container[c][d][i] = createHist<TH1F>(
-                            Form("%s_MC_BKG_%s_%s_Mass%d", chains[c].c_str(), prefix.c_str(), detectors[d].c_str(), mass),
-                            Form(titleFmt.c_str(), chains[c].c_str(), detectors[d].c_str(), mass, detectors[d].c_str()),
-                            ekBins.size() - 1, ekBins.data());
+                            Form("%s_MC_BKG_%s_%s_Mass%dBin", chains[c].c_str(), prefix.c_str(), detectors[d].c_str(), massA),
+                            Form(titleFmt.c_str(), chains[c].c_str(), detectors[d].c_str(), massA, detectors[d].c_str()),
+                            static_cast<int>(ekBinsBe.size()) - 1, ekBinsBe.data());
                     }
                 }
             }
         };
         
-        createMcBkgHists(MC_BKGH2, "H2", "%s %s MC frag Isotope Mass%d Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
-        createMcBkgHists(MC_BKGH3a, "H3a", "%s %s MC upTOF frag Isotope Mass%d Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
-        createMcBkgHists(MC_BKGH3b, "H3b", "%s %s MC upTOF frag survival in rich Isotope Mass%d Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
+        createMcBkgHists(MC_BKGH2, "H2", "%s %s MC frag Isotope Mass%dBin Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
+        createMcBkgHists(MC_BKGH3a, "H3a", "%s %s MC upTOF frag Isotope Mass%dBin Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
+        createMcBkgHists(MC_BKGH3b, "H3b", "%s %s MC upTOF frag survival in rich Isotope Mass%dBin Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
     }
 
     // ---------------- FLUX 区域 ----------------
@@ -271,13 +295,13 @@ HistManager::HistManager(const std::string& output_filename,
                         int mass = isISS ? iso->getMass(i) : UseMass;
                         auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
                         FLUXH1[c][cg][nd][d][i] = createHist<TH1F>(
-                            Form("%s_FLUX_H1_%s_%s_%s_Mass%d",
+                            Form("%s_FLUX_H1_%s_%s_%s_Mass%dBin",
                                  chains[c].c_str(), cut_groups[cg].c_str(),
                                  num_den[nd].c_str(), detectors[d].c_str(), mass),
-                            Form("%s %s %s %s Mass%d counts;%s E_{k}/n [GeV/n];Counts",
+                            Form("%s %s %s %s Mass%dBin counts;%s E_{k}/n [GeV/n];Counts",
                                  chains[c].c_str(), detectors[d].c_str(),
                                  cut_groups[cg].c_str(), num_den[nd].c_str(), mass, detectors[d].c_str()),
-                            ekBins.size() - 1, ekBins.data());
+                            static_cast<int>(ekBins.size()) - 1, ekBins.data());
                     }
                 }
             }
@@ -288,28 +312,28 @@ HistManager::HistManager(const std::string& output_filename,
         ISS_FLUXH2.resize(1);
         auto rigBins = safeBins("Rigidity");
         ISS_FLUXH2[0] = createHist<TH1F>(
-            "ISS_FLUX_H2", "ISS Exposure time;Rigidity [GV];Exposure Time [s]", rigBins.size() - 1, rigBins.data());
-            ISS_FLUXH3.resize(Ndet);
-            for (int d = 0; d < Ndet; ++d) {
-                ISS_FLUXH3[d].resize(Niso);
-                for (int i = 0; i < Niso; ++i) {
-                    int mass = iso->getMass(i);
-                    auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
-                    ISS_FLUXH3[d][i] = createHist<TH1F>(
-                        Form("ISS_FLUX_H3_%s_Mass%d", detectors[d].c_str(), mass),
-                        Form("%s Mass%d Exposure time;E_{k}/n [GeV/n];Exposure Time [s]",
-                             detectors[d].c_str(), mass),
-                        ekBins.size() - 1, ekBins.data());
-                }
+            "ISS_FLUX_H2", "ISS Exposure time;Rigidity [GV];Exposure Time [s]", static_cast<int>(rigBins.size()) - 1, rigBins.data());
+        ISS_FLUXH3.resize(Ndet);
+        for (int d = 0; d < Ndet; ++d) {
+            ISS_FLUXH3[d].resize(Niso);
+            for (int i = 0; i < Niso; ++i) {
+                int mass = iso->getMass(i);
+                auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
+                ISS_FLUXH3[d][i] = createHist<TH1F>(
+                    Form("ISS_FLUX_H3_%s_Mass%dBin", detectors[d].c_str(), mass),
+                    Form("%s Mass%dBin Exposure time;E_{k}/n [GeV/n];Exposure Time [s]",
+                         detectors[d].c_str(), mass),
+                    static_cast<int>(ekBins.size()) - 1, ekBins.data());
             }
+        }
     } else {
         MC_FLUXH2.resize(Nchain);
         MC_FLUXH3.resize(1);
-        auto ekBins = binMgr.GetEkPerNucleonBins(charge, UseMass);
+        auto ekBinsUse = binMgr.GetEkPerNucleonBins(charge, UseMass);
         MC_FLUXH3[0] = createHist<TH1F>(
             "MC_FLUX_H3",
             "MC Generated counts;E_{k}^{gen}/n [GeV/n];Counts",
-            ekBins.size() - 1, ekBins.data());
+            static_cast<int>(ekBinsUse.size()) - 1, ekBinsUse.data());
         auto ekBins_flux = safeBins("EkPerNucleon");
         for (int c = 0; c < Nchain; ++c) {
             MC_FLUXH2[c].resize(NcutGroups);
@@ -325,7 +349,7 @@ HistManager::HistManager(const std::string& output_filename,
                             Form("%s %s MC %s %s counts;%s E_{k}/n [GeV/n];Counts",
                                  chains[c].c_str(), detectors[d].c_str(),
                                  cut_groups[cg].c_str(), gene_rec[gr].c_str(), detectors[d].c_str()),
-                            ekBins_flux.size() - 1, ekBins_flux.data());
+                            static_cast<int>(ekBins_flux.size()) - 1, ekBins_flux.data());
                     }
                 }
             }
@@ -399,14 +423,14 @@ void HistManager::Save() {
     write1D(IDH7b);
     
     if (!ISS_IDH1.empty()) write3D(ISS_IDH1);
-    if (!MC_IDH1.empty()) write2D(MC_IDH1);
+    if (!MC_IDH1.empty()) write3D(MC_IDH1);
 
     // BKG histograms
     if (!ISS_BKGH1.empty()) {
         write3D(ISS_BKGH1);
         write4D(ISS_BKGH2);
         write3D(ISS_BKGH3);
-        write3D(ISS_BKGH4);
+        write4D(ISS_BKGH4); // 由原 3D 改为 4D（最后一维为 Be 同位素）
     }
     if (!MC_BKGH1.empty()) {
         write2D(MC_BKGH1);

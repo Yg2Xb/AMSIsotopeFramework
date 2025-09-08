@@ -58,7 +58,7 @@ void IsotopeAnalyzer::initialize() {
     BinningManager::GetInstance().Initialize();
 
     // 2. 定义分析链
-    active_chains_ = {"L1Inner", "UnbiasedL1Inner"};
+    active_chains_ = {"UnbiasedL1Inner", "L1Inner"};
 
     // 3. 创建 HistManager （替代原来的 ProductRegistry）
     TString output_filename = outDir_ + "/" + outName_;

@@ -29,10 +29,12 @@ public:
     void Save();
 
     // ======== ID 区域 ========
+    // ISS
     std::vector<std::vector<std::vector<H1Ptr>>> ISS_IDH1; // [chain][det][iso]
-    std::vector<std::vector<H2Ptr>> MC_IDH1; // [chain][det]
+    // MC: 扩展为 Niso 维度（每个同位素一份 1/Mass vs Ek/n 模板）
+    std::vector<std::vector<std::vector<H2Ptr>>> MC_IDH1; // [chain][det][iso]
 
-    std::vector<std::vector<std::vector<H2Ptr>>> IDH2; // [chain][det][iso/mc=1]
+    std::vector<std::vector<std::vector<H2Ptr>>> IDH2; // [chain][det][iso]
     std::vector<std::vector<H2Ptr>> IDH3; // [chain][det]
     std::vector<H1Ptr> IDH4a; // [chain]
     std::vector<H1Ptr> IDH4b; // [chain]
@@ -44,16 +46,21 @@ public:
     std::vector<H2Ptr> IDH7b; // [chain]
 
     // ======== BKG 区域 ========
+    // 统一研究碎裂产物为 Be 的三种同位素（Mass7/9/10），替代原来依据输入 iso->getIsotopeCount() 的维度
+
     // ISS
     std::vector<std::vector<std::vector<H1Ptr>>> ISS_BKGH1; // [chain][source][det]
     std::vector<std::vector<std::vector<std::vector<H2Ptr>>>> ISS_BKGH2; // [chain][source][charge_type][det]
     std::vector<std::vector<std::vector<H1Ptr>>> ISS_BKGH3; // [chain][source][det]
-    std::vector<std::vector<std::vector<H2Ptr>>> ISS_BKGH4; // [chain][source][det]
+    // 将 ISS_BKGH4 扩展同位素维度为3（Be7/Be9/Be10）
+    std::vector<std::vector<std::vector<std::vector<H2Ptr>>>> ISS_BKGH4; // [chain][source][det][BeIso=3]
+
     // MC
     std::vector<std::vector<H1Ptr>> MC_BKGH1; // [chain][det]
-    std::vector<std::vector<std::vector<H1Ptr>>> MC_BKGH2; // [chain][det][iso]
-    std::vector<std::vector<std::vector<H1Ptr>>> MC_BKGH3a; // [chain][det][iso]
-    std::vector<std::vector<std::vector<H1Ptr>>> MC_BKGH3b; // [chain][det][iso]
+    // 以下三个均固定 iso 维度为 3（Be7,Be9,Be10）
+    std::vector<std::vector<std::vector<H1Ptr>>> MC_BKGH2;  // [chain][det][BeIso=3]
+    std::vector<std::vector<std::vector<H1Ptr>>> MC_BKGH3a; // [chain][det][BeIso=3]
+    std::vector<std::vector<std::vector<H1Ptr>>> MC_BKGH3b; // [chain][det][BeIso=3]
 
     // ======== FLUX 区域 ========
     std::vector<std::vector<std::vector<std::vector<std::vector<H1Ptr>>>>> FLUXH1; // [chain][cut_group][num_den][det][iso/1]

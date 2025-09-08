@@ -45,6 +45,10 @@ void selectdata::Loop() {
 	UInt_t current_run=0, min_event=0, max_event=0; int event_count=1;
 	std::vector<double> mc_events;
 
+    const int NchainLoc = static_cast<int>(chains.size()); // 2
+    const int NdetLoc   = 3;                               // 0:TOF, 1:NaF, 2:AGL
+    const int NisoLoc   = iso->getIsotopeCount();
+
 	double weight_NucFlux = 1.;
 	double cutOffRig = -1, TOFBeta = -1, richBeta = -1;
 	double rig_chain[2] = {-1, -1};
@@ -223,7 +227,22 @@ void selectdata::Loop() {
         }
 
 		// --- ID  histogram 填充 ---
-
+        for (int c = 0; c < NchainLoc; ++c) {
+            if (!TwoAccTrackerCutResult[c]) continue; // chain gate
+            for (int d = 0; d < NdetLoc; ++d) {
+                if (!BetaDetectorCutResult[d]) continue; // detector gate
+                if (ek_det[d] <= 0 || !Tools::isValidBeta(beta_det[d])) continue;
+                // Reconstruct inverse mass; alpha=1.0 nominal
+                auto mres = calculateMass(beta_det[d], 1.0, rig_chain[c], charge);
+                if (!mres.isValid() || mres.invMass <= 0) continue;
+                for (int i = 0; i < NisoLoc; ++i) {
+                    const int A = iso->getMass(i);
+                    if (!getBeyondBetaCutoffCut(d, charge, A)) continue;
+                    if (auto* h = histManager->IDH2[c][d][i].get())
+                        h->Fill(mres.invMass, ek_det[d], weight_NucFlux);
+                }
+            }
+        }
 		// --- BKG  histogram 填充 ---
 		// --- FLUX  histogram 填充 ---
         
