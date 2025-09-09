@@ -69,6 +69,7 @@ public:
     const std::string& getName() const { return name_; }
     const std::array<int, Constants::MAX_ISOTOPES>& getMasses() const { return mass_; }
     const std::array<int, Constants::MAX_ISOTOPES>& getParticles() const { return particle_; }
+    int getParticleIDByMass(int mass) const;
     
     int getMass(int index) const {
         if (index < 0 || index >= isotope_count_) {

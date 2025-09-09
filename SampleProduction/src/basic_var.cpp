@@ -26,6 +26,12 @@ IsotopeVar::IsotopeVar(int charge, int num, std::string name,
             ". Must be between 1 and " + std::to_string(Constants::ELEMENT_COUNT));
     }
 }
+int IsotopeVar::getParticleIDByMass(int mass) const {
+    for (int i = 0; i < isotope_count_; ++i) {
+        if (mass_[i] == mass) return particle_[i];
+    }
+    return -1;
+}
 
 // BetaExpoT implementation
 BetaExpoT::BetaExpoT(std::string name, double safety_factor,

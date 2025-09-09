@@ -64,6 +64,8 @@ std::string selectFluxName(int charge, int mass);
 // 计算事件权重
 double calculateWeight(double mmom, int charge, int mass, bool isISS);
 
+
+
 // 坐标计算结果类型
 struct Point2D {
     double x;
@@ -112,6 +114,19 @@ std::optional<Point2D> calculateXYAtZ(const Float_t positions[9][3],
 std::optional<Point2D> calculateXYAtNaFZ(const std::array<double, 3>& pos1,
                                          const std::array<double, 3>& pos2,
                                          double nafZ);
+
+struct MassResult {
+    double beta;
+    double gamma;
+    double invMass;
+    double ek;
+    
+    bool isValid() const {
+        return isValidBeta(beta) && gamma > 1.0 && 
+               invMass > 0.0 && ek >= 0.0;
+    }
+};
+MassResult calculateMass(double beta, double alpha, double innerRig, int charge);
 
 // Function to get the RICH width based on particle charge and radiator type.
 // iz: particle charge Z

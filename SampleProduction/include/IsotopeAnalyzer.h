@@ -37,6 +37,9 @@ public:
     int getUseMass() const { return UseMass_; }
     const std::vector<std::string>& getActiveChains() const { return active_chains_; }
 
+    std::vector<int> getBkgFragIDs(int fragZ) const;
+    int getGeneID(int charge, int useMass) const;
+
     // --- 关键接口 ---
     // 为 selectdata 提供按名称获取任何直方图的通用方法
     TH1* getHist(const std::string& name) const;

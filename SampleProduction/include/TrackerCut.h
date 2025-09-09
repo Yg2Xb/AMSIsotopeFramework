@@ -77,10 +77,12 @@ public:
     CutResult<2> cutUnphysical(int charge, bool isISS = true) const;
     CutResult<2> getDenominatorL1PickUp(int charge, bool isISS) const;
     CutResult<6> chargeTempFitCut(int charge, bool isISS, bool isNormalL1 = false) const;
+    CutResult<6> chargeTempCut(int charge, int fragZ, bool isISS) const;
 
     bool TrackerCut::AccUndepCut(int charge, bool isISS) const ;
-    bool TrackerCut::QandBkgUndepCut(int charge, bool isISS) const ;
+    bool TrackerCut::QandL1IndependCut(int charge, bool isISS) const ;
     CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS)  const;
+    std::array<bool,2> TrackerCut::BkgSourceOrFragCut(int charge, bool isISS, int fragZ, bool isL2Frag) const;
 
     // 辅助函数
     double getRadius(bool isUnphysical, int layer) const;

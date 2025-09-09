@@ -409,14 +409,15 @@ bool TrackerCut::AccUndepCut(int charge, bool isISS) const {
            innerQ.total && utofQ.total && bg.details[0];
 }
 
-bool TrackerCut::QandBkgUndepCut(int charge, bool isISS) const {
+bool TrackerCut::QandL1IndependCut(int charge, bool isISS) const {
     if (!event_) return false;
 
     auto physTrig = cutPhysTrigger(isISS);
     auto basicFid = cutBasicAndFiducial(isISS);
     auto innerTrk = cutInnerTracker(charge, isISS);
+    auto bg = cutBackground(charge, isISS);
 
-    return physTrig.total && basicFid.total && innerTrk.total;
+    return physTrig.total && basicFid.total && innerTrk.total && bg.details[0];
 }
 
 CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS) const {
@@ -432,6 +433,88 @@ CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS) const {
     return CutResult<2>(cuts, false);
 }
 
+std::array<bool,2> TrackerCut::BkgSourceOrFragCut(int charge, bool isISS, int fragZ, bool isL2Frag) const {
+    std::array<bool,2> pass{false,false};
+    if (!event_) return pass;
+    if (!cutPhysTrigger(isISS).total) return pass;
+    if (!cutBasicAndFiducial(isISS).total) return pass;
+    if (!cutInnerTracker(charge, isISS).total) return pass;
+    if (!cutBackground(charge, isISS).total) return pass;
+    // Inner Q from inner tracker
+    const double q_inner = event_->tk_qin[Tracker::ChargeReco::DEFAULT][Tracker::Direction::DEFAULT];
+    // Inner-Q window
+    const double q_low_default = 3.45;
+    const double q_low  = (fragZ > 0) ? (fragZ - 0.65) : q_low_default;
+    double       q_high = charge + 0.45;                 // L1Source 上限
+    if (isL2Frag && fragZ > 0) q_high = fragZ + 0.45;    // L2Frag 上限（Be=4.45, B=5.45）
+    if (!(q_inner > q_low && q_inner < q_high)) return pass;
+    // L1 quality cuts (unbiased and normal)
+    const auto l1_unbiased = cutL1Unbiased(charge, isISS, false, false, 1.0);
+    const auto l1_normal   = cutL1Norm    (charge, isISS, 1.0);
+    // L1 charge measurements
+    const double q_l1_unb = event_->tk_exqln[Tracker::ChargeReco::DEFAULT][0][Tracker::Direction::DEFAULT];
+    const double q_l1_nrm = event_->tk_qln   [Tracker::ChargeReco::DEFAULT][0][Tracker::Direction::DEFAULT];
+    // L1 charge windows
+    const double l1_low_side = (charge==4||charge==5||charge==7) ? 0.2 : ((charge==6||charge==8) ? 0.4 : 0.3);
+    const bool pass_q_unb = (q_l1_unb > charge - l1_low_side) && (q_l1_unb < charge + 0.4);
+    const bool pass_q_nrm = (q_l1_nrm > charge - l1_low_side) && (q_l1_nrm < charge + 0.4);
+    pass[0] = (l1_unbiased.details[2] && l1_unbiased.details[3]) && pass_q_unb;                 // Unbiased L1
+    pass[1] = (l1_normal.details[2] && l1_normal.details[3] && l1_normal.details[4]) && pass_q_nrm; // Normal L1
+    return pass;
+}
+
+// [0] L1QSignal_normal
+// [1] L1QSignal_unbiased
+// [2] L1QTemplate_normal
+// [3] L1QTemplate_unbiased
+// [4] L2QTemplate_normal
+// [5] L2QTemplate_unbiased
+CutResult<6> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS) const {
+    std::array<bool, 6> cuts{false, false, false, false, false, false};
+    if (!event_) return CutResult<6>(cuts, false);
+    if (!QandL1IndependCut(charge, isISS)) return CutResult<6>(cuts, false);
+
+    // 快速取值
+    const double innerQ = event_->tk_qin[Tracker::ChargeReco::DEFAULT][Tracker::Direction::DEFAULT];
+    const double L38    = status_.L38InnerAveQ;
+
+    // L1 质量位（不含电荷窗）
+    const auto l1n = cutL1Norm(charge, isISS, 1.0);
+    const auto l1u = cutL1Unbiased(charge, isISS, false, false, 1.0);
+    const bool L1Norm_quality = l1n.details[2] && l1n.details[3] && l1n.details[4]; // QStatus, hasXY, chi2Y
+    const bool L1Unb_quality  = l1u.details[2] && l1u.details[3];                    // QStatus, hasXYSignal
+
+    // innerQ 的 RMS 质量位（details[1]）
+    const bool innerQ_rms_ok = cutInnerQ(charge, isISS, false, false, 1.0).details[1];
+
+    // 模板所需的 coe=0.5 cut
+    const auto innerQ05  = cutInnerQ(charge, isISS, false, false, 0.5);
+    const auto utofQ05   = cutUTOFQ(charge, isISS, false, false, 0.5);
+    const auto l1n05     = cutL1Norm(charge, isISS, 0.5);
+    const auto l1u05     = cutL1Unbiased(charge, isISS, false, false, 0.5);
+
+    // L2 质量
+    const bool L2XY      = std::bitset<32>(event_->tk_hitb[0]).test(1);
+    const bool L2QStatus = ((event_->tk_qls[1] & 0x10013D) == 0);
+
+    // 1) L1QSignal（fragZ 决定下沿；不限制 L1 电荷量）
+    const double q_low  = (fragZ > 0) ? (fragZ - 0.65) : 3.45;
+    const double q_high = charge + 0.45;
+    const bool innerQ_in = (innerQ > q_low && innerQ < q_high);
+    cuts[0] = innerQ_in && innerQ_rms_ok && L1Norm_quality; // normal
+    cuts[1] = innerQ_in && innerQ_rms_ok && L1Unb_quality;  // unbiased
+
+    // 2) L1QTemplate（coe=0.5；L1 仅质量位）
+    cuts[2] = innerQ05.total && utofQ05.total && L1Norm_quality; // normal
+    cuts[3] = innerQ05.total && utofQ05.total && L1Unb_quality;  // unbiased
+
+    // 3) L2QTemplate（L1 完整 coe=0.5，含电荷窗）
+    const bool L38_ok = std::abs(L38 - charge) < 0.45 * 0.5;
+    cuts[4] = L2XY && L2QStatus && L38_ok && utofQ05.total && l1n05.total; // normal
+    cuts[5] = L2XY && L2QStatus && L38_ok && utofQ05.total && l1u05.total; // unbiased
+
+    return CutResult<6>(cuts, false);
+}
 
 
 } // namespace AMS_Iso

@@ -9,6 +9,11 @@
 
 using namespace AMS_Iso;
 
+// 简单常数快速判断碎裂产物元素（与 selectdata 保持一致的简化口径）
+// 当 isBeFragment() 返回 true → Z=4(Be)；否则 → Z=5(B)
+static constexpr bool FragZFast = true; // true: Be, false: B
+static inline bool isBeFragment() { return FragZFast; }
+
 static inline const std::vector<double>& safeBins(const std::string& key) {
     try {
         const auto& bins = BinningManager::GetInstance().Get(key);
@@ -45,8 +50,11 @@ HistManager::HistManager(const std::string& output_filename,
     const std::vector<std::string> sources = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
     const std::vector<std::string> gene_rec = {"Gene", "Rec"};
 
-    // 固定的 Be 碎裂产物同位素 A 列表
-    const std::vector<int> BeFragA = {7, 9, 10};
+    // 动态的碎裂产物配置：Be 或 B
+    const bool beFrag = isBeFragment();
+    const int fragZ = beFrag ? 4 : 5;
+    const std::vector<int> FragA = beFrag ? std::vector<int>{7, 9, 10}
+                                          : std::vector<int>{10, 11};
 
     int Nchain = static_cast<int>(chains.size());
     int Ndet = static_cast<int>(detectors.size());
@@ -93,7 +101,7 @@ HistManager::HistManager(const std::string& output_filename,
                     auto ekBins_i = binMgr.GetEkPerNucleonBins(charge, mass_i);
                     MC_IDH1[c][d][i] = createHist<TH2F>(
                         Form("%s_MC_ID_H1_%s_Mass%dBin", chains[c].c_str(), detectors[d].c_str(), mass_i),
-                        Form("%s %s Mass%dBin Isotope MC 1/Mass template;%s 1/Mass;%s E_{k}/n [GeV/n]",
+                        Form("%s %s Mass%dBin Isotope MC NoFragCut 1/Mass template;%s 1/Mass;%s E_{k}/n [GeV/n]",
                              chains[c].c_str(), detectors[d].c_str(), mass_i, detectors[d].c_str(), detectors[d].c_str()),
                         200, 0, 0.5, static_cast<int>(ekBins_i.size()) - 1, ekBins_i.data());
                 }
@@ -121,7 +129,7 @@ HistManager::HistManager(const std::string& output_filename,
                 auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
                 IDH2[c][d][i] = createHist<TH2F>(
                     Form("%s_ID_H2_%s_Mass%dBin", chains[c].c_str(), detectors[d].c_str(), mass),
-                    Form("%s %s UseMass%dBin 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]",
+                    Form("%s %s UseMass%dBin Isotope MC 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]",
                          chains[c].c_str(), detectors[d].c_str(), mass, detectors[d].c_str(), detectors[d].c_str()),
                     200, 0, 0.5, static_cast<int>(ekBins.size()) - 1, ekBins.data());
             }
@@ -227,22 +235,22 @@ HistManager::HistManager(const std::string& output_filename,
                              chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), detectors[d].c_str()),
                         static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 
-                    // H4：碎裂 1/Mass vs Ek/n，按 Be 碎裂产物三种同位素维度展开，Ek 分箱按(Z=4, A=7/9/10)专属
-                    ISS_BKGH4[c][s][d].resize(static_cast<int>(BeFragA.size()));
-                    for (size_t bi = 0; bi < BeFragA.size(); ++bi) {
-                        int A = BeFragA[bi];
-                        auto ekBinsBe = binMgr.GetEkPerNucleonBins(4 /*Be*/, A);
+                    // H4：碎裂 1/Mass vs Ek/n，按碎裂产物（Be 或 B）对应的 A 列表维度展开，Ek 分箱按 (fragZ, A)
+                    ISS_BKGH4[c][s][d].resize(static_cast<int>(FragA.size()));
+                    for (size_t bi = 0; bi < FragA.size(); ++bi) {
+                        int A = FragA[bi];
+                        auto ekBinsFrag = binMgr.GetEkPerNucleonBins(fragZ, A);
                         ISS_BKGH4[c][s][d][bi] = createHist<TH2F>(
-                            Form("%s_ISS_BKG_H4_%s_%s_Mass%dBin", chains[c].c_str(), sources[s].c_str(), detectors[d].c_str(), A),
-                            Form("%s %s L1%s L2frag 1/Mass vs E_{k}/n (Be Mass%dBin);%s 1/Mass;%s E_{k}/n [GeV/n]",
-                                 chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), A, detectors[d].c_str(), detectors[d].c_str()),
-                            200, 0, 0.5, static_cast<int>(ekBinsBe.size()) - 1, ekBinsBe.data());
+                            Form("%s_ISS_BKG_H4_%s_%s_Z%d_Mass%dBin", chains[c].c_str(), sources[s].c_str(), detectors[d].c_str(), fragZ, A),
+                            Form("%s %s L1%s L2frag 1/Mass vs E_{k}/n (Z=%d Mass%dBin);%s 1/Mass;%s E_{k}/n [GeV/n]",
+                                 chains[c].c_str(), detectors[d].c_str(), sources[s].c_str(), fragZ, A, detectors[d].c_str(), detectors[d].c_str()),
+                            200, 0, 0.5, static_cast<int>(ekBinsFrag.size()) - 1, ekBinsFrag.data());
                     }
                 }
             }
         }
     } else { // MC
-        int NisoBKG = static_cast<int>(BeFragA.size());
+        int NisoBKG = static_cast<int>(FragA.size());
         auto ekBinsStd = safeBins("EkPerNucleon");
 
         MC_BKGH1.resize(Nchain);
@@ -264,17 +272,18 @@ HistManager::HistManager(const std::string& output_filename,
                 for (int d = 0; d < Ndet; ++d) {
                     container[c][d].resize(NisoBKG);
                     for (int i = 0; i < NisoBKG; ++i) {
-                        int massA = BeFragA[i];
-                        auto ekBinsBe = binMgr.GetEkPerNucleonBins(4 /*Be*/, massA);
+                        int massA = FragA[i];
+                        auto ekBinsFrag = binMgr.GetEkPerNucleonBins(fragZ, massA);
                         container[c][d][i] = createHist<TH1F>(
-                            Form("%s_MC_BKG_%s_%s_Mass%dBin", chains[c].c_str(), prefix.c_str(), detectors[d].c_str(), massA),
+                            Form("%s_MC_BKG_%s_%s_Z%d_Mass%dBin", chains[c].c_str(), prefix.c_str(), detectors[d].c_str(), fragZ, massA),
                             Form(titleFmt.c_str(), chains[c].c_str(), detectors[d].c_str(), massA, detectors[d].c_str()),
-                            static_cast<int>(ekBinsBe.size()) - 1, ekBinsBe.data());
+                            static_cast<int>(ekBinsFrag.size()) - 1, ekBinsFrag.data());
                     }
                 }
             }
         };
         
+        // 标题模板将 Mass%d 放到第三个占位符（与上方 Form 调用保持一致）
         createMcBkgHists(MC_BKGH2, "H2", "%s %s MC frag Isotope Mass%dBin Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
         createMcBkgHists(MC_BKGH3a, "H3a", "%s %s MC upTOF frag Isotope Mass%dBin Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
         createMcBkgHists(MC_BKGH3b, "H3b", "%s %s MC upTOF frag survival in rich Isotope Mass%dBin Counts vs E_{k}/n;%s E_{k}/n [GeV/n];Counts");
@@ -430,7 +439,7 @@ void HistManager::Save() {
         write3D(ISS_BKGH1);
         write4D(ISS_BKGH2);
         write3D(ISS_BKGH3);
-        write4D(ISS_BKGH4); // 由原 3D 改为 4D（最后一维为 Be 同位素）
+        write4D(ISS_BKGH4); // 由原 3D 改为 4D（最后一维为 Frag 同位素）
     }
     if (!MC_BKGH1.empty()) {
         write2D(MC_BKGH1);

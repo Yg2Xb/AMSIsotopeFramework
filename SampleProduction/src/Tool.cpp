@@ -157,6 +157,20 @@ double calculateWeight(double mmom, int charge, int mass, bool isISS) {
     return flux_val / mc_val;
 }
 
+MassResult calculateMass(double beta, double alpha, double innerRig, int charge) {
+    MassResult result{0.0, 0.0, 0.0, 0.0};
+    if (!isValidBeta(beta) || innerRig < 0.0) return result;
+    
+    result.beta = alpha * beta / std::sqrt(1 - beta * beta + std::pow(alpha * beta, 2));
+    if (!isValidBeta(result.beta)) return {0.0, 0.0, 0.0, 0.0};
+    
+    result.gamma = 1.0 / std::sqrt(1.0 - result.beta * result.beta);
+    result.ek = (result.gamma - 1) * MASS_UNIT;
+    result.invMass = (result.beta * result.gamma) / (charge * innerRig);
+    
+    return result;
+}
+
 double calculateAverage(const double* values, int count, double ignoreValue) {
     if (!values || count <= 0) return -1000000.0;
 

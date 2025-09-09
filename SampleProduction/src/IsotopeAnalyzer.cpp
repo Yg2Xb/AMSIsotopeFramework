@@ -76,6 +76,32 @@ void IsotopeAnalyzer::initialize() {
     std::cout << "IsotopeAnalyzer initialized with " << dataChain->GetEntries() << " entries." << std::endl;
 }
 
+std::vector<int> IsotopeAnalyzer::getBkgFragIDs(int fragZ) const {
+    std::vector<int> out;
+    try {
+        const auto& isoVar = AMS_Iso::getIsotopeVar(fragZ);
+        const auto& parts = isoVar.getParticles();
+        for (int i = 0; i < isoVar.getIsotopeCount(); ++i) {
+            int pid = parts[i];
+            if (pid != 0) out.push_back(pid);
+        }
+    } catch (const IsotopeError& e) {
+        // 可选：打印一次调试信息，便于定位非法 fragZ
+        // std::cerr << "[IsotopeAnalyzer] getBkgFragIDs: " << e.what() << std::endl;
+    }
+    return out;
+}
+
+int IsotopeAnalyzer::getGeneID(int charge, int useMass) const {
+    try {
+        const auto& isoVar = AMS_Iso::getIsotopeVar(charge);
+        return isoVar.getParticleIDByMass(useMass); // 不存在时返回 -1
+    } catch (const IsotopeError& e) {
+        // std::cerr << "[IsotopeAnalyzer] getGeneID: " << e.what() << std::endl;
+        return -1;
+    }
+}
+
 void IsotopeAnalyzer::write() {
     if (m_histManager) {
         std::cout << "Saving all histograms to file..." << std::endl;
