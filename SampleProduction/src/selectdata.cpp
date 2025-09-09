@@ -276,6 +276,25 @@ void selectdata::Loop() {
 				}
 			}
 		}
+        // [FILL] ID.H7a/H7b (per chain): Delta(1/beta) vs RICH beta*gamma
+        for (int c = 0; c < std::min(2, NchainLoc); ++c) {
+            if (!TwoAccTrackerCutResult[c]) continue;
+            if (!(tof_cut.cutTOF(charge, isISS).total && rich_cut.cutRICH(charge, isISS, true).total)) continue;
+            if (!(Tools::isValidBeta(beta_det[0]) && Tools::isValidBeta(richBeta))) continue;
+
+            const double dx = 1.0 / beta_det[0] - 1.0 / richBeta;
+            const double bg = richBeta / std::sqrt(std::max(1e-12, 1.0 - richBeta * richBeta));
+
+            if (rich_NaF) {
+                if (getBeyondBetaCutoffCut(1, charge, UseMass)) {
+                    if (auto* h = histManager->IDH7a[c].get()) h->Fill(dx, bg, weight_NucFlux);
+                }
+            } else {
+                if (getBeyondBetaCutoffCut(2, charge, UseMass)) {
+                    if (auto* h = histManager->IDH7b[c].get()) h->Fill(dx, bg, weight_NucFlux);
+                }
+            }
+        }
 
 		// =========================
 		// BKG histograms 
