@@ -1,6 +1,6 @@
 #!/bin/bash
 
-base="/afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_7271180."
+base="/afs/cern.ch/user/z/zixuan/public/logISS/output_7271180."
 start=0
 end=2460
 

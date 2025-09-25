@@ -1,0 +1,16 @@
+Universe  = vanilla
+executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/run_hadd.sh
+arguments   = $(item_1) $(item_2)
+
+output      = /afs/cern.ch/user/z/zixuan/public/logHadd/hadd_out_$(Cluster).$(Process).txt
+error       = /afs/cern.ch/user/z/zixuan/public/logHadd/hadd_err_$(Cluster).$(Process).txt
+log         = /afs/cern.ch/user/z/zixuan/public/logHadd/hadd_log_$(Cluster).log
+
++AMSPublic = True
++JobFlavour = "workday"
+
+should_transfer_files   = NO
+
+environment = "HADD_THREADS=12"
+
+queue 2 from /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/hadd_jobs_all.txt

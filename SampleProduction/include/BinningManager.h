@@ -21,7 +21,7 @@ public:
     const std::vector<double>& GetEkPerNucleonBins(int charge, int mass) const;
     // ADDED: 新增查询函数，方便通过(Z,A)获取专属的Beta分箱 (源于标准刚度)
     const std::vector<double>& GetBetaBins(int charge, int mass) const;
-    const std::vector<double>& GetBetaGammaBins(int charge, int mass) const;
+    const std::vector<double>& GetBetaRigBins(int charge, int mass) const;
 
     // 为 HistManager 提供别名，保持兼容性
     const std::vector<double>& GetBinning(const std::string& name) const {
@@ -31,7 +31,7 @@ public:
     // --- 静态工具函数 ---
     static std::vector<double> ConvertRigidityToEk(const std::vector<double>& rig_bins, int charge, int mass);
     static std::vector<double> ConvertRigidityToBeta(const std::vector<double>& rig_bins, int charge, int mass);
-    static std::vector<double> ConvertRigidityToBetaGamma(const std::vector<double>& rig_bins, int charge, int mass);
+    static std::vector<double> ConvertRigidityToBetaRig(const std::vector<double>& rig_bins, int charge, int mass);
 
 private:
     BinningManager() = default;

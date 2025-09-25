@@ -14,6 +14,6 @@ set -- "${args[@]}"
 # 处理后800行
 tail -n +801 /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_MC_O16.txt | while read -r line; do
     echo "Processing: $line"
-    /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/main_exe \
+    /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/SampleProduction \
         /eos/user/z/zixuan/Isotope/MC/O16 $(basename "$line") "$line" "8|MC" 16
 done

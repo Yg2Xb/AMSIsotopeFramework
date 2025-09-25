@@ -1,0 +1,18 @@
+Universe  = vanilla
+executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/run_hadd.sh
+arguments   = $(list_file) $(output_name)
+
+output      = /afs/cern.ch/user/z/zixuan/public/logHadd/hadd_out_$(Cluster).$(Process).txt
+error       = /afs/cern.ch/user/z/zixuan/public/logHadd/hadd_err_$(Cluster).$(Process).txt
+log         = /afs/cern.ch/user/z/zixuan/public/logHadd/hadd_log_$(Cluster).log
+
++AMSPublic = True
++JobFlavour = "workday"
+
+# 不进行文件传输，输入输出都在 AFS/EOS
+should_transfer_files   = NO
+
+# 并行线程数由环境变量控制
+environment = "HADD_THREADS=12"
+
+queue list_file output_name from /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/hadd_jobs_all.txt

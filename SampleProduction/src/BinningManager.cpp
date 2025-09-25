@@ -25,10 +25,14 @@ void BinningManager::Initialize() {
 
     const auto& ek_wide_arr = Binning::EkWideBin;
     std::vector<double> ek_wide_vec(ek_wide_arr.begin(), ek_wide_arr.end());
+
+    const auto& ek_common_arr = Binning::common_EkBins;
+    std::vector<double> ek_common_vec(ek_common_arr.begin(), ek_common_arr.end());
     
+    m_bin_map["common_EkPerNucleon"] = ek_common_vec;
     m_bin_map["EkPerNucleon"] = ConvertRigidityToEk(rigidity_bins_vec, 2, 4);
     m_bin_map["Beta"] = ConvertRigidityToBeta(rigidity_bins_vec, 2, 4);
-    m_bin_map["BetaGamma"] = ConvertRigidityToBetaGamma(rigidity_bins_vec, 2, 4);
+    m_bin_map["BetaRig"] = ConvertRigidityToBetaRig(rigidity_bins_vec, 2, 4);
 
     m_bin_map["InverseMass"] = {}; 
     m_bin_map["1/NaFBeta"] = {};   
@@ -55,9 +59,9 @@ void BinningManager::Initialize() {
             if (m_bin_map.find(beta_bin_key) == m_bin_map.end()) {
                  m_bin_map[beta_bin_key] = ConvertRigidityToBeta(rigidity_bins_vec, charge, current_mass);
             }
-            std::string betagamma_bin_key = "BetaGamma_" + isotope_name;
-            if (m_bin_map.find(betagamma_bin_key) == m_bin_map.end()) {
-                 m_bin_map[betagamma_bin_key] = ConvertRigidityToBetaGamma(rigidity_bins_vec, charge, current_mass);
+            std::string BetaRig_bin_key = "BetaRig_" + isotope_name;
+            if (m_bin_map.find(BetaRig_bin_key) == m_bin_map.end()) {
+                 m_bin_map[BetaRig_bin_key] = ConvertRigidityToBetaRig(rigidity_bins_vec, charge, current_mass);
             }
         }
     }
@@ -88,11 +92,11 @@ const std::vector<double>& BinningManager::GetBetaBins(int charge, int mass) con
     return Get(beta_bin_key);
 }
 
-const std::vector<double>& BinningManager::GetBetaGammaBins(int charge, int mass) const {
+const std::vector<double>& BinningManager::GetBetaRigBins(int charge, int mass) const {
     const auto& isotope_info = getIsotopeVar(charge);
     std::string isotope_name = isotope_info.getName() + std::to_string(mass);
-    std::string betagamma_bin_key = "BetaGamma_" + isotope_name;
-    return Get(betagamma_bin_key);
+    std::string BetaRig_bin_key = "BetaRig_" + isotope_name;
+    return Get(BetaRig_bin_key);
 }
 
 
@@ -117,16 +121,16 @@ std::vector<double> BinningManager::ConvertRigidityToBeta(const std::vector<doub
     return beta_bins;
 }
 
-std::vector<double> BinningManager::ConvertRigidityToBetaGamma(const std::vector<double>& rig_bins, int charge, int mass) {
+std::vector<double> BinningManager::ConvertRigidityToBetaRig(const std::vector<double>& rig_bins, int charge, int mass) {
     if (charge == 0 || mass == 0) throw std::runtime_error("Charge and mass cannot be zero for Beta conversion.");
-    std::vector<double> betagamma_bins;
-    betagamma_bins.reserve(rig_bins.size());
+    std::vector<double> BetaRig_bins;
+    BetaRig_bins.reserve(rig_bins.size());
     for (double R : rig_bins) {
         double converted_beta = Tools::rigidityToBeta(R, charge, mass, false);
-        double beta_gamma = converted_beta / std::sqrt(1 - converted_beta * converted_beta);
-        betagamma_bins.push_back(beta_gamma); 
+        double beta_rig = converted_beta * R;
+        BetaRig_bins.push_back(beta_rig); 
     }
-    return betagamma_bins;
+    return BetaRig_bins;
 }
 
 

@@ -1,0 +1,696 @@
+
+Processing ../rootlogon.C...
+Processing chargeHistFit.cpp...
+[open] input '/eos/user/z/zixuan/Isotope/Add/Be_all.root' -> OK
+[open] output '/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy.root' -> OK
+[init] Beryllium_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.300 LG chi2/ndf=2.039 EGE chi2/ndf=1.628
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.370 LG chi2/ndf=1.767 EGE chi2/ndf=1.626
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.263 EGE chi2/ndf=0.928
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.539 LG chi2/ndf=2.863 EGE chi2/ndf=1.688
+  [warn] boundary: LG-2 par#0 Width = 0.110 in [0.005,0.110] Beryllium/TOF/L1QTemplate EkCen=0.642
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.642 LG chi2/ndf=3.221 EGE chi2/ndf=1.193
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.759 LG chi2/ndf=4.292 EGE chi2/ndf=1.747
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.890 LG chi2/ndf=2.163 EGE chi2/ndf=1.818
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=1.036 LG chi2/ndf=2.486 EGE chi2/ndf=2.438
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.150 EGE chi2/ndf=1.861
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=1.378 LG chi2/ndf=1.728 EGE chi2/ndf=1.502
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=1.576 LG chi2/ndf=1.537 EGE chi2/ndf=1.585
+[init] Beryllium_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.300 LG chi2/ndf=1.502 EGE chi2/ndf=1.360
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.370 LG chi2/ndf=1.853 EGE chi2/ndf=1.501
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.138 EGE chi2/ndf=0.990
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.539 LG chi2/ndf=1.668 EGE chi2/ndf=1.176
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.642 LG chi2/ndf=2.916 EGE chi2/ndf=1.455
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.759 LG chi2/ndf=2.266 EGE chi2/ndf=0.947
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.890 LG chi2/ndf=2.999 EGE chi2/ndf=1.222
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=1.036 LG chi2/ndf=2.176 EGE chi2/ndf=1.627
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.578 EGE chi2/ndf=2.315
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=1.378 LG chi2/ndf=1.639 EGE chi2/ndf=1.551
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=1.576 LG chi2/ndf=1.601 EGE chi2/ndf=1.549
+[init] Beryllium_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=0.642 LG chi2/ndf=1.798 EGE chi2/ndf=0.954
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=0.759 LG chi2/ndf=2.214 EGE chi2/ndf=1.655
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.043 EGE chi2/ndf=0.796
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.605 EGE chi2/ndf=1.575
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.064 EGE chi2/ndf=1.018
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.151 EGE chi2/ndf=1.174
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.256 EGE chi2/ndf=1.069
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.795 LG chi2/ndf=0.990 EGE chi2/ndf=1.021
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.151 EGE chi2/ndf=1.177
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.237 EGE chi2/ndf=1.021
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.460 EGE chi2/ndf=1.428
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.052 EGE chi2/ndf=0.897
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.896 EGE chi2/ndf=1.822
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.258 EGE chi2/ndf=1.234
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.144 EGE chi2/ndf=0.967
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.627 EGE chi2/ndf=1.139
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Beryllium/NaF/L1QTemplate EkCen=4.894
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.132 EGE chi2/ndf=1.084
+[init] Beryllium_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=0.642 LG chi2/ndf=1.200 EGE chi2/ndf=1.045
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.007 EGE chi2/ndf=0.873
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=0.890 LG chi2/ndf=0.903 EGE chi2/ndf=0.744
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.103 EGE chi2/ndf=1.107
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.371 EGE chi2/ndf=1.358
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.387 EGE chi2/ndf=1.340
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.376 EGE chi2/ndf=1.428
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.446 EGE chi2/ndf=1.518
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.204 EGE chi2/ndf=1.307
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.281 EGE chi2/ndf=1.330
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.116 EGE chi2/ndf=1.169
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.896 LG chi2/ndf=0.865 EGE chi2/ndf=0.795
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=3.234 LG chi2/ndf=0.974 EGE chi2/ndf=0.941
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.909 EGE chi2/ndf=0.920
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.239 EGE chi2/ndf=1.307
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.414 EGE chi2/ndf=1.368
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.079 EGE chi2/ndf=1.060
+[init] Beryllium_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=2.299 LG chi2/ndf=1.425 EGE chi2/ndf=1.344
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=2.584 LG chi2/ndf=1.289 EGE chi2/ndf=1.096
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.561 EGE chi2/ndf=1.024
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.576 EGE chi2/ndf=1.112
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=3.600 LG chi2/ndf=2.330 EGE chi2/ndf=1.832
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=3.997 LG chi2/ndf=2.074 EGE chi2/ndf=1.858
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=4.425 LG chi2/ndf=2.107 EGE chi2/ndf=1.641
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=4.894 LG chi2/ndf=2.077 EGE chi2/ndf=1.157
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=5.388 LG chi2/ndf=2.115 EGE chi2/ndf=1.808
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=5.907 LG chi2/ndf=2.736 EGE chi2/ndf=1.846
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.357 EGE chi2/ndf=1.035
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.291 EGE chi2/ndf=1.232
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=7.769 LG chi2/ndf=2.202 EGE chi2/ndf=1.941
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=8.490 LG chi2/ndf=2.304 EGE chi2/ndf=1.867
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.854 EGE chi2/ndf=1.909
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=10.083 LG chi2/ndf=0.897 EGE chi2/ndf=0.863
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.179 EGE chi2/ndf=1.224
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.278 EGE chi2/ndf=0.974
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.317 EGE chi2/ndf=1.233
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.741 EGE chi2/ndf=1.521
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.913 EGE chi2/ndf=0.975
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.175 EGE chi2/ndf=1.119
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.461 EGE chi2/ndf=1.322
+[init] Beryllium_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=2.299 LG chi2/ndf=1.501 EGE chi2/ndf=1.383
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=2.584 LG chi2/ndf=1.974 EGE chi2/ndf=1.567
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=2.896 LG chi2/ndf=2.456 EGE chi2/ndf=2.297
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.926 EGE chi2/ndf=1.344
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=3.600 LG chi2/ndf=2.023 EGE chi2/ndf=1.461
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.137 EGE chi2/ndf=0.841
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.634 EGE chi2/ndf=1.001
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.205 EGE chi2/ndf=0.991
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.507 EGE chi2/ndf=1.293
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.243 EGE chi2/ndf=1.225
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.531 EGE chi2/ndf=1.192
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=7.098 LG chi2/ndf=2.323 EGE chi2/ndf=1.797
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.285 EGE chi2/ndf=1.237
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.049 EGE chi2/ndf=0.967
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.363 EGE chi2/ndf=1.386
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=10.083 LG chi2/ndf=0.977 EGE chi2/ndf=1.012
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.552 EGE chi2/ndf=1.371
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.753 EGE chi2/ndf=1.736
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.514 EGE chi2/ndf=1.444
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.730 EGE chi2/ndf=1.649
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.062 EGE chi2/ndf=1.113
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.330 EGE chi2/ndf=1.193
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.971 EGE chi2/ndf=0.947
+[init] Boron_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.300 LG chi2/ndf=1.674 EGE chi2/ndf=1.497
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.370 LG chi2/ndf=1.955 EGE chi2/ndf=2.063
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.449 LG chi2/ndf=2.061 EGE chi2/ndf=1.475
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.539 LG chi2/ndf=2.233 EGE chi2/ndf=1.493
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.739 EGE chi2/ndf=2.371
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=0.759
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.759 LG chi2/ndf=40.490 EGE chi2/ndf=2.277
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.890 LG chi2/ndf=7.354 EGE chi2/ndf=1.998
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=1.036
+[ok] L1Inner Boron L1QTemplate TOF EkCen=1.036 LG chi2/ndf=59.317 EGE chi2/ndf=2.037
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=1.198
+[ok] L1Inner Boron L1QTemplate TOF EkCen=1.198 LG chi2/ndf=78.471 EGE chi2/ndf=2.045
+[ok] L1Inner Boron L1QTemplate TOF EkCen=1.378 LG chi2/ndf=3.020 EGE chi2/ndf=2.458
+[ok] L1Inner Boron L1QTemplate TOF EkCen=1.576 LG chi2/ndf=3.763 EGE chi2/ndf=2.773
+[init] Boron_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.300 LG chi2/ndf=1.594 EGE chi2/ndf=1.675
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.370 LG chi2/ndf=1.796 EGE chi2/ndf=1.584
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.449 LG chi2/ndf=2.253 EGE chi2/ndf=1.433
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.319 EGE chi2/ndf=2.485
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.288 EGE chi2/ndf=1.224
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.759 LG chi2/ndf=2.125 EGE chi2/ndf=2.442
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.890 LG chi2/ndf=3.917 EGE chi2/ndf=2.151
+[ok] L1Inner Boron L2QTemplate TOF EkCen=1.036 LG chi2/ndf=4.514 EGE chi2/ndf=2.675
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L2QTemplate EkCen=1.198
+[ok] L1Inner Boron L2QTemplate TOF EkCen=1.198 LG chi2/ndf=43.284 EGE chi2/ndf=2.602
+  [warn] boundary: LG-3 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L2QTemplate EkCen=1.378
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L2QTemplate EkCen=1.378
+[ok] L1Inner Boron L2QTemplate TOF EkCen=1.378 LG chi2/ndf=49.635 EGE chi2/ndf=2.307
+[ok] L1Inner Boron L2QTemplate TOF EkCen=1.576 LG chi2/ndf=2.496 EGE chi2/ndf=2.429
+[init] Boron_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L1QTemplate NaF EkCen=0.642 LG chi2/ndf=1.513 EGE chi2/ndf=1.288
+[ok] L1Inner Boron L1QTemplate NaF EkCen=0.759 LG chi2/ndf=2.391 EGE chi2/ndf=1.413
+[ok] L1Inner Boron L1QTemplate NaF EkCen=0.890 LG chi2/ndf=2.338 EGE chi2/ndf=1.791
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.638 EGE chi2/ndf=1.266
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.686 EGE chi2/ndf=1.371
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.516 EGE chi2/ndf=1.637
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.277 EGE chi2/ndf=1.282
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.207 EGE chi2/ndf=1.208
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.246 EGE chi2/ndf=1.258
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.582 EGE chi2/ndf=1.706
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.315 EGE chi2/ndf=1.311
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.207 EGE chi2/ndf=1.244
+[ok] L1Inner Boron L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.639 EGE chi2/ndf=1.564
+[ok] L1Inner Boron L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.645 EGE chi2/ndf=1.464
+[ok] L1Inner Boron L1QTemplate NaF EkCen=3.997 LG chi2/ndf=0.829 EGE chi2/ndf=0.884
+[ok] L1Inner Boron L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.155 EGE chi2/ndf=1.198
+[ok] L1Inner Boron L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.231 EGE chi2/ndf=1.316
+[init] Boron_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L2QTemplate NaF EkCen=0.642 LG chi2/ndf=1.183 EGE chi2/ndf=1.176
+[ok] L1Inner Boron L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.576 EGE chi2/ndf=1.235
+[ok] L1Inner Boron L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.873 EGE chi2/ndf=1.635
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.359 EGE chi2/ndf=1.302
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.317 EGE chi2/ndf=1.107
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.572 EGE chi2/ndf=1.356
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.258 EGE chi2/ndf=1.103
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.185 EGE chi2/ndf=1.230
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.207 EGE chi2/ndf=1.297
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.327 EGE chi2/ndf=1.391
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.226 EGE chi2/ndf=1.297
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.466 EGE chi2/ndf=1.491
+[ok] L1Inner Boron L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.850 EGE chi2/ndf=1.911
+[ok] L1Inner Boron L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.910 EGE chi2/ndf=0.968
+[ok] L1Inner Boron L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.190 EGE chi2/ndf=1.220
+[ok] L1Inner Boron L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.042 EGE chi2/ndf=1.112
+[ok] L1Inner Boron L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.318 EGE chi2/ndf=1.284
+[init] Boron_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L1QTemplate AGL EkCen=2.299 LG chi2/ndf=0.855 EGE chi2/ndf=0.938
+[ok] L1Inner Boron L1QTemplate AGL EkCen=2.584 LG chi2/ndf=2.028 EGE chi2/ndf=1.910
+[ok] L1Inner Boron L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.461 EGE chi2/ndf=1.527
+[ok] L1Inner Boron L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.378 EGE chi2/ndf=1.562
+[ok] L1Inner Boron L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.937 EGE chi2/ndf=1.901
+[ok] L1Inner Boron L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.544 EGE chi2/ndf=1.438
+[ok] L1Inner Boron L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.297 EGE chi2/ndf=1.445
+[ok] L1Inner Boron L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.818 EGE chi2/ndf=1.366
+[ok] L1Inner Boron L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.693 EGE chi2/ndf=1.828
+[ok] L1Inner Boron L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.611 EGE chi2/ndf=1.807
+[ok] L1Inner Boron L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.490 EGE chi2/ndf=1.515
+[ok] L1Inner Boron L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.689 EGE chi2/ndf=1.472
+[ok] L1Inner Boron L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.028 EGE chi2/ndf=1.087
+[ok] L1Inner Boron L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.161 EGE chi2/ndf=1.110
+[ok] L1Inner Boron L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.225 EGE chi2/ndf=1.325
+[ok] L1Inner Boron L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.327 EGE chi2/ndf=1.367
+[ok] L1Inner Boron L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.203 EGE chi2/ndf=1.320
+[ok] L1Inner Boron L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.516 EGE chi2/ndf=1.580
+[ok] L1Inner Boron L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.429 EGE chi2/ndf=1.582
+[ok] L1Inner Boron L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.853 EGE chi2/ndf=1.991
+[ok] L1Inner Boron L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.206 EGE chi2/ndf=1.233
+[ok] L1Inner Boron L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.035 EGE chi2/ndf=0.989
+[ok] L1Inner Boron L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.157 EGE chi2/ndf=1.306
+[init] Boron_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L2QTemplate AGL EkCen=2.299 LG chi2/ndf=1.031 EGE chi2/ndf=1.114
+[ok] L1Inner Boron L2QTemplate AGL EkCen=2.584 LG chi2/ndf=2.109 EGE chi2/ndf=2.351
+[ok] L1Inner Boron L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.442 EGE chi2/ndf=1.750
+[ok] L1Inner Boron L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.635 EGE chi2/ndf=2.026
+[ok] L1Inner Boron L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.297 EGE chi2/ndf=1.420
+[ok] L1Inner Boron L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.104 EGE chi2/ndf=1.270
+[ok] L1Inner Boron L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.915 EGE chi2/ndf=2.089
+[ok] L1Inner Boron L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.246 EGE chi2/ndf=1.434
+[ok] L1Inner Boron L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.209 EGE chi2/ndf=1.301
+[ok] L1Inner Boron L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.619 EGE chi2/ndf=1.646
+[ok] L1Inner Boron L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.265 EGE chi2/ndf=1.283
+[ok] L1Inner Boron L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.778 EGE chi2/ndf=1.838
+[ok] L1Inner Boron L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.064 EGE chi2/ndf=1.272
+[ok] L1Inner Boron L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.018 EGE chi2/ndf=1.261
+[ok] L1Inner Boron L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.179 EGE chi2/ndf=1.387
+[ok] L1Inner Boron L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.363 EGE chi2/ndf=1.416
+[ok] L1Inner Boron L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.743 EGE chi2/ndf=1.837
+[ok] L1Inner Boron L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.302 EGE chi2/ndf=1.298
+[ok] L1Inner Boron L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.897 EGE chi2/ndf=1.898
+[ok] L1Inner Boron L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.107 EGE chi2/ndf=1.014
+[ok] L1Inner Boron L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.855 EGE chi2/ndf=1.595
+[ok] L1Inner Boron L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.400 EGE chi2/ndf=1.498
+[ok] L1Inner Boron L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.161 EGE chi2/ndf=1.139
+[init] Carbon_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.300 LG chi2/ndf=0.626 EGE chi2/ndf=0.648
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.370 LG chi2/ndf=2.980 EGE chi2/ndf=2.917
+  [warn] boundary: LG par#0 Width = 0.005 in [0.005,0.110] Carbon/TOF/L1QTemplate EkCen=0.449
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.989 EGE chi2/ndf=2.160
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.468 EGE chi2/ndf=1.600
+  [warn] boundary: LG par#0 Width = 0.005 in [0.005,0.110] Carbon/TOF/L1QTemplate EkCen=0.642
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.642 LG chi2/ndf=1.552 EGE chi2/ndf=1.673
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.759 LG chi2/ndf=1.073 EGE chi2/ndf=1.203
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.652 EGE chi2/ndf=1.965
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=1.036 LG chi2/ndf=1.820 EGE chi2/ndf=2.010
+  [warn] boundary: LG par#0 Width = 0.005 in [0.005,0.110] Carbon/TOF/L1QTemplate EkCen=1.198
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=1.198 LG chi2/ndf=1.354 EGE chi2/ndf=1.452
+  [warn] boundary: LG par#0 Width = 0.005 in [0.005,0.110] Carbon/TOF/L1QTemplate EkCen=1.378
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=1.378 LG chi2/ndf=1.937 EGE chi2/ndf=2.065
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=1.576 LG chi2/ndf=1.626 EGE chi2/ndf=1.761
+[init] Carbon_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.300 LG chi2/ndf=0.754 EGE chi2/ndf=0.682
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.370 LG chi2/ndf=1.147 EGE chi2/ndf=1.291
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.286 EGE chi2/ndf=1.641
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.539 LG chi2/ndf=1.751 EGE chi2/ndf=1.905
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.642 LG chi2/ndf=0.841 EGE chi2/ndf=0.925
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.759 LG chi2/ndf=0.727 EGE chi2/ndf=0.819
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.782 EGE chi2/ndf=2.269
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=1.036 LG chi2/ndf=1.345 EGE chi2/ndf=1.992
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=1.198 LG chi2/ndf=0.988 EGE chi2/ndf=1.084
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=1.378 LG chi2/ndf=1.812 EGE chi2/ndf=2.009
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=1.576 LG chi2/ndf=1.491 EGE chi2/ndf=1.868
+[init] Carbon_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=0.642 LG chi2/ndf=0.793 EGE chi2/ndf=0.858
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=0.759 LG chi2/ndf=0.946 EGE chi2/ndf=1.045
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.605 EGE chi2/ndf=1.793
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.508 EGE chi2/ndf=1.663
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.158 EGE chi2/ndf=1.279
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.116 EGE chi2/ndf=1.226
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.179 EGE chi2/ndf=1.348
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.550 EGE chi2/ndf=1.711
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.663 EGE chi2/ndf=1.822
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.299 LG chi2/ndf=0.855 EGE chi2/ndf=0.939
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.309 EGE chi2/ndf=1.451
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.070 EGE chi2/ndf=1.182
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=3.234 LG chi2/ndf=0.764 EGE chi2/ndf=0.902
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.192 EGE chi2/ndf=1.309
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.494 EGE chi2/ndf=1.649
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.604 EGE chi2/ndf=1.760
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.397 EGE chi2/ndf=1.603
+[init] Carbon_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=0.642 LG chi2/ndf=0.807 EGE chi2/ndf=0.910
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.269 EGE chi2/ndf=1.418
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.063 EGE chi2/ndf=1.179
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.235 EGE chi2/ndf=1.361
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.002 EGE chi2/ndf=1.116
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.056 EGE chi2/ndf=1.170
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.576 LG chi2/ndf=0.890 EGE chi2/ndf=1.212
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.795 LG chi2/ndf=0.758 EGE chi2/ndf=0.900
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.151 EGE chi2/ndf=1.452
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.299 LG chi2/ndf=0.945 EGE chi2/ndf=1.161
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.356 EGE chi2/ndf=1.538
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.064 EGE chi2/ndf=1.174
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=3.234 LG chi2/ndf=0.464 EGE chi2/ndf=0.511
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.896 EGE chi2/ndf=1.133
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=3.997 LG chi2/ndf=0.644 EGE chi2/ndf=0.714
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.243 EGE chi2/ndf=1.398
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.107 EGE chi2/ndf=1.382
+[init] Carbon_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=2.299 LG chi2/ndf=0.829 EGE chi2/ndf=0.974
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=2.584 LG chi2/ndf=1.252 EGE chi2/ndf=1.700
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.108 EGE chi2/ndf=1.876
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.706 EGE chi2/ndf=1.974
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.767 EGE chi2/ndf=2.071
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.461 EGE chi2/ndf=1.641
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=4.425 LG chi2/ndf=0.826 EGE chi2/ndf=0.959
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.660 EGE chi2/ndf=2.472
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.777 EGE chi2/ndf=1.968
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=5.907 LG chi2/ndf=2.480 EGE chi2/ndf=2.767
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.652 EGE chi2/ndf=1.826
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.051 EGE chi2/ndf=1.230
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.056 EGE chi2/ndf=1.241
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=8.490 LG chi2/ndf=0.982 EGE chi2/ndf=1.260
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=9.261 LG chi2/ndf=0.481 EGE chi2/ndf=0.610
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.070 EGE chi2/ndf=1.187
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.234 EGE chi2/ndf=1.473
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=11.952 LG chi2/ndf=0.814 EGE chi2/ndf=0.911
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.167 EGE chi2/ndf=1.311
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.643 EGE chi2/ndf=2.093
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=15.245 LG chi2/ndf=2.048 EGE chi2/ndf=2.464
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.508 EGE chi2/ndf=1.779
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=17.842 LG chi2/ndf=2.050 EGE chi2/ndf=2.267
+[init] Carbon_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=2.299 LG chi2/ndf=1.160 EGE chi2/ndf=1.299
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=2.584 LG chi2/ndf=0.526 EGE chi2/ndf=1.082
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.153 EGE chi2/ndf=2.106
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.221 EGE chi2/ndf=1.351
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.799 EGE chi2/ndf=2.876
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=3.997 LG chi2/ndf=0.825 EGE chi2/ndf=1.325
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.491 EGE chi2/ndf=1.808
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.227 EGE chi2/ndf=1.458
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=5.388
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=5.388 LG chi2/ndf=0.878 EGE chi2/ndf=1.802
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=5.907 LG chi2/ndf=0.726 EGE chi2/ndf=0.997
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.483 EGE chi2/ndf=2.016
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=7.098 LG chi2/ndf=0.468 EGE chi2/ndf=0.829
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.488 EGE chi2/ndf=1.768
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.102 EGE chi2/ndf=1.300
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=9.261
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=9.261 LG chi2/ndf=0.647 EGE chi2/ndf=0.917
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.364 EGE chi2/ndf=1.861
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=10.980 LG chi2/ndf=0.885 EGE chi2/ndf=1.259
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.226 EGE chi2/ndf=1.913
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=12.975 LG chi2/ndf=0.951 EGE chi2/ndf=1.397
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.142 EGE chi2/ndf=1.485
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.592 EGE chi2/ndf=2.090
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=16.493
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=16.493 LG chi2/ndf=0.915 EGE chi2/ndf=1.285
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.733 EGE chi2/ndf=0.818
+[init] Nitrogen_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=1.036 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+  [warn] boundary: LG-2 par#1 MPV = 6.850 in [6.850,7.180] Nitrogen/TOF/L1QTemplate EkCen=1.198
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=1.198 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=1.378 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=1.576 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[init] Nitrogen_TOF_L2QTemplate with 73 Ek/n bins
+[init] Nitrogen_NaF_L1QTemplate with 73 Ek/n bins
+[init] Nitrogen_NaF_L2QTemplate with 73 Ek/n bins
+[init] Nitrogen_AGL_L1QTemplate with 73 Ek/n bins
+[init] Nitrogen_AGL_L2QTemplate with 73 Ek/n bins
+[init] Oxygen_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.642 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.759 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.890 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=1.036 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=1.198 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=1.378 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=1.576 LG chi2/ndf=0.000 EGE chi2/ndf=0.000
+[init] Oxygen_TOF_L2QTemplate with 73 Ek/n bins
+[init] Oxygen_NaF_L1QTemplate with 73 Ek/n bins
+[init] Oxygen_NaF_L2QTemplate with 73 Ek/n bins
+[init] Oxygen_AGL_L1QTemplate with 73 Ek/n bins
+[init] Oxygen_AGL_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.300 LG chi2/ndf=2.089 EGE chi2/ndf=1.632
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.370 LG chi2/ndf=1.701 EGE chi2/ndf=1.535
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.338 EGE chi2/ndf=0.976
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.539 LG chi2/ndf=2.685 EGE chi2/ndf=1.530
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.642 LG chi2/ndf=3.350 EGE chi2/ndf=1.246
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.759 LG chi2/ndf=4.222 EGE chi2/ndf=1.754
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.890 LG chi2/ndf=2.135 EGE chi2/ndf=1.854
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=1.036 LG chi2/ndf=2.463 EGE chi2/ndf=2.286
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.128 EGE chi2/ndf=1.750
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=1.378 LG chi2/ndf=1.795 EGE chi2/ndf=1.530
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=1.576 LG chi2/ndf=1.582 EGE chi2/ndf=1.673
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.300 LG chi2/ndf=1.547 EGE chi2/ndf=1.397
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.370 LG chi2/ndf=1.833 EGE chi2/ndf=1.382
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.449 LG chi2/ndf=0.962 EGE chi2/ndf=0.827
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.539 LG chi2/ndf=1.902 EGE chi2/ndf=1.283
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.642 LG chi2/ndf=2.618 EGE chi2/ndf=1.332
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.759 LG chi2/ndf=2.312 EGE chi2/ndf=1.014
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.890 LG chi2/ndf=2.919 EGE chi2/ndf=1.337
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=1.036 LG chi2/ndf=2.180 EGE chi2/ndf=1.615
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.843 EGE chi2/ndf=2.206
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=1.378 LG chi2/ndf=1.601 EGE chi2/ndf=1.527
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=1.576 LG chi2/ndf=1.580 EGE chi2/ndf=1.518
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=0.642 LG chi2/ndf=2.000 EGE chi2/ndf=1.077
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=0.759 LG chi2/ndf=2.277 EGE chi2/ndf=1.534
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.427 EGE chi2/ndf=0.985
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.572 EGE chi2/ndf=1.525
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.053 EGE chi2/ndf=0.984
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.119 EGE chi2/ndf=1.151
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.241 EGE chi2/ndf=1.130
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.108 EGE chi2/ndf=1.119
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.262 EGE chi2/ndf=1.287
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.053 EGE chi2/ndf=0.960
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.239 EGE chi2/ndf=1.228
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.031 EGE chi2/ndf=0.946
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=3.234 LG chi2/ndf=2.133 EGE chi2/ndf=2.035
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.142 EGE chi2/ndf=1.138
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.098 EGE chi2/ndf=0.959
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.547 EGE chi2/ndf=1.130
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.068 EGE chi2/ndf=1.046
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=0.642 LG chi2/ndf=1.126 EGE chi2/ndf=1.014
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.017 EGE chi2/ndf=0.831
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=0.890 LG chi2/ndf=0.924 EGE chi2/ndf=0.766
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.034 EGE chi2/ndf=1.029
+  [warn] boundary: LG par#3 Sigma = 0.500 in [0.060,0.500] Beryllium/NaF/L2QTemplate EkCen=1.198
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.475 EGE chi2/ndf=1.372
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.451 EGE chi2/ndf=1.399
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.427 EGE chi2/ndf=1.473
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.465 EGE chi2/ndf=1.530
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.313 EGE chi2/ndf=1.423
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.340 EGE chi2/ndf=1.368
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.165 EGE chi2/ndf=1.208
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.896 LG chi2/ndf=0.806 EGE chi2/ndf=0.730
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.015 EGE chi2/ndf=0.998
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Beryllium/NaF/L2QTemplate EkCen=3.600
+  [warn] boundary: LG par#3 Sigma = 0.500 in [0.060,0.500] Beryllium/NaF/L2QTemplate EkCen=3.600
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.944 EGE chi2/ndf=0.997
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.278 EGE chi2/ndf=1.342
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.278 EGE chi2/ndf=1.244
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.082 EGE chi2/ndf=1.071
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=2.299 LG chi2/ndf=1.434 EGE chi2/ndf=1.366
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=2.584 LG chi2/ndf=1.308 EGE chi2/ndf=1.148
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.606 EGE chi2/ndf=1.095
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.551 EGE chi2/ndf=1.140
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=3.600 LG chi2/ndf=2.405 EGE chi2/ndf=1.861
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=3.997 LG chi2/ndf=2.074 EGE chi2/ndf=1.808
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=4.425 LG chi2/ndf=2.050 EGE chi2/ndf=1.618
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=4.894 LG chi2/ndf=2.092 EGE chi2/ndf=1.245
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=5.388 LG chi2/ndf=2.273 EGE chi2/ndf=1.898
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=5.907 LG chi2/ndf=2.504 EGE chi2/ndf=1.658
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.426 EGE chi2/ndf=1.084
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.322 EGE chi2/ndf=1.235
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=7.769 LG chi2/ndf=2.435 EGE chi2/ndf=2.201
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=8.490 LG chi2/ndf=2.199 EGE chi2/ndf=1.749
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.857 EGE chi2/ndf=1.899
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.049 EGE chi2/ndf=0.994
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.091 EGE chi2/ndf=1.126
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.291 EGE chi2/ndf=0.947
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.334 EGE chi2/ndf=1.225
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.595 EGE chi2/ndf=1.436
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.000 EGE chi2/ndf=1.050
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.240 EGE chi2/ndf=1.226
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.480 EGE chi2/ndf=1.338
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=2.299 LG chi2/ndf=1.650 EGE chi2/ndf=1.543
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=2.584 LG chi2/ndf=2.030 EGE chi2/ndf=1.615
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=2.896 LG chi2/ndf=2.312 EGE chi2/ndf=2.201
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.953 EGE chi2/ndf=1.292
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=3.600 LG chi2/ndf=2.146 EGE chi2/ndf=1.515
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.225 EGE chi2/ndf=0.939
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.484 EGE chi2/ndf=0.937
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.194 EGE chi2/ndf=1.031
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.338 EGE chi2/ndf=1.109
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.158 EGE chi2/ndf=1.165
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.419 EGE chi2/ndf=1.104
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=7.098 LG chi2/ndf=2.250 EGE chi2/ndf=1.827
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.231 EGE chi2/ndf=1.202
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.098 EGE chi2/ndf=1.045
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.444 EGE chi2/ndf=1.498
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=10.083 LG chi2/ndf=0.893 EGE chi2/ndf=0.923
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.500 EGE chi2/ndf=1.311
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.610 EGE chi2/ndf=1.643
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.670 EGE chi2/ndf=1.502
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.632 EGE chi2/ndf=1.568
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.040 EGE chi2/ndf=1.080
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.274 EGE chi2/ndf=1.162
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.961 EGE chi2/ndf=0.937
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.300 LG chi2/ndf=1.649 EGE chi2/ndf=1.407
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.370 LG chi2/ndf=2.017 EGE chi2/ndf=2.116
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.449 LG chi2/ndf=2.115 EGE chi2/ndf=1.571
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.954 EGE chi2/ndf=1.383
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.687 EGE chi2/ndf=2.051
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=0.759
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.759 LG chi2/ndf=40.426 EGE chi2/ndf=2.229
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=0.890
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.890 LG chi2/ndf=46.466 EGE chi2/ndf=2.161
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=1.036
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=1.036 LG chi2/ndf=51.122 EGE chi2/ndf=1.883
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L1QTemplate EkCen=1.198
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=1.198 LG chi2/ndf=78.738 EGE chi2/ndf=2.044
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=1.378 LG chi2/ndf=2.880 EGE chi2/ndf=2.970
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=1.576 LG chi2/ndf=3.589 EGE chi2/ndf=2.877
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.300 LG chi2/ndf=1.729 EGE chi2/ndf=1.801
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.370 LG chi2/ndf=1.722 EGE chi2/ndf=1.516
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.449 LG chi2/ndf=2.092 EGE chi2/ndf=1.401
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.332 EGE chi2/ndf=2.436
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.254 EGE chi2/ndf=1.227
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.992 EGE chi2/ndf=2.372
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.890 LG chi2/ndf=3.592 EGE chi2/ndf=1.915
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=1.036 LG chi2/ndf=4.307 EGE chi2/ndf=2.538
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L2QTemplate EkCen=1.198
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=1.198 LG chi2/ndf=41.951 EGE chi2/ndf=2.505
+  [warn] boundary: LG-3 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L2QTemplate EkCen=1.378
+  [warn] boundary: LG-4 par#0 Width = 0.110 in [0.005,0.110] Boron/TOF/L2QTemplate EkCen=1.378
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=1.378 LG chi2/ndf=48.972 EGE chi2/ndf=2.290
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=1.576 LG chi2/ndf=2.070 EGE chi2/ndf=2.048
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=0.642 LG chi2/ndf=1.581 EGE chi2/ndf=1.383
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=0.759 LG chi2/ndf=2.483 EGE chi2/ndf=1.424
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=0.890 LG chi2/ndf=2.387 EGE chi2/ndf=1.799
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.776 EGE chi2/ndf=0.929
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.571 EGE chi2/ndf=1.526
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.417 EGE chi2/ndf=1.532
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.259 EGE chi2/ndf=1.273
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.147 EGE chi2/ndf=1.144
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.302 EGE chi2/ndf=1.308
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.571 EGE chi2/ndf=1.688
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.266 EGE chi2/ndf=1.254
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.291 EGE chi2/ndf=1.396
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.569 EGE chi2/ndf=1.498
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.591 EGE chi2/ndf=1.425
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=3.997 LG chi2/ndf=0.837 EGE chi2/ndf=0.886
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.210 EGE chi2/ndf=1.246
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.334 EGE chi2/ndf=1.433
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Boron/NaF/L2QTemplate EkCen=0.642
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=0.642 LG chi2/ndf=1.309 EGE chi2/ndf=1.244
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.641 EGE chi2/ndf=1.284
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.746 EGE chi2/ndf=1.574
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.342 EGE chi2/ndf=1.351
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.388 EGE chi2/ndf=1.214
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.558 EGE chi2/ndf=1.238
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.269 EGE chi2/ndf=1.101
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.227 EGE chi2/ndf=1.278
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.185 EGE chi2/ndf=1.282
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.426 EGE chi2/ndf=1.489
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.151 EGE chi2/ndf=1.233
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.315 EGE chi2/ndf=1.352
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.839 EGE chi2/ndf=1.921
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.902 EGE chi2/ndf=0.970
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.233 EGE chi2/ndf=1.264
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.227 EGE chi2/ndf=1.293
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.248 EGE chi2/ndf=1.173
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=2.299 LG chi2/ndf=0.999 EGE chi2/ndf=1.059
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=2.584 LG chi2/ndf=2.013 EGE chi2/ndf=1.943
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.329 EGE chi2/ndf=1.442
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.489 EGE chi2/ndf=1.690
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.846 EGE chi2/ndf=1.839
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.366 EGE chi2/ndf=1.308
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.283 EGE chi2/ndf=1.451
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.788 EGE chi2/ndf=1.425
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.663 EGE chi2/ndf=1.811
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.639 EGE chi2/ndf=1.826
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.486 EGE chi2/ndf=1.523
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.650 EGE chi2/ndf=1.499
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.133 EGE chi2/ndf=1.262
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.258 EGE chi2/ndf=1.226
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.253 EGE chi2/ndf=1.404
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.332 EGE chi2/ndf=1.419
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.086 EGE chi2/ndf=1.167
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.554 EGE chi2/ndf=1.632
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.474 EGE chi2/ndf=1.623
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.747 EGE chi2/ndf=1.984
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.146 EGE chi2/ndf=1.170
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.043 EGE chi2/ndf=1.029
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.209 EGE chi2/ndf=1.355
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=2.299 LG chi2/ndf=1.004 EGE chi2/ndf=0.998
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=2.584 LG chi2/ndf=2.076 EGE chi2/ndf=2.309
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.406 EGE chi2/ndf=1.693
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.609 EGE chi2/ndf=1.972
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.351 EGE chi2/ndf=1.457
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=3.997 LG chi2/ndf=0.984 EGE chi2/ndf=1.106
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.934 EGE chi2/ndf=2.098
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.312 EGE chi2/ndf=1.523
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.206 EGE chi2/ndf=1.331
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.831 EGE chi2/ndf=1.825
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.315 EGE chi2/ndf=1.352
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.626 EGE chi2/ndf=1.662
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.122 EGE chi2/ndf=1.331
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.010 EGE chi2/ndf=1.234
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.126 EGE chi2/ndf=1.346
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.360 EGE chi2/ndf=1.435
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.824 EGE chi2/ndf=1.929
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.362 EGE chi2/ndf=1.364
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.898 EGE chi2/ndf=1.871
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.101 EGE chi2/ndf=1.018
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.684 EGE chi2/ndf=1.537
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.315 EGE chi2/ndf=1.391
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.148 EGE chi2/ndf=1.148
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.300 LG chi2/ndf=0.616 EGE chi2/ndf=0.623
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.370 LG chi2/ndf=2.901 EGE chi2/ndf=2.919
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.940 EGE chi2/ndf=1.865
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.559 EGE chi2/ndf=1.707
+  [warn] boundary: LG par#0 Width = 0.005 in [0.005,0.110] Carbon/TOF/L1QTemplate EkCen=0.642
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.642 LG chi2/ndf=1.530 EGE chi2/ndf=1.653
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.759 LG chi2/ndf=1.131 EGE chi2/ndf=1.266
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.459 EGE chi2/ndf=1.748
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=1.036 LG chi2/ndf=1.604 EGE chi2/ndf=1.777
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=1.198 LG chi2/ndf=1.326 EGE chi2/ndf=1.426
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=1.378 LG chi2/ndf=1.783 EGE chi2/ndf=1.906
+  [warn] boundary: LG par#0 Width = 0.005 in [0.005,0.110] Carbon/TOF/L1QTemplate EkCen=1.576
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=1.576 LG chi2/ndf=1.657 EGE chi2/ndf=1.797
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.300 LG chi2/ndf=0.818 EGE chi2/ndf=0.933
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.370 LG chi2/ndf=1.150 EGE chi2/ndf=1.298
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.155 EGE chi2/ndf=1.464
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.539 LG chi2/ndf=1.681 EGE chi2/ndf=1.827
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.642 LG chi2/ndf=0.822 EGE chi2/ndf=0.903
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.759 LG chi2/ndf=0.805 EGE chi2/ndf=0.895
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.752 EGE chi2/ndf=2.181
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=1.036 LG chi2/ndf=1.220 EGE chi2/ndf=1.965
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=1.198 LG chi2/ndf=1.046 EGE chi2/ndf=1.158
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=1.378 LG chi2/ndf=1.731 EGE chi2/ndf=1.854
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=1.576 LG chi2/ndf=1.586 EGE chi2/ndf=1.946
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=0.642 LG chi2/ndf=0.742 EGE chi2/ndf=0.819
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.022 EGE chi2/ndf=1.129
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.523 EGE chi2/ndf=1.718
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.360 EGE chi2/ndf=1.500
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.347 EGE chi2/ndf=1.489
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.218 EGE chi2/ndf=1.345
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.229 EGE chi2/ndf=1.380
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.371 EGE chi2/ndf=1.518
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.627 EGE chi2/ndf=1.783
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.299 LG chi2/ndf=0.835 EGE chi2/ndf=0.919
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.308 EGE chi2/ndf=1.469
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.180 EGE chi2/ndf=1.304
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=3.234 LG chi2/ndf=0.765 EGE chi2/ndf=0.869
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.334 EGE chi2/ndf=1.464
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.437 EGE chi2/ndf=1.587
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.604 EGE chi2/ndf=1.761
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.299 EGE chi2/ndf=1.480
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=0.642 LG chi2/ndf=0.827 EGE chi2/ndf=0.937
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.214 EGE chi2/ndf=1.351
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=0.890 LG chi2/ndf=0.967 EGE chi2/ndf=1.073
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.196 EGE chi2/ndf=1.326
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.044 EGE chi2/ndf=1.160
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.156 EGE chi2/ndf=1.281
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/NaF/L2QTemplate EkCen=1.576
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.059 EGE chi2/ndf=1.420
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.795 LG chi2/ndf=0.906 EGE chi2/ndf=1.079
+  [warn] boundary: EGE par#3 SigmaR = 0.500 in [0.010,0.500] Carbon/NaF/L2QTemplate EkCen=2.036
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.039 EGE chi2/ndf=1.341
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.098 EGE chi2/ndf=1.326
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.104 EGE chi2/ndf=1.290
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.010 EGE chi2/ndf=1.119
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=3.234 LG chi2/ndf=0.586 EGE chi2/ndf=0.643
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.890 EGE chi2/ndf=1.112
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=3.997 LG chi2/ndf=0.562 EGE chi2/ndf=0.620
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.035 EGE chi2/ndf=1.154
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.451 EGE chi2/ndf=1.745
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=2.299 LG chi2/ndf=0.809 EGE chi2/ndf=0.948
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=2.584 LG chi2/ndf=1.174 EGE chi2/ndf=1.671
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.084 EGE chi2/ndf=1.780
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.727 EGE chi2/ndf=2.029
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.694 EGE chi2/ndf=2.104
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.368 EGE chi2/ndf=1.542
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=4.425 LG chi2/ndf=0.720 EGE chi2/ndf=0.851
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L1QTemplate EkCen=4.894
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.689 EGE chi2/ndf=2.610
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.747 EGE chi2/ndf=1.945
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=5.907 LG chi2/ndf=2.554 EGE chi2/ndf=2.839
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.680 EGE chi2/ndf=1.862
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=7.098 LG chi2/ndf=0.952 EGE chi2/ndf=1.139
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=7.769 LG chi2/ndf=0.997 EGE chi2/ndf=1.170
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.082 EGE chi2/ndf=1.376
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=9.261 LG chi2/ndf=0.451 EGE chi2/ndf=0.542
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.049 EGE chi2/ndf=1.163
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.482 EGE chi2/ndf=1.828
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=11.952 LG chi2/ndf=0.977 EGE chi2/ndf=1.100
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.094 EGE chi2/ndf=1.232
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.556 EGE chi2/ndf=1.938
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=15.245 LG chi2/ndf=2.016 EGE chi2/ndf=2.460
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.234 EGE chi2/ndf=1.464
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.928 EGE chi2/ndf=2.132
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=2.299 LG chi2/ndf=1.029 EGE chi2/ndf=1.148
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=2.584 LG chi2/ndf=0.528 EGE chi2/ndf=1.071
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.093 EGE chi2/ndf=2.039
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.246 EGE chi2/ndf=1.369
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=3.600
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.718 EGE chi2/ndf=2.767
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=3.997 LG chi2/ndf=0.810 EGE chi2/ndf=1.207
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.449 EGE chi2/ndf=1.796
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.254 EGE chi2/ndf=1.473
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=5.388 LG chi2/ndf=0.854 EGE chi2/ndf=1.718
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=5.907 LG chi2/ndf=0.723 EGE chi2/ndf=1.004
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.469 EGE chi2/ndf=1.973
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=7.098 LG chi2/ndf=0.559 EGE chi2/ndf=0.969
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.589 EGE chi2/ndf=1.896
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.092 EGE chi2/ndf=1.332
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=9.261 LG chi2/ndf=0.635 EGE chi2/ndf=0.853
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=10.083
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.540 EGE chi2/ndf=2.088
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=10.980
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.063 EGE chi2/ndf=1.442
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=11.952
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.123 EGE chi2/ndf=1.765
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=12.975 LG chi2/ndf=0.810 EGE chi2/ndf=1.220
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.059 EGE chi2/ndf=1.418
+  [warn] boundary: LG par#0 Width = 0.110 in [0.005,0.110] Carbon/AGL/L2QTemplate EkCen=15.245
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.792 EGE chi2/ndf=2.293
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=16.493 LG chi2/ndf=0.943 EGE chi2/ndf=1.312
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.731 EGE chi2/ndf=0.818
+All parameter histograms saved to /eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy.root

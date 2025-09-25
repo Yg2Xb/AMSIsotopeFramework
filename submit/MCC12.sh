@@ -25,6 +25,6 @@ fi
 for line in "$@"; do
     echo "Processing file: $line"
     basename_of_file=$(basename "$line")
-    /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/main_exe \
+    /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/SampleProduction \
         /eos/user/z/zixuan/Isotope/MC/C12 "$basename_of_file" "$line" "6|MC" 12
 done

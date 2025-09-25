@@ -383,7 +383,7 @@ CutResult<6> TrackerCut::chargeTempFitCut(int charge, bool isISS, bool isNormalL
                   cutUTOFQ(charge, isISS, false, false, coe).total;
 
         // L2Q模板: 使用L38InnerAveQ cut
-        bool innerL38Cut = std::abs(status_.L38InnerAveQ - charge) < coe*0.4; // 25.0605, 0.45 to 0.4
+        bool innerL38Cut = std::abs(status_.L38InnerAveQ - charge) < coe*0.4; // 
         bool l2QStatus = (event_->tk_qls[1]&0x10013D)==0;
         cuts[i+3] = basicCuts && innerL38Cut && 
                     cutUTOFQ(charge, isISS, false, false, coe).total && l2QStatus &&
@@ -487,11 +487,11 @@ CutResult<6> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS) const 
     // innerQ 的 RMS 质量位（details[1]）
     const bool innerQ_rms_ok = cutInnerQ(charge, isISS, false, false, 1.0).details[1];
 
-    // 模板所需的 coe=0.5 cut
-    const auto innerQ05  = cutInnerQ(charge, isISS, false, false, 0.5);
-    const auto utofQ05   = cutUTOFQ(charge, isISS, false, false, 0.5);
-    const auto l1n05     = cutL1Norm(charge, isISS, 0.5);
-    const auto l1u05     = cutL1Unbiased(charge, isISS, false, false, 0.5);
+    // 模板所需的 coe=0.8 cut
+    const auto innerQcoe  = cutInnerQ(charge, isISS, false, false, 0.8);
+    const auto utofQcoe   = cutUTOFQ(charge, isISS, false, false, 0.8);
+    const auto l1ncoe     = cutL1Norm(charge, isISS, 0.8);
+    const auto l1ucoe     = cutL1Unbiased(charge, isISS, false, false, 0.8);
 
     // L2 质量
     const bool L2XY      = std::bitset<32>(event_->tk_hitb[0]).test(1);
@@ -504,14 +504,14 @@ CutResult<6> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS) const 
     cuts[0] = innerQ_in && innerQ_rms_ok && L1Norm_quality; // normal
     cuts[1] = innerQ_in && innerQ_rms_ok && L1Unb_quality;  // unbiased
 
-    // 2) L1QTemplate（coe=0.5；L1 仅质量位）
-    cuts[2] = innerQ05.total && utofQ05.total && L1Norm_quality; // normal
-    cuts[3] = innerQ05.total && utofQ05.total && L1Unb_quality;  // unbiased
+    // 2) L1QTemplate（coe=0.8；L1 仅质量位）
+    cuts[2] = innerQcoe.total && utofQcoe.total && L1Norm_quality; // normal
+    cuts[3] = innerQcoe.total && utofQcoe.total && L1Unb_quality;  // unbiased
 
-    // 3) L2QTemplate（L1 完整 coe=0.5，含电荷窗）
-    const bool L38_ok = std::abs(L38 - charge) < 0.45 * 0.5;
-    cuts[4] = L2XY && L2QStatus && L38_ok && utofQ05.total && l1n05.total; // normal
-    cuts[5] = L2XY && L2QStatus && L38_ok && utofQ05.total && l1u05.total; // unbiased
+    // 3) L2QTemplate（L1 完整 coe=0.8，含电荷窗）
+    const bool L38_ok = std::abs(L38 - charge) < 0.45 * 0.8;
+    cuts[4] = L2XY && L2QStatus && L38_ok && utofQcoe.total && l1ncoe.total; // normal
+    cuts[5] = L2XY && L2QStatus && L38_ok && utofQcoe.total && l1ucoe.total; // unbiased
 
     return CutResult<6>(cuts, false);
 }

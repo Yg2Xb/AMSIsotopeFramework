@@ -1,8 +1,8 @@
 Universe  = vanilla
 executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSLit.sh
-output      = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_$(Cluster).$(Process)
-error       = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/output_$(Cluster).$(Process)
-log         = /afs/cern.ch/work/z/zuhao/public/yanzx/log9/log_$(Cluster)
+output      = /afs/cern.ch/user/z/zixuan/public/logISS/output_$(Cluster).$(Process)
+error       = /afs/cern.ch/user/z/zixuan/public/logISS/output_$(Cluster).$(Process)
+log         = /afs/cern.ch/user/z/zixuan/public/logISS/log_$(Cluster)
 +AMSPublic = True
 +JobFlavour = "workday"
 transfer_output_files = ""

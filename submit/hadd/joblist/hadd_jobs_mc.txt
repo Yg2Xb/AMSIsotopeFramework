@@ -1,0 +1,8 @@
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_B10.txt B10.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_B11.txt B11.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_Be10.txt Be10.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_Be7.txt Be7.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_Be9.txt Be9.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_C12.txt C12.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_N14.txt N14.root
+/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/hadd/joblist/list_O16.txt O16.root

@@ -1,8 +1,8 @@
 Universe  = vanilla
 executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/MCN15.sh
-output      = /afs/cern.ch/work/z/zuhao/public/yanzx/logMC/output_$(Cluster).$(Process)
-error       = /afs/cern.ch/work/z/zuhao/public/yanzx/logMC/output_$(Cluster).$(Process)
-log         = /afs/cern.ch/work/z/zuhao/public/yanzx/logMC/log_$(Cluster)
+output      = /afs/cern.ch/user/z/zixuan/public/logMC/output_$(Cluster).$(Process)
+error       = /afs/cern.ch/user/z/zixuan/public/logMC/output_$(Cluster).$(Process)
+log         = /afs/cern.ch/user/z/zixuan/public/logMC/log_$(Cluster)
 +AMSPublic = True
 +JobFlavour = "longlunch"
 transfer_output_files = ""

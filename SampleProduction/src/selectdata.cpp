@@ -237,9 +237,9 @@ void selectdata::Loop() {
         
 		// Detector beta quality selection for ID/BKG usage
 		bool BetaDetectorCutResult[3] = {
-			tof_cut.cutTOF(charge, isISS).total && Tools::isValidBeta(beta_det[0]),
-			rich_NaF && rich_cut.cutRICH(charge, isISS, true).total && Tools::isValidBeta(beta_det[1]),
-			!rich_NaF && rich_cut.cutRICH(charge, isISS, true).total && Tools::isValidBeta(beta_det[2])
+			tof_cut.cutTOF(charge, isISS).total,
+			rich_NaF && rich_cut.cutRICH(charge, isISS, true).total,
+			!rich_NaF && rich_cut.cutRICH(charge, isISS, true).total
 		};
 
 		// Precompute beyondBetaCutoff mask for all (Z,A) in Constants lists
@@ -248,7 +248,7 @@ void selectdata::Loop() {
 			for (int n = 0; n < Constants::N_nuc; ++n) {
 				int Z = Constants::nuclei_Z[n]; int A = Constants::nuclei_A[n];
 				auto betaBins = binMgr.GetBetaBins(Z, A);
-				if (beta_det[d] >= 1) { beyondBetaCutoff[d][n] = true; continue; }
+				if (!isISS || beta_det[d] >= 1) { beyondBetaCutoff[d][n] = true; continue; }
 				int betaBin = Tools::findBin(betaBins, beta_det[d]);
 				if (betaBin >= 0) {
 					double betaLow = betaBins[betaBin];
@@ -274,7 +274,6 @@ void selectdata::Loop() {
 
 			for (int d = 0; d < NdetLoc; ++d) {
 				if (!BetaDetectorCutResult[d]) continue;
-				if (ek_det[d] <= 0 || !Tools::isValidBeta(beta_det[d])) continue;
 
 				auto mres = Tools::calculateMass(beta_det[d], 1.0, rig_chain[c], charge);
 				if (mres.invMass <= 0) continue;
@@ -315,26 +314,18 @@ void selectdata::Loop() {
         // [FILL] ID.H7a/H7b (per chain): Delta(1/beta) vs RICH beta*gamma
         for (int c = 0; c < std::min(2, NchainLoc); ++c) {
             if (!TwoAccTrackerCutResult[c]) continue;
-            if (!(tof_cut.cutTOF(charge, isISS).total && rich_cut.cutRICH(charge, isISS, true).total)) continue;
-            if (!(Tools::isValidBeta(beta_det[0]) && Tools::isValidBeta(richBeta))) continue;
+            if (!(tof_cut.cutTOF(charge, isISS).total && rich_cut.cutRICH(charge, isISS, true).total) && richBeta > 0) continue;
 
             const double dx = 1.0 / beta_det[0] - 1.0 / richBeta;
-            const double bg = richBeta / std::sqrt(std::max(1e-12, 1.0 - richBeta * richBeta));
-
-			if (std::isnan(dx) || std::isnan(bg) || std::isinf(dx) || std::isinf(bg)) {
-				std::cerr << "[WARN] H7 invalid values at entry " << jentry << " | dx=" << dx << " | bg=" << bg
-				          << " | beta_tof=" << beta_det[0] << " | beta_rich=" << richBeta << std::endl;
-				continue;
-			}
 
             if (rich_NaF) {
-                if (getBeyondBetaCutoffCut(1, charge, UseMass)) {
-                    if (auto* h = histManager->IDH7a[c].get()) h->Fill(dx, bg, weight_NucFlux);
+                if (rig_chain[c] > Constants::SAFE_FACTOR_RIG * cutOffRig) {
+                    if (auto* h = histManager->IDH7a[c].get()) h->Fill(dx, richBeta*rig_chain[c], weight_NucFlux);
                     else std::cerr << "[ERROR] IDH7a["<<c<<"] is null" << std::endl;
                 }
             } else {
-                if (getBeyondBetaCutoffCut(2, charge, UseMass)) {
-                    if (auto* h = histManager->IDH7b[c].get()) h->Fill(dx, bg, weight_NucFlux);
+                if (rig_chain[c] > Constants::SAFE_FACTOR_RIG * cutOffRig) {
+                    if (auto* h = histManager->IDH7b[c].get()) h->Fill(dx, richBeta*rig_chain[c],  weight_NucFlux);
                     else std::cerr << "[ERROR] IDH7b["<<c<<"] is null" << std::endl;
                 }
             }
@@ -346,9 +337,9 @@ void selectdata::Loop() {
 		// =========================
 		// Detector validity for BKG (quality-only, full version)
 		bool detValidBkg[3] = {
-			tof_cut.cutTOF(charge, isISS).total && Tools::isValidBeta(beta_det[0]),
-			rich_cut.cutRICHforBkg(charge, isISS, true).total && Tools::isValidBeta(beta_det[1]),
-			rich_cut.cutRICHforBkg(charge, isISS, true).total && Tools::isValidBeta(beta_det[2])
+			tof_cut.cutTOF(charge, isISS).total,
+			rich_cut.cutRICHforBkg(charge, isISS, true).total,
+			rich_cut.cutRICHforBkg(charge, isISS, true).total
 		};
         
 
@@ -447,7 +438,6 @@ void selectdata::Loop() {
 							// Reconstruct mass at L2 with fragment charge hypothesis (fragZ)
 							// Use per-chain rigidity consistent with your H2/H3 logic
 							auto mres_frag = Tools::calculateMass(beta_det[d], 1.0, rig_chain[c], fragZ);
-							if (!(mres_frag.invMass > 0)) continue; // protect invalid mass
 							const double invMass_rec = mres_frag.invMass;
 
 							// Fragment isotope slots (align with HistManager booking order)
@@ -512,9 +502,9 @@ void selectdata::Loop() {
 				bool TwoAccTrackerCutResult_frag[2] = { twoAcc_frag.details[0], twoAcc_frag.details[1] };
 
 				bool BetaDetectorCutResult_frag[3] = {
-					tof_cut.cutTOF(fragZ, isISS).total && Tools::isValidBeta(beta_det[0]),
-					rich_NaF && rich_cut.cutRICH(fragZ, isISS, true).total && Tools::isValidBeta(beta_det[1]),
-					!rich_NaF && rich_cut.cutRICH(fragZ, isISS, true).total && Tools::isValidBeta(beta_det[2])
+					tof_cut.cutTOF(fragZ, isISS).total,
+					rich_NaF && rich_cut.cutRICH(fragZ, isISS, true).total,
+					!rich_NaF && rich_cut.cutRICH(fragZ, isISS, true).total
 				};
 
 				const bool requireBeMother = (charge > 4);
@@ -524,25 +514,31 @@ void selectdata::Loop() {
 
 					for (int d = 0; d < NdetLoc; ++d) {
 						if (!BetaDetectorCutResult_frag[d]) continue;
-						if (ek_det[d] <= 0 || !Tools::isValidBeta(beta_det[d])) continue;
 
 						for (int bi = 0; bi < NisoBKG; ++bi) {
 							const int targetFragID = fragIDs_global[bi];
 
 							// H3a: upTOF fragmentation
 							if (mtrpar[1] == targetFragID && (!requireBeMother || mtrpar[0] == 4)) {
-								if (auto* h3a = histManager->MC_BKGH3a[c][d][bi].get())
-									h3a->Fill(ek_det[d], weight_NucFlux);
+								if (auto* h3a = histManager->MC_BKGH3a[c][d][bi].get()){
+									//h3a->Fill(ek_det[d], weight_NucFlux);
+									h3a->Fill(Tools::rigidityToKineticEnergy(mmom/mch, charge, UseMass), weight_NucFlux);
+                                }
 								else
+                                {
 									std::cerr << "[ERROR] MC_BKGH3a["<<c<<"]["<<d<<"]["<<bi<<"] is null" << std::endl;
+                                }
 							}
 
 							// H3b: survival in RICH
 							if (mtrpar[1] == targetFragID && (!requireBeMother || mtrpar[0] == 4) && mtrpar[7] == targetFragID) {
-								if (auto* h3b = histManager->MC_BKGH3b[c][d][bi].get())
-									h3b->Fill(ek_det[d], weight_NucFlux);
-								else
+								if (auto* h3b = histManager->MC_BKGH3b[c][d][bi].get()){
+									//h3b->Fill(ek_det[d], weight_NucFlux);
+                                    h3b->Fill(Tools::rigidityToKineticEnergy(mmom/mch, charge, UseMass), weight_NucFlux);
+                                }
+								else{
 									std::cerr << "[ERROR] MC_BKGH3b["<<c<<"]["<<d<<"]["<<bi<<"] is null" << std::endl;
+                                }
 							}
 						}
 					}
