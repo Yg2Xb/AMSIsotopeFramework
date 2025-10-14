@@ -455,7 +455,7 @@ std::array<bool,2> TrackerCut::BkgSourceOrFragCut(int charge, bool isISS, int fr
     const double q_l1_unb = event_->tk_exqln[Tracker::ChargeReco::DEFAULT][0][Tracker::Direction::DEFAULT];
     const double q_l1_nrm = event_->tk_qln   [Tracker::ChargeReco::DEFAULT][0][Tracker::Direction::DEFAULT];
     // L1 charge windows
-    const double l1_low_side = (charge==4||charge==5||charge==7) ? 0.2 : ((charge==6||charge==8) ? 0.4 : 0.3);
+    const double l1_low_side = (charge==4||charge==5||charge==7) ? 0.2 : ((charge==6||charge==8) ? 0.2 : 0.2);
     const bool pass_q_unb = (q_l1_unb > charge - l1_low_side) && (q_l1_unb < charge + 0.4);
     const bool pass_q_nrm = (q_l1_nrm > charge - l1_low_side) && (q_l1_nrm < charge + 0.4);
     pass[0] = (l1_unbiased.details[2] && l1_unbiased.details[3]) && pass_q_unb;                 // Unbiased L1
@@ -499,7 +499,7 @@ CutResult<6> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS, bool f
     const bool L2QStatus = ((event_->tk_qls[1] & 0x10013D) == 0);
 
     // 1) L1QSignal（fragZ 决定下沿；不限制 L1 电荷量）
-    const double q_low  = (fragZ > 0) ? (fragZ - 0.65) : 3.45;
+    const double q_low  = (fragZ > 0) ? (fragZ - 0.55) : 3.45;
     const double q_high = charge + 0.45;
     const bool innerQ_in = (innerQ > q_low && innerQ < q_high);
     cuts[0] = innerQ_in && innerQ_rms_ok && L1Norm_quality; // normal

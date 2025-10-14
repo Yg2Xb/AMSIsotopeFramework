@@ -147,9 +147,9 @@
  
  CutResult<2> RICHCut::cutRICHforBkg(int charge, bool isISS, bool interpolate) const {
      std::array<bool, 2> cuts{
-         //cutGeometry(interpolate).total,
          isISS ? event_->rich_goodgeo : cutGeometry(interpolate).total,
-         event_->rich_NaF ? true : (event_->rich_npe[0] / event_->rich_npe[2]) > RICH::cut_per[richRegion]
+         cutBasic().total
+         // no charge cut
      };
  
      return CutResult<2>(cuts);

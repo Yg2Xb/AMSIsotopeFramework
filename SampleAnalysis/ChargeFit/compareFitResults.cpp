@@ -31,12 +31,12 @@ struct FitResult {
 };
 
 struct Config {
-    string file_v05 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5.root";
-    string file_v08 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter2.root";
-    string main_analysis_file_path = file_v08; 
+    string file_v05 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter1.root";
+    string file_v08 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter1.root";
+    string main_analysis_file_path = file_v05; 
     string output_dir = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/";
     vector<string> elements = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
-    //vector<string> elements = {"Oxygen"};
+    //vector<string> elements = {"Boron"};
     vector<string> detectors = {"TOF", "NaF", "AGL"};
     vector<string> chains = {"L1Inner", "UnbiasedL1Inner"};
     vector<string> templates = {"L1QTemplate", "L2QTemplate"};
@@ -153,9 +153,9 @@ FitResult performSplineFit(TH1* hist, const string& detector, const string& base
     cout << "\n[INFO] Starting smart spline fit for: " << baseName << " (" << valid_bin_centers.size() << " points)" << endl;
 
     const map<int, double> chi2ndf_thresholds = {
-        {1, 1.8}, {2, 2.5}, {3, 3.0}, {4, 4.0}, {5, 5.0}, {6, 4.0}, {7, 4.0}, {8, 4.0}
+        {1, 1.8}, {2, 2.5}, {3, 3.0}, {4, 4.0}, {5, 5.0}, {6, 4.0}, {7, 4.0}
     };
-    const int max_segments = (detector == "TOF") ? 5 : 8;
+    const int max_segments = (detector == "TOF") ? 5 : 7;
 
     map<int, pair<double, int>> fit_quality;
     int best_seg_idx = -1;
@@ -444,7 +444,7 @@ void compareFitResults() {
     string main_version_tag = (gConfig.main_analysis_file_path == gConfig.file_v05) ? "0.5" : "0.8";
 
     // --- START OF MODIFICATION 5: Open the output file at the beginning ---
-    string splineOutFile = gConfig.output_dir + "allFitHistSplineSmooth_" + main_version_tag + "_iter2.root";
+    string splineOutFile = gConfig.output_dir + "allFitHistSplineSmooth_" + main_version_tag + "_iter1.root";
     gSplineOutFile = make_unique<TFile>(splineOutFile.c_str(), "RECREATE");
     if (!gSplineOutFile || gSplineOutFile->IsZombie()) {
         cout << "[ERROR] Cannot create output spline file: " << splineOutFile << endl;
@@ -458,22 +458,22 @@ void compareFitResults() {
     //plotFitFileVersionComparison(fin_v05.get(), fin_v08.get(), c, pdfName_version);
     c->Print((pdfName_version + "]").c_str());
 
-    string pdfName_template = gConfig.output_dir + "FitParam_TemplateCompare_" + main_version_tag + "_iter2.pdf";
+    string pdfName_template = gConfig.output_dir + "FitParam_TemplateCompare_" + main_version_tag + "_iter1.pdf";
     c->Print((pdfName_template + "[").c_str());
     plotTemplateComparison(fin_main.get(), c, pdfName_template);
     c->Print((pdfName_template + "]").c_str());
     
-    string pdfName_detector = gConfig.output_dir + "FitParam_DetectorCompare_" + main_version_tag + "_iter2.pdf";
+    string pdfName_detector = gConfig.output_dir + "FitParam_DetectorCompare_" + main_version_tag + "_iter1.pdf";
     c->Print((pdfName_detector + "[").c_str());
     plotDetectorComparison(fin_main.get(), c, pdfName_detector);
     c->Print((pdfName_detector + "]").c_str());
     
-    string pdfName_chain = gConfig.output_dir + "FitParam_ChainCompare_" + main_version_tag + "_iter2.pdf";
+    string pdfName_chain = gConfig.output_dir + "FitParam_ChainCompare_" + main_version_tag + "_iter1.pdf";
     c->Print((pdfName_chain + "[").c_str());
     plotChainComparison(fin_main.get(), c, pdfName_chain);
     c->Print((pdfName_chain + "]").c_str());
     
-    string pdfName_chi2 = gConfig.output_dir + "FitParam_Chi2ModelCompare_" + main_version_tag + "_iter2.pdf";
+    string pdfName_chi2 = gConfig.output_dir + "FitParam_Chi2ModelCompare_" + main_version_tag + "_iter1.pdf";
     c->Print((pdfName_chi2 + "[").c_str());
     plotModelChi2Comparison(fin_main.get(), c, pdfName_chi2);
     c->Print((pdfName_chi2 + "]").c_str());

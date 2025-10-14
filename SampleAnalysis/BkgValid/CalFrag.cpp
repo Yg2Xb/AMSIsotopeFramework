@@ -186,7 +186,9 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
     for (int i_bin = 1; i_bin <= nBins; ++i_bin) {
         // Get bin center directly from the reference axis
         double binCenter = xAxis->GetBinCenter(i_bin);
-        std::string det = (binCenter < 1.17) ? "TOF" : (binCenter < 3.23) ? "NaF" : "AGL";
+        if(binCenter > 22) break; // Limit to 22 GeV/n as before
+        std::string det = (binCenter < 1.28) ? "TOF" : (binCenter < 3.06) ? "NaF" : "AGL";
+
 
         ValueWithError rawFragCounts_vw(rawFragCountsHists[det]->GetBinContent(i_bin), rawFragCountsHists[det]->GetBinError(i_bin));
         ValueWithError sourceYield_vw(sourceYieldHists[det]->GetBinContent(i_bin), sourceYieldHists[det]->GetBinError(i_bin));

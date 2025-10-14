@@ -45,7 +45,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
     const string suffix = usePureTemplates ? "" : "MC_";
 
     // Construct input file paths (UNCHANGED as requested)
-    string dataFilePath = "/eos/user/z/zixuan/Isotope/Add/" + config.name + "_all.root";
+    string dataFilePath = "/eos/user/z/zixuan/Isotope/Add/" + config.name + Form("_frag%d.root",config.charge);
     vector<unique_ptr<TFile>> f_mc_vec;
     for (int mass : config.masses) {
         string mcFilePath = Form("/eos/user/z/zixuan/Isotope/Add/%s%d_rew_frag%d.root", config.name.c_str(), mass, config.charge);
@@ -140,8 +140,8 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
             Form("%s Entries;E_{k}/n [GeV/n];Entries", DetName[idet]), ek_bins.size() - 1, ek_bins.data());
 
         // Loop over energy bins
-        for (int ibin = 1; ibin < ek_bins.size(); ++ibin) {
-            double ek_center = 0.5 * (ek_bins[ibin-1] + ek_bins[ibin]);
+        for (int ibin = 1; ibin < ek_bins.size(); ibin = ibin+ProNbin) {
+            double ek_center = 0.5 * (ek_bins[ibin-1] + ek_bins[ibin+ProNbin-1]);
 
             // Check if bin center is within the detector's valid energy range
             if (ek_center < DetRanges[idet][0] || ek_center > DetRanges[idet][1]) {
@@ -160,6 +160,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
                     break;
                 }
                 TH1D* mc_proj = mc_hist_2d->ProjectionX(Form("mc_proj_%d_%d", ibin, i), ibin, ibin+ProNbin-1);
+                cout<<ProNbin<<endl;
                 mc_proj->Rebin(rebinX);
                 mc_proj->Smooth(1);
                 mc_hists.push_back(mc_proj);
@@ -217,7 +218,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
             RooAddPdf model("model", "Combined Model", pdf_list, frac_list_model);
 
             // Perform the fit
-            cout << "Fitting bin " << ibin << " (Ek: " << ek_bins[ibin-1] << "-" << ek_bins[ibin] << " GeV/n)..." << endl;
+            cout << "Fitting bin " << ibin << " (Ek: " << ek_bins[ibin-1] << "-" << ek_bins[ibin+ProNbin-1] << " GeV/n)..." << endl;
             unique_ptr<RooFitResult> fit_res(model.fitTo(data, RooFit::Save(), RooFit::SumW2Error(kTRUE), RooFit::PrintLevel(-1)));
             
             // 4. ============================ Plotting and Saving Results ============================
@@ -245,7 +246,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
             frame->SetXTitle(Form("1/%s Mass", DetName[idet]));
             frame->SetYTitle("Events");
             frame->GetYaxis()->SetTitleOffset(1.2);
-            frame->SetTitle(Form("%s: E_{k}/n in [%.2f, %.2f] GeV/n", DetName[idet], ek_bins[ibin-1], ek_bins[ibin]));
+            frame->SetTitle(Form("%s: E_{k}/n in [%.2f, %.2f] GeV/n", DetName[idet], ek_bins[ibin-1], ek_bins[ibin+ProNbin-1]));
             frame->Draw();
 
             // Legend
@@ -282,8 +283,8 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
             // Pull Plot
             canvas->cd(2);
             TGraphErrors* pullGraph = new TGraphErrors();
-            pullGraph->SetTitle(Form(";1/%s Mass;Pull", DetName[idet]));
-            setupPullPlot(pullGraph, Form(";1/%s Mass;Pull", DetName[idet]), config.fitRangeLow[idet], config.fitRangeUp[idet]);
+            pullGraph->SetTitle(Form(";Pull;1/%s Mass", DetName[idet]));
+            setupPullPlot(pullGraph, Form(";Pull;1/%s Mass", DetName[idet]), config.fitRangeLow[idet], config.fitRangeUp[idet]);
             calculatePull(frame, pullGraph, "data", "model", config.fitRangeLow[idet], config.fitRangeUp[idet]);
             pullGraph->GetXaxis()->SetRangeUser(config.fitRangeLow[idet], config.fitRangeUp[idet]);
             pullGraph->GetYaxis()->SetRangeUser(-6, 6);
@@ -313,8 +314,14 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
 
         // Write results for this detector to the output file
         output_file->cd();
-        for (auto& h : h_best_fractions) h->Write();
+        for (auto& h : h_best_fractions) 
+        {
+            h->Rebin(ProNbin);
+            h->Write();
+        }
+        h_best_chi2->Rebin(ProNbin);
         h_best_chi2->Write();
+        h_best_entries->Rebin(ProNbin);
         h_best_entries->Write();
     } // End of detector loop
 
@@ -327,14 +334,8 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
 
 // Entry point to run the analysis
 void HistTempFit_hist() {
-    /*
-    HistTempFit("Be", 7, true, true, 1);
-    HistTempFit("Be", 7, false, true, 1);
-    HistTempFit("Be", 7, true, true, 2, 2, true, "Boron");
-    HistTempFit("Be", 7, false, true, 2, 2, true, "Boron");
-    HistTempFit("B", 10, true, true, 1);
-    HistTempFit("B", 10, false, true, 1);
-    */
-    HistTempFit("B", 10, true, true, 1, 1, true, "Carbon");
-    HistTempFit("B", 10, false, true, 1, 1, true, "Carbon");
+    //HistTempFit("Be", 7, false, true, 1, 2);
+    //HistTempFit("Be", 7, false, true, 2, 2, true, "Boron");
+    //HistTempFit("B", 10, false, true, 1, 2);
+    HistTempFit("B", 10, false, true, 1, 2, true, "Carbon");
 }

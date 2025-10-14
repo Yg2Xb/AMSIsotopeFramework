@@ -1,5 +1,5 @@
 Universe  = vanilla
-executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBor2.sh
+executable  = /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/ISSBor2.sh
 output      = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 error       = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 log         = /afs/cern.ch/work/z/zixuan/logISS/log_$(Cluster)
@@ -11,7 +11,7 @@ request_cpus = 1
 request_memory = 700MB
 request_disk = 100MB
  
-queue arguments from /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_jobs_yzx.txt
+queue arguments from /afs/cern.ch/work/z/zuhao/public/yanzx/isotpes_code/submit/ISSBer10.sh/joblist/list_jobs_yzx.txt
 
 
 

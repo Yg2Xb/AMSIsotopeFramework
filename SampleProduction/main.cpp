@@ -36,9 +36,10 @@ int main(int argc, char* argv[]) {
         std::string inData  = argv[3]; // 可以是单个文件，或.txt列表文件
         std::string charge  = argv[4];
         int useMass = (argc > 5) ? atoi(argv[5]) : 0;
+        bool noBkgCut = (argc > 6) ? (atoi(argv[6]) != 0) : false;
 
         // 配置与初始化（内部会根据 inData 自动 readDataFrom）
-        analyzer.setConfig(outDir, outName, inData, charge, useMass);
+        analyzer.setConfig(outDir, outName, inData, charge, useMass, noBkgCut);
         analyzer.initialize();
 
         // 获取数据链并处理

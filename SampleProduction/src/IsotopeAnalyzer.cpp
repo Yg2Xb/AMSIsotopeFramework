@@ -15,12 +15,14 @@ IsotopeAnalyzer& IsotopeAnalyzer::Instance() {
 
 void IsotopeAnalyzer::setConfig(const TString& outDir, const TString& outName,
                                const TString& inData, const TString& inOptions,
-                               int UseMass) {
+                               int UseMass, bool NoBkgCut) {
     outDir_ = outDir;
     outName_ = outName;
     inData_ = inData;
     inOptions_ = inOptions;
     isISS_ = !inOptions.Contains("|MC");
+    isNoBkgCut_ = NoBkgCut;
+
 
     int charge = std::stoi(inOptions.Data());
     if (charge > 0 && charge <= Constants::ELEMENT_COUNT) {
@@ -33,7 +35,7 @@ void IsotopeAnalyzer::setConfig(const TString& outDir, const TString& outName,
 
     std::cout << "Analyzer configured for: " << isotope->getName()
               << (isISS_ ? " (ISS Data)" : " (MC Data)")
-              << ", Z=" << charge << ", A=" << UseMass_ << std::endl;
+              << ", Z=" << charge << ", A=" << UseMass_ << ", isNoBkgCut=" << isNoBkgCut_ << std::endl;
 }
 
 void IsotopeAnalyzer::readDataFrom(TChain* chain, const TString& filename) {

@@ -34,7 +34,7 @@ void selectdata::Loop() {
 	const int charge = analyzer_->getCharge();
 	const int UseMass = analyzer_->getUseMass();
 	auto* histManager = analyzer_->getHistManager();
-	bool forBackground = (UseMass == 9 || UseMass == 11);
+	bool forBackground = analyzer_->isNoBkgCut();
 	if (!histManager) { std::cerr << "Failed to get HistManager\n"; return; }
 
 	auto& binMgr = BinningManager::GetInstance();
@@ -54,7 +54,10 @@ void selectdata::Loop() {
 	{
 			AMS_Iso::Tools::initFluxFunctions();
 	}
-	//AMS_Iso::Tools::initChargeTuning();
+	if(isISS)
+	{
+		AMS_Iso::Tools::initChargeTuning();
+	}
 
 	// Book-keeping for ISS exposure and MC generation accounting
 	std::vector<unsigned int> timeTag;
@@ -384,6 +387,11 @@ void selectdata::Loop() {
 				const int zsrc = source_Z[s];
 				const int Amin_src = getMinAForZ(zsrc);
 				if (Amin_src < 0) continue;
+				bool BetaDetectorCutResult_zsrc[3] = {//charge-dependent
+					tof_cut.cutTOF(zsrc, isISS).total,
+					rich_NaF && rich_cut.cutRICH(zsrc, isISS, true).total,
+					!rich_NaF && rich_cut.cutRICH(zsrc, isISS, true).total
+				};
 
 				// Legacy decisions for BKGH1/BKGH3
 				auto l1Pass = tracker_cut.BkgSourceOrFragCut(zsrc, /*isISS=*/true, fragZ, /*isL2Frag=*/false, forBackground);
@@ -409,7 +417,7 @@ void selectdata::Loop() {
 					// NEW: [FILL] ISS.BKG.H2 (charge vs Ek/n) without charge_types dependency
 					for (int d = 0; d < NdetLoc; ++d) {
 						// direct cutoff beta cut uses (Z=zsrc, A=Amin_src)
-						if (!beyondBetaCutoff_direct[d][s]) continue;
+						if (!getBeyondBetaCutoffCut(d, zsrc, Amin_src)) continue;
 
 						// t = 0 assumed to be L1QSignal
 						{
@@ -427,7 +435,7 @@ void selectdata::Loop() {
 						// t = 1 assumed to be L1QTemplate
 						{
 							bool pass = (c == 1) ? cuts6.details[2] : cuts6.details[3];
-							if (pass && BetaDetectorCutResult[d]) { // L1QTemplate uses FULL detector quality
+							if (pass && BetaDetectorCutResult_zsrc[d]) { // L1QTemplate uses FULL detector quality
 								if (auto* h2 = histManager->ISS_BKGH2[c][s][d][1].get()) {
 									double x_charge = (c == 1) ? tk_ql1 : tk_ql1_unbiased;
 									h2->Fill(x_charge, ek_det[d], weight_NucFlux);
@@ -440,13 +448,12 @@ void selectdata::Loop() {
 						// t = 2 assumed to be L2QTemplate with L2Q Tuning
 						{
 							bool pass = (c == 1) ? cuts6.details[4] : cuts6.details[5];
-							if (pass && BetaDetectorCutResult[d]) { // L2QTemplate uses FULL detector quality
+							if (pass && BetaDetectorCutResult_zsrc[d]) { // L2QTemplate uses FULL detector quality
 								if (auto* h2 = histManager->ISS_BKGH2[c][s][d][2].get()) {
 
 									// --- Start of L2Q Tuning ---
 									// 1. Get the original L2 charge from the current event.
 									const double original_q_l2 = tk_ql2;
-									/*
 									// 2. Determine the energy bin for the current event using the BinningManager.
 									int ekBin = Tools::findBin(StdBetaBins, beta_det[d]);
 									// 3. Define the string parameters for the tuning function.
@@ -459,8 +466,6 @@ void selectdata::Loop() {
 									);
 									// 5. Fill the histogram with the TUNED L2 charge.
 									h2->Fill(tuned_q_l2, ek_det[d], weight_NucFlux);
-									*/
-									h2->Fill(original_q_l2, ek_det[d], weight_NucFlux);
 									// --- End of L2Q Tuning ---
 
 								} else {

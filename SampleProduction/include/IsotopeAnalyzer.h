@@ -24,7 +24,7 @@ public:
     // 配置和初始化
     void setConfig(const TString& outDir, const TString& outName,
                   const TString& inData, const TString& inOptions,
-                  int UseMass = -1);
+                  int UseMass = -1, bool NoBkgCut = false);
     void initialize();
     void write();
     void cleanup();
@@ -35,6 +35,7 @@ public:
     bool isISS() const { return isISS_; }
     int getCharge() const { return isotope ? isotope->getCharge() : -1; }
     int getUseMass() const { return UseMass_; }
+    bool isNoBkgCut() const { return isNoBkgCut_; }
     const std::vector<std::string>& getActiveChains() const { return active_chains_; }
 
     std::vector<int> getBkgFragIDs(int fragZ) const;
@@ -58,6 +59,7 @@ private:
     TString inData_;
     TString inOptions_;
     int UseMass_ = -1;
+    bool isNoBkgCut_ = false;
     bool isISS_ = true;
     std::vector<std::string> active_chains_; // <--- 存储分析链
 

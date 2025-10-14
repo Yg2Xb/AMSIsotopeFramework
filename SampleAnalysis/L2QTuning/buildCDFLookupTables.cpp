@@ -110,7 +110,7 @@ void preloadSplines(std::map<std::string, std::unique_ptr<TF1>>& cache, TFile* f
 
 // 【新】用于修正参数的“安全”能量范围
 const std::map<std::string, std::pair<double, double>> SAFE_DETECTOR_RANGES = {
-    {"TOF", {0.43, 1.26}}, {"NaF", {0.75, 5.9}}, {"AGL", {2.95, 19.9}}
+    {"TOF", {0.43, 1.26}}, {"NaF", {0.75, 5.4}}, {"AGL", {2.95, 19.9}}
 };
 
 void getParamsFromSpline(const std::map<std::string, std::unique_ptr<TF1>>& splineCache, const std::string& chain, const std::string& elem, const std::string& det, 
@@ -199,10 +199,10 @@ void buildCDFLookupTables(const std::string& nucleusName) {
     const time_t start_time = time(nullptr);
     std::cout << "Starting performance monitoring..." << std::endl;
 
-    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.8_iter2.root";
+    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.5_iter1.root";
     const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline_" + nucleusName + ".root";
     
-    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter2.root";
+    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter1.root";
     const std::string binningHistName = "L1Inner_Beryllium_AGL_L1QTemplate_EGE_Peak";
     std::vector<double> energyBins;
     auto finBinning = std::unique_ptr<TFile>(TFile::Open(binningFileName.c_str()));

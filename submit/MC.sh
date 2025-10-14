@@ -117,7 +117,8 @@ $SAMPLE_PROD_EXE \
     "$BaseOutName" \
     "$ChainInputFile" \
     "$PID_PARAM" \
-    "$EnergyParam"
+    "$EnergyParam"\
+    1
 
 EXIT_CODE=$?
 

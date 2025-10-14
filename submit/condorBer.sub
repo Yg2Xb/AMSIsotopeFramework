@@ -4,7 +4,7 @@ output      = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 error       = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 log         = /afs/cern.ch/work/z/zixuan/logISS/log_$(Cluster)
 +AMSPublic = True
-+JobFlavour = "espresso"
++JobFlavour = "microcentury"
 transfer_output_files = ""
 
 request_cpus = 1
