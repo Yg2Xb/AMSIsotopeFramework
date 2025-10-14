@@ -28,8 +28,12 @@ void BinningManager::Initialize() {
 
     const auto& ek_common_arr = Binning::common_EkBins;
     std::vector<double> ek_common_vec(ek_common_arr.begin(), ek_common_arr.end());
+
+    const auto& ek_old_arr = Binning::old_EkBins;
+    std::vector<double> ek_old_vec(ek_old_arr.begin(), ek_old_arr.end());
     
     m_bin_map["common_EkPerNucleon"] = ek_common_vec;
+    m_bin_map["old_EkPerNucleon"] = ek_old_vec;
     m_bin_map["EkPerNucleon"] = ConvertRigidityToEk(rigidity_bins_vec, 2, 4);
     m_bin_map["Beta"] = ConvertRigidityToBeta(rigidity_bins_vec, 2, 4);
     m_bin_map["BetaRig"] = ConvertRigidityToBetaRig(rigidity_bins_vec, 2, 4);

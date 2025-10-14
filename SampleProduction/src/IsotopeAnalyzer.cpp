@@ -103,10 +103,20 @@ int IsotopeAnalyzer::getGeneID(int charge, int useMass) const {
 }
 
 void IsotopeAnalyzer::write() {
-    if (m_histManager) {
-        std::cout << "Saving all histograms to file..." << std::endl;
-        m_histManager->Save();
+    if (!m_histManager) {
+        std::cerr << "Error: HistManager not initialized!" << std::endl;
+        return;
     }
+
+    std::cout << "Saving all results to file..." << std::endl;
+    
+    // 将 dataChain 传递给 HistManager
+    if (dataChain) {
+        m_histManager->SetDataChain(dataChain.get());
+    }
+    
+    // 调用 Save()，默认会保存直方图和 TTree
+    m_histManager->Save(false); // true = 保存 TTree
 }
 
 void IsotopeAnalyzer::cleanup() {
@@ -118,11 +128,11 @@ TH1* IsotopeAnalyzer::getHist(const std::string& name) const {
                              "Please access histograms through HistManager arrays.");
 }
 
-TH1F* IsotopeAnalyzer::getHist1F(const std::string& name) const {
+TH1D* IsotopeAnalyzer::getHist1D(const std::string& name) const {
     return nullptr; // 不再支持
 }
 
-TH2F* IsotopeAnalyzer::getHist2F(const std::string& name) const {
+TH2D* IsotopeAnalyzer::getHist2D(const std::string& name) const {
     return nullptr; // 不再支持
 }
 

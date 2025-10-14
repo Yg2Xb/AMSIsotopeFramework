@@ -31,7 +31,7 @@ bool isValidBeta(double beta);
 const int colors[] = {600, 880, 632, 800-3, 900+10, 416-1, 1, 416-3, 840+3, 632, 416 + 2};
 const int nColors = sizeof(colors) / sizeof(colors[0]);
 
-constexpr double Mass_Unit = 0.931;
+constexpr double Mass_Unit = 0.9315;
 
 namespace Constants {
     const int MAX_ISOTOPES = 3;
@@ -113,7 +113,7 @@ const std::array<IsotopeVar, Constants::ELEMENT_COUNT> IsotopeData {{
 
 namespace Binning {
     // Rigidity bins
-    const std::array<double, Constants::RIGIDITY_BINS + 1> RigidityBins {{
+    inline const  std::array<double, Constants::RIGIDITY_BINS + 1> RigidityBins {{
         0.8, 1.00, 1.16, 1.33, 1.51, 1.71, 1.92, 2.15, 2.40, 2.67, 2.97, 3.29, 
         3.64, 4.02, 4.43, 4.88, 5.37, 5.90, 6.47, 7.09, 7.76, 8.48, 9.26, 10.1, 
         11.0, 12.0, 13.0, 14.1, 15.3, 16.6, 18.0, 19.5, 21.1, 22.8, 24.7, 26.7, 

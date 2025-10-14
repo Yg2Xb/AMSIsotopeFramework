@@ -1,400 +1,455 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
 #include <memory>
-#include <cstdarg>
-#include <iomanip>
+#include <map>
+#include <numeric>
+#include <algorithm>
+#include <stdexcept>
 
 #include <TFile.h>
 #include <TH1D.h>
-#include <TH2.h>
-#include <TF1.h>
+#include <TH2F.h>
 #include <TCanvas.h>
-#include <TPaveText.h>
+#include <TPad.h>
 #include <TLegend.h>
+#include <TStyle.h>
+#include <TROOT.h>
 #include <TLine.h>
-#include <TMath.h>
+#include <TPaveText.h>
+#include <TGraphErrors.h>
+#include <RooRealVar.h>
+#include <RooDataHist.h>
+#include <RooHistPdf.h>
+#include <RooAddPdf.h>
+#include <RooPlot.h>
+#include <RooFitResult.h>
+#include <RooArgList.h>
+#include <RooMsgService.h>
+#include <RooFormulaVar.h>
+#include <RooAbsReal.h>
 
-#include "../Tool.h" // must contain definitions of langaufun and funcExpGausExp
+#include "../Tool.h" // Assumed to contain functions within AMS_Iso namespace
 
 using namespace AMS_Iso;
-using std::string;
-using std::vector;
-using std::map;
-using std::unique_ptr;
-using std::cout;
-using std::endl;
-// Config (keep simple)
-struct DebugCfg {
-    bool infoOpen = true;
-    bool fitSummary = true;
-    bool rangeLog = false;
-    bool boundaryWarn = true;
-} DBG;
+using namespace RooFit;
 
-static inline void printOpen(const string& tag, const string& path, TFile* f) {
-    if (DBG.infoOpen) cout << "[open] " << tag << " '" << path << "' -> " << ((f && !f->IsZombie()) ? "OK" : "FAIL") << endl;
-}
+// --- Global Configuration ---
+const std::string inputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4.root";
+const std::string outputDir = "/eos/user/z/zixuan/Isotope/ChargeTemp/"; 
+const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
 
-static inline void drawFitRangeLines(TCanvas* c, double fitLow, double fitHigh, int color) {
-    if (!c) return;
-    double yMin = c->GetUymin(), yMax = c->GetUymax();
-    TLine* L1 = new TLine(fitLow, yMin, fitLow, yMax);  L1->SetLineColor(color);  L1->SetLineStyle(3);  L1->SetLineWidth(2);  L1->Draw("same");
-    TLine* L2 = new TLine(fitHigh, yMin, fitHigh, yMax);L2->SetLineColor(color);  L2->SetLineStyle(3);  L2->SetLineWidth(2);  L2->Draw("same");
-}
-
-static double findContentLevel(double charge, TH1D* hist, double ratio, bool searchLeft) {
-    if (!hist) return 0;
-    int binMin = hist->GetXaxis()->FindBin(charge - 0.12);
-    int binMax = hist->GetXaxis()->FindBin(charge + 0.12);
-    if (binMin < 1) binMin = 1;
-    if (binMax > hist->GetNbinsX()) binMax = hist->GetNbinsX();
-
-    int maxBin = binMin;
-    double maxContent = hist->GetBinContent(binMin);
-    for (int bin = binMin + 1; bin <= binMax; ++bin) {
-        double c = hist->GetBinContent(bin);
-        if (c > maxContent) { maxContent = c; maxBin = bin; }
-    }
-    double target = maxContent * ratio;
-    double targetX = hist->GetXaxis()->GetBinCenter(maxBin);
-
-    if (searchLeft) {
-        for (int bin = maxBin; bin >= 1; --bin) {
-            if (hist->GetBinContent(bin) <= target) { targetX = hist->GetXaxis()->GetBinCenter(bin); break; }
-        }
-    } else {
-        for (int bin = maxBin; bin <= hist->GetNbinsX(); ++bin) {
-            if (hist->GetBinContent(bin) <= target) { targetX = hist->GetXaxis()->GetBinCenter(bin); break; }
-        }
-    }
-    return targetX;
-}
-
-static void findFitRange(TH1D* hist, double chargeValue, double leftRatio, double rightRatio, double& lowEdge, double& highEdge) {
-    if (!hist) { lowEdge = highEdge = 0; return; }
-    lowEdge = findContentLevel(chargeValue, hist, leftRatio, true);
-    highEdge = findContentLevel(chargeValue, hist, rightRatio, false);
-    if (lowEdge > chargeValue - 0.24) lowEdge = chargeValue - 0.24;
-    if (highEdge < chargeValue + 0.35) highEdge = chargeValue + 0.35;
-    if (DBG.rangeLog) {
-        cout << std::fixed << std::setprecision(4)
-             << "  [range] Z=" << chargeValue << " -> [" << lowEdge << ", " << highEdge << "]" << endl;
-    }
-}
-
-static inline bool passEnergyWindow(const string& det, double ekLow) {
-    if (det == "TOF") return ekLow >= 0.26 && ekLow < 1.55;
-    if (det == "NaF") return ekLow >= 0.50 && ekLow <= 5.00;
-    if (det == "AGL") return ekLow >= 2.00 && ekLow <= 18.00;
-    return false;
-}
-
-static inline void addTextFmt(TPaveText& pt, Color_t color, const char* fmt, ...) {
-    va_list ap; va_start(ap, fmt);
-    char buf[512]; vsnprintf(buf, sizeof(buf), fmt, ap);
-    va_end(ap);
-    auto* t = pt.AddText(buf);
-    t->SetTextColor(color);
-}
-
-// Parameter initializer
-class FitParameterManager {
-public:
-    explicit FitParameterManager(bool firstFit) : firstFit_(firstFit) {}
-    void setParameters(TF1& f, const string& fitType,
-                       const string&, const string&, const string&,
-                       double, double charge, double histMax,
-                       double fitLow, double fitHigh)
-    {
-        if (fitType == "LG") {
-            f.SetParameters(0.05, charge, histMax, 0.20, 1.0);
-            f.FixParameter(4, 1.0);
-            f.SetParLimits(0, 0.005, 0.11);
-            f.SetParLimits(1, charge - 0.15, charge + 0.18);
-            f.SetParLimits(3, 0.06, 0.5);
-        } else { // EGE
-            f.SetParameters(charge, 0.20, 2.0, 0.20, 2.0, histMax, fitLow, fitHigh);
-            f.SetParLimits(1, 0.01, 0.5);
-            f.SetParLimits(2, 0.5, 4.0);
-            f.SetParLimits(3, 0.01, 0.5);
-            f.SetParLimits(4, 0.5, 4.0);
-            f.FixParameter(6, fitLow);
-            f.FixParameter(7, fitHigh);
-        }
-    }
-    void checkBoundaries(const TF1& func, const string& fitName,
-                         const string& elem, const string& det, const string& type,
-                         double ekCen) const
-    {
-        if (!DBG.boundaryWarn) return;
-        for (int i = 0; i < func.GetNpar(); ++i) {
-            double v = func.GetParameter(i), lo, hi;
-            func.GetParLimits(i, lo, hi);
-            if (lo < hi) {
-                const double eps = 1e-8;
-                if (TMath::Abs(v - lo) < eps || TMath::Abs(v - hi) < eps) {
-                    cout << "  [warn] boundary: " << fitName
-                         << " par#" << i << " " << func.GetParName(i)
-                         << " = " << v << " in [" << lo << "," << hi << "] "
-                         << elem << "/" << det << "/" << type << " EkCen=" << ekCen << endl;
-                }
-            }
-        }
-    }
-private:
-    bool firstFit_;
+// --- Detector-specific energy ranges ---
+const std::map<std::string, std::pair<double, double>> detector_ek_ranges = {
+    {"TOF", {0.35, 1.29}},
+    {"NaF", {0.70, 5.10}},
+    {"AGL", {2.90, 20.0}}
 };
 
-// Build TF1 (no lambdas)
-static TF1* BuildLG(double lo, double hi) { return new TF1("fLG",  langaufun,       lo, hi, 5); }
-static TF1* BuildEGE(double lo, double hi){ return new TF1("fEGE", funcExpGausExp, lo, hi, 8); }
+// --- Helper Utilities ---
+struct ElementInfo { int Z; std::string type; };
+const std::map<std::string, ElementInfo> element_db = {
+    {"Beryllium", {4, "Secondary"}}, {"Boron",     {5, "Secondary"}},
+    {"Carbon",    {6, "Primary"}},   {"Nitrogen",  {7, "Secondary"}},
+    {"Oxygen",    {8, "Primary"}}
+};
+const std::map<int, std::string> Z_to_name = {
+    {4, "Beryllium"}, {5, "Boron"}, {6, "Carbon"}, {7, "Nitrogen"}, {8, "Oxygen"}
+};
 
-// One-pass fitter without templates/lambdas
-static TF1* doFit(TH1D* h, TF1* (*builder)(double,double),
-                  const vector<std::pair<string,int>>& parList,
-                  FitParameterManager& pm, const string& fitType,
-                  const string& chain, const string& elem, const string& det, const string& type,
-                  double ekCen, double chargeZ, double histMax,
-                  double& fitLow, double& fitHigh, int maxIter = 4, const char* fitOpt = "RQ0")
+// --- Result Data Structures ---
+struct FitResult {
+    double energy_center = 0.0;
+    double energy_width = 0.0;
+    int fit_status = -1;
+    double chi2ndf = 0.0;
+    int ndf = 0;
+    double N_sig_narrow = 0.0;
+    double fragment_yield = 0.0;
+    double fragment_yield_err = 0.0;
+    std::map<std::string, double> fit_fractions;
+    std::map<std::string, double> fit_fractions_err;
+    std::map<std::string, double> narrow_fractions;
+    std::map<std::string, double> narrow_fractions_err;
+};
+
+// --- Core Fitting Class ---
+class ChargeFitProcessor {
+public:
+    ChargeFitProcessor(
+        const std::string& source, const std::string& fragment, const std::string& chain, const std::string& detector,
+        int energy_bin, TH2F* signal_rebinned, const std::map<std::string, TH2F*>& templates_rebinned);
+
+    bool initializeAndProject();
+    bool runFit();
+    FitResult calculateFinalYield();
+    std::unique_ptr<RooPlot> generatePlotAndCalcChi2(FitResult& result);
+    const std::vector<std::string>& getTemplateElements() const { return templateElements_; }
+
+private:
+    std::string sourceName_, fragmentName_, chainName_, detectorName_;
+    int energyBin_;
+    TH2F* h_signal_rebinned_;
+    const std::map<std::string, TH2F*>& templates_rebinned_;
+    std::vector<std::string> templateElements_;
+    double fitMin_, fitMax_, narrowMin_, narrowMax_;
+    std::unique_ptr<RooRealVar> charge_;
+    std::unique_ptr<TH1D> h_signal_extended_;
+    std::map<std::string, std::unique_ptr<TH1D>> h_templates_extended_;
+    std::vector<std::unique_ptr<RooRealVar>> fractionParams_;
+    std::unique_ptr<RooFormulaVar> lastFraction_;
+    std::unique_ptr<RooAddPdf> total_pdf_;
+    std::unique_ptr<RooFitResult> fitResult_;
+    std::unique_ptr<RooDataHist> data_hist_;
+    std::map<std::string, std::unique_ptr<RooHistPdf>> template_pdfs_;
+    std::map<std::string, std::unique_ptr<RooDataHist>> template_data_hists_;
+    void configure();
+    std::unique_ptr<TH1D> projectSlice(TH2F* h2d, const char* name);
+};
+
+ChargeFitProcessor::ChargeFitProcessor(
+    const std::string& source, const std::string& fragment, const std::string& chain, const std::string& detector,
+    int energy_bin, TH2F* signal_rebinned, const std::map<std::string, TH2F*>& templates_rebinned)
+    : sourceName_(source), fragmentName_(fragment), chainName_(chain), detectorName_(detector),
+      energyBin_(energy_bin), h_signal_rebinned_(signal_rebinned), templates_rebinned_(templates_rebinned)
 {
-    TF1* f = nullptr;
-    for (int iter = 0; iter < maxIter; ++iter) {
-        if (f) { delete f; f = nullptr; }
-        f = builder(fitLow, fitHigh);
-        for (size_t i = 0; i < parList.size(); ++i)
-            f->SetParName(parList[i].second, parList[i].first.c_str());
-
-        pm.setParameters(*f, fitType, elem, det, type, ekCen, chargeZ, histMax, fitLow, fitHigh);
-        h->Fit(f, fitOpt, "", fitLow, fitHigh);
-        pm.checkBoundaries(*f, fitType + (iter==0 ? "" : ("-" + std::to_string(iter+1))), elem, det, type, ekCen);
-
-        double ndf = f->GetNDF();
-        double chi2ndf = (ndf > 0) ? f->GetChisquare()/ndf : 1e9;
-        if (chi2ndf < 3.0) break;
-
-        // simple range adjust
-        if (fitType == "LG") {
-            if (iter == 0) { fitLow -= 0.05; }
-            else { fitLow += 0.05; fitHigh -= 0.05; }
-        } else { // EGE
-            if (iter > 0) { fitLow += 0.10; fitHigh -= 0.10; }
-        }
-    }
-    return f;
+    configure();
 }
 
-void chargeHistFit(
-    const string& histFile = "/eos/user/z/zixuan/Isotope/Add/Be_all.root",
-    const string& pdfOut  = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_BeToOxy.pdf",
-    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy.root",
-    int rebin = 2,
-    bool firstFit = true,
-    bool listKeysOnce = false // kept for compatibility, unused to stay simple
-) {
-    const vector<string> chains = {"L1Inner", "UnbiasedL1Inner"};
-    const vector<string> nuclei = {"Beryllium","Boron","Carbon","Nitrogen","Oxygen"};
-    const map<string,double> chargeZ = {{"Beryllium",4.0}, {"Boron",5.0}, {"Carbon",6.0}, {"Nitrogen",7.0}, {"Oxygen",8.0}};
-    const vector<string> types = {"L1QTemplate", "L2QTemplate"};
-    const vector<string> dets = {"TOF","NaF","AGL"};
-    const map<string,int> detColor = {{"TOF", kRed}, {"NaF", kBlue}, {"AGL", kGreen+2}};
-    const map<string,int> typeMarker = {{"L1QTemplate", 20}, {"L2QTemplate", 21}};
+void ChargeFitProcessor::configure() {
+    int z_frag = element_db.at(fragmentName_).Z;
+    int z_source = element_db.at(sourceName_).Z;
+    for (int z = z_frag; z <= z_source + 1 && z <= 8; ++z) {
+        templateElements_.push_back(Z_to_name.at(z));
+    }
+    fitMin_ = z_frag - 0.4;
+    // --- REQUIREMENT: Adjust fit upper limit ---
+    fitMax_ = (sourceName_ == "Oxygen") ? z_source + 0.4 : z_source + 1.4;
+    const auto& sourceInfo = element_db.at(sourceName_);
+    if (sourceInfo.type == "Primary") {
+        narrowMin_ = sourceInfo.Z - 0.4;
+        narrowMax_ = sourceInfo.Z + 0.4;
+    } else {
+        narrowMin_ = sourceInfo.Z - 0.2;
+        narrowMax_ = sourceInfo.Z + 0.4;
+    }
+}
 
-    const vector<std::pair<string,int>> LG_params = {{"Width",0},{"MPV",1},{"Area",2},{"Sigma",3}};
-    const vector<std::pair<string,int>> EGE_params = {{"Peak",0},{"SigmaL",1},{"AlphaL",2},{"SigmaR",3},{"AlphaR",4},{"Norm",5},{"xmin",6},{"xmax",7}};
+std::unique_ptr<TH1D> ChargeFitProcessor::projectSlice(TH2F* h2d, const char* name) {
+    auto slice = std::unique_ptr<TH1D>(h2d->ProjectionX(name, energyBin_, energyBin_));
+    slice->SetDirectory(nullptr);
+    return slice;
+}
 
-    FitParameterManager pm(firstFit);
-
-    unique_ptr<TFile> fin(TFile::Open(histFile.c_str()));
-    printOpen("input", histFile, fin.get());
-    if (!fin || fin->IsZombie()) return;
-
-    unique_ptr<TFile> fout(TFile::Open(histOut.c_str(), "RECREATE"));
-    printOpen("output", histOut, fout.get());
-    if (!fout || fout->IsZombie()) return;
-
-    unique_ptr<TCanvas> c(new TCanvas("c","",900,700));
-    c->SetLogy(true);
-    c->Print((pdfOut + "[").c_str(), "pdf");
-
-    // Parameter hist store struct
-    struct ParSet {
-        bool init = false;
-        int nb = 0;
-        std::vector<double> edges;
-        map<string, TH1D*> h;
-    };
-    map<string, ParSet> store;
-
-    auto keyEDT = [](const string& e, const string& d, const string& t){ return e + "_" + d + "_" + t; };
-    auto namePar = [](const string& e,const string& d,const string& t,const string& fit,const string& par){
-        return e + "_" + d + "_" + t + "_" + fit + "_" + par;
-    };
-
-    for (size_t ich = 0; ich < chains.size(); ++ich)
-    for (size_t ie = 0; ie < nuclei.size(); ++ie)
-    for (size_t id = 0; id < dets.size(); ++id)
-    for (size_t it = 0; it < types.size(); ++it)
-    {
-        const string& chain = chains[ich];
-        const string& elem = nuclei[ie];
-        const string& det  = dets[id];
-        const string& type = types[it];
-
-        string key = chain + "_ISS_BKG_H2_" + elem + "_" + type + "_" + det;
-        TH2* h2 = dynamic_cast<TH2*>(fin->Get(key.c_str()));
-        if (!h2) { if (DBG.infoOpen) cout << "[miss] " << key << endl; continue; }
-
-        // init param hists on first time for this elem/det/type using Y-axis edges
-        string edt = keyEDT(elem,det,type);
-        ParSet& PS = store[edt];
-        if (!PS.init) {
-            int nY = h2->GetYaxis()->GetNbins();
-            PS.nb = nY;
-            PS.edges.resize(nY+1);
-            for (int i=1;i<=nY;++i) PS.edges[i-1] = h2->GetYaxis()->GetBinLowEdge(i);
-            PS.edges[nY] = h2->GetYaxis()->GetBinUpEdge(nY);
-
-            auto mk = [&](const string& fit, const string& par){
-                string nm = namePar(elem,det,type,fit,par);
-                string tt = nm + ";E_{k}/n [GeV/n];" + par;
-                TH1D* h = new TH1D(nm.c_str(), tt.c_str(), PS.nb, PS.edges.data());
-                h->SetDirectory(nullptr);
-                h->SetLineColor(detColor.at(det));
-                h->SetMarkerColor(detColor.at(det));
-                h->SetMarkerStyle(typeMarker.at(type));
-                h->SetLineWidth(2);
-                PS.h[nm] = h;
-            };
-            for (size_t iP=0;iP<LG_params.size();++iP) mk("LG", LG_params[iP].first);
-            mk("LG","Chi2NDF");
-            for (size_t iP=0;iP<EGE_params.size();++iP) mk("EGE", EGE_params[iP].first);
-            mk("EGE","Chi2NDF");
-            PS.init = true;
-            if (DBG.infoOpen) cout << "[init] " << edt << " with " << PS.nb << " Ek/n bins" << endl;
+bool ChargeFitProcessor::initializeAndProject() {
+    auto h_signal_slice = projectSlice(h_signal_rebinned_, Form("h_signal_slice_bin%d", energyBin_));
+    if (!h_signal_slice || h_signal_slice->GetEntries() < 20) return false;
+    
+    std::map<std::string, std::unique_ptr<TH1D>> h_templates_slices;
+    for (const auto& el : templateElements_) {
+        auto it = templates_rebinned_.find(el);
+        if (it == templates_rebinned_.end()) {
+            std::cerr << "      -> CRITICAL: Template for " << el << " not found." << std::endl;
+            return false;
         }
+        h_templates_slices[el] = projectSlice(it->second, Form("h_template_%s_slice_bin%d", el.c_str(), energyBin_));
+        if (!h_templates_slices[el] || h_templates_slices[el]->GetEntries() < 5) return false;
+    }
 
-        int nY = h2->GetYaxis()->GetNbins();
-        for (int ybin=1; ybin<=nY; ++ybin) {
-            double ekLow  = h2->GetYaxis()->GetBinLowEdge(ybin);
-            double ekHigh = h2->GetYaxis()->GetBinUpEdge(ybin);
-            if (!passEnergyWindow(det, ekLow)) continue;
+    h_signal_extended_ = extendHistogram(h_signal_slice.get(), fitMin_, fitMax_);
+    for (const auto& el : templateElements_) {
+        h_templates_extended_[el] = extendHistogram(h_templates_slices.at(el).get(), fitMin_, fitMax_);
+    }
 
-            double ekCen = 0.5*(ekLow+ekHigh);
-            string projName = key + Form("_projY%d", ybin);
-            TH1D* h1 = dynamic_cast<TH1D*>(h2->ProjectionX(projName.c_str(), ybin, ybin));
-            if (!h1) continue;
-            if (h1->GetMaximum() < 50) { delete h1; continue; }
-            if (rebin > 1) h1->Rebin(rebin);
-            h1->Sumw2();
+    charge_ = std::make_unique<RooRealVar>("charge", "Charge", fitMin_, fitMax_);
+    data_hist_ = std::make_unique<RooDataHist>("data_hist", "Data", *charge_, h_signal_extended_.get());
+    for (const auto& el : templateElements_) {
+        template_data_hists_[el] = std::make_unique<RooDataHist>(Form("dhist_%s", el.c_str()), "", *charge_, h_templates_extended_.at(el).get());
+        template_pdfs_[el] = std::make_unique<RooHistPdf>(Form("pdf_%s", el.c_str()), "", *charge_, *template_data_hists_[el]);
+    }
 
-            double z = chargeZ.at(elem);
-
-            // LG
-            double fitLowLG=0, fitHighLG=0;
-            findFitRange(h1, z, 0.10, 0.10, fitLowLG, fitHighLG);
-            TF1* fLG = doFit(h1, BuildLG, LG_params, pm, "LG", chain, elem, det, type, ekCen, z, h1->GetMaximum(), fitLowLG, fitHighLG);
-
-            // EGE
-            double fitLowEGE=0, fitHighEGE=0;
-            findFitRange(h1, z, 0.10, 0.10, fitLowEGE, fitHighEGE);
-            TF1* fEGE = doFit(h1, BuildEGE, EGE_params, pm, "EGE", chain, elem, det, type, ekCen, z, h1->GetMaximum(), fitLowEGE, fitHighEGE);
-
-            // Fill parameter hists
-            int b = store[edt].h[namePar(elem,det,type,"LG","Width")]->FindBin(ekCen);
-            for (size_t iP=0;iP<LG_params.size();++iP) {
-                const string& par = LG_params[iP].first; int ip = LG_params[iP].second;
-                TH1D* hh = store[edt].h[namePar(elem,det,type,"LG",par)];
-                hh->SetBinContent(b, fLG->GetParameter(ip));
-                hh->SetBinError(b, fLG->GetParError(ip));
+    std::vector<std::string> free_params_elements;
+    std::string constrained_element;
+    if (templateElements_.size() > 1) {
+        free_params_elements.push_back(sourceName_);
+        if (sourceName_ != fragmentName_ && std::find(templateElements_.begin(), templateElements_.end(), fragmentName_) != templateElements_.end()) {
+            free_params_elements.push_back(fragmentName_);
+        }
+        for (const auto& el : templateElements_) {
+            if (free_params_elements.size() >= templateElements_.size() - 1) break;
+            if (std::find(free_params_elements.begin(), free_params_elements.end(), el) == free_params_elements.end()) {
+                free_params_elements.push_back(el);
             }
-            {
-                TH1D* hchi = store[edt].h[namePar(elem,det,type,"LG","Chi2NDF")];
-                hchi->SetBinContent(b, (fLG->GetNDF()>0)? fLG->GetChisquare()/fLG->GetNDF() : 0);
-                hchi->SetBinError(b, 0);
+        }
+        for (const auto& el : templateElements_) {
+            if (std::find(free_params_elements.begin(), free_params_elements.end(), el) == free_params_elements.end()) {
+                constrained_element = el;
+                break;
             }
+        }
+    } else if (!templateElements_.empty()) {
+        free_params_elements.push_back(templateElements_[0]);
+    }
 
-            for (size_t iP=0;iP<EGE_params.size();++iP) {
-                const string& par = EGE_params[iP].first; int ip = EGE_params[iP].second;
-                TH1D* hh = store[edt].h[namePar(elem,det,type,"EGE",par)];
-                hh->SetBinContent(b, fEGE->GetParameter(ip));
-                hh->SetBinError(b, fEGE->GetParError(ip));
+    std::map<std::string, RooAbsReal*> frac_map;
+    double initial_other_frac = (free_params_elements.size() > 1) ? 0.02 / (free_params_elements.size() - 1) : 0.0;
+    for (const auto& el : free_params_elements) {
+        double initial_val = (el == sourceName_) ? 0.98 : initial_other_frac;
+        auto fracVar = std::make_unique<RooRealVar>(Form("frac_%s", el.c_str()), "", initial_val, 0.0, 1.0);
+        frac_map[el] = fracVar.get();
+        fractionParams_.push_back(std::move(fracVar));
+    }
+    if (!constrained_element.empty()) {
+        std::string formula = "1.0";
+        RooArgList formulaArgs;
+        for (const auto& param : fractionParams_) {
+            formula += " - @" + std::to_string(formulaArgs.getSize());
+            formulaArgs.add(*param);
+        }
+        lastFraction_ = std::make_unique<RooFormulaVar>(Form("frac_%s", constrained_element.c_str()), "", formula.c_str(), formulaArgs);
+        frac_map[constrained_element] = lastFraction_.get();
+    }
+
+    RooArgList pdfList, fracList;
+    for (const auto& el : templateElements_) {
+        pdfList.add(*template_pdfs_.at(el));
+        fracList.add(*frac_map.at(el));
+    }
+    total_pdf_ = std::make_unique<RooAddPdf>("total_pdf", "Total PDF", pdfList, fracList, false);
+    return true;
+}
+
+bool ChargeFitProcessor::runFit() {
+    fitResult_ = std::unique_ptr<RooFitResult>(total_pdf_->fitTo(*data_hist_, Save(true), PrintLevel(-1), Strategy(2), Minimizer("Minuit2")));
+    return (fitResult_ && fitResult_->status() == 0);
+}
+
+FitResult ChargeFitProcessor::calculateFinalYield() {
+    FitResult res;
+    res.fit_status = fitResult_->status();
+
+    const RooArgList& finalPars = fitResult_->floatParsFinal();
+    for (const auto& el : templateElements_) {
+        RooAbsReal* frac_param = (RooAbsReal*)finalPars.find(Form("frac_%s", el.c_str()));
+        if (frac_param) {
+            res.fit_fractions[el] = frac_param->getVal();
+            RooRealVar* real_var = dynamic_cast<RooRealVar*>(frac_param);
+            if (real_var) res.fit_fractions_err[el] = real_var->getError();
+        } else {
+            if (lastFraction_ && lastFraction_->GetName() == std::string("frac_" + el)) {
+                res.fit_fractions[el] = lastFraction_->getVal();
+                res.fit_fractions_err[el] = lastFraction_->getPropagatedError(*fitResult_);
             }
-            {
-                TH1D* hchi = store[edt].h[namePar(elem,det,type,"EGE","Chi2NDF")];
-                hchi->SetBinContent(b, (fEGE->GetNDF()>0)? fEGE->GetChisquare()/fEGE->GetNDF() : 0);
-                hchi->SetBinError(b, 0);
-            }
-
-            // Draw
-            h1->SetStats(0);
-            h1->SetTitle(Form("%s | %s | %s | %s | Ek/n: [%.3f, %.3f] GeV/n", chain.c_str(), type.c_str(), elem.c_str(), det.c_str(), ekLow, ekHigh));
-            h1->GetXaxis()->SetTitle("Tracker Layer Q");
-            h1->GetYaxis()->SetTitle("Counts");
-            h1->GetYaxis()->SetTitleOffset(1.4);
-            h1->SetMarkerStyle(20); h1->SetMarkerSize(0.9); h1->SetMarkerColor(kBlack); h1->SetLineColor(kBlack);
-            h1->GetXaxis()->SetRangeUser(z - 1.2, z + 1.0);
-
-            c->cd(); c->SetLogy(true);
-            h1->Draw("E");
-
-            fLG->SetRange(h1->GetXaxis()->GetXmin(), h1->GetXaxis()->GetXmax());
-            fLG->SetLineColor(kRed); fLG->SetLineWidth(3); fLG->SetLineStyle(1); fLG->Draw("same");
-            fEGE->SetRange(h1->GetXaxis()->GetXmin(), h1->GetXaxis()->GetXmax());
-            fEGE->SetLineColor(kGreen+2); fEGE->SetLineWidth(3); fEGE->SetLineStyle(2); fEGE->Draw("same");
-
-            drawFitRangeLines(c.get(), fitLowLG,  fitHighLG,  kRed);
-            drawFitRangeLines(c.get(), fitLowEGE, fitHighEGE, kGreen+2);
-
-            TLegend leg(0.66, 0.66, 0.93, 0.88);
-            leg.SetTextSize(0.03); leg.SetBorderSize(0); leg.SetFillStyle(0);
-            leg.AddEntry(h1, "Data", "ep");
-            leg.AddEntry(fLG, "Landau-Gauss", "l");
-            leg.AddEntry(fEGE, "ExpGausExp", "l");
-            leg.Draw();
-
-            TPaveText pt(0.15, 0.35, 0.47, 0.88, "NDC");
-            pt.SetTextSize(0.033); pt.SetBorderSize(0); pt.SetFillStyle(0); pt.SetTextAlign(13);
-            addTextFmt(pt, kRed,      "LandauGauss:");
-            addTextFmt(pt, kRed,      "  MPV = %.3f #pm %.3f",  fLG->GetParameter(1), fLG->GetParError(1));
-            addTextFmt(pt, kRed,      "  Width = %.3f #pm %.3f",fLG->GetParameter(0), fLG->GetParError(0));
-            addTextFmt(pt, kRed,      "  Sigma = %.3f #pm %.3f",fLG->GetParameter(3), fLG->GetParError(3));
-            addTextFmt(pt, kRed,      "  #chi^{2}/ndf = %.0f/%d = %.2f", fLG->GetChisquare(), (int)fLG->GetNDF(), (fLG->GetNDF()>0? fLG->GetChisquare()/fLG->GetNDF():0));
-            addTextFmt(pt, kRed,      "  fit range: %.2f-%.2f", fitLowLG, fitHighLG);
-            addTextFmt(pt, kGreen+2,  "ExpGausExp:");
-            addTextFmt(pt, kGreen+2,  "  Peak = %.4f #pm %.4f",   fEGE->GetParameter(0), fEGE->GetParError(0));
-            addTextFmt(pt, kGreen+2,  "  #sigma_{L} = %.4f #pm %.4f", fEGE->GetParameter(1), fEGE->GetParError(1));
-            addTextFmt(pt, kGreen+2,  "  #sigma_{R} = %.4f #pm %.4f", fEGE->GetParameter(3), fEGE->GetParError(3));
-            addTextFmt(pt, kGreen+2,  "  #alpha_{L} = %.4f #pm %.4f", fEGE->GetParameter(2), fEGE->GetParError(2));
-            addTextFmt(pt, kGreen+2,  "  #alpha_{R} = %.4f #pm %.4f", fEGE->GetParameter(4), fEGE->GetParError(4));
-            addTextFmt(pt, kGreen+2,  "  #chi^{2}/ndf = %.0f/%d = %.2f", fEGE->GetChisquare(), (int)fEGE->GetNDF(), (fEGE->GetNDF()>0? fEGE->GetChisquare()/fEGE->GetNDF():0));
-            addTextFmt(pt, kGreen+2,  "  fit range: %.2f-%.2f", fitLowEGE, fitHighEGE);
-            pt.Draw();
-
-            c->Print(pdfOut.c_str(), "pdf");
-
-            if (DBG.fitSummary) {
-                cout << std::fixed << std::setprecision(3)
-                     << "[ok] " << chain << " " << elem << " " << type << " " << det
-                     << " EkCen=" << ekCen
-                     << " LG chi2/ndf=" << (fLG->GetNDF()>0? fLG->GetChisquare()/fLG->GetNDF():0)
-                     << " EGE chi2/ndf=" << (fEGE->GetNDF()>0? fEGE->GetChisquare()/fEGE->GetNDF():0)
-                     << endl;
-            }
-
-            delete fLG;
-            delete fEGE;
-            delete h1;
         }
     }
 
-    c->Print((pdfOut + "]").c_str(), "pdf");
+    int bin_low = h_signal_extended_->GetXaxis()->FindBin(narrowMin_);
+    int bin_high = h_signal_extended_->GetXaxis()->FindBin(narrowMax_);
+    res.N_sig_narrow = h_signal_extended_->Integral(bin_low, bin_high);
+    double err_N_sig = sqrt(res.N_sig_narrow);
 
-    fout->cd();
-    for (auto& kv : store) {
-        for (auto& hk : kv.second.h) hk.second->Write();
+    charge_->setRange("narrow_range", narrowMin_, narrowMax_);
+    std::map<std::string, double> shape_factors;
+    for (const auto& el : templateElements_) {
+        auto integral_obj = std::unique_ptr<RooAbsReal>(template_pdfs_.at(el)->createIntegral(*charge_, NormSet(*charge_), Range("narrow_range")));
+        shape_factors[el] = integral_obj->getVal();
     }
-    fout->Close();
-    cout << "All parameter histograms saved to " << histOut << endl;
+    double total_model_narrow_integral = 0.0;
+    for (const auto& el : templateElements_) {
+        total_model_narrow_integral += res.fit_fractions.at(el) * shape_factors.at(el);
+    }
+    double P_frag = 0.0;
+    if (total_model_narrow_integral > 1e-9) {
+        P_frag = (res.fit_fractions.at(fragmentName_) * shape_factors.at(fragmentName_)) / total_model_narrow_integral;
+    }
+
+    double err_P_frag_approx = 0.0;
+    double F_Y = res.fit_fractions.at(fragmentName_);
+    if (F_Y > 1e-9) {
+         double err_F_Y = res.fit_fractions_err.at(fragmentName_);
+         err_P_frag_approx = (err_F_Y / F_Y) * P_frag;
+    }
+
+    res.fragment_yield = res.N_sig_narrow * P_frag;
+    if (res.fragment_yield > 0) {
+        res.fragment_yield_err = sqrt(pow(err_N_sig * P_frag, 2) + pow(res.N_sig_narrow * err_P_frag_approx, 2));
+    }
+
+    if(total_model_narrow_integral > 1e-9){
+        for(const auto& el : templateElements_){
+            res.narrow_fractions[el] = (res.fit_fractions.at(el) * shape_factors.at(el)) / total_model_narrow_integral;
+            res.narrow_fractions_err[el] = 0.0;
+        }
+    }
+    
+    charge_->setRange("full_range", fitMin_, fitMax_);
+    return res;
+}
+
+std::unique_ptr<RooPlot> ChargeFitProcessor::generatePlotAndCalcChi2(FitResult& result) {
+    auto frame = std::unique_ptr<RooPlot>(charge_->frame());
+    data_hist_->plotOn(frame.get(), Name("data_hist"), MarkerStyle(20), MarkerSize(0.8));
+    total_pdf_->plotOn(frame.get(), Name("total_pdf"), LineColor(kRed), LineWidth(2));
+    
+    std::vector<int> colors = {kBlue, kGreen + 2, kMagenta, kOrange, kCyan, kYellow + 2};
+    int color_idx = 0;
+    for (const auto& el : templateElements_) {
+        total_pdf_->plotOn(frame.get(), Components(*template_pdfs_.at(el)), Name(Form("comp_%s", el.c_str())), LineColor(colors[color_idx % colors.size()]), LineStyle(kDashed));
+        color_idx++;
+    }
+    
+    int nFreeParams = fitResult_->floatParsFinal().getSize();
+    result.ndf = h_signal_extended_->GetNbinsX() - nFreeParams;
+    double chi2 = calculateChi2(frame.get(), "data_hist", "total_pdf", fitMin_, fitMax_);
+    result.chi2ndf = (result.ndf > 0) ? chi2 / result.ndf : 0.0;
+
+    return frame;
+}
+
+// --- Main Analysis Driver ---
+void runFragmentationAnalysis(const std::string& source, const std::string& fragment, const std::string& chain) {
+    if (element_db.find(source) == element_db.end() || element_db.find(fragment) == element_db.end()) return;
+    std::cout << "Starting analysis for: " << source << " -> " << fragment << " (" << chain << ")" << std::endl;
+    auto inputFile = std::unique_ptr<TFile>(TFile::Open(inputFileName.c_str()));
+    if (!inputFile || inputFile->IsZombie()) return;
+    
+    std::string pdf_filename = outputDir + "QFit_" + source + "_to_" + fragment + "_" + chain + ".pdf";
+    std::string root_filename = outputDir + "QFit_" + source + "_to_" + fragment + "_" + chain + ".root";
+    auto c_pdf = std::make_unique<TCanvas>("c_pdf", "PDF Canvas", 800, 800);
+    c_pdf->Print((pdf_filename + "[").c_str());
+    auto outputFile = std::make_unique<TFile>(root_filename.c_str(), "RECREATE");
+
+    for (const auto& detector : detectors) {
+        std::cout << "\n--- Processing Detector: " << detector << " ---" << std::endl;
+        
+        std::map<std::string, std::unique_ptr<TH2F>> templates_rebinned;
+        int z_frag = element_db.at(fragment).Z;
+        int z_source = element_db.at(source).Z;
+        std::vector<std::string> required_elements;
+        for (int z = z_frag; z <= z_source + 1 && z <= 8; ++z) {
+            required_elements.push_back(Z_to_name.at(z));
+        }
+
+        std::string signalHistName = chain + "_ISS_BKG_H2_" + source + "_L1QSignal_" + detector;
+        TH2F* h_signal_raw = (TH2F*)inputFile->Get(signalHistName.c_str());
+        if (!h_signal_raw) continue;
+        auto h_signal_rebinned = std::unique_ptr<TH2F>((TH2F*)h_signal_raw->Clone(Form("%s_rebinned", signalHistName.c_str())));
+        h_signal_rebinned->RebinY(2);
+
+        bool all_templates_found = true;
+        for (const auto& el : required_elements) {
+            const auto& el_info = element_db.at(el);
+            std::string template_type = (el_info.type == "Primary") ? "L1QTemplate" : "L2QTemplate";
+            std::string templateHistName = chain + "_ISS_BKG_H2_" + el + "_" + template_type + "_" + detector;
+            TH2F* h_template_raw = (TH2F*)inputFile->Get(templateHistName.c_str());
+            if (!h_template_raw) { all_templates_found = false; break; }
+            templates_rebinned[el] = std::unique_ptr<TH2F>((TH2F*)h_template_raw->Clone(Form("%s_rebinned", templateHistName.c_str())));
+            templates_rebinned[el]->RebinY(2);
+        }
+        if (!all_templates_found) continue;
+
+        int n_bins_y = h_signal_rebinned->GetNbinsY();
+        const TAxis* y_axis = h_signal_rebinned->GetYaxis();
+        auto h_yield = std::make_unique<TH1D>(Form("h_yield_%s_%s", fragment.c_str(), detector.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
+        auto h_chi2ndf = std::make_unique<TH1D>(Form("h_chi2ndf_%s", detector.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
+        std::map<std::string, std::unique_ptr<TH1D>> h_fitfracs, h_narrowfracs;
+        for (const auto& el : required_elements) {
+            h_fitfracs[el] = std::make_unique<TH1D>(Form("h_fitfrac_%s_%s", el.c_str(), detector.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
+            h_narrowfracs[el] = std::make_unique<TH1D>(Form("h_narrowfrac_%s_%s", el.c_str(), detector.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
+        }
+
+        for (int y_bin = 1; y_bin <= n_bins_y; ++y_bin) {
+            double ek_center = y_axis->GetBinCenter(y_bin);
+            // --- REQUIREMENT: Check detector energy range ---
+            const auto& range = detector_ek_ranges.at(detector);
+            if (ek_center < range.first || ek_center > range.second) continue;
+
+            std::cout << "    Processing energy bin " << y_bin << " (Ek=" << ek_center << " GeV/n)" << std::endl;
+            std::map<std::string, TH2F*> templates_raw_ptr;
+            for(auto const& [key, val] : templates_rebinned) templates_raw_ptr[key] = val.get();
+            
+            ChargeFitProcessor processor(source, fragment, chain, detector, y_bin, h_signal_rebinned.get(), templates_raw_ptr);
+            if (!processor.initializeAndProject()) continue;
+            if (!processor.runFit()) continue;
+            
+            FitResult result = processor.calculateFinalYield();
+            result.energy_center = ek_center;
+            result.energy_width = y_axis->GetBinWidth(y_bin);
+            auto frame = processor.generatePlotAndCalcChi2(result);
+
+            h_yield->SetBinContent(y_bin, result.fragment_yield);
+            h_yield->SetBinError(y_bin, result.fragment_yield_err);
+            h_chi2ndf->SetBinContent(y_bin, result.chi2ndf);
+            for (const auto& el : processor.getTemplateElements()) {
+                h_fitfracs.at(el)->SetBinContent(y_bin, result.fit_fractions[el]);
+                h_fitfracs.at(el)->SetBinError(y_bin, result.fit_fractions_err[el]);
+                h_narrowfracs.at(el)->SetBinContent(y_bin, result.narrow_fractions[el]);
+                h_narrowfracs.at(el)->SetBinError(y_bin, result.narrow_fractions_err[el]);
+            }
+
+            c_pdf->Clear(); c_pdf->Divide(1, 2);
+            TPad* pad1 = (TPad*)c_pdf->cd(1);
+            pad1->SetPad(0, 0.3, 1, 1); pad1->SetLogy(); pad1->SetBottomMargin(0.02);
+            
+            // --- REQUIREMENT: Set detailed plot title ---
+            frame->SetTitle(Form("%s #rightarrow %s (%s, E_{k}=%.2f GeV/n)", source.c_str(), fragment.c_str(), detector.c_str(), result.energy_center));
+            frame->GetYaxis()->SetTitle("Events"); frame->GetXaxis()->SetLabelSize(0);
+            frame->Draw();
+
+            // --- REQUIREMENT: Create complete legend ---
+            auto legend = std::make_unique<TLegend>(0.7, 0.55, 0.88, 0.88);
+            legend->SetFillStyle(0); legend->SetBorderSize(0);
+            legend->AddEntry("data_hist", "Data", "pe");
+            legend->AddEntry("total_pdf", "Total Fit", "l");
+            std::vector<int> colors = {kBlue, kGreen + 2, kMagenta, kOrange, kCyan, kYellow + 2};
+            int color_idx = 0;
+            for (const auto& el : processor.getTemplateElements()) {
+                legend->AddEntry(Form("comp_%s", el.c_str()), el.c_str(), "l");
+                color_idx++;
+            }
+            legend->Draw();
+
+            // --- REQUIREMENT: Create comprehensive info box ---
+            auto info = std::make_unique<TPaveText>(0.15, 0.45, 0.6, 0.88, "NDC");
+            info->SetFillStyle(0); info->SetBorderSize(0); info->SetTextAlign(12);
+            info->AddText(Form("#chi^{2}/NDF = %.2f", result.chi2ndf));
+            info->AddText("Fit Fractions:");
+            for(const auto& el : processor.getTemplateElements()) info->AddText(Form("  F_{%s} = %.3f", el.substr(0,2).c_str(), result.fit_fractions.at(el)));
+            info->AddText("Narrow Range Fractions:");
+            for(const auto& el : processor.getTemplateElements()) info->AddText(Form("  P_{%s} = %.3f", el.substr(0,2).c_str(), result.narrow_fractions.at(el)));
+            info->AddText(Form("N_{sig} (narrow) = %.0f", result.N_sig_narrow));
+            info->AddText(Form("%s Yield = %.1f #pm %.1f", fragment.c_str(), result.fragment_yield, result.fragment_yield_err));
+            info->Draw();
+            
+            TPad* pad2 = (TPad*)c_pdf->cd(2);
+            pad2->SetPad(0, 0, 1, 0.3); pad2->SetTopMargin(0.02); pad2->SetBottomMargin(0.3); pad2->SetGridy();
+            auto pullGraph = std::make_unique<TGraphErrors>();
+            calculatePull(frame.get(), pullGraph.get(), frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
+            setupPullPlot(pullGraph.get(), frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
+            pullGraph->Draw("AP");
+            TLine zeroLine(frame->GetXaxis()->GetXmin(), 0, frame->GetXaxis()->GetXmax(), 0);
+            zeroLine.SetLineStyle(2); zeroLine.SetLineColor(kGray + 1);
+            zeroLine.Draw("SAME");
+            c_pdf->Print(pdf_filename.c_str());
+        }
+        outputFile->cd();
+        h_yield->Write(); h_chi2ndf->Write();
+        for (const auto& el : required_elements) {
+            h_fitfracs.at(el)->Write();
+            h_narrowfracs.at(el)->Write();
+        }
+    }
+    c_pdf->Print((pdf_filename + "]").c_str());
+    outputFile->Close();
+}
+
+// --- Entry Point ---
+void ChargeTempFit() {
+    gROOT->SetBatch(kTRUE);
+    gStyle->SetOptStat(0);
+    gStyle->SetPadTickX(1);
+    gStyle->SetPadTickY(1);
+    RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
+    runFragmentationAnalysis("Carbon", "Boron", "L1Inner");
+    runFragmentationAnalysis("Oxygen", "Beryllium", "L1Inner");
 }

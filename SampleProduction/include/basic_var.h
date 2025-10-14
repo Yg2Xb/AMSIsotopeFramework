@@ -51,6 +51,16 @@ namespace Constants {
     inline constexpr  int nuclei_A[N_nuc] = {7,9,10,10,11,12,14,16};
 }
 
+	const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
+	const std::vector<std::string> cut_groups = {
+		"BasicAndFiducial", "Trigger", "InnerTracker", "L1BigZ", "L1PickUp", "L1UpperQ", "UpperTOFQ", "BkgReduction",
+		"TOFGeo", "TOFBetaQuality", "NaFGeo", "NaFReconstruction", "AGLGeo", "AGLReconstruction"
+	};
+	const std::vector<std::string> num_den = {"Num", "Den"};
+	const std::vector<std::string> charge_types = {"L1QSignal", "L1QTemplate", "L2QTemplate"};
+	const std::vector<std::string> sources = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+	const std::vector<std::string> gene_rec = {"Gene", "Rec"};
+
 // Exception classes
 class IsotopeError : public std::runtime_error {
     using std::runtime_error::runtime_error;
@@ -114,6 +124,10 @@ namespace Binning {
     // wei jh ek bin
     extern const std::array<double, 23> EkWideBin;
     extern const std::array<double, 15> BkgEkWideBin;
+    
+    extern const std::array<double, 38> common_RigidityBins;
+    extern const std::array<double, 38> common_EkBins;
+    extern const std::array<double, 74> old_EkBins;
 
     // Run parameters
     inline constexpr double RunBegin = 1304179200;

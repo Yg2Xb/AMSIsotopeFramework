@@ -59,10 +59,10 @@ void cleanupFluxFunctions();
 std::map<std::string, std::shared_ptr<TF1>>& getFluxMap();
 std::map<std::string, double>& getFluxNorm();
 
-std::string selectFluxName(int charge, int mass);
+std::string selectFluxName(int charge, double mass);
 
 // 计算事件权重
-double calculateWeight(double mmom, int charge, int mass, bool isISS);
+double calculateWeight(double mmom, int charge, double mass, bool isISS);
 
 
 
@@ -87,18 +87,18 @@ void modifyPositionByZ(double targetZ,
 double betaToKineticEnergy(double beta);
 double kineticEnergyToBeta(double kineticEnergy);
 // 刚度和Beta转换
-double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron = false);
-double betaToRigidity(double beta, int charge, int mass, bool isElectron = false);
+double rigidityToBeta(double rigidity, int charge, double mass, bool isElectron = false);
+double betaToRigidity(double beta, int charge, double mass, bool isElectron = false);
 //
-double rigidityToKineticEnergy(double rig_gv, int z, int a);
-double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a);
-double dR_dEk(double ek_per_nucleon, int z, int a);
+double rigidityToKineticEnergy(double rig_gv, int z, double a);
+double kineticEnergyToRigidity(double ek_per_nucleon, int z, double a);
+double dR_dEk(double ek_per_nucleon, int z, double a);
 void setCutStatus(std::bitset<32>& cutStatus, bool expectedValue, int bitPosition);
 //
 bool isValidBeta(double beta);
 int findBin(std::vector<double> Rbins_beta, double beta);
 bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, 
-                    int charge, int UseMass, bool isMC);
+                    int charge, double UseMass, bool isMC);
 
 //carlos corr
 double CorrectCalibrationBias(double beta, bool naf_rad);
@@ -138,6 +138,18 @@ double GetRichWidth(int iz, bool isNaF);
 // seed: a random number for each event (e.g., Run + Event number)
 // isNaF: true for NaF, false for AGL
 double GetSmearRichBeta(int iz, double beta, bool isNaF);
+
+// Initializes the charge tuning lookup tables. Thread-safe.
+void initChargeTuning(const std::string& filename = "/eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline.root");
+
+// Performs L2 charge tuning using pre-loaded tables.
+double tuneL2Charge(
+    const std::string& chain, 
+    const std::string& nucleusName, 
+    const std::string& detectorName, 
+    int ekBin, 
+    double q_l2
+);
 
 } // namespace Tools
 } // namespace AMS_Iso

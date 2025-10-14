@@ -5,16 +5,17 @@
 #include <vector>
 #include <string>
 #include "TFile.h"
-#include "TH1F.h"
-#include "TH2F.h"
+#include "TH1D.h"
+#include "TH2D.h"
+#include "TChain.h"  // 添加这个头文件
 #include "basic_var.h"
 
 // 命名空间应与你的项目保持一致，这里假设是 AMS_Iso
 namespace AMS_Iso {
 
 // 使用 using 别名来简化智能指针的类型声明
-using H1Ptr = std::unique_ptr<TH1F>;
-using H2Ptr = std::unique_ptr<TH2F>;
+using H1Ptr = std::unique_ptr<TH1D>;
+using H2Ptr = std::unique_ptr<TH2D>;
 
 class HistManager {
 public:
@@ -26,7 +27,11 @@ public:
                 const IsotopeVar* iso,
                 int UseMass);
 
-    void Save();
+    // 新增：设置要保存的 TChain
+    void SetDataChain(TChain* chain) { m_dataChain = chain; }
+    
+    // 修改 Save() 声明，添加可选参数控制是否保存 TTree
+    void Save(bool saveTree = true);
 
     // ======== ID 区域 ========
     // ISS
@@ -75,6 +80,7 @@ public:
 
 private:
     std::unique_ptr<TFile> m_outputFile;
+    TChain* m_dataChain = nullptr;  // ← 添加这一行
 
     // 辅助函数，用于简化直方图的创建
     template <typename HistType, typename... Args>

@@ -1,0 +1,22 @@
+Universe = vanilla
+executable = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/MCB11.sh
+
+output = /afs/cern.ch/work/z/zixuan/logMC/output_$(Cluster).$(Process)
+error = /afs/cern.ch/work/z/zixuan/logMC/error_$(Cluster).$(Process)
+log = /afs/cern.ch/work/z/zixuan/logMC/log_$(Cluster)
+
++AMSPublic = True
++JobFlavour = "microcentury" 
+
+request_cpus = 1
+request_memory = 600MB       
+request_disk = 100MB 
+
+transfer_output_files = ""
+
+GroupSize = 10
+InputListFile = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_MC_B11.txt
+
+arguments = $(InputListFile) $(GroupSize) $(Process)
+
+queue 114

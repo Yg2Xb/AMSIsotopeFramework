@@ -142,7 +142,7 @@ double kineticEnergyToBeta(double kineticEnergy) {
     return std::sqrt(1.0 - 1.0 / (gamma * gamma));
 }
 
-double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron) {
+double rigidityToBeta(double rigidity, int charge, double mass, bool isElectron) {
     if (!isElectron && mass < charge) {
         throw std::invalid_argument("Invalid charge/mass combination");
     }
@@ -157,7 +157,7 @@ double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron) {
     }
 }
 
-double betaToRigidity(double beta, int charge, int mass, bool isElectron) {
+double betaToRigidity(double beta, int charge, double mass, bool isElectron) {
     if (beta <= 0.0 || beta >= 1.0) return -100000.0;
 
     if (isElectron) {
@@ -170,23 +170,23 @@ double betaToRigidity(double beta, int charge, int mass, bool isElectron) {
     }
 }
 
-double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
-    if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
-    
-    double factor = (a * Mass_Unit) / z;
-    double term = std::pow(ek_per_nucleon / Mass_Unit + 1, 2) - 1;
-    return factor * std::sqrt(term);
-}
-
-double dR_dEk(double ek_per_nucleon, int z, int a) {
+double kineticEnergyToRigidity(double ek_per_nucleon, int z, double a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
     
     double factor = (a * Mass_Unit) / z;
     double ek_term = ek_per_nucleon / Mass_Unit + 1;
+    return factor * std::sqrt(ek_term * ek_term - 1);
+}
+
+double dR_dEk(double ek_per_nucleon, int z, double a) {
+    if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
+    
+    double factor = 1.0*float(a) / z;
+    double ek_term = ek_per_nucleon / Mass_Unit + 1;
     return factor * ek_term / std::sqrt(ek_term * ek_term - 1);
 }
 
-double rigidityToKineticEnergy(double rig_gv, int z, int a) {
+double rigidityToKineticEnergy(double rig_gv, int z, double a) {
     if (rig_gv <= 0.0 || z == 0) return -9.0;
     
     double factor = (a * Mass_Unit) / z;
@@ -194,7 +194,7 @@ double rigidityToKineticEnergy(double rig_gv, int z, int a) {
     return Mass_Unit * (std::sqrt(1 + term) - 1);
 }
 
-double dEk_dR(double rig_gv, int z, int a) {
+double dEk_dR(double rig_gv, int z, double a) {
     if (rig_gv <= 0.0 || z == 0) return -9.0;
     
     double factor = (a * Mass_Unit) / z;
@@ -230,7 +230,7 @@ int findBin2(std::vector<double>& bins, double value) {
     return -1;
 }
 
-int findEkBin(double beta, int charge, int mass) {
+int findEkBin(double beta, int charge, double mass) {
     if (!isValidBeta(beta)) return -1;
     
     double ek = betaToKineticEnergy(beta);
@@ -248,7 +248,7 @@ int findEkBin(double beta, int charge, int mass) {
     return -1;
 }
 
-bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, int charge, int UseMass,  bool isMC) {
+bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, int charge, double UseMass,  bool isMC) {
     if (isMC) return true;
     if (!isValidBeta(beta_low)) return false;
         
@@ -258,7 +258,7 @@ bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, int 
     return beta_low > safetyFactor * cutoffBeta;
 }
 
-bool isBeyondCutoff2(double beta_low, double cutoffRig, double safetyFactor, int charge, int UseMass,  bool isMC) {
+bool isBeyondCutoff2(double beta_low, double cutoffRig, double safetyFactor, int charge, double UseMass,  bool isMC) {
     if (isMC) return true;
     if (!isValidBeta(beta_low)) return false;
         

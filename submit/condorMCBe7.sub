@@ -1,9 +1,0 @@
-Universe  = vanilla
-executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/MCBe7.sh
-output      = /afs/cern.ch/user/z/zixuan/public/logMC/output_$(Cluster).$(Process)
-error       = /afs/cern.ch/user/z/zixuan/public/logMC/output_$(Cluster).$(Process)
-log         = /afs/cern.ch/user/z/zixuan/public/logMC/log_$(Cluster)
-+AMSPublic = True
-+JobFlavour = "longlunch"
-transfer_output_files = ""
-queue arguments from /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_MC_Be7.txt

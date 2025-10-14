@@ -1,0 +1,1280 @@
+
+Processing ../rootlogon.C...
+Processing chargeHistFit.cpp...
+[open] spline '/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.8_orig.root' -> OK
+[open] hist_ori '/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_orig.root' -> OK
+[open] input '/eos/user/z/zixuan/Isotope/Add/Be_all.root' -> OK
+[open] output '/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8.root' -> OK
+[init] L1Inner_Beryllium_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.088 EGE chi2/ndf=0.782
+  [info] Fit not optimal (Chi2/NDF=3.109, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.484 EGE chi2/ndf=1.564
+  [info] Fit not optimal (Chi2/NDF=5.725, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.794 EGE chi2/ndf=1.233
+  [info] Fit not optimal (Chi2/NDF=6.428, Boundary Hits=0). Adjusting fit range for iter 2...
+  [warn] boundary: LG-try1 par#3 Sigma = 0.140 in [0.084,0.140] L1Inner/Beryllium/TOF/L1QTemplate EkCen=0.759
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Sigma limits to [0.062, 0.162]
+  [info] Fit not optimal (Chi2/NDF=3.811, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.723 EGE chi2/ndf=1.624
+  [info] Fit not optimal (Chi2/NDF=4.061, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.919 EGE chi2/ndf=1.949
+  [info] Fit not optimal (Chi2/NDF=3.903, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=1.036 LG chi2/ndf=2.691 EGE chi2/ndf=2.950
+[ok] L1Inner Beryllium L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.222 EGE chi2/ndf=1.869
+[init] L1Inner_Beryllium_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.449 LG chi2/ndf=0.965 EGE chi2/ndf=0.974
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.167 EGE chi2/ndf=1.295
+  [info] Fit not optimal (Chi2/NDF=3.961, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.629 EGE chi2/ndf=1.406
+  [info] Fit not optimal (Chi2/NDF=4.231, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.647 EGE chi2/ndf=1.010
+  [info] Fit not optimal (Chi2/NDF=3.278, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.831 EGE chi2/ndf=1.260
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=1.036 LG chi2/ndf=2.323 EGE chi2/ndf=1.459
+  [info] Fit not optimal (Chi2/NDF=3.271, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Beryllium L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.483 EGE chi2/ndf=2.738
+[init] L1Inner_Beryllium_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.849 EGE chi2/ndf=1.644
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.620 EGE chi2/ndf=1.200
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.450 EGE chi2/ndf=1.378
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.038 EGE chi2/ndf=0.950
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.104 EGE chi2/ndf=1.073
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.236 EGE chi2/ndf=1.170
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.008 EGE chi2/ndf=1.035
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.147 EGE chi2/ndf=1.144
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.237 EGE chi2/ndf=1.022
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.356 EGE chi2/ndf=1.312
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.030 EGE chi2/ndf=0.883
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.775 EGE chi2/ndf=1.690
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.228 EGE chi2/ndf=1.160
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.107 EGE chi2/ndf=0.927
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.586 EGE chi2/ndf=1.128
+[ok] L1Inner Beryllium L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.082 EGE chi2/ndf=1.056
+[init] L1Inner_Beryllium_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=0.759 LG chi2/ndf=0.969 EGE chi2/ndf=0.759
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=0.890 LG chi2/ndf=0.874 EGE chi2/ndf=0.763
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.201 EGE chi2/ndf=1.177
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.575 EGE chi2/ndf=1.549
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.309 EGE chi2/ndf=1.281
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.238 EGE chi2/ndf=1.256
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.383 EGE chi2/ndf=1.432
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.160 EGE chi2/ndf=1.221
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.345 EGE chi2/ndf=1.366
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.123 EGE chi2/ndf=1.153
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=2.896 LG chi2/ndf=0.782 EGE chi2/ndf=0.673
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=3.234 LG chi2/ndf=0.979 EGE chi2/ndf=0.895
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.895 EGE chi2/ndf=0.901
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.165 EGE chi2/ndf=1.202
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.413 EGE chi2/ndf=1.370
+[ok] L1Inner Beryllium L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.058 EGE chi2/ndf=1.005
+[init] L1Inner_Beryllium_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.623 EGE chi2/ndf=1.049
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.521 EGE chi2/ndf=1.065
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=3.600 LG chi2/ndf=2.369 EGE chi2/ndf=1.821
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=3.997 LG chi2/ndf=2.175 EGE chi2/ndf=1.855
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=4.425 LG chi2/ndf=2.076 EGE chi2/ndf=1.578
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=4.894 LG chi2/ndf=2.112 EGE chi2/ndf=1.137
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=5.388 LG chi2/ndf=2.023 EGE chi2/ndf=1.682
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=5.907 LG chi2/ndf=2.655 EGE chi2/ndf=1.710
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.394 EGE chi2/ndf=1.032
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.345 EGE chi2/ndf=1.233
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=7.769 LG chi2/ndf=2.239 EGE chi2/ndf=1.946
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=8.490 LG chi2/ndf=2.204 EGE chi2/ndf=1.723
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.720 EGE chi2/ndf=1.720
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.021 EGE chi2/ndf=0.967
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.210 EGE chi2/ndf=1.204
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.258 EGE chi2/ndf=0.916
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.294 EGE chi2/ndf=1.164
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.609 EGE chi2/ndf=1.409
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.877 EGE chi2/ndf=0.910
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.182 EGE chi2/ndf=1.099
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.461 EGE chi2/ndf=1.289
+[ok] L1Inner Beryllium L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.127 EGE chi2/ndf=1.150
+[init] L1Inner_Beryllium_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=2.896 LG chi2/ndf=2.678 EGE chi2/ndf=2.483
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.766 EGE chi2/ndf=1.231
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=3.600 LG chi2/ndf=2.101 EGE chi2/ndf=1.430
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.144 EGE chi2/ndf=0.842
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.738 EGE chi2/ndf=1.020
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.250 EGE chi2/ndf=0.980
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.565 EGE chi2/ndf=1.294
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.158 EGE chi2/ndf=1.115
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.582 EGE chi2/ndf=1.257
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=7.098 LG chi2/ndf=2.337 EGE chi2/ndf=1.785
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.235 EGE chi2/ndf=1.191
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=8.490 LG chi2/ndf=0.965 EGE chi2/ndf=0.867
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.372 EGE chi2/ndf=1.349
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=10.083 LG chi2/ndf=0.974 EGE chi2/ndf=0.994
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.572 EGE chi2/ndf=1.411
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.730 EGE chi2/ndf=1.703
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.685 EGE chi2/ndf=1.461
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.789 EGE chi2/ndf=1.664
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.074 EGE chi2/ndf=1.094
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.335 EGE chi2/ndf=1.174
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.971 EGE chi2/ndf=0.942
+[ok] L1Inner Beryllium L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.020 EGE chi2/ndf=1.001
+[init] L1Inner_Boron_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.449 LG chi2/ndf=2.215 EGE chi2/ndf=1.924
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.539 LG chi2/ndf=2.309 EGE chi2/ndf=1.539
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.866 EGE chi2/ndf=2.341
+  [info] Fit not optimal (Chi2/NDF=8.516, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.132, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.639 EGE chi2/ndf=2.274
+  [info] Fit not optimal (Chi2/NDF=9.235, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=4.368, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] L1Inner Boron L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.972 EGE chi2/ndf=2.035
+  [info] Fit not optimal (Chi2/NDF=7.385, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=5.149, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=4.009, Boundary Hits=0). Adjusting fit range for iter 4...
+  [info] Fit not optimal (Chi2/NDF=3.215, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Boron L1QTemplate TOF EkCen=1.036 LG chi2/ndf=3.848 EGE chi2/ndf=1.960
+  [info] Fit not optimal (Chi2/NDF=5.234, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.242, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=4.606, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.512, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] L1Inner Boron L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.481 EGE chi2/ndf=1.983
+[init] L1Inner_Boron_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.449 LG chi2/ndf=2.232 EGE chi2/ndf=1.753
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.126 EGE chi2/ndf=2.095
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.294 EGE chi2/ndf=1.255
+  [info] Fit not optimal (Chi2/NDF=4.846, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.696 EGE chi2/ndf=2.587
+  [info] Fit not optimal (Chi2/NDF=5.794, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Boron L2QTemplate TOF EkCen=0.890 LG chi2/ndf=2.649 EGE chi2/ndf=2.115
+  [info] Fit not optimal (Chi2/NDF=6.886, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.033, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] L1Inner Boron L2QTemplate TOF EkCen=1.036 LG chi2/ndf=2.012 EGE chi2/ndf=2.849
+  [info] Fit not optimal (Chi2/NDF=4.397, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.132, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=3.063, Boundary Hits=0). Adjusting fit range for iter 4...
+[ok] L1Inner Boron L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.019 EGE chi2/ndf=2.510
+[init] L1Inner_Boron_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L1QTemplate NaF EkCen=0.759 LG chi2/ndf=2.307 EGE chi2/ndf=1.337
+[ok] L1Inner Boron L1QTemplate NaF EkCen=0.890 LG chi2/ndf=2.235 EGE chi2/ndf=1.715
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.583 EGE chi2/ndf=1.277
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.836 EGE chi2/ndf=1.734
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.445 EGE chi2/ndf=1.542
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.336 EGE chi2/ndf=1.302
+[ok] L1Inner Boron L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.131 EGE chi2/ndf=1.112
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.184 EGE chi2/ndf=1.161
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.309 EGE chi2/ndf=1.368
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.418 EGE chi2/ndf=1.359
+[ok] L1Inner Boron L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.227 EGE chi2/ndf=1.239
+[ok] L1Inner Boron L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.683 EGE chi2/ndf=1.601
+[ok] L1Inner Boron L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.702 EGE chi2/ndf=1.457
+[ok] L1Inner Boron L1QTemplate NaF EkCen=3.997 LG chi2/ndf=0.793 EGE chi2/ndf=0.829
+[ok] L1Inner Boron L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.247 EGE chi2/ndf=1.277
+[ok] L1Inner Boron L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.219 EGE chi2/ndf=1.283
+[init] L1Inner_Boron_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.670 EGE chi2/ndf=1.280
+[ok] L1Inner Boron L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.692 EGE chi2/ndf=1.530
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.209 EGE chi2/ndf=1.104
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.205 EGE chi2/ndf=0.991
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.564 EGE chi2/ndf=1.279
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.976 in [0.659,1.976] L1Inner/Boron/NaF/L2QTemplate EkCen=1.576
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.395, 2.240]
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.225 EGE chi2/ndf=1.053
+[ok] L1Inner Boron L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.207 EGE chi2/ndf=1.230
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.129 EGE chi2/ndf=1.196
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.367 EGE chi2/ndf=1.414
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.074 EGE chi2/ndf=1.116
+[ok] L1Inner Boron L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.328 EGE chi2/ndf=1.323
+[ok] L1Inner Boron L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.853 EGE chi2/ndf=1.886
+[ok] L1Inner Boron L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.918 EGE chi2/ndf=0.961
+[ok] L1Inner Boron L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.197 EGE chi2/ndf=1.195
+[ok] L1Inner Boron L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.090 EGE chi2/ndf=1.137
+[ok] L1Inner Boron L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.323 EGE chi2/ndf=1.274
+[init] L1Inner_Boron_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.536 EGE chi2/ndf=1.567
+[ok] L1Inner Boron L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.311 EGE chi2/ndf=1.472
+[ok] L1Inner Boron L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.979 EGE chi2/ndf=1.901
+[ok] L1Inner Boron L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.469 EGE chi2/ndf=1.350
+[ok] L1Inner Boron L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.272 EGE chi2/ndf=1.404
+[ok] L1Inner Boron L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.788 EGE chi2/ndf=1.301
+[ok] L1Inner Boron L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.770 EGE chi2/ndf=1.782
+[ok] L1Inner Boron L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.563 EGE chi2/ndf=1.697
+[ok] L1Inner Boron L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.551 EGE chi2/ndf=1.566
+[ok] L1Inner Boron L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.729 EGE chi2/ndf=1.497
+[ok] L1Inner Boron L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.020 EGE chi2/ndf=1.094
+[ok] L1Inner Boron L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.185 EGE chi2/ndf=1.112
+[ok] L1Inner Boron L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.175 EGE chi2/ndf=1.245
+[ok] L1Inner Boron L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.363 EGE chi2/ndf=1.387
+[ok] L1Inner Boron L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.164 EGE chi2/ndf=1.254
+[ok] L1Inner Boron L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.512 EGE chi2/ndf=1.549
+[ok] L1Inner Boron L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.406 EGE chi2/ndf=1.525
+[ok] L1Inner Boron L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.844 EGE chi2/ndf=1.941
+[ok] L1Inner Boron L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.206 EGE chi2/ndf=1.207
+[ok] L1Inner Boron L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.036 EGE chi2/ndf=0.969
+[ok] L1Inner Boron L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.157 EGE chi2/ndf=1.277
+[ok] L1Inner Boron L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.742 EGE chi2/ndf=1.790
+[init] L1Inner_Boron_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Boron L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.510 EGE chi2/ndf=1.775
+[ok] L1Inner Boron L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.630 EGE chi2/ndf=1.971
+[ok] L1Inner Boron L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.324 EGE chi2/ndf=1.451
+[ok] L1Inner Boron L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.060 EGE chi2/ndf=1.172
+[ok] L1Inner Boron L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.884 EGE chi2/ndf=2.020
+[ok] L1Inner Boron L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.233 EGE chi2/ndf=1.370
+[ok] L1Inner Boron L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.112 EGE chi2/ndf=1.176
+[ok] L1Inner Boron L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.599 EGE chi2/ndf=1.605
+[ok] L1Inner Boron L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.383 EGE chi2/ndf=1.402
+[ok] L1Inner Boron L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.850 EGE chi2/ndf=1.903
+[ok] L1Inner Boron L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.033 EGE chi2/ndf=1.209
+[ok] L1Inner Boron L2QTemplate AGL EkCen=8.490 LG chi2/ndf=0.978 EGE chi2/ndf=1.187
+[ok] L1Inner Boron L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.201 EGE chi2/ndf=1.383
+[ok] L1Inner Boron L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.337 EGE chi2/ndf=1.395
+[ok] L1Inner Boron L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.775 EGE chi2/ndf=1.844
+[ok] L1Inner Boron L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.319 EGE chi2/ndf=1.324
+[ok] L1Inner Boron L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.934 EGE chi2/ndf=1.956
+[ok] L1Inner Boron L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.110 EGE chi2/ndf=0.997
+[ok] L1Inner Boron L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.856 EGE chi2/ndf=1.589
+[ok] L1Inner Boron L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.401 EGE chi2/ndf=1.465
+[ok] L1Inner Boron L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.161 EGE chi2/ndf=1.235
+[ok] L1Inner Boron L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.490 EGE chi2/ndf=1.317
+[init] L1Inner_Carbon_TOF_L1QTemplate with 73 Ek/n bins
+  [info] Fit not optimal (Chi2/NDF=3.261, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=4.474, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.317, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.995 EGE chi2/ndf=2.349
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.618 EGE chi2/ndf=1.935
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.002 EGE chi2/ndf=1.762
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.641 EGE chi2/ndf=2.134
+  [info] Fit not optimal (Chi2/NDF=3.671, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.362 EGE chi2/ndf=2.323
+  [info] Fit not optimal (Chi2/NDF=4.225, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=1.036 LG chi2/ndf=2.280 EGE chi2/ndf=2.619
+  [info] Fit not optimal (Chi2/NDF=4.616, Boundary Hits=0). Adjusting fit range for iter 2...
+  [warn] boundary: LG-try1 par#0 Width = 0.053 in [0.018,0.053] L1Inner/Carbon/TOF/L1QTemplate EkCen=1.198
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.011, 0.060]
+  [info] Fit not optimal (Chi2/NDF=3.546, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Carbon L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.537 EGE chi2/ndf=1.955
+[init] L1Inner_Carbon_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.449 LG chi2/ndf=2.072 EGE chi2/ndf=1.684
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.209 EGE chi2/ndf=2.436
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.456 EGE chi2/ndf=2.347
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.267 EGE chi2/ndf=1.533
+  [info] Fit not optimal (Chi2/NDF=3.031, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.196 EGE chi2/ndf=2.240
+  [info] Fit not optimal (Chi2/NDF=3.484, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=1.036 LG chi2/ndf=0.929 EGE chi2/ndf=2.178
+  [info] Fit not optimal (Chi2/NDF=4.327, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Carbon L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.391 EGE chi2/ndf=2.356
+[init] L1Inner_Carbon_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.199 EGE chi2/ndf=1.291
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.237 EGE chi2/ndf=1.166
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.406 EGE chi2/ndf=1.100
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.256 EGE chi2/ndf=1.428
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.131 EGE chi2/ndf=1.173
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.435 EGE chi2/ndf=1.425
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.419 EGE chi2/ndf=1.620
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.880 EGE chi2/ndf=1.817
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.271 EGE chi2/ndf=1.034
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.349 EGE chi2/ndf=1.463
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.212 EGE chi2/ndf=1.305
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.063 EGE chi2/ndf=1.139
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=3.600 LG chi2/ndf=0.955 EGE chi2/ndf=0.988
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.482 EGE chi2/ndf=1.391
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.133 EGE chi2/ndf=1.161
+[ok] L1Inner Carbon L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.459 EGE chi2/ndf=1.488
+[init] L1Inner_Carbon_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.018 EGE chi2/ndf=1.053
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.682 EGE chi2/ndf=1.480
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.941 EGE chi2/ndf=1.574
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.716 EGE chi2/ndf=1.520
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.207 EGE chi2/ndf=1.246
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.311 EGE chi2/ndf=1.316
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.207 EGE chi2/ndf=1.228
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.222 EGE chi2/ndf=1.266
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.299 LG chi2/ndf=0.972 EGE chi2/ndf=1.026
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.510 EGE chi2/ndf=1.491
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.257 EGE chi2/ndf=1.285
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=3.234 LG chi2/ndf=0.815 EGE chi2/ndf=0.867
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=3.600 LG chi2/ndf=1.235 EGE chi2/ndf=1.303
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.081 EGE chi2/ndf=0.863
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.530 EGE chi2/ndf=1.611
+[ok] L1Inner Carbon L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.290 EGE chi2/ndf=1.298
+[init] L1Inner_Carbon_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=2.896 LG chi2/ndf=2.134 EGE chi2/ndf=1.547
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=3.234 LG chi2/ndf=2.431 EGE chi2/ndf=2.210
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.847 EGE chi2/ndf=1.779
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.535 EGE chi2/ndf=1.603
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.486 EGE chi2/ndf=1.638
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=4.894 LG chi2/ndf=2.133 EGE chi2/ndf=2.223
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.618 EGE chi2/ndf=1.676
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.959 EGE chi2/ndf=1.997
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=6.477 LG chi2/ndf=2.092 EGE chi2/ndf=2.006
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.680 EGE chi2/ndf=1.647
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.504 EGE chi2/ndf=1.649
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.832 EGE chi2/ndf=1.240
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.943 EGE chi2/ndf=1.142
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.881 EGE chi2/ndf=1.911
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.337 EGE chi2/ndf=1.493
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.622 EGE chi2/ndf=1.647
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.906 EGE chi2/ndf=1.495
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.925 EGE chi2/ndf=1.713
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.663 EGE chi2/ndf=1.868
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.485 EGE chi2/ndf=1.361
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=17.842 LG chi2/ndf=2.057 EGE chi2/ndf=1.963
+[ok] L1Inner Carbon L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.650 EGE chi2/ndf=1.641
+[init] L1Inner_Carbon_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=2.896 LG chi2/ndf=2.409 EGE chi2/ndf=2.791
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=3.234 LG chi2/ndf=2.059 EGE chi2/ndf=1.922
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=3.600 LG chi2/ndf=2.283 EGE chi2/ndf=2.401
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.563 EGE chi2/ndf=1.762
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=4.425 LG chi2/ndf=2.111 EGE chi2/ndf=1.706
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.951 EGE chi2/ndf=1.909
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.494 EGE chi2/ndf=1.370
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.392 EGE chi2/ndf=1.434
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=6.477 LG chi2/ndf=2.049 EGE chi2/ndf=1.818
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.087 EGE chi2/ndf=1.155
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.841 EGE chi2/ndf=1.708
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.285 EGE chi2/ndf=1.393
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.091 EGE chi2/ndf=1.223
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.859 EGE chi2/ndf=2.134
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.461 EGE chi2/ndf=1.387
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.568 EGE chi2/ndf=1.682
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.563 EGE chi2/ndf=1.316
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.787 EGE chi2/ndf=1.461
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.463 EGE chi2/ndf=1.266
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.467 EGE chi2/ndf=1.516
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.978 EGE chi2/ndf=0.958
+[ok] L1Inner Carbon L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.270 EGE chi2/ndf=1.237
+[init] L1Inner_Nitrogen_TOF_L1QTemplate with 73 Ek/n bins
+  [info] Fit not optimal (Chi2/NDF=35.067, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=50.321, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=43.829, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=32.655, Boundary Hits=0). Adjusting fit range for iter 4...
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.143 EGE chi2/ndf=17.804
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.479 EGE chi2/ndf=1.504
+  [info] Fit not optimal (Chi2/NDF=3.321, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.055 EGE chi2/ndf=2.004
+  [info] Fit not optimal (Chi2/NDF=3.322, Boundary Hits=0). Adjusting fit range for iter 2...
+  [warn] boundary: LG-try1 par#0 Width = 0.014 in [0.014,0.041] L1Inner/Nitrogen/TOF/L1QTemplate EkCen=0.759
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.008, 0.047]
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=0.759 LG chi2/ndf=1.224 EGE chi2/ndf=1.920
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=0.890 LG chi2/ndf=2.228 EGE chi2/ndf=2.208
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=1.036 LG chi2/ndf=1.510 EGE chi2/ndf=1.369
+[ok] L1Inner Nitrogen L1QTemplate TOF EkCen=1.198 LG chi2/ndf=1.719 EGE chi2/ndf=1.775
+[init] L1Inner_Nitrogen_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.194 EGE chi2/ndf=1.249
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=0.539 LG chi2/ndf=1.265 EGE chi2/ndf=1.267
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.508 EGE chi2/ndf=1.700
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.390 EGE chi2/ndf=1.478
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.148 EGE chi2/ndf=1.149
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=1.036 LG chi2/ndf=1.261 EGE chi2/ndf=1.044
+[ok] L1Inner Nitrogen L2QTemplate TOF EkCen=1.198 LG chi2/ndf=1.392 EGE chi2/ndf=1.337
+[init] L1Inner_Nitrogen_NaF_L1QTemplate with 73 Ek/n bins
+ !!!!!!!0.759
+  [warn] Insane limits for Width: [-0.000, -0.001]. Using defaults.
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=0.759 LG chi2/ndf=0.786 EGE chi2/ndf=0.768
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.597 EGE chi2/ndf=1.610
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.423 EGE chi2/ndf=1.409
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.407 EGE chi2/ndf=1.442
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.852 EGE chi2/ndf=1.879
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=1.576 LG chi2/ndf=0.899 EGE chi2/ndf=0.910
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=1.795 LG chi2/ndf=0.875 EGE chi2/ndf=0.895
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=2.036 LG chi2/ndf=0.755 EGE chi2/ndf=0.760
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.003 EGE chi2/ndf=0.985
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.485 EGE chi2/ndf=1.533
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.232 EGE chi2/ndf=1.250
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.253 EGE chi2/ndf=1.242
+  [warn] boundary: LG-try1 par#0 Width = 0.055 in [0.055,0.110] L1Inner/Nitrogen/NaF/L1QTemplate EkCen=3.600
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.033, 0.110]
+  [warn] boundary: LG-try2 par#3 Sigma = 0.208 in [0.125,0.208] L1Inner/Nitrogen/NaF/L1QTemplate EkCen=3.600
+  [info] Fit not optimal (Chi2/NDF=1.669, Boundary Hits=1). Adjusting fit range for iter 2...
+  [warn] boundary: LG-try1 par#0 Width = 0.055 in [0.055,0.110] L1Inner/Nitrogen/NaF/L1QTemplate EkCen=3.600
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.033, 0.110]
+  [warn] boundary: LG-try2 par#3 Sigma = 0.208 in [0.125,0.208] L1Inner/Nitrogen/NaF/L1QTemplate EkCen=3.600
+  [info] Fit not optimal (Chi2/NDF=2.115, Boundary Hits=1). Adjusting fit range for iter 3...
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=3.600 LG chi2/ndf=2.148 EGE chi2/ndf=1.666
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=3.997 LG chi2/ndf=0.920 EGE chi2/ndf=0.913
+  [warn] boundary: LG-try1 par#0 Width = 0.022 in [0.007,0.022] L1Inner/Nitrogen/NaF/L1QTemplate EkCen=4.425
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.004, 0.024]
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.013 EGE chi2/ndf=0.974
+[ok] L1Inner Nitrogen L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.766 EGE chi2/ndf=1.784
+[init] L1Inner_Nitrogen_NaF_L2QTemplate with 73 Ek/n bins
+  [warn] boundary: LG-try1 par#0 Width = 0.020 in [0.020,0.061] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=0.759
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.012, 0.069]
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=0.759 LG chi2/ndf=0.833 EGE chi2/ndf=0.808
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.290 EGE chi2/ndf=1.206
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.398 EGE chi2/ndf=1.374
+  [warn] boundary: LG-try1 par#0 Width = 0.008 in [0.008,0.025] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=1.198
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.005, 0.029]
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.838 in [0.613,1.838] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=1.198
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.368, 2.083]
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.476 EGE chi2/ndf=1.499
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.177 EGE chi2/ndf=1.142
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.259 EGE chi2/ndf=1.221
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=1.795 LG chi2/ndf=0.813 EGE chi2/ndf=0.818
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.241 EGE chi2/ndf=1.217
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.067 EGE chi2/ndf=1.100
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.461 EGE chi2/ndf=1.485
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.411 EGE chi2/ndf=1.410
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.481 EGE chi2/ndf=1.345
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=3.600 LG chi2/ndf=1.365 EGE chi2/ndf=1.396
+  [warn] boundary: LG-try1 par#3 Sigma = 0.196 in [0.118,0.196] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Sigma limits to [0.086, 0.227]
+  [warn] boundary: LG-try2 par#0 Width = 0.042 in [0.042,0.110] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Fit not optimal (Chi2/NDF=1.223, Boundary Hits=1). Adjusting fit range for iter 2...
+  [warn] boundary: LG-try1 par#0 Width = 0.042 in [0.042,0.110] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.025, 0.110]
+  [warn] boundary: LG-try2 par#3 Sigma = 0.196 in [0.118,0.196] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Fit not optimal (Chi2/NDF=1.034, Boundary Hits=1). Adjusting fit range for iter 3...
+  [warn] boundary: EGE-try1 par#1 SigmaL = 0.246 in [0.148,0.246] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaL limits to [0.108, 0.285]
+  [warn] boundary: EGE-try2 par#3 SigmaR = 0.194 in [0.194,0.324] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Fit not optimal (Chi2/NDF=1.076, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.011 EGE chi2/ndf=1.032
+  [warn] boundary: LG-try1 par#3 Sigma = 0.159 in [0.096,0.159] L1Inner/Nitrogen/NaF/L2QTemplate EkCen=4.425
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Sigma limits to [0.070, 0.185]
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.679 EGE chi2/ndf=1.677
+[ok] L1Inner Nitrogen L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.634 EGE chi2/ndf=1.662
+[init] L1Inner_Nitrogen_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.009 EGE chi2/ndf=0.952
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.239 EGE chi2/ndf=1.231
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.714 EGE chi2/ndf=1.656
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.179 EGE chi2/ndf=1.137
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.395 EGE chi2/ndf=1.397
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.073 EGE chi2/ndf=1.032
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=5.388 LG chi2/ndf=0.816 EGE chi2/ndf=0.822
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=5.907 LG chi2/ndf=0.998 EGE chi2/ndf=1.042
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.610 EGE chi2/ndf=1.654
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.517 EGE chi2/ndf=1.528
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.428 EGE chi2/ndf=1.443
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=8.490 LG chi2/ndf=0.710 EGE chi2/ndf=0.741
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.122 EGE chi2/ndf=1.092
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.479 EGE chi2/ndf=1.363
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=10.980 LG chi2/ndf=0.937 EGE chi2/ndf=0.936
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.093 EGE chi2/ndf=1.125
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.192 EGE chi2/ndf=1.188
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.398 EGE chi2/ndf=1.359
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.526 EGE chi2/ndf=0.522
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.264 EGE chi2/ndf=1.294
+  [warn] boundary: LG-try1 par#0 Width = 0.045 in [0.015,0.045] L1Inner/Nitrogen/AGL/L1QTemplate EkCen=17.842
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.051]
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.178 EGE chi2/ndf=1.188
+  [warn] boundary: LG-try1 par#0 Width = 0.015 in [0.015,0.045] L1Inner/Nitrogen/AGL/L1QTemplate EkCen=19.290
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.051]
+[ok] L1Inner Nitrogen L1QTemplate AGL EkCen=19.290 LG chi2/ndf=0.860 EGE chi2/ndf=0.874
+[init] L1Inner_Nitrogen_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.357 EGE chi2/ndf=1.281
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.374 EGE chi2/ndf=1.412
+  [warn] boundary: EGE-try1 par#4 AlphaR = 2.072 in [0.691,2.072] L1Inner/Nitrogen/AGL/L2QTemplate EkCen=3.600
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.414, 2.348]
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.408 EGE chi2/ndf=1.264
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.369 EGE chi2/ndf=1.397
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.588 EGE chi2/ndf=1.553
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.227 EGE chi2/ndf=1.268
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=5.388 LG chi2/ndf=0.977 EGE chi2/ndf=1.006
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.285 EGE chi2/ndf=1.291
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=6.477 LG chi2/ndf=0.986 EGE chi2/ndf=0.994
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.269 EGE chi2/ndf=1.240
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.094 EGE chi2/ndf=1.123
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.467 EGE chi2/ndf=1.469
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.800 EGE chi2/ndf=1.628
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=10.083 LG chi2/ndf=0.973 EGE chi2/ndf=0.995
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.798 in [0.599,1.798] L1Inner/Nitrogen/AGL/L2QTemplate EkCen=10.980
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.360, 2.038]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 2.038 in [0.360,2.038] L1Inner/Nitrogen/AGL/L2QTemplate EkCen=10.980
+  [info] Fit not optimal (Chi2/NDF=1.103, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.163 EGE chi2/ndf=1.060
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.807 EGE chi2/ndf=1.822
+  [warn] boundary: LG-try1 par#0 Width = 0.047 in [0.016,0.047] L1Inner/Nitrogen/AGL/L2QTemplate EkCen=12.975
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.053]
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.309 EGE chi2/ndf=1.253
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=14.072 LG chi2/ndf=2.207 EGE chi2/ndf=2.077
+  [warn] boundary: LG-try1 par#0 Width = 0.046 in [0.015,0.046] L1Inner/Nitrogen/AGL/L2QTemplate EkCen=15.245
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.052]
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.358 EGE chi2/ndf=1.361
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.752 EGE chi2/ndf=1.782
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.982 EGE chi2/ndf=1.002
+[ok] L1Inner Nitrogen L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.281 EGE chi2/ndf=1.302
+[init] L1Inner_Oxygen_TOF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.449 LG chi2/ndf=2.206 EGE chi2/ndf=2.118
+  [info] Fit not optimal (Chi2/NDF=3.550, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.758, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.394 EGE chi2/ndf=2.167
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.556 EGE chi2/ndf=2.738
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.759 LG chi2/ndf=1.396 EGE chi2/ndf=1.521
+  [info] Fit not optimal (Chi2/NDF=3.662, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.970, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.143, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=0.890 LG chi2/ndf=2.729 EGE chi2/ndf=2.575
+  [info] Fit not optimal (Chi2/NDF=3.203, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.488, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=1.036 LG chi2/ndf=1.521 EGE chi2/ndf=2.572
+  [info] Fit not optimal (Chi2/NDF=3.284, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Oxygen L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.699 EGE chi2/ndf=2.988
+[init] L1Inner_Oxygen_TOF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.408 EGE chi2/ndf=1.546
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.072 EGE chi2/ndf=2.488
+  [info] Fit not optimal (Chi2/NDF=3.014, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=0.642 LG chi2/ndf=2.378 EGE chi2/ndf=2.733
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.461 EGE chi2/ndf=1.799
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=0.890 LG chi2/ndf=2.072 EGE chi2/ndf=2.142
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=1.036 LG chi2/ndf=1.808 EGE chi2/ndf=2.513
+[ok] L1Inner Oxygen L2QTemplate TOF EkCen=1.198 LG chi2/ndf=1.636 EGE chi2/ndf=1.848
+[init] L1Inner_Oxygen_NaF_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.172 EGE chi2/ndf=1.148
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.106 EGE chi2/ndf=1.138
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=1.036 LG chi2/ndf=0.931 EGE chi2/ndf=0.908
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.393 EGE chi2/ndf=1.359
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.481 EGE chi2/ndf=1.569
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=1.576 LG chi2/ndf=0.856 EGE chi2/ndf=0.859
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.796 EGE chi2/ndf=1.853
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.286 EGE chi2/ndf=1.312
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.102 EGE chi2/ndf=1.103
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.038 EGE chi2/ndf=0.957
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.084 EGE chi2/ndf=0.989
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.368 EGE chi2/ndf=1.189
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.286 EGE chi2/ndf=1.346
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.043 EGE chi2/ndf=1.005
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.061 EGE chi2/ndf=1.107
+[ok] L1Inner Oxygen L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.513 EGE chi2/ndf=1.468
+[init] L1Inner_Oxygen_NaF_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=0.759 LG chi2/ndf=0.938 EGE chi2/ndf=0.971
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.355 EGE chi2/ndf=1.373
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=1.036 LG chi2/ndf=0.778 EGE chi2/ndf=0.810
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.427 EGE chi2/ndf=1.398
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.002 EGE chi2/ndf=1.027
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=1.576 LG chi2/ndf=0.953 EGE chi2/ndf=0.967
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.207 EGE chi2/ndf=1.176
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.977 in [0.659,1.977] L1Inner/Oxygen/NaF/L2QTemplate EkCen=2.036
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.395, 2.241]
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=2.036 LG chi2/ndf=0.996 EGE chi2/ndf=0.967
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.832 EGE chi2/ndf=1.743
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.244 EGE chi2/ndf=1.232
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.013 EGE chi2/ndf=1.031
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.123 EGE chi2/ndf=1.097
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=3.600 LG chi2/ndf=1.220 EGE chi2/ndf=1.235
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.347 EGE chi2/ndf=1.386
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.424 EGE chi2/ndf=1.457
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.730 in [0.577,1.730] L1Inner/Oxygen/NaF/L2QTemplate EkCen=4.894
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.346, 1.960]
+[ok] L1Inner Oxygen L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.446 EGE chi2/ndf=1.353
+[init] L1Inner_Oxygen_AGL_L1QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.353 EGE chi2/ndf=1.399
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.661 EGE chi2/ndf=1.714
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.559 EGE chi2/ndf=1.558
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.630 EGE chi2/ndf=1.471
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.996 EGE chi2/ndf=1.757
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.414 EGE chi2/ndf=1.498
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.516 EGE chi2/ndf=1.423
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.164 EGE chi2/ndf=1.170
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.266 EGE chi2/ndf=1.047
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.315 EGE chi2/ndf=1.304
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.276 EGE chi2/ndf=1.329
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.133 EGE chi2/ndf=0.940
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.457 EGE chi2/ndf=1.389
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.622 EGE chi2/ndf=1.726
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.483 EGE chi2/ndf=1.378
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.657 EGE chi2/ndf=1.506
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.535 EGE chi2/ndf=1.333
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.413 EGE chi2/ndf=1.339
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.590 in [0.530,1.590] L1Inner/Oxygen/AGL/L1QTemplate EkCen=15.245
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.318, 1.802]
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.872 EGE chi2/ndf=0.771
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.262 EGE chi2/ndf=1.262
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.519 EGE chi2/ndf=1.473
+[ok] L1Inner Oxygen L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.172 EGE chi2/ndf=1.154
+[init] L1Inner_Oxygen_AGL_L2QTemplate with 73 Ek/n bins
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.220 EGE chi2/ndf=1.179
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.280 EGE chi2/ndf=1.380
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.319 EGE chi2/ndf=1.349
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.457 EGE chi2/ndf=1.514
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.216 EGE chi2/ndf=1.199
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=4.894 LG chi2/ndf=0.996 EGE chi2/ndf=1.038
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.284 EGE chi2/ndf=1.129
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=5.907 LG chi2/ndf=0.733 EGE chi2/ndf=0.730
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.204 EGE chi2/ndf=1.182
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=7.098 LG chi2/ndf=0.822 EGE chi2/ndf=0.849
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.172 EGE chi2/ndf=1.234
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.445 EGE chi2/ndf=1.365
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.342 EGE chi2/ndf=1.110
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.068 EGE chi2/ndf=1.055
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.211 EGE chi2/ndf=1.257
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=11.952 LG chi2/ndf=0.809 EGE chi2/ndf=0.723
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.564 EGE chi2/ndf=1.531
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.608 EGE chi2/ndf=1.594
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.105 EGE chi2/ndf=0.965
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.354 EGE chi2/ndf=1.392
+  [warn] boundary: LG-try1 par#0 Width = 0.019 in [0.019,0.058] L1Inner/Oxygen/AGL/L2QTemplate EkCen=17.842
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.012, 0.065]
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.406 EGE chi2/ndf=1.388
+[ok] L1Inner Oxygen L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.021 EGE chi2/ndf=1.017
+[init] UnbiasedL1Inner_Beryllium_TOF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.187 EGE chi2/ndf=0.834
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.539 LG chi2/ndf=2.754 EGE chi2/ndf=1.444
+  [info] Fit not optimal (Chi2/NDF=5.856, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.741 EGE chi2/ndf=1.271
+  [info] Fit not optimal (Chi2/NDF=6.318, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.770, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.593 EGE chi2/ndf=1.620
+  [info] Fit not optimal (Chi2/NDF=4.116, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.943 EGE chi2/ndf=1.890
+  [info] Fit not optimal (Chi2/NDF=3.803, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=1.036 LG chi2/ndf=2.709 EGE chi2/ndf=2.869
+[ok] UnbiasedL1Inner Beryllium L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.207 EGE chi2/ndf=1.779
+[init] UnbiasedL1Inner_Beryllium_TOF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.449 LG chi2/ndf=0.966 EGE chi2/ndf=0.965
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.190 EGE chi2/ndf=1.329
+  [info] Fit not optimal (Chi2/NDF=3.575, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.358 EGE chi2/ndf=1.324
+  [info] Fit not optimal (Chi2/NDF=4.210, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.614 EGE chi2/ndf=1.039
+  [info] Fit not optimal (Chi2/NDF=3.354, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.817 EGE chi2/ndf=1.405
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=1.036 LG chi2/ndf=2.421 EGE chi2/ndf=1.491
+  [info] Fit not optimal (Chi2/NDF=3.102, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Beryllium L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.256 EGE chi2/ndf=2.593
+[init] UnbiasedL1Inner_Beryllium_NaF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.870 EGE chi2/ndf=1.702
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.662 EGE chi2/ndf=1.304
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.474 EGE chi2/ndf=1.378
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.029 EGE chi2/ndf=0.921
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.098 EGE chi2/ndf=1.075
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.177 EGE chi2/ndf=1.130
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.156 EGE chi2/ndf=1.155
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.227 EGE chi2/ndf=1.220
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.120 EGE chi2/ndf=0.969
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.157 EGE chi2/ndf=1.136
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=2.896 LG chi2/ndf=0.994 EGE chi2/ndf=0.912
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=3.234 LG chi2/ndf=2.016 EGE chi2/ndf=1.885
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.111 EGE chi2/ndf=1.071
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.035 EGE chi2/ndf=0.896
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.513 EGE chi2/ndf=1.117
+[ok] UnbiasedL1Inner Beryllium L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.093 EGE chi2/ndf=1.039
+[init] UnbiasedL1Inner_Beryllium_NaF_L2QTemplate with 73 Ek/n bins
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.285 in [0.428,1.285] UnbiasedL1Inner/Beryllium/NaF/L2QTemplate EkCen=0.759
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.257, 1.457]
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.128 EGE chi2/ndf=0.775
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=0.890 LG chi2/ndf=0.894 EGE chi2/ndf=0.784
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.110 EGE chi2/ndf=1.066
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.416 EGE chi2/ndf=1.408
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.369 EGE chi2/ndf=1.333
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.311 EGE chi2/ndf=1.329
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.384 EGE chi2/ndf=1.432
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.253 EGE chi2/ndf=1.323
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.363 EGE chi2/ndf=1.377
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.179 EGE chi2/ndf=1.187
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=2.896 LG chi2/ndf=0.710 EGE chi2/ndf=0.641
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.035 EGE chi2/ndf=0.981
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.988 EGE chi2/ndf=0.964
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.194 EGE chi2/ndf=1.230
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.340 EGE chi2/ndf=1.258
+[ok] UnbiasedL1Inner Beryllium L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.061 EGE chi2/ndf=1.012
+[init] UnbiasedL1Inner_Beryllium_AGL_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.709 EGE chi2/ndf=1.129
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.535 EGE chi2/ndf=1.126
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=3.600 LG chi2/ndf=2.389 EGE chi2/ndf=1.810
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=3.997 LG chi2/ndf=2.151 EGE chi2/ndf=1.821
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=4.425 LG chi2/ndf=2.034 EGE chi2/ndf=1.566
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=4.894 LG chi2/ndf=2.133 EGE chi2/ndf=1.221
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=5.388 LG chi2/ndf=2.161 EGE chi2/ndf=1.765
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=5.907 LG chi2/ndf=2.402 EGE chi2/ndf=1.518
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.472 EGE chi2/ndf=1.084
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.335 EGE chi2/ndf=1.188
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=7.769 LG chi2/ndf=2.495 EGE chi2/ndf=2.219
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=8.490 LG chi2/ndf=2.175 EGE chi2/ndf=1.676
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.699 EGE chi2/ndf=1.690
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.164 EGE chi2/ndf=1.090
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.174 EGE chi2/ndf=1.169
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.279 EGE chi2/ndf=0.897
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.306 EGE chi2/ndf=1.147
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.476 EGE chi2/ndf=1.333
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.960 EGE chi2/ndf=0.977
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.248 EGE chi2/ndf=1.205
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.480 EGE chi2/ndf=1.305
+[ok] UnbiasedL1Inner Beryllium L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.201 EGE chi2/ndf=1.207
+[init] UnbiasedL1Inner_Beryllium_AGL_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=2.896 LG chi2/ndf=2.503 EGE chi2/ndf=2.347
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.844 EGE chi2/ndf=1.226
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=3.600 LG chi2/ndf=2.119 EGE chi2/ndf=1.478
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.231 EGE chi2/ndf=0.940
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.606 EGE chi2/ndf=0.965
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.247 EGE chi2/ndf=1.026
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.399 EGE chi2/ndf=1.123
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.070 EGE chi2/ndf=1.053
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.450 EGE chi2/ndf=1.151
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=7.098 LG chi2/ndf=2.287 EGE chi2/ndf=1.826
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.187 EGE chi2/ndf=1.127
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.005 EGE chi2/ndf=0.936
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.428 EGE chi2/ndf=1.433
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=10.083 LG chi2/ndf=0.920 EGE chi2/ndf=0.935
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.559 EGE chi2/ndf=1.372
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.577 EGE chi2/ndf=1.582
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.663 EGE chi2/ndf=1.444
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.685 EGE chi2/ndf=1.583
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.055 EGE chi2/ndf=1.069
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.287 EGE chi2/ndf=1.152
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.961 EGE chi2/ndf=0.931
+[ok] UnbiasedL1Inner Beryllium L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.054 EGE chi2/ndf=1.017
+[init] UnbiasedL1Inner_Boron_TOF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.449 LG chi2/ndf=2.231 EGE chi2/ndf=2.011
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.539 LG chi2/ndf=2.103 EGE chi2/ndf=1.482
+  [info] Fit not optimal (Chi2/NDF=3.062, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.642 LG chi2/ndf=0.982 EGE chi2/ndf=2.079
+  [info] Fit not optimal (Chi2/NDF=8.772, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.797 EGE chi2/ndf=2.919
+  [info] Fit not optimal (Chi2/NDF=10.233, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=4.513, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=0.890 LG chi2/ndf=2.134 EGE chi2/ndf=2.163
+  [info] Fit not optimal (Chi2/NDF=7.663, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=5.189, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=4.188, Boundary Hits=0). Adjusting fit range for iter 4...
+  [info] Fit not optimal (Chi2/NDF=3.170, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=1.036 LG chi2/ndf=3.869 EGE chi2/ndf=1.823
+  [info] Fit not optimal (Chi2/NDF=5.578, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.216, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=4.787, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.767, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Boron L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.370 EGE chi2/ndf=1.920
+[init] UnbiasedL1Inner_Boron_TOF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.449 LG chi2/ndf=2.081 EGE chi2/ndf=1.706
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.103 EGE chi2/ndf=2.078
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.224 EGE chi2/ndf=1.221
+  [info] Fit not optimal (Chi2/NDF=4.559, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.587 EGE chi2/ndf=2.571
+  [info] Fit not optimal (Chi2/NDF=5.447, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=0.890 LG chi2/ndf=2.373 EGE chi2/ndf=2.081
+  [info] Fit not optimal (Chi2/NDF=6.532, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.125, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=1.036 LG chi2/ndf=2.114 EGE chi2/ndf=2.710
+  [info] Fit not optimal (Chi2/NDF=4.181, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.074, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Boron L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.925 EGE chi2/ndf=2.390
+[init] UnbiasedL1Inner_Boron_NaF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=0.759 LG chi2/ndf=2.438 EGE chi2/ndf=1.283
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=0.890 LG chi2/ndf=2.339 EGE chi2/ndf=1.790
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.656 EGE chi2/ndf=1.293
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.738 EGE chi2/ndf=1.667
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.353 EGE chi2/ndf=1.424
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.284 EGE chi2/ndf=1.256
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.067 EGE chi2/ndf=1.021
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.202 EGE chi2/ndf=1.179
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.328 EGE chi2/ndf=1.386
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.360 EGE chi2/ndf=1.289
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.300 EGE chi2/ndf=1.367
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.589 EGE chi2/ndf=1.509
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.664 EGE chi2/ndf=1.440
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=3.997 LG chi2/ndf=0.803 EGE chi2/ndf=0.828
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.285 EGE chi2/ndf=1.320
+[ok] UnbiasedL1Inner Boron L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.328 EGE chi2/ndf=1.402
+[init] UnbiasedL1Inner_Boron_NaF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=0.759 LG chi2/ndf=1.711 EGE chi2/ndf=1.303
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.609 EGE chi2/ndf=1.494
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.313 EGE chi2/ndf=1.151
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.282 EGE chi2/ndf=1.087
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.531 EGE chi2/ndf=1.195
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.226 EGE chi2/ndf=1.032
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.261 EGE chi2/ndf=1.288
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.193 EGE chi2/ndf=1.254
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.449 EGE chi2/ndf=1.490
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.033 EGE chi2/ndf=1.083
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.246 EGE chi2/ndf=1.233
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.819 EGE chi2/ndf=1.866
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=3.600 LG chi2/ndf=0.963 EGE chi2/ndf=1.020
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.242 EGE chi2/ndf=1.243
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.275 EGE chi2/ndf=1.315
+[ok] UnbiasedL1Inner Boron L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.283 EGE chi2/ndf=1.209
+[init] UnbiasedL1Inner_Boron_AGL_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.425 EGE chi2/ndf=1.508
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.432 EGE chi2/ndf=1.602
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.888 EGE chi2/ndf=1.840
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.292 EGE chi2/ndf=1.224
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.231 EGE chi2/ndf=1.384
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.728 EGE chi2/ndf=1.318
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.744 EGE chi2/ndf=1.786
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.620 EGE chi2/ndf=1.751
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.554 EGE chi2/ndf=1.574
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.685 EGE chi2/ndf=1.510
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.089 EGE chi2/ndf=1.223
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.276 EGE chi2/ndf=1.216
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.220 EGE chi2/ndf=1.335
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.367 EGE chi2/ndf=1.434
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.041 EGE chi2/ndf=1.101
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.573 EGE chi2/ndf=1.619
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.444 EGE chi2/ndf=1.561
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.736 EGE chi2/ndf=1.932
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.146 EGE chi2/ndf=1.145
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.043 EGE chi2/ndf=1.007
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.209 EGE chi2/ndf=1.326
+[ok] UnbiasedL1Inner Boron L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.525 EGE chi2/ndf=1.570
+[init] UnbiasedL1Inner_Boron_AGL_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.490 EGE chi2/ndf=1.739
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.602 EGE chi2/ndf=1.920
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.352 EGE chi2/ndf=1.464
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=3.997 LG chi2/ndf=0.960 EGE chi2/ndf=1.033
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.906 EGE chi2/ndf=2.036
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.287 EGE chi2/ndf=1.440
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.094 EGE chi2/ndf=1.184
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.833 EGE chi2/ndf=1.799
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.411 EGE chi2/ndf=1.434
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.683 EGE chi2/ndf=1.713
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.113 EGE chi2/ndf=1.291
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=8.490 LG chi2/ndf=0.968 EGE chi2/ndf=1.163
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.185 EGE chi2/ndf=1.384
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.313 EGE chi2/ndf=1.386
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.875 EGE chi2/ndf=1.952
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.365 EGE chi2/ndf=1.351
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.933 EGE chi2/ndf=1.951
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.103 EGE chi2/ndf=1.000
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.964 in [0.655,1.964] UnbiasedL1Inner/Boron/AGL/L2QTemplate EkCen=15.245
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.393, 2.226]
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.685 EGE chi2/ndf=1.499
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.316 EGE chi2/ndf=1.362
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.148 EGE chi2/ndf=1.236
+[ok] UnbiasedL1Inner Boron L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.442 EGE chi2/ndf=1.326
+[init] UnbiasedL1Inner_Carbon_TOF_L1QTemplate with 73 Ek/n bins
+  [info] Fit not optimal (Chi2/NDF=3.205, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=4.403, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.232, Boundary Hits=0). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.953 EGE chi2/ndf=2.345
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.614 EGE chi2/ndf=1.920
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.105 EGE chi2/ndf=1.812
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.693 EGE chi2/ndf=2.172
+  [info] Fit not optimal (Chi2/NDF=3.552, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.186 EGE chi2/ndf=2.257
+  [info] Fit not optimal (Chi2/NDF=4.190, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=1.036 LG chi2/ndf=2.073 EGE chi2/ndf=2.641
+  [info] Fit not optimal (Chi2/NDF=4.492, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.323, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Carbon L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.373 EGE chi2/ndf=1.749
+[init] UnbiasedL1Inner_Carbon_TOF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.449 LG chi2/ndf=2.096 EGE chi2/ndf=1.612
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.116 EGE chi2/ndf=2.312
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.470 EGE chi2/ndf=2.343
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.242 EGE chi2/ndf=1.484
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=0.890 LG chi2/ndf=2.915 EGE chi2/ndf=2.131
+  [info] Fit not optimal (Chi2/NDF=3.315, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=1.036 LG chi2/ndf=0.890 EGE chi2/ndf=2.041
+  [info] Fit not optimal (Chi2/NDF=4.288, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Carbon L2QTemplate TOF EkCen=1.198 LG chi2/ndf=2.421 EGE chi2/ndf=2.350
+[init] UnbiasedL1Inner_Carbon_NaF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.214 EGE chi2/ndf=1.332
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.136 EGE chi2/ndf=1.084
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.392 EGE chi2/ndf=1.130
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.371 EGE chi2/ndf=1.546
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.271 EGE chi2/ndf=1.264
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.576 LG chi2/ndf=1.519 EGE chi2/ndf=1.493
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.272 EGE chi2/ndf=1.459
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.036 LG chi2/ndf=2.020 EGE chi2/ndf=1.972
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.135 EGE chi2/ndf=0.913
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.414 EGE chi2/ndf=1.514
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.312 EGE chi2/ndf=1.396
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.155 EGE chi2/ndf=1.221
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.034 EGE chi2/ndf=1.062
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.471 EGE chi2/ndf=1.387
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.064 EGE chi2/ndf=1.098
+[ok] UnbiasedL1Inner Carbon L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.435 EGE chi2/ndf=1.466
+[init] UnbiasedL1Inner_Carbon_NaF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=0.759 LG chi2/ndf=0.978 EGE chi2/ndf=1.006
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.526 EGE chi2/ndf=1.364
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.832 EGE chi2/ndf=1.477
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.684 EGE chi2/ndf=1.502
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.138 EGE chi2/ndf=1.151
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.446 EGE chi2/ndf=1.466
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.189 EGE chi2/ndf=1.204
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.155 EGE chi2/ndf=1.178
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.299 LG chi2/ndf=0.944 EGE chi2/ndf=0.989
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.476 EGE chi2/ndf=1.458
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.279 EGE chi2/ndf=1.302
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=3.234 LG chi2/ndf=0.930 EGE chi2/ndf=0.979
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=3.600 LG chi2/ndf=1.087 EGE chi2/ndf=1.158
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.063 EGE chi2/ndf=0.874
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.402 EGE chi2/ndf=1.474
+[ok] UnbiasedL1Inner Carbon L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.417 EGE chi2/ndf=1.444
+[init] UnbiasedL1Inner_Carbon_AGL_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=2.896 LG chi2/ndf=2.025 EGE chi2/ndf=1.474
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=3.234 LG chi2/ndf=2.346 EGE chi2/ndf=2.063
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=3.600 LG chi2/ndf=2.023 EGE chi2/ndf=1.868
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.406 EGE chi2/ndf=1.510
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.252 EGE chi2/ndf=1.484
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.841 EGE chi2/ndf=2.030
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.689 EGE chi2/ndf=1.740
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.924 EGE chi2/ndf=1.974
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.809 EGE chi2/ndf=1.843
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.639 EGE chi2/ndf=1.682
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.465 EGE chi2/ndf=1.614
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.936 EGE chi2/ndf=1.330
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=9.261 LG chi2/ndf=2.035 EGE chi2/ndf=1.077
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.706 EGE chi2/ndf=1.781
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.468 EGE chi2/ndf=1.617
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.822 EGE chi2/ndf=1.699
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.959 EGE chi2/ndf=1.391
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=14.072 LG chi2/ndf=2.002 EGE chi2/ndf=1.773
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=15.245 LG chi2/ndf=1.587 EGE chi2/ndf=1.786
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.442 EGE chi2/ndf=1.299
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.990 EGE chi2/ndf=1.911
+[ok] UnbiasedL1Inner Carbon L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.601 EGE chi2/ndf=1.659
+[init] UnbiasedL1Inner_Carbon_AGL_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=2.896 LG chi2/ndf=2.194 EGE chi2/ndf=2.583
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=3.234 LG chi2/ndf=2.052 EGE chi2/ndf=1.853
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=3.600 LG chi2/ndf=2.192 EGE chi2/ndf=2.308
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.402 EGE chi2/ndf=1.575
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=4.425 LG chi2/ndf=2.094 EGE chi2/ndf=1.771
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.938 EGE chi2/ndf=1.934
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.455 EGE chi2/ndf=1.347
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.463 EGE chi2/ndf=1.476
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.904 EGE chi2/ndf=1.747
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.136 EGE chi2/ndf=1.195
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.881 EGE chi2/ndf=1.814
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.360 EGE chi2/ndf=1.451
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.038 EGE chi2/ndf=1.146
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.826 EGE chi2/ndf=2.090
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.484 EGE chi2/ndf=1.347
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.410 EGE chi2/ndf=1.560
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.560 EGE chi2/ndf=1.355
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.761 EGE chi2/ndf=1.495
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.597 EGE chi2/ndf=1.424
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.480 EGE chi2/ndf=1.544
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=17.842 LG chi2/ndf=0.917 EGE chi2/ndf=0.928
+[ok] UnbiasedL1Inner Carbon L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.156 EGE chi2/ndf=1.153
+[init] UnbiasedL1Inner_Nitrogen_TOF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=0.449 LG chi2/ndf=1.417 EGE chi2/ndf=1.228
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.397 EGE chi2/ndf=1.440
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.917 EGE chi2/ndf=1.923
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=0.759 LG chi2/ndf=2.452 EGE chi2/ndf=1.398
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=0.890 LG chi2/ndf=1.571 EGE chi2/ndf=1.549
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=1.036 LG chi2/ndf=1.491 EGE chi2/ndf=1.265
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate TOF EkCen=1.198 LG chi2/ndf=1.781 EGE chi2/ndf=1.546
+[init] UnbiasedL1Inner_Nitrogen_TOF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.210 EGE chi2/ndf=1.267
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=0.539 LG chi2/ndf=1.308 EGE chi2/ndf=1.315
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=0.642 LG chi2/ndf=1.463 EGE chi2/ndf=1.630
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.366 EGE chi2/ndf=1.432
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.144 EGE chi2/ndf=1.134
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=1.036 LG chi2/ndf=1.188 EGE chi2/ndf=0.966
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate TOF EkCen=1.198 LG chi2/ndf=1.404 EGE chi2/ndf=1.427
+[init] UnbiasedL1Inner_Nitrogen_NaF_L1QTemplate with 73 Ek/n bins
+  [warn] boundary: LG-try1 par#0 Width = 0.012 in [0.012,0.036] UnbiasedL1Inner/Nitrogen/NaF/L1QTemplate EkCen=0.759
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.007, 0.041]
+  [warn] boundary: LG-try2 par#0 Width = 0.007 in [0.007,0.041] UnbiasedL1Inner/Nitrogen/NaF/L1QTemplate EkCen=0.759
+  [info] Fit not optimal (Chi2/NDF=0.802, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=0.759 LG chi2/ndf=0.646 EGE chi2/ndf=0.769
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.452 EGE chi2/ndf=1.458
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=1.036 LG chi2/ndf=1.463 EGE chi2/ndf=1.450
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.285 EGE chi2/ndf=1.323
+  [warn] boundary: LG-try1 par#0 Width = 0.014 in [0.014,0.042] UnbiasedL1Inner/Nitrogen/NaF/L1QTemplate EkCen=1.378
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.008, 0.048]
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.902 EGE chi2/ndf=1.934
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=1.576 LG chi2/ndf=0.900 EGE chi2/ndf=0.911
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=1.795 LG chi2/ndf=0.878 EGE chi2/ndf=0.896
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=2.036 LG chi2/ndf=0.843 EGE chi2/ndf=0.837
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.079 EGE chi2/ndf=1.065
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.594 EGE chi2/ndf=1.638
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.423 EGE chi2/ndf=1.450
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.273 EGE chi2/ndf=1.266
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.498 EGE chi2/ndf=1.534
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=3.997 LG chi2/ndf=0.950 EGE chi2/ndf=0.952
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=4.425 LG chi2/ndf=0.991 EGE chi2/ndf=0.985
+  [warn] boundary: LG-try1 par#0 Width = 0.018 in [0.018,0.055] UnbiasedL1Inner/Nitrogen/NaF/L1QTemplate EkCen=4.894
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.011, 0.062]
+  [warn] boundary: LG-try2 par#0 Width = 0.011 in [0.011,0.062] UnbiasedL1Inner/Nitrogen/NaF/L1QTemplate EkCen=4.894
+  [info] Fit not optimal (Chi2/NDF=1.664, Boundary Hits=1). Adjusting fit range for iter 2...
+  [warn] boundary: LG-try1 par#0 Width = 0.018 in [0.018,0.055] UnbiasedL1Inner/Nitrogen/NaF/L1QTemplate EkCen=4.894
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.011, 0.062]
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.922 EGE chi2/ndf=1.669
+[init] UnbiasedL1Inner_Nitrogen_NaF_L2QTemplate with 73 Ek/n bins
+ !!!!!!!0.759
+  [warn] Insane limits for Width: [-0.004, -0.012]. Using defaults.
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=0.759 LG chi2/ndf=0.788 EGE chi2/ndf=0.763
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.391 EGE chi2/ndf=1.284
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=1.036 LG chi2/ndf=1.374 EGE chi2/ndf=1.354
+  [warn] boundary: LG-try1 par#0 Width = 0.008 in [0.008,0.025] UnbiasedL1Inner/Nitrogen/NaF/L2QTemplate EkCen=1.198
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.005, 0.029]
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.552 EGE chi2/ndf=1.576
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.907 in [0.636,1.907] UnbiasedL1Inner/Nitrogen/NaF/L2QTemplate EkCen=1.378
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.381, 2.162]
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.154 EGE chi2/ndf=1.104
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=1.576 LG chi2/ndf=1.225 EGE chi2/ndf=1.191
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=1.795 LG chi2/ndf=0.844 EGE chi2/ndf=0.846
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=2.036 LG chi2/ndf=1.273 EGE chi2/ndf=1.230
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.126 EGE chi2/ndf=1.165
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.463 EGE chi2/ndf=1.485
+  [warn] boundary: LG-try1 par#3 Sigma = 0.183 in [0.110,0.183] UnbiasedL1Inner/Nitrogen/NaF/L2QTemplate EkCen=2.896
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Sigma limits to [0.080, 0.212]
+  [warn] boundary: LG-try2 par#0 Width = 0.055 in [0.055,0.110] UnbiasedL1Inner/Nitrogen/NaF/L2QTemplate EkCen=2.896
+  [info] Fit not optimal (Chi2/NDF=1.365, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=2.896 LG chi2/ndf=1.219 EGE chi2/ndf=1.339
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.526 EGE chi2/ndf=1.390
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=3.600 LG chi2/ndf=1.385 EGE chi2/ndf=1.416
+  [warn] boundary: LG-try1 par#0 Width = 0.017 in [0.017,0.050] UnbiasedL1Inner/Nitrogen/NaF/L2QTemplate EkCen=3.997
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.010, 0.056]
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.103 EGE chi2/ndf=1.070
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.974 EGE chi2/ndf=1.966
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.564 EGE chi2/ndf=1.587
+[init] UnbiasedL1Inner_Nitrogen_AGL_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.049 EGE chi2/ndf=0.986
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.216 EGE chi2/ndf=1.214
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.686 EGE chi2/ndf=1.648
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.251 EGE chi2/ndf=1.226
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=4.425 LG chi2/ndf=1.289 EGE chi2/ndf=1.292
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.122 EGE chi2/ndf=1.098
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=5.388 LG chi2/ndf=0.753 EGE chi2/ndf=0.758
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=5.907 LG chi2/ndf=0.970 EGE chi2/ndf=1.003
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.665 EGE chi2/ndf=1.691
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.585 EGE chi2/ndf=1.592
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.515 EGE chi2/ndf=1.526
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=8.490 LG chi2/ndf=0.759 EGE chi2/ndf=0.786
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.074 EGE chi2/ndf=1.052
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.407 EGE chi2/ndf=1.319
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.011 EGE chi2/ndf=1.020
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.043 EGE chi2/ndf=1.053
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.111 EGE chi2/ndf=1.092
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.487 EGE chi2/ndf=1.410
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.521 EGE chi2/ndf=0.516
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.336 EGE chi2/ndf=1.363
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.003 EGE chi2/ndf=1.017
+  [warn] boundary: LG-try1 par#0 Width = 0.015 in [0.015,0.046] UnbiasedL1Inner/Nitrogen/AGL/L1QTemplate EkCen=19.290
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.052]
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.661 in [0.554,1.661] UnbiasedL1Inner/Nitrogen/AGL/L1QTemplate EkCen=19.290
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.332, 1.882]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 1.882 in [0.332,1.882] UnbiasedL1Inner/Nitrogen/AGL/L1QTemplate EkCen=19.290
+  [info] Fit not optimal (Chi2/NDF=0.944, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Nitrogen L1QTemplate AGL EkCen=19.290 LG chi2/ndf=0.929 EGE chi2/ndf=0.980
+[init] UnbiasedL1Inner_Nitrogen_AGL_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.301 EGE chi2/ndf=1.275
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.317 EGE chi2/ndf=1.361
+  [warn] boundary: EGE-try1 par#4 AlphaR = 2.018 in [0.673,2.018] UnbiasedL1Inner/Nitrogen/AGL/L2QTemplate EkCen=3.600
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.404, 2.287]
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.396 EGE chi2/ndf=1.302
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.400 EGE chi2/ndf=1.421
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.160 EGE chi2/ndf=1.188
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.210 EGE chi2/ndf=1.241
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.003 EGE chi2/ndf=1.036
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=5.907 LG chi2/ndf=1.214 EGE chi2/ndf=1.211
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.165 EGE chi2/ndf=1.169
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=7.098 LG chi2/ndf=1.207 EGE chi2/ndf=1.161
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.084 EGE chi2/ndf=1.109
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.554 EGE chi2/ndf=1.545
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.694 EGE chi2/ndf=1.524
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.073 EGE chi2/ndf=1.087
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.133 EGE chi2/ndf=1.092
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=11.952 LG chi2/ndf=1.754 EGE chi2/ndf=1.754
+  [warn] boundary: LG-try1 par#0 Width = 0.045 in [0.015,0.045] UnbiasedL1Inner/Nitrogen/AGL/L2QTemplate EkCen=12.975
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.051]
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.283 EGE chi2/ndf=1.228
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=14.072 LG chi2/ndf=2.089 EGE chi2/ndf=1.927
+  [warn] boundary: LG-try1 par#0 Width = 0.043 in [0.014,0.043] UnbiasedL1Inner/Nitrogen/AGL/L2QTemplate EkCen=15.245
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.009, 0.049]
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.336 EGE chi2/ndf=1.337
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.748 EGE chi2/ndf=1.772
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.190 EGE chi2/ndf=1.219
+[ok] UnbiasedL1Inner Nitrogen L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.316 EGE chi2/ndf=1.337
+[init] UnbiasedL1Inner_Oxygen_TOF_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=0.449 LG chi2/ndf=2.164 EGE chi2/ndf=2.280
+  [info] Fit not optimal (Chi2/NDF=3.471, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.906, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=0.539 LG chi2/ndf=1.379 EGE chi2/ndf=2.110
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=0.642 LG chi2/ndf=2.548 EGE chi2/ndf=2.818
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=0.759 LG chi2/ndf=1.435 EGE chi2/ndf=1.555
+  [info] Fit not optimal (Chi2/NDF=3.548, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=4.081, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.093, Boundary Hits=0). Adjusting fit range for iter 3...
+  [info] Fit not optimal (Chi2/NDF=3.173, Boundary Hits=0). Adjusting fit range for iter 4...
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=0.890 LG chi2/ndf=2.683 EGE chi2/ndf=1.462
+  [info] Fit not optimal (Chi2/NDF=3.106, Boundary Hits=0). Adjusting fit range for iter 2...
+  [info] Fit not optimal (Chi2/NDF=3.400, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=1.036 LG chi2/ndf=1.517 EGE chi2/ndf=2.483
+  [info] Fit not optimal (Chi2/NDF=3.077, Boundary Hits=0). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Oxygen L1QTemplate TOF EkCen=1.198 LG chi2/ndf=2.607 EGE chi2/ndf=2.981
+[init] UnbiasedL1Inner_Oxygen_TOF_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=0.449 LG chi2/ndf=1.379 EGE chi2/ndf=1.512
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=0.539 LG chi2/ndf=2.075 EGE chi2/ndf=2.456
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=0.642 LG chi2/ndf=2.341 EGE chi2/ndf=2.950
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=0.759 LG chi2/ndf=1.387 EGE chi2/ndf=1.704
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=0.890 LG chi2/ndf=1.978 EGE chi2/ndf=2.055
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=1.036 LG chi2/ndf=1.801 EGE chi2/ndf=2.474
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.346 in [0.449,1.346] UnbiasedL1Inner/Oxygen/TOF/L2QTemplate EkCen=1.198
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.269, 1.526]
+[ok] UnbiasedL1Inner Oxygen L2QTemplate TOF EkCen=1.198 LG chi2/ndf=1.657 EGE chi2/ndf=1.802
+[init] UnbiasedL1Inner_Oxygen_NaF_L1QTemplate with 73 Ek/n bins
+  [warn] boundary: LG-try1 par#0 Width = 0.022 in [0.007,0.022] UnbiasedL1Inner/Oxygen/NaF/L1QTemplate EkCen=0.759
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.004, 0.025]
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=0.759 LG chi2/ndf=1.134 EGE chi2/ndf=1.119
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=0.890 LG chi2/ndf=1.136 EGE chi2/ndf=1.164
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=1.036 LG chi2/ndf=0.909 EGE chi2/ndf=0.889
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=1.198 LG chi2/ndf=1.366 EGE chi2/ndf=1.342
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=1.378 LG chi2/ndf=1.514 EGE chi2/ndf=1.607
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=1.576 LG chi2/ndf=0.854 EGE chi2/ndf=0.875
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=1.795 LG chi2/ndf=1.834 EGE chi2/ndf=1.893
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=2.036 LG chi2/ndf=1.308 EGE chi2/ndf=1.305
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=2.299 LG chi2/ndf=1.040 EGE chi2/ndf=1.037
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=2.584 LG chi2/ndf=1.062 EGE chi2/ndf=0.919
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=2.896 LG chi2/ndf=1.038 EGE chi2/ndf=0.960
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=3.234 LG chi2/ndf=1.395 EGE chi2/ndf=1.212
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=3.600 LG chi2/ndf=1.287 EGE chi2/ndf=1.331
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=3.997 LG chi2/ndf=1.037 EGE chi2/ndf=1.007
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=4.425 LG chi2/ndf=1.135 EGE chi2/ndf=1.183
+[ok] UnbiasedL1Inner Oxygen L1QTemplate NaF EkCen=4.894 LG chi2/ndf=1.471 EGE chi2/ndf=1.415
+[init] UnbiasedL1Inner_Oxygen_NaF_L2QTemplate with 73 Ek/n bins
+ !!!!!!!0.759
+  [warn] Insane limits for AlphaR: [-0.652, -1.955]. Using defaults.
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=0.759 LG chi2/ndf=0.987 EGE chi2/ndf=1.023
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.084 in [0.361,1.084] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=0.890
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.217, 1.229]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 1.229 in [0.217,1.229] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=0.890
+  [info] Fit not optimal (Chi2/NDF=1.597, Boundary Hits=1). Adjusting fit range for iter 2...
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.084 in [0.361,1.084] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=0.890
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.217, 1.229]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 1.229 in [0.217,1.229] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=0.890
+  [info] Fit not optimal (Chi2/NDF=1.628, Boundary Hits=1). Adjusting fit range for iter 3...
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=0.890 LG chi2/ndf=1.412 EGE chi2/ndf=1.376
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=1.036 LG chi2/ndf=0.877 EGE chi2/ndf=0.932
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=1.198 LG chi2/ndf=1.483 EGE chi2/ndf=1.459
+  [warn] boundary: LG-try1 par#0 Width = 0.033 in [0.011,0.033] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.378
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting Width limits to [0.007, 0.038]
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=1.378 LG chi2/ndf=1.030 EGE chi2/ndf=1.062
+  [warn] boundary: EGE-try1 par#3 SigmaR = 0.209 in [0.209,0.348] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.576
+  [warn] boundary: EGE-try1 par#4 AlphaR = 0.676 in [0.225,0.676] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.576
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaR limits to [0.153, 0.403]
+    -> Adjusting AlphaR limits to [0.135, 0.766]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 0.766 in [0.135,0.766] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.576
+  [info] Fit not optimal (Chi2/NDF=1.485, Boundary Hits=1). Adjusting fit range for iter 2...
+  [warn] boundary: EGE-try1 par#3 SigmaR = 0.209 in [0.209,0.348] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.576
+  [warn] boundary: EGE-try1 par#4 AlphaR = 0.676 in [0.225,0.676] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.576
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaR limits to [0.153, 0.403]
+    -> Adjusting AlphaR limits to [0.135, 0.766]
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=1.576 LG chi2/ndf=0.828 EGE chi2/ndf=1.307
+  [warn] boundary: EGE-try1 par#3 SigmaR = 0.211 in [0.211,0.351] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [warn] boundary: EGE-try1 par#4 AlphaR = 0.427 in [0.142,0.427] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaR limits to [0.154, 0.407]
+    -> Adjusting AlphaR limits to [0.085, 0.484]
+  [warn] boundary: EGE-try2 par#3 SigmaR = 0.154 in [0.154,0.407] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [warn] boundary: EGE-try2 par#4 AlphaR = 0.484 in [0.085,0.484] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Fit not optimal (Chi2/NDF=2.911, Boundary Hits=2). Adjusting fit range for iter 2...
+  [warn] boundary: EGE-try1 par#3 SigmaR = 0.211 in [0.211,0.351] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [warn] boundary: EGE-try1 par#4 AlphaR = 0.427 in [0.142,0.427] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaR limits to [0.154, 0.407]
+    -> Adjusting AlphaR limits to [0.085, 0.484]
+  [warn] boundary: EGE-try2 par#3 SigmaR = 0.154 in [0.154,0.407] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Fit not optimal (Chi2/NDF=1.668, Boundary Hits=1). Adjusting fit range for iter 3...
+  [warn] boundary: EGE-try1 par#3 SigmaR = 0.211 in [0.211,0.351] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [warn] boundary: EGE-try1 par#4 AlphaR = 0.427 in [0.142,0.427] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaR limits to [0.154, 0.407]
+    -> Adjusting AlphaR limits to [0.085, 0.484]
+  [warn] boundary: EGE-try2 par#1 SigmaL = 0.300 in [0.180,0.300] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Fit not optimal (Chi2/NDF=1.453, Boundary Hits=1). Adjusting fit range for iter 4...
+  [warn] boundary: EGE-try1 par#1 SigmaL = 0.300 in [0.180,0.300] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [warn] boundary: EGE-try1 par#3 SigmaR = 0.211 in [0.211,0.351] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [warn] boundary: EGE-try1 par#4 AlphaR = 0.427 in [0.142,0.427] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=1.795
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting SigmaL limits to [0.132, 0.348]
+    -> Adjusting SigmaR limits to [0.154, 0.407]
+    -> Adjusting AlphaR limits to [0.085, 0.484]
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=1.795 LG chi2/ndf=1.168 EGE chi2/ndf=1.506
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=2.036 LG chi2/ndf=0.948 EGE chi2/ndf=0.922
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=2.299 LG chi2/ndf=1.795 EGE chi2/ndf=1.694
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=2.584 LG chi2/ndf=1.329 EGE chi2/ndf=1.324
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=2.896 LG chi2/ndf=0.963 EGE chi2/ndf=0.979
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.283 in [0.428,1.283] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=3.234
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.257, 1.454]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 1.454 in [0.257,1.454] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=3.234
+  [info] Fit not optimal (Chi2/NDF=1.112, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=3.234 LG chi2/ndf=1.097 EGE chi2/ndf=0.829
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=3.600 LG chi2/ndf=1.324 EGE chi2/ndf=1.337
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=3.997 LG chi2/ndf=1.361 EGE chi2/ndf=1.396
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=4.425 LG chi2/ndf=1.423 EGE chi2/ndf=1.451
+  [warn] boundary: EGE-try1 par#4 AlphaR = 1.368 in [0.456,1.368] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=4.894
+  [info] Params at boundary. Adjusting limits and refitting...
+    -> Adjusting AlphaR limits to [0.274, 1.550]
+  [warn] boundary: EGE-try2 par#4 AlphaR = 1.550 in [0.274,1.550] UnbiasedL1Inner/Oxygen/NaF/L2QTemplate EkCen=4.894
+  [info] Fit not optimal (Chi2/NDF=1.412, Boundary Hits=1). Adjusting fit range for iter 2...
+[ok] UnbiasedL1Inner Oxygen L2QTemplate NaF EkCen=4.894 LG chi2/ndf=1.429 EGE chi2/ndf=1.274
+[init] UnbiasedL1Inner_Oxygen_AGL_L1QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=2.896 LG chi2/ndf=1.331 EGE chi2/ndf=1.375
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=3.234 LG chi2/ndf=1.462 EGE chi2/ndf=1.518
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=3.600 LG chi2/ndf=1.555 EGE chi2/ndf=1.534
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=3.997 LG chi2/ndf=1.622 EGE chi2/ndf=1.448
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=4.425 LG chi2/ndf=2.013 EGE chi2/ndf=1.764
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=4.894 LG chi2/ndf=1.342 EGE chi2/ndf=1.425
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=5.388 LG chi2/ndf=1.582 EGE chi2/ndf=1.478
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=5.907 LG chi2/ndf=1.167 EGE chi2/ndf=1.177
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=6.477 LG chi2/ndf=1.219 EGE chi2/ndf=0.994
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=7.098 LG chi2/ndf=1.211 EGE chi2/ndf=1.213
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=7.769 LG chi2/ndf=1.350 EGE chi2/ndf=1.395
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=8.490 LG chi2/ndf=1.112 EGE chi2/ndf=0.892
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=9.261 LG chi2/ndf=1.440 EGE chi2/ndf=1.375
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=10.083 LG chi2/ndf=1.580 EGE chi2/ndf=1.598
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=10.980 LG chi2/ndf=1.383 EGE chi2/ndf=1.308
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=11.952 LG chi2/ndf=1.801 EGE chi2/ndf=1.631
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=12.975 LG chi2/ndf=1.446 EGE chi2/ndf=1.275
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=14.072 LG chi2/ndf=1.473 EGE chi2/ndf=1.415
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=15.245 LG chi2/ndf=0.839 EGE chi2/ndf=0.727
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=16.493 LG chi2/ndf=1.238 EGE chi2/ndf=1.231
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=17.842 LG chi2/ndf=1.490 EGE chi2/ndf=1.457
+[ok] UnbiasedL1Inner Oxygen L1QTemplate AGL EkCen=19.290 LG chi2/ndf=1.169 EGE chi2/ndf=1.174
+[init] UnbiasedL1Inner_Oxygen_AGL_L2QTemplate with 73 Ek/n bins
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=2.896 LG chi2/ndf=1.194 EGE chi2/ndf=1.129
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=3.234 LG chi2/ndf=1.370 EGE chi2/ndf=1.450
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=3.600 LG chi2/ndf=1.359 EGE chi2/ndf=1.390
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=3.997 LG chi2/ndf=1.598 EGE chi2/ndf=1.637
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=4.425 LG chi2/ndf=1.171 EGE chi2/ndf=1.166
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=4.894 LG chi2/ndf=1.008 EGE chi2/ndf=1.033
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=5.388 LG chi2/ndf=1.196 EGE chi2/ndf=1.048
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=5.907 LG chi2/ndf=0.745 EGE chi2/ndf=0.775
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=6.477 LG chi2/ndf=1.247 EGE chi2/ndf=1.266
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=7.098 LG chi2/ndf=0.824 EGE chi2/ndf=0.847
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=7.769 LG chi2/ndf=1.243 EGE chi2/ndf=1.311
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=8.490 LG chi2/ndf=1.527 EGE chi2/ndf=1.431
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=9.261 LG chi2/ndf=1.219 EGE chi2/ndf=0.982
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=10.083 LG chi2/ndf=1.024 EGE chi2/ndf=1.023
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=10.980 LG chi2/ndf=1.181 EGE chi2/ndf=1.251
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=11.952 LG chi2/ndf=0.833 EGE chi2/ndf=0.746
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=12.975 LG chi2/ndf=1.454 EGE chi2/ndf=1.442
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=14.072 LG chi2/ndf=1.989 EGE chi2/ndf=1.948
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=15.245 LG chi2/ndf=1.127 EGE chi2/ndf=0.981
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=16.493 LG chi2/ndf=1.461 EGE chi2/ndf=1.491
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=17.842 LG chi2/ndf=1.389 EGE chi2/ndf=1.388
+[ok] UnbiasedL1Inner Oxygen L2QTemplate AGL EkCen=19.290 LG chi2/ndf=1.052 EGE chi2/ndf=1.068
+All parameter histograms saved to /eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8.root

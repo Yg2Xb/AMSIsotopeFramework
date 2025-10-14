@@ -15,15 +15,20 @@
 #include <limits>
 #include <TRandom3.h>
 #include <iostream>
-#include "TFile.h"
 #include "Tool.h"
-#include <TFile.h>
+#include "TROOT.h"
+#include "TKey.h"
+#include "TFile.h"
+#include "TVectorD.h"
+#include "TObjArray.h"
+#include "TObjString.h"
+#include "TString.h"
 
 namespace AMS_Iso {
 namespace Tools {
 
-const double geneRig_low = 0.9;
-const double geneRig_up  = 3300.0;
+const double geneRig_low = 1.0;     
+const double geneRig_up = 2000.0;  
 
 TF1 f_MC("f_MC", "1/x", geneRig_low, geneRig_up);
 TF1 f_Reweight("f_Reweight", "pow(x, -2.7)", geneRig_low, geneRig_up);
@@ -48,57 +53,30 @@ void initFluxFunctions(const std::string& filename) {
             return;
         }
 
-        // 先处理 Be 和 B 的总通量
-        TF1* f_Be = dynamic_cast<TF1*>(fin.Get("Be"));
-        TF1* f_B = dynamic_cast<TF1*>(fin.Get("B"));
+        const std::vector<std::string> tags = {
+            "Be7", "Be9", "Be10", "B10", "B11", "C12", "N14", "N15", "O16"
+        };
 
-        double integral_Be = 0;
-        if (f_Be) {
-            integral_Be = f_Be->Integral(geneRig_low, geneRig_up);
-            std::cout<<integral_Be<<std::endl;
-            // 保存总通量函数
-            fluxMap["Be"] = std::shared_ptr<TF1>(static_cast<TF1*>(f_Be->Clone("Be_clone")));
-            fluxNorm["Be"] = integral_Be;
-        } else {
-            std::cerr << "[WARN] flux TF1 Be not found in file!" << std::endl;
-        }
-
-        double integral_B = 0;
-        if (f_B) {
-            integral_B = f_B->Integral(geneRig_low, geneRig_up);
-            // 保存总通量函数
-            fluxMap["B"] = std::shared_ptr<TF1>(static_cast<TF1*>(f_B->Clone("B_clone")));
-            fluxNorm["B"] = integral_B;
-        } else {
-            std::cerr << "[WARN] flux TF1 B not found in file!" << std::endl;
-        }
-
-        // 再处理所有同位素
-        std::vector<std::string> names = {"Be7","Be9","Be10", "B10","B11", "C","N","O"};
-        for (auto& n : names) {
-            TF1* f = dynamic_cast<TF1*>(fin.Get(n.c_str()));
+        for (const auto& t : tags) {
+            const std::string key = t + "_spline_R";
+            TF1* f = dynamic_cast<TF1*>(fin.Get(key.c_str()));
             if (!f) {
-                std::cerr << "[WARN] flux TF1 " << n << " not found in file!" << std::endl;
+                std::cerr << "[WARN] flux TF1 not found in file: " << key << std::endl;
                 continue;
             }
-            auto f_clone = std::shared_ptr<TF1>(static_cast<TF1*>(f->Clone((n+"_clone").c_str())));
-            fluxMap[n] = f_clone;
 
-            if (n == "Be7" || n == "Be9" || n == "Be10") {
-                // 按比例计算 Be 同位素的 norm
-                if (n == "Be7") fluxNorm[n] = integral_Be * 0.7;
-                if (n == "Be9") fluxNorm[n] = integral_Be * 0.2;
-                if (n == "Be10") fluxNorm[n] = integral_Be * 0.1;
-            } else if (n == "B10" || n == "B11") {
-                // 按比例计算 B 同位素的 norm
-                if (n == "B10") fluxNorm[n] = integral_B * 0.3;
-                if (n == "B11") fluxNorm[n] = integral_B * 0.7;
-            } else {
-                // 其他元素按原始方式计算 norm
-                fluxNorm[n] = f_clone->Integral(geneRig_low, geneRig_up);
+            auto f_clone = std::shared_ptr<TF1>(static_cast<TF1*>(f->Clone((t + "_clone").c_str())));
+            f_clone->SetNpx(2000);
+
+            fluxMap[t]  = f_clone;
+            const double integ = f_clone->Integral(geneRig_low, geneRig_up);
+            fluxNorm[t] = integ;
+
+            if (!(integ > 0)) {
+                std::cerr << "[WARN] norm<=0 for " << t
+                          << " over [" << geneRig_low << "," << geneRig_up << "]" << std::endl;
             }
-            std::cout << "[INIT] Loaded flux TF1: " << n 
-                      << "  norm=" << fluxNorm[n] << std::endl;
+            std::cout << "[INIT] Loaded TF1 " << key << "  norm=" << integ << std::endl;
         }
 
         fin.Close();
@@ -111,49 +89,58 @@ void cleanupFluxFunctions() {
     // 注意：std::once_flag 无法重置，如果需要重新 init，需要换方案
 }
 
-std::string selectFluxName(int charge, int mass) {
-    if (charge==4) {
-        if (mass==7) return "Be7";
-        if (mass==9) return "Be9";
-        if (mass==10) return "Be10";
-        return "Be";
+std::string selectFluxName(int charge, double mass) {
+    if (charge == 4) {
+        if (mass == 7)  return "Be7";
+        if (mass == 9)  return "Be9";
+        if (mass == 10) return "Be10";
+        return ""; // 不再回退到 "Be"
     }
-    if (charge==5) {
-        if (mass==10) return "B10";
-        if (mass==11) return "B11";
-        return "B";
+    if (charge == 5) {
+        if (mass == 10) return "B10";
+        if (mass == 11) return "B11";
+        return ""; // 不再回退到 "B"
     }
-    if (charge==6) return "C";
-    if (charge==7) return "N";
-    if (charge==8) return "O";
+    if (charge == 6) return "C12";
+    if (charge == 7) {
+        if (mass == 14) return "N14";
+        if (mass == 15) return "N15";
+        return "";
+    }
+    if (charge == 8) return "O16";
     return "";
 }
 
-double calculateWeight(double mmom, int charge, int mass, bool isISS) {
+double calculateWeight(double mmom, int charge, double mass, bool isISS) {
     if (isISS) return 1.0;
-    if (charge == 0) {
-        //std::cerr << "[ERROR] Charge is zero, set weight=0." << std::endl;
-        return 0.0;
-    }
+    if (charge == 0) return 0.0;
 
-    double geneRig = mmom / charge;
+    const double geneRig = std::abs(mmom) / std::abs(charge);
     if (geneRig < geneRig_low || geneRig > geneRig_up) {
-        //std::cerr << "[WARN] rigidity out of range: " << geneRig << std::endl;
         return 0.0;
     }
 
-    std::string name = selectFluxName(charge, mass);
-    if (name.empty() || fluxMap.find(name) == fluxMap.end()) {
-        std::cerr << "[ERROR] flux TF1 not found for (Z=" << charge << ", A=" << mass << ")" << std::endl;
+    const std::string name = selectFluxName(charge, mass);
+    if (name.empty()) {
+        std::cerr << "[ERROR] flux name not found for (Z=" << charge << ", A=" << mass << ")" << std::endl;
         return 0.0;
     }
 
-    auto f_flux = fluxMap[name];
-    double flux_norm = fluxNorm[name];
+    auto itF = fluxMap.find(name);
+    auto itN = fluxNorm.find(name);
+    if (itF == fluxMap.end() || itN == fluxNorm.end()) {
+        std::cerr << "[ERROR] flux TF1 or norm missing for " << name << std::endl;
+        return 0.0;
+    }
 
-    double mc_val   = f_MC.Eval(geneRig) / MC_norm;
-    double flux_val = f_flux->Eval(geneRig) / flux_norm;
+    const double mc_den = MC_norm;
+    const double fl_den = itN->second;
+    if (!(mc_den > 0) || !(fl_den > 0)) return 0.0;
 
+    const double mc_val   = f_MC.Eval(geneRig) / mc_den;
+    const double flux_val = itF->second->Eval(geneRig) / fl_den;
+
+    if (!(mc_val > 0)) return 0.0;
     return flux_val / mc_val;
 }
 
@@ -213,22 +200,22 @@ double kineticEnergyToBeta(double kineticEnergy) {
     return std::sqrt(1.0 - 1.0 / (gamma * gamma));
 }
 
-double rigidityToBeta(double rigidity, int charge, int mass, bool isElectron) {
+double rigidityToBeta(double rigidity, int charge, double mass, bool isElectron) {
     if (!isElectron && mass < charge) {
         throw std::invalid_argument("Invalid charge/mass combination");
     }
 
     if (isElectron) {
         constexpr double ELECTRON_MASS = 0.000511;
-        double beta = rigidity * std::sqrt(1.0 / (ELECTRON_MASS * ELECTRON_MASS + rigidity * rigidity));
+        double beta = std::abs(rigidity) * std::sqrt(1.0 / (ELECTRON_MASS * ELECTRON_MASS + rigidity * rigidity));
         return (charge == -1) ? beta : -beta;
     } else {
         double particleMass = mass * MASS_UNIT;
-        return rigidity * charge * std::sqrt(1.0 / (particleMass * particleMass + rigidity * rigidity * charge * charge));
+        return std::abs(rigidity) * charge * std::sqrt(1.0 / (particleMass * particleMass + rigidity * rigidity * charge * charge));
     }
 }
 
-double betaToRigidity(double beta, int charge, int mass, bool isElectron) {
+double betaToRigidity(double beta, int charge, double mass, bool isElectron) {
     if (beta <= 0.0 || beta >= 1.0) return -100000.0;
 
     if (isElectron) {
@@ -241,7 +228,7 @@ double betaToRigidity(double beta, int charge, int mass, bool isElectron) {
     }
 }
 
-double rigidityToKineticEnergy(double rig_gv, int z, int a) {
+double rigidityToKineticEnergy(double rig_gv, int z, double a) {
     if (rig_gv <= 0.0 || z == 0) return -9.0;
     
     double factor = (a * MASS_UNIT) / z;
@@ -249,7 +236,7 @@ double rigidityToKineticEnergy(double rig_gv, int z, int a) {
     return MASS_UNIT * (std::sqrt(1 + term) - 1);
 }
 
-double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
+double kineticEnergyToRigidity(double ek_per_nucleon, int z, double a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
     
     double factor = (a * MASS_UNIT) / z;
@@ -257,10 +244,10 @@ double kineticEnergyToRigidity(double ek_per_nucleon, int z, int a) {
     return factor * std::sqrt(ek_term * ek_term - 1);
 }
 
-double dR_dEk(double ek_per_nucleon, int z, int a) {
+double dR_dEk(double ek_per_nucleon, int z, double a) {
     if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
     
-    double factor = (a * MASS_UNIT) / z;
+    double factor = 1.0*a / z;
     double ek_term = ek_per_nucleon / MASS_UNIT + 1;
     return factor * ek_term / std::sqrt(ek_term * ek_term - 1);
 }
@@ -290,7 +277,7 @@ int findBin(std::vector<double> Rbins_beta, double beta) {
     return -1;
 }
 
-bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, int charge, int UseMass,  bool isMC) {
+bool isBeyondCutoff(double beta_low, double cutoffRig, double safetyFactor, int charge, double UseMass,  bool isMC) {
     if (isMC) return true;
     if (beta_low > 1) return true;
         
@@ -487,6 +474,205 @@ double GetSmearRichBeta(int iz, double beta, bool isNaF) {
     return newbeta;
 }
 
+// Internal helper class to manage a single CDF lookup table.
+class LookupTable {
+public:
+    bool isValid = false;
+
+    void loadFromVectors(TVectorD* q_vec, TVectorD* cdf1_vec, TVectorD* cdf2_vec) {
+        isValid = false;
+        if (q_vec && cdf1_vec && cdf2_vec && q_vec->GetNrows() > 1) {
+            q_values.assign(q_vec->GetMatrixArray(), q_vec->GetMatrixArray() + q_vec->GetNrows());
+            cdf_l1.assign(cdf1_vec->GetMatrixArray(), cdf1_vec->GetMatrixArray() + cdf1_vec->GetNrows());
+            cdf_l2.assign(cdf2_vec->GetMatrixArray(), cdf2_vec->GetMatrixArray() + cdf2_vec->GetNrows());
+            q_min = q_values.front();
+            q_max = q_values.back();
+            dq = (q_values.size() > 1) ? (q_max - q_min) / (q_values.size() - 1) : 0.0;
+            if (std::abs(dq) > 1e-9) isValid = true;
+        }
+    }
+    
+    double getCDF_L2(double q) const {
+        if (!isValid || q < q_min || q > q_max) return -1.0;
+        double fidx = (q - q_min) / dq;
+        int idx = static_cast<int>(fidx);
+        if (idx >= static_cast<int>(cdf_l2.size()) - 1) return cdf_l2.back();
+        if (idx < 0) return cdf_l2.front();
+        double frac = fidx - idx;
+        return cdf_l2[idx] + frac * (cdf_l2[idx+1] - cdf_l2[idx]);
+    }
+    
+    double getInvCDF_L1(double cdf_target) const {
+        if (!isValid || cdf_target < 0.0 || cdf_target > 1.0) return -999.0;
+        auto it = std::lower_bound(cdf_l1.begin(), cdf_l1.end(), cdf_target);
+        if (it == cdf_l1.end()) return q_max;
+        if (it == cdf_l1.begin()) return q_min;
+        int idx = std::distance(cdf_l1.begin(), it);
+        double den = cdf_l1[idx] - cdf_l1[idx-1];
+        if (std::abs(den) < 1e-9) return q_values[idx-1];
+        double frac = (cdf_target - cdf_l1[idx-1]) / den;
+        return q_values[idx-1] + frac * (q_values[idx] - q_values[idx-1]);
+    }
+
+private:
+    std::vector<double> q_values, cdf_l1, cdf_l2;
+    double q_min = 0.0, q_max = 0.0, dq = 0.0;
+};
+
+// --- Global variables for pre-loaded tuning data ---
+namespace {
+    // OPTIMIZATION: Use an integer tuple as the map key for high performance.
+    // Key: <chain_idx, nucleus_idx, detector_idx, ekBin>
+    std::map<std::tuple<int, int, int, int>, LookupTable> g_chargeTuningData_EGE;
+    std::once_flag g_chargeTuningInitFlag;
+
+    // OPTIMIZATION: Define name-to-index mappings for fast string-to-int conversion.
+    const std::vector<std::string> CHAIN_NAMES = {"UnbiasedL1Inner", "L1Inner"};
+    const std::vector<std::string> NUCLEUS_NAMES = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+    const std::vector<std::string> DETECTOR_NAMES = {"TOF", "NaF", "AGL"};
+    
+    // Reverse maps for fast lookup, filled during initialization.
+    std::map<std::string, int> g_chain_map, g_nucleus_map, g_detector_map;
+}
+
+// --- Function Implementations ---
+
+void initChargeTuning(const std::string& filename) {
+    std::call_once(g_chargeTuningInitFlag, [&](){
+        std::cout << "[INFO] Initializing Charge Tuning System (EGE model, optimized)..." << std::endl;
+        
+        // Populate the reverse maps for string-to-index conversion.
+        for(size_t i=0; i<CHAIN_NAMES.size(); ++i) g_chain_map[CHAIN_NAMES[i]] = i;
+        for(size_t i=0; i<NUCLEUS_NAMES.size(); ++i) g_nucleus_map[NUCLEUS_NAMES[i]] = i;
+        for(size_t i=0; i<DETECTOR_NAMES.size(); ++i) g_detector_map[DETECTOR_NAMES[i]] = i;
+
+        auto lookupFile = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
+        if (!lookupFile || lookupFile->IsZombie()) {
+            std::cerr << "[CRITICAL ERROR] Cannot open charge tuning lookup file: " << filename << std::endl;
+            return;
+        }
+
+        // Temporarily store pointers to related TVectorD objects.
+        std::map<std::string, std::array<TVectorD*, 3>> temp_vectors;
+        
+        // Iterate through all keys in the ROOT file.
+        TIter next(lookupFile->GetListOfKeys());
+        TKey *key;
+        while ((key = (TKey*)next())) {
+            // Skip objects that are not TVectorD.
+            if (!gROOT->GetClass(key->GetClassName())->InheritsFrom("TVectorD")) continue;
+            
+            TString name = key->GetName();
+            // Filter for EGE model vectors only.
+            if (!name.EndsWith("_EGE_q") && !name.EndsWith("_EGE_cdf_l1") && !name.EndsWith("_EGE_cdf_l2")) continue;
+            
+            // Read the object from the file.
+            TVectorD* vec = (TVectorD*)key->ReadObj();
+            
+            // Extract the base name and determine the vector type (q, cdf1, or cdf2).
+            TString baseName = name;
+            int index = -1;
+            if (name.EndsWith("_EGE_q")) { baseName.ReplaceAll("_EGE_q", ""); index = 0; } 
+            else if (name.EndsWith("_EGE_cdf_l1")) { baseName.ReplaceAll("_EGE_cdf_l1", ""); index = 1; } 
+            else if (name.EndsWith("_EGE_cdf_l2")) { baseName.ReplaceAll("_EGE_cdf_l2", ""); index = 2; }
+            
+            // Group the three related vectors by their base name.
+            if (index != -1) {
+                if (temp_vectors.find(baseName.Data()) == temp_vectors.end()) temp_vectors[baseName.Data()] = {nullptr, nullptr, nullptr};
+                temp_vectors[baseName.Data()][index] = vec;
+            }
+        }
+
+        size_t loaded_count = 0;
+        // Process the grouped vectors.
+        for (auto const& [baseNameStr, vecs] : temp_vectors) {
+            TString baseName(baseNameStr);
+            TObjArray* tokens = baseName.Tokenize("_");
+            if (tokens->GetEntries() >= 4) {
+                // Parse the name to get chain, nucleus, detector, and bin index.
+                std::string chain_str = ((TObjString*)tokens->At(0))->GetString().Data();
+                std::string nucleus_str = ((TObjString*)tokens->At(1))->GetString().Data();
+                std::string detector_str = ((TObjString*)tokens->At(2))->GetString().Data();
+                TString bin_str = ((TObjString*)tokens->At(3))->GetString();
+                bin_str.ReplaceAll("bin", "");
+                int ekBin = bin_str.Atoi();
+
+                // Convert names to integer indices using the pre-filled maps.
+                if (g_chain_map.count(chain_str) && g_nucleus_map.count(nucleus_str) && g_detector_map.count(detector_str)) {
+                    int chain_idx = g_chain_map[chain_str];
+                    int nucleus_idx = g_nucleus_map[nucleus_str];
+                    int detector_idx = g_detector_map[detector_str];
+                    std::tuple<int, int, int, int> key = {chain_idx, nucleus_idx, detector_idx, ekBin};
+                    
+                    // Create and load the LookupTable object.
+                    LookupTable pdata;
+                    pdata.loadFromVectors(vecs[0], vecs[1], vecs[2]);
+                    if (pdata.isValid) {
+                        // Move the loaded data into the global map.
+                        g_chargeTuningData_EGE[key] = std::move(pdata);
+                        loaded_count++;
+                    }
+                }
+            }
+            delete tokens;
+            // Free the memory of the TVectorD objects read from the file.
+            delete vecs[0]; delete vecs[1]; delete vecs[2];
+        }
+        
+        std::cout << "[INFO] Charge Tuning System initialized. Loaded " << loaded_count << " valid EGE lookup tables using integer keys." << std::endl;
+    });
+}
+
+double tuneL2Charge(
+    const std::string& chain, 
+    const std::string& nucleusName, 
+    const std::string& detectorName, 
+    int ekBin, 
+    double q_l2
+) {
+    if (ekBin < 0) {
+        // std::cerr << "[DBG] L2Q Fail: Invalid ekBin=" << ekBin << std::endl;
+        return q_l2;
+    }
+
+    // OPTIMIZATION: Convert input strings to integer indices for fast lookup.
+    auto it_chain = g_chain_map.find(chain);
+    auto it_nuc = g_nucleus_map.find(nucleusName);
+    auto it_det = g_detector_map.find(detectorName);
+
+    // If any name is not found, it's an invalid call. Return original value.
+    if (it_chain == g_chain_map.end() || it_nuc == g_nucleus_map.end() || it_det == g_detector_map.end()) {
+         std::cerr << "[DBG] L2Q Fail: Invalid name. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << std::endl;
+        return q_l2;
+    }
+
+    // Construct the integer-based key.
+    std::tuple<int, int, int, int> key = {it_chain->second, it_nuc->second, it_det->second, ekBin};
+
+    // Perform the fast lookup in the map.
+    auto it = g_chargeTuningData_EGE.find(key);
+    if (it == g_chargeTuningData_EGE.end()) {
+         //std::cerr << "[DBG] L2Q Fail: Table not found. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << " ekBin=" << ekBin << std::endl;
+        return q_l2; // No table found for this combination.
+    }
+    
+    // Use the found lookup table to perform the tuning.
+    const LookupTable& pdata = it->second;
+    double cdf_l2 = pdata.getCDF_L2(q_l2);
+    if (cdf_l2 < 0.0) {
+         std::cerr << "[DBG] L2Q Fail: q_l2 out of range. q_l2=" << q_l2 << std::endl;
+        return q_l2; // q_l2 is out of the table's range.
+    }
+    
+    double q_tuned = pdata.getInvCDF_L1(cdf_l2);
+    if (q_tuned < 0) {
+         std::cerr << "[DBG] L2Q Fail: InvCDF failed. cdf_l2=" << cdf_l2 << std::endl;
+        return q_l2; // Inverse CDF calculation failed.
+    }
+    //std::cout<<q_l2<<" tune:"<<q_tuned<<std::endl;
+
+    return q_tuned;
+}
 
 } // namespace Tools
 } // namespace AMS_Iso

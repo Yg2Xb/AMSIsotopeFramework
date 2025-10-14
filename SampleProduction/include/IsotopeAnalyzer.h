@@ -9,8 +9,8 @@
 // ROOT类的正向声明
 class TChain;
 class TH1;
-class TH1F;
-class TH2F;
+class TH1D;
+class TH2D;
 
 namespace AMS_Iso {
 
@@ -43,8 +43,8 @@ public:
     // --- 关键接口 ---
     // 为 selectdata 提供按名称获取任何直方图的通用方法
     TH1* getHist(const std::string& name) const;
-    TH1F* getHist1F(const std::string& name) const;
-    TH2F* getHist2F(const std::string& name) const;
+    TH1D* getHist1D(const std::string& name) const;
+    TH2D* getHist2D(const std::string& name) const;
     HistManager* getHistManager() const { return m_histManager.get(); }
 
 
