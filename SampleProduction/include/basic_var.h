@@ -35,6 +35,9 @@ namespace Version {
 class IsotopeVar;
 class BetaExpoT;
 
+//!!!!!!!!!!!!!!!!!!!!
+inline constexpr bool yanzx_dst = false; 
+
 
 
 namespace Constants {
@@ -46,9 +49,9 @@ namespace Constants {
     inline constexpr int TRACKER_CUTS = 5;
     inline constexpr double SAFE_FACTOR_RIG = 1.2;
 
-    inline constexpr  int N_nuc = 8;
-    inline constexpr  int nuclei_Z[N_nuc] = {4,4,4,5,5,6,7,8};
-    inline constexpr  int nuclei_A[N_nuc] = {7,9,10,10,11,12,14,16};
+    inline constexpr  int N_nuc = 13;
+    inline constexpr  int nuclei_Z[N_nuc] = {2,2,3,3,4,4,4,5,5,6,7,7,8};
+    inline constexpr  int nuclei_A[N_nuc] = {3,4,6,7,7,9,10,10,11,12,14,15,16};
 }
 
 	const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
@@ -58,8 +61,18 @@ namespace Constants {
 	};
 	const std::vector<std::string> num_den = {"Num", "Den"};
 	const std::vector<std::string> charge_types = {"L1QSignal", "L1QTemplate", "L2QTemplate"};
-	const std::vector<std::string> sources = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+	const std::vector<std::string> sources = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
 	const std::vector<std::string> gene_rec = {"Gene", "Rec"};
+
+const std::map<int, std::vector<std::pair<int, double>>> isotopeWeights = {
+		{2, {{3, 0.1}, {4, 0.9}}},  // He
+		{3, {{6, 0.5}, {7, 0.5}}},  // Li
+		{4, {{7, 0.6}, {9, 0.3}, {10, 0.1}}},  // Be
+		{5, {{10, 0.3}, {11, 0.7}}},           // B
+		{6, {{12, 1.0}}},                      // C
+		{7, {{14, 0.5}, {15, 0.5}}},           // N
+		{8, {{16, 1.0}}}                       // O
+};
 
 // Exception classes
 class IsotopeError : public std::runtime_error {

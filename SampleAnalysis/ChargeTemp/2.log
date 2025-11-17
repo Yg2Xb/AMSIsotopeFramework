@@ -1,0 +1,1196 @@
+
+Processing ../rootlogon.C...
+Processing CalPureQTemp.cpp...
+
+--- Processing Detector: TOF ---
+ [Bin 1] Ek=0.103981 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 2] Ek=0.145761 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 3] Ek=0.189414 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 4] Ek=0.240282 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 5] Ek=0.300226 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 6] Ek=0.369524 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.130566, N_template: 173818, N_purged: 8749.91, Scale: 0.0503395
+Total chi2/ndf: 4.50511
+   [Purge] Element: Oxygen, Fraction: 0.128238, N_template: 173818, N_purged: 8593.85, Scale: 0.0494416
+Total chi2/ndf: 0.0499734
+   [Purge] Element: Nitrogen, Fraction: 0.0164625, N_template: 58425, N_purged: 4008.7, Scale: 0.0686128
+   [Purge] Element: Oxygen, Fraction: 0.0104478, N_template: 173818, N_purged: 2544.09, Scale: 0.0146365
+Total chi2/ndf: 9.2604
+   [Purge] Element: Nitrogen, Fraction: 0.0154166, N_template: 58425, N_purged: 3754.02, Scale: 0.0642537
+   [Purge] Element: Oxygen, Fraction: 0.00963328, N_template: 173818, N_purged: 2345.75, Scale: 0.0134954
+Total chi2/ndf: 0.786669
+   [Purge] Element: Carbon, Fraction: 0.115631, N_template: 237652, N_purged: 10430.6, Scale: 0.0438904
+   [Purge] Element: Nitrogen, Fraction: 0.00751391, N_template: 58425, N_purged: 677.799, Scale: 0.0116012
+Total chi2/ndf: 4.01138
+   [Purge] Element: Carbon, Fraction: 0.117494, N_template: 237652, N_purged: 10598.6, Scale: 0.0445973
+   [Purge] Element: Nitrogen, Fraction: 0.00671442, N_template: 58425, N_purged: 605.681, Scale: 0.0103668
+Total chi2/ndf: 0.288611
+   [Purge] Element: Boron, Fraction: 0.0719038, N_template: 79238.7, N_purged: 1515.8, Scale: 0.0191296
+   [Purge] Element: Carbon, Fraction: 0.0488009, N_template: 237652, N_purged: 1028.77, Scale: 0.0043289
+Total chi2/ndf: 2.85955
+   [Purge] Element: Boron, Fraction: 0.065996, N_template: 79238.7, N_purged: 1391.26, Scale: 0.0175579
+   [Purge] Element: Carbon, Fraction: 0.045266, N_template: 237652, N_purged: 954.252, Scale: 0.00401534
+Total chi2/ndf: 0.389578
+ [Bin 7] Ek=0.448539 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.127956, N_template: 229288, N_purged: 11181.3, Scale: 0.0487652
+Total chi2/ndf: 3.45689
+   [Purge] Element: Oxygen, Fraction: 0.124447, N_template: 229288, N_purged: 10874.7, Scale: 0.0474279
+Total chi2/ndf: 0.15905
+   [Purge] Element: Nitrogen, Fraction: 0.013753, N_template: 76556.9, N_purged: 4345.66, Scale: 0.0567637
+   [Purge] Element: Oxygen, Fraction: 0.0093715, N_template: 229288, N_purged: 2961.2, Scale: 0.0129147
+Total chi2/ndf: 8.06847
+   [Purge] Element: Nitrogen, Fraction: 0.0138212, N_template: 76556.9, N_purged: 4367.21, Scale: 0.0570453
+   [Purge] Element: Oxygen, Fraction: 0.00869303, N_template: 229288, N_purged: 2746.81, Scale: 0.0119798
+Total chi2/ndf: 0.292657
+   [Purge] Element: Carbon, Fraction: 0.106894, N_template: 309029, N_purged: 12467.6, Scale: 0.0403444
+   [Purge] Element: Nitrogen, Fraction: 0.00693373, N_template: 76556.9, N_purged: 808.715, Scale: 0.0105636
+Total chi2/ndf: 2.48763
+   [Purge] Element: Carbon, Fraction: 0.108939, N_template: 309029, N_purged: 12706.1, Scale: 0.0411161
+   [Purge] Element: Nitrogen, Fraction: 0.00616414, N_template: 76556.9, N_purged: 718.955, Scale: 0.00939111
+Total chi2/ndf: 0.3622
+   [Purge] Element: Boron, Fraction: 0.0588207, N_template: 103459, N_purged: 1659.16, Scale: 0.0160368
+   [Purge] Element: Carbon, Fraction: 0.0423405, N_template: 309029, N_purged: 1194.3, Scale: 0.00386468
+Total chi2/ndf: 1.99262
+   [Purge] Element: Boron, Fraction: 0.0572115, N_template: 103459, N_purged: 1613.76, Scale: 0.0155981
+   [Purge] Element: Carbon, Fraction: 0.039326, N_template: 309029, N_purged: 1109.27, Scale: 0.00358952
+Total chi2/ndf: 0.1923
+ [Bin 8] Ek=0.539271 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.117431, N_template: 284646, N_purged: 12618, Scale: 0.0443288
+Total chi2/ndf: 6.9791
+   [Purge] Element: Oxygen, Fraction: 0.114663, N_template: 284646, N_purged: 12320.5, Scale: 0.0432836
+Total chi2/ndf: 0.124843
+   [Purge] Element: Nitrogen, Fraction: 0.0134831, N_template: 95165.6, N_purged: 5238.45, Scale: 0.0550457
+   [Purge] Element: Oxygen, Fraction: 0.00913521, N_template: 284646, N_purged: 3549.21, Scale: 0.0124689
+Total chi2/ndf: 6.64269
+   [Purge] Element: Nitrogen, Fraction: 0.013416, N_template: 95165.6, N_purged: 5212.38, Scale: 0.0547717
+   [Purge] Element: Oxygen, Fraction: 0.00863636, N_template: 284646, N_purged: 3355.4, Scale: 0.011788
+Total chi2/ndf: 0.507641
+   [Purge] Element: Carbon, Fraction: 0.105186, N_template: 380167, N_purged: 15037.8, Scale: 0.0395558
+   [Purge] Element: Nitrogen, Fraction: 0.0063351, N_template: 95165.6, N_purged: 905.691, Scale: 0.009517
+Total chi2/ndf: 3.01696
+   [Purge] Element: Carbon, Fraction: 0.105321, N_template: 380167, N_purged: 15057.1, Scale: 0.0396065
+   [Purge] Element: Nitrogen, Fraction: 0.00574794, N_template: 95165.6, N_purged: 821.749, Scale: 0.00863494
+Total chi2/ndf: 0.373577
+   [Purge] Element: Boron, Fraction: 0.0579717, N_template: 127465, N_purged: 2047.44, Scale: 0.0160628
+   [Purge] Element: Carbon, Fraction: 0.0371939, N_template: 380167, N_purged: 1313.62, Scale: 0.00345537
+Total chi2/ndf: 2.0199
+   [Purge] Element: Boron, Fraction: 0.0549599, N_template: 127465, N_purged: 1941.07, Scale: 0.0152283
+   [Purge] Element: Carbon, Fraction: 0.0356691, N_template: 380167, N_purged: 1259.76, Scale: 0.00331371
+Total chi2/ndf: 0.233493
+ [Bin 9] Ek=0.641983 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.112656, N_template: 330504, N_purged: 14062.4, Scale: 0.0425484
+Total chi2/ndf: 3.67142
+   [Purge] Element: Oxygen, Fraction: 0.110704, N_template: 330504, N_purged: 13818.8, Scale: 0.0418112
+Total chi2/ndf: 0.0711493
+   [Purge] Element: Nitrogen, Fraction: 0.0137398, N_template: 111016, N_purged: 6170.29, Scale: 0.0555805
+   [Purge] Element: Oxygen, Fraction: 0.00814677, N_template: 330504, N_purged: 3658.56, Scale: 0.0110696
+Total chi2/ndf: 5.26871
+   [Purge] Element: Nitrogen, Fraction: 0.0135559, N_template: 111016, N_purged: 6087.71, Scale: 0.0548366
+   [Purge] Element: Oxygen, Fraction: 0.00780538, N_template: 330504, N_purged: 3505.25, Scale: 0.0106058
+Total chi2/ndf: 0.395844
+   [Purge] Element: Carbon, Fraction: 0.102342, N_template: 439709, N_purged: 16906.6, Scale: 0.0384496
+   [Purge] Element: Nitrogen, Fraction: 0.00577716, N_template: 111016, N_purged: 954.369, Scale: 0.00859672
+Total chi2/ndf: 4.06141
+   [Purge] Element: Carbon, Fraction: 0.102103, N_template: 439709, N_purged: 16867.1, Scale: 0.0383597
+   [Purge] Element: Nitrogen, Fraction: 0.00525306, N_template: 111016, N_purged: 867.789, Scale: 0.00781683
+Total chi2/ndf: 0.41591
+   [Purge] Element: Boron, Fraction: 0.0533665, N_template: 147884, N_purged: 2274.91, Scale: 0.0153831
+   [Purge] Element: Carbon, Fraction: 0.0331686, N_template: 439709, N_purged: 1413.91, Scale: 0.00321557
+Total chi2/ndf: 2.73379
+   [Purge] Element: Boron, Fraction: 0.0513232, N_template: 147884, N_purged: 2187.8, Scale: 0.0147941
+   [Purge] Element: Carbon, Fraction: 0.03147, N_template: 439709, N_purged: 1341.5, Scale: 0.00305089
+Total chi2/ndf: 0.175718
+ [Bin 10] Ek=0.758915 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.106432, N_template: 402030, N_purged: 15955.5, Scale: 0.0396873
+Total chi2/ndf: 3.93292
+   [Purge] Element: Oxygen, Fraction: 0.10412, N_template: 402030, N_purged: 15609, Scale: 0.0388254
+Total chi2/ndf: 0.110132
+   [Purge] Element: Nitrogen, Fraction: 0.0120695, N_template: 134326, N_purged: 6524.44, Scale: 0.0485716
+   [Purge] Element: Oxygen, Fraction: 0.00784354, N_template: 402030, N_purged: 4240, Scale: 0.0105465
+Total chi2/ndf: 8.49228
+   [Purge] Element: Nitrogen, Fraction: 0.0123362, N_template: 134326, N_purged: 6668.62, Scale: 0.0496449
+   [Purge] Element: Oxygen, Fraction: 0.00747437, N_template: 402030, N_purged: 4040.44, Scale: 0.0100501
+Total chi2/ndf: 0.225555
+   [Purge] Element: Carbon, Fraction: 0.094817, N_template: 530025, N_purged: 18724.2, Scale: 0.0353269
+   [Purge] Element: Nitrogen, Fraction: 0.00545702, N_template: 134326, N_purged: 1077.64, Scale: 0.00802253
+Total chi2/ndf: 2.69757
+   [Purge] Element: Carbon, Fraction: 0.0953608, N_template: 530025, N_purged: 18831.6, Scale: 0.0355295
+   [Purge] Element: Nitrogen, Fraction: 0.00497171, N_template: 134326, N_purged: 981.798, Scale: 0.00730906
+Total chi2/ndf: 0.42884
+   [Purge] Element: Boron, Fraction: 0.048246, N_template: 178042, N_purged: 2384.85, Scale: 0.0133948
+   [Purge] Element: Carbon, Fraction: 0.0324959, N_template: 530025, N_purged: 1606.3, Scale: 0.00303062
+Total chi2/ndf: 2.02972
+   [Purge] Element: Boron, Fraction: 0.0471985, N_template: 178042, N_purged: 2333.07, Scale: 0.013104
+   [Purge] Element: Carbon, Fraction: 0.0302938, N_template: 530025, N_purged: 1497.46, Scale: 0.00282525
+Total chi2/ndf: 0.201156
+ [Bin 11] Ek=0.890201 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.106218, N_template: 427818, N_purged: 16755.8, Scale: 0.0391656
+Total chi2/ndf: 4.85678
+   [Purge] Element: Oxygen, Fraction: 0.103807, N_template: 427818, N_purged: 16375.3, Scale: 0.0382764
+Total chi2/ndf: 0.135956
+   [Purge] Element: Nitrogen, Fraction: 0.0105916, N_template: 141404, N_purged: 6082.67, Scale: 0.0430164
+   [Purge] Element: Oxygen, Fraction: 0.00735978, N_template: 427818, N_purged: 4226.66, Scale: 0.00987957
+Total chi2/ndf: 4.22726
+   [Purge] Element: Nitrogen, Fraction: 0.0109294, N_template: 141404, N_purged: 6276.65, Scale: 0.0443881
+   [Purge] Element: Oxygen, Fraction: 0.0069985, N_template: 427818, N_purged: 4019.18, Scale: 0.00939459
+Total chi2/ndf: 0.206326
+   [Purge] Element: Carbon, Fraction: 0.0879742, N_template: 564101, N_purged: 18285.3, Scale: 0.032415
+   [Purge] Element: Nitrogen, Fraction: 0.00506099, N_template: 141404, N_purged: 1051.92, Scale: 0.00743914
+Total chi2/ndf: 3.00205
+   [Purge] Element: Carbon, Fraction: 0.0891874, N_template: 564101, N_purged: 18537.5, Scale: 0.032862
+   [Purge] Element: Nitrogen, Fraction: 0.0046109, N_template: 141404, N_purged: 958.371, Scale: 0.00677755
+Total chi2/ndf: 0.392355
+   [Purge] Element: Boron, Fraction: 0.0412345, N_template: 188592, N_purged: 2327.03, Scale: 0.0123389
+   [Purge] Element: Carbon, Fraction: 0.028383, N_template: 564101, N_purged: 1601.77, Scale: 0.00283951
+Total chi2/ndf: 2.01921
+   [Purge] Element: Boron, Fraction: 0.0406584, N_template: 188592, N_purged: 2294.52, Scale: 0.0121665
+   [Purge] Element: Carbon, Fraction: 0.0269758, N_template: 564101, N_purged: 1522.35, Scale: 0.00269872
+Total chi2/ndf: 0.0936335
+ [Bin 12] Ek=1.03598 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0995698, N_template: 462548, N_purged: 16783.5, Scale: 0.0362849
+Total chi2/ndf: 4.59787
+   [Purge] Element: Oxygen, Fraction: 0.0970595, N_template: 462548, N_purged: 16360.4, Scale: 0.0353701
+Total chi2/ndf: 0.156232
+   [Purge] Element: Nitrogen, Fraction: 0.00986091, N_template: 152226, N_purged: 6079.48, Scale: 0.0399371
+   [Purge] Element: Oxygen, Fraction: 0.00735157, N_template: 462548, N_purged: 4532.41, Scale: 0.0097988
+Total chi2/ndf: 3.07695
+   [Purge] Element: Nitrogen, Fraction: 0.0102345, N_template: 152226, N_purged: 6309.8, Scale: 0.0414501
+   [Purge] Element: Oxygen, Fraction: 0.00700066, N_template: 462548, N_purged: 4316.07, Scale: 0.00933107
+Total chi2/ndf: 0.154499
+   [Purge] Element: Carbon, Fraction: 0.0818303, N_template: 605968, N_purged: 17935.2, Scale: 0.0295977
+   [Purge] Element: Nitrogen, Fraction: 0.00481126, N_template: 152226, N_purged: 1054.51, Scale: 0.00692728
+Total chi2/ndf: 3.03814
+   [Purge] Element: Carbon, Fraction: 0.0837787, N_template: 605968, N_purged: 18362.3, Scale: 0.0303024
+   [Purge] Element: Nitrogen, Fraction: 0.00432507, N_template: 152226, N_purged: 947.952, Scale: 0.00622725
+Total chi2/ndf: 0.214802
+   [Purge] Element: Boron, Fraction: 0.0395394, N_template: 199969, N_purged: 2424.83, Scale: 0.012126
+   [Purge] Element: Carbon, Fraction: 0.0267704, N_template: 605968, N_purged: 1641.75, Scale: 0.0027093
+Total chi2/ndf: 1.42286
+   [Purge] Element: Boron, Fraction: 0.0397229, N_template: 199969, N_purged: 2436.09, Scale: 0.0121823
+   [Purge] Element: Carbon, Fraction: 0.0247048, N_template: 605968, N_purged: 1515.07, Scale: 0.00250026
+Total chi2/ndf: 0.197028
+ [Bin 13] Ek=1.19844 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0922897, N_template: 519014, N_purged: 17230.1, Scale: 0.0331978
+Total chi2/ndf: 3.38095
+   [Purge] Element: Oxygen, Fraction: 0.0903711, N_template: 519014, N_purged: 16871.9, Scale: 0.0325077
+Total chi2/ndf: 0.124722
+   [Purge] Element: Nitrogen, Fraction: 0.00950408, N_template: 169835, N_purged: 6547.79, Scale: 0.0385539
+   [Purge] Element: Oxygen, Fraction: 0.00685875, N_template: 519014, N_purged: 4725.3, Scale: 0.00910438
+Total chi2/ndf: 4.47708
+   [Purge] Element: Nitrogen, Fraction: 0.00987212, N_template: 169835, N_purged: 6801.35, Scale: 0.0400469
+   [Purge] Element: Oxygen, Fraction: 0.00656217, N_template: 519014, N_purged: 4520.97, Scale: 0.0087107
+Total chi2/ndf: 0.150262
+   [Purge] Element: Carbon, Fraction: 0.071368, N_template: 677681, N_purged: 17208, Scale: 0.0253925
+   [Purge] Element: Nitrogen, Fraction: 0.00447495, N_template: 169835, N_purged: 1078.99, Scale: 0.00635316
+Total chi2/ndf: 20.0957
+   [Purge] Element: Carbon, Fraction: 0.0733816, N_template: 677681, N_purged: 17693.5, Scale: 0.026109
+   [Purge] Element: Nitrogen, Fraction: 0.00403143, N_template: 169835, N_purged: 972.047, Scale: 0.0057235
+Total chi2/ndf: 0.195988
+   [Purge] Element: Boron, Fraction: 0.040932, N_template: 222491, N_purged: 2606.8, Scale: 0.0117164
+   [Purge] Element: Carbon, Fraction: 0.0220727, N_template: 677681, N_purged: 1405.72, Scale: 0.00207431
+Total chi2/ndf: 2.58742
+   [Purge] Element: Boron, Fraction: 0.0395752, N_template: 222491, N_purged: 2520.38, Scale: 0.011328
+   [Purge] Element: Carbon, Fraction: 0.0206817, N_template: 677681, N_purged: 1317.13, Scale: 0.00194359
+Total chi2/ndf: 0.228039
+ [Bin 14] Ek=1.37763 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 15] Ek=1.57583 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 16] Ek=1.79538 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 17] Ek=2.03628 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 18] Ek=2.29851 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 19] Ek=2.58439 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 20] Ek=2.89629 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 21] Ek=3.23418 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 22] Ek=3.60045 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 23] Ek=3.99748 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 24] Ek=4.42526 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 25] Ek=4.8936 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 26] Ek=5.38764 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 27] Ek=5.90734 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 28] Ek=6.47739 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 29] Ek=7.09781 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 30] Ek=7.76859 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 31] Ek=8.48974 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 32] Ek=9.26122 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 33] Ek=10.083 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 34] Ek=10.98 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 35] Ek=11.9523 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 36] Ek=12.9748 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 37] Ek=14.0725 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 38] Ek=15.2454 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 39] Ek=16.4935 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 40] Ek=17.8417 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 41] Ek=19.29 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 42] Ek=20.8385 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 43] Ek=22.4871 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 44] Ek=24.2608 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 45] Ek=26.1595 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 46] Ek=28.1834 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 47] Ek=30.3574 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 48] Ek=32.7064 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 49] Ek=35.2305 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 50] Ek=37.9297 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 51] Ek=40.8289 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 52] Ek=43.9532 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 53] Ek=47.3275 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 54] Ek=51.0769 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 55] Ek=55.0763 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 56] Ek=59.3257 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 57] Ek=64.0752 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 58] Ek=69.5747 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 59] Ek=75.8242 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 60] Ek=82.8237 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 61] Ek=90.8232 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 62] Ek=99.8228 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 63] Ek=110.072 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 64] Ek=122.072 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 65] Ek=136.572 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 66] Ek=154.321 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 67] Ek=176.321 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 68] Ek=204.071 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 69] Ek=240.57 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 70] Ek=295.32 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 71] Ek=384.07 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 72] Ek=544.069 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 73] Ek=1149.07 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+
+--- Processing Detector: NaF ---
+ [Bin 1] Ek=0.103981 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 2] Ek=0.145761 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 3] Ek=0.189414 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 4] Ek=0.240282 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 5] Ek=0.300226 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 6] Ek=0.369524 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 7] Ek=0.448539 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 8] Ek=0.539271 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 9] Ek=0.641983 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 10] Ek=0.758915 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 11] Ek=0.890201 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 12] Ek=1.03598 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0887698, N_template: 35460, N_purged: 1200.17, Scale: 0.0338457
+Total chi2/ndf: 1.35027
+   [Purge] Element: Oxygen, Fraction: 0.0848336, N_template: 35460, N_purged: 1146.95, Scale: 0.0323449
+Total chi2/ndf: 0.0458456
+   [Purge] Element: Nitrogen, Fraction: 0.00944844, N_template: 12387.5, N_purged: 508.732, Scale: 0.0410683
+   [Purge] Element: Oxygen, Fraction: 0.00536931, N_template: 35460, N_purged: 289.1, Scale: 0.00815285
+Total chi2/ndf: 1.79705
+   [Purge] Element: Nitrogen, Fraction: 0.00899186, N_template: 12387.5, N_purged: 484.149, Scale: 0.0390838
+   [Purge] Element: Oxygen, Fraction: 0.00446967, N_template: 35460, N_purged: 240.66, Scale: 0.00678681
+Total chi2/ndf: 0.212082
+   [Purge] Element: Carbon, Fraction: 0.0732308, N_template: 53152.8, N_purged: 1437.3, Scale: 0.0270409
+   [Purge] Element: Nitrogen, Fraction: 0.00414327, N_template: 12387.5, N_purged: 81.32, Scale: 0.0065647
+Total chi2/ndf: 2.17645
+   [Purge] Element: Carbon, Fraction: 0.0721094, N_template: 53152.8, N_purged: 1415.29, Scale: 0.0266268
+   [Purge] Element: Nitrogen, Fraction: 0.00248891, N_template: 12387.5, N_purged: 48.8499, Scale: 0.00394349
+Total chi2/ndf: 0.423176
+   [Purge] Element: Boron, Fraction: 0.0400103, N_template: 18213.4, N_purged: 226.738, Scale: 0.012449
+   [Purge] Element: Carbon, Fraction: 0.0198572, N_template: 53152.8, N_purged: 112.531, Scale: 0.00211712
+Total chi2/ndf: 2.41456
+   [Purge] Element: Boron, Fraction: 0.0332383, N_template: 18213.4, N_purged: 188.362, Scale: 0.0103419
+   [Purge] Element: Carbon, Fraction: 0.0152612, N_template: 53152.8, N_purged: 86.4852, Scale: 0.0016271
+Total chi2/ndf: 0.26057
+ [Bin 13] Ek=1.19844 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0802576, N_template: 39576, N_purged: 1210.04, Scale: 0.0305752
+Total chi2/ndf: 1.77747
+   [Purge] Element: Oxygen, Fraction: 0.0757917, N_template: 39576, N_purged: 1142.71, Scale: 0.0288739
+Total chi2/ndf: 0.0576995
+   [Purge] Element: Nitrogen, Fraction: 0.00851855, N_template: 13946.2, N_purged: 518.362, Scale: 0.0371688
+   [Purge] Element: Oxygen, Fraction: 0.00515102, N_template: 39576, N_purged: 313.445, Scale: 0.00792007
+Total chi2/ndf: 1.3586
+   [Purge] Element: Nitrogen, Fraction: 0.00844856, N_template: 13946.2, N_purged: 514.104, Scale: 0.0368634
+   [Purge] Element: Oxygen, Fraction: 0.00470066, N_template: 39576, N_purged: 286.04, Scale: 0.00722761
+Total chi2/ndf: 0.106739
+   [Purge] Element: Carbon, Fraction: 0.074909, N_template: 60077.6, N_purged: 1661.56, Scale: 0.0276569
+   [Purge] Element: Nitrogen, Fraction: 0.00345007, N_template: 13946.2, N_purged: 76.526, Scale: 0.00548725
+Total chi2/ndf: 1.94934
+   [Purge] Element: Carbon, Fraction: 0.073969, N_template: 60077.6, N_purged: 1640.71, Scale: 0.0273098
+   [Purge] Element: Nitrogen, Fraction: 0.00280689, N_template: 13946.2, N_purged: 62.2597, Scale: 0.00446429
+Total chi2/ndf: 0.148681
+   [Purge] Element: Boron, Fraction: 0.0348452, N_template: 20526.7, N_purged: 206.318, Scale: 0.0100512
+   [Purge] Element: Carbon, Fraction: 0.0204431, N_template: 60077.6, N_purged: 121.044, Scale: 0.00201479
+Total chi2/ndf: 1.78366
+   [Purge] Element: Boron, Fraction: 0.0303239, N_template: 20526.7, N_purged: 179.548, Scale: 0.00874702
+   [Purge] Element: Carbon, Fraction: 0.0146672, N_template: 60077.6, N_purged: 86.8443, Scale: 0.00144553
+Total chi2/ndf: 0.266281
+ [Bin 14] Ek=1.37763 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0822097, N_template: 41318, N_purged: 1306.15, Scale: 0.0316121
+Total chi2/ndf: 2.62734
+   [Purge] Element: Oxygen, Fraction: 0.0793734, N_template: 41318, N_purged: 1261.09, Scale: 0.0305214
+Total chi2/ndf: 0.0349131
+   [Purge] Element: Nitrogen, Fraction: 0.00902637, N_template: 14637.7, N_purged: 586.516, Scale: 0.0400689
+   [Purge] Element: Oxygen, Fraction: 0.00629227, N_template: 41318, N_purged: 408.859, Scale: 0.00989542
+Total chi2/ndf: 1.99672
+   [Purge] Element: Nitrogen, Fraction: 0.00892202, N_template: 14637.7, N_purged: 579.735, Scale: 0.0396057
+   [Purge] Element: Oxygen, Fraction: 0.0055203, N_template: 41318, N_purged: 358.698, Scale: 0.00868141
+Total chi2/ndf: 0.334262
+   [Purge] Element: Carbon, Fraction: 0.0738884, N_template: 64079.7, N_purged: 1723.97, Scale: 0.0269035
+   [Purge] Element: Nitrogen, Fraction: 0.00373371, N_template: 14637.7, N_purged: 87.1149, Scale: 0.00595142
+Total chi2/ndf: 2.17737
+   [Purge] Element: Carbon, Fraction: 0.071914, N_template: 64079.7, N_purged: 1677.9, Scale: 0.0261845
+   [Purge] Element: Nitrogen, Fraction: 0.002587, N_template: 14637.7, N_purged: 60.3598, Scale: 0.0041236
+Total chi2/ndf: 0.348017
+   [Purge] Element: Boron, Fraction: 0.0311572, N_template: 21653.5, N_purged: 208.847, Scale: 0.00964492
+   [Purge] Element: Carbon, Fraction: 0.0183937, N_template: 64079.7, N_purged: 123.293, Scale: 0.00192406
+Total chi2/ndf: 1.89019
+   [Purge] Element: Boron, Fraction: 0.0275566, N_template: 21653.5, N_purged: 184.712, Scale: 0.00853033
+   [Purge] Element: Carbon, Fraction: 0.0136639, N_template: 64079.7, N_purged: 91.5888, Scale: 0.0014293
+Total chi2/ndf: 0.147582
+ [Bin 15] Ek=1.57583 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0742509, N_template: 42602, N_purged: 1202.57, Scale: 0.0282279
+Total chi2/ndf: 1.29092
+   [Purge] Element: Oxygen, Fraction: 0.0701316, N_template: 42602, N_purged: 1135.85, Scale: 0.0266619
+Total chi2/ndf: 0.0865815
+   [Purge] Element: Nitrogen, Fraction: 0.00825645, N_template: 15081.2, N_purged: 544.216, Scale: 0.0360856
+   [Purge] Element: Oxygen, Fraction: 0.00519795, N_template: 42602, N_purged: 342.618, Scale: 0.00804229
+Total chi2/ndf: 1.80821
+   [Purge] Element: Nitrogen, Fraction: 0.0082233, N_template: 15081.2, N_purged: 542.031, Scale: 0.0359407
+   [Purge] Element: Oxygen, Fraction: 0.00442185, N_template: 42602, N_purged: 291.462, Scale: 0.0068415
+Total chi2/ndf: 0.119627
+   [Purge] Element: Carbon, Fraction: 0.0701765, N_template: 65112.7, N_purged: 1661.5, Scale: 0.0255173
+   [Purge] Element: Nitrogen, Fraction: 0.00388735, N_template: 15081.2, N_purged: 92.0369, Scale: 0.00610274
+Total chi2/ndf: 1.73793
+   [Purge] Element: Carbon, Fraction: 0.0690182, N_template: 65112.7, N_purged: 1634.08, Scale: 0.0250961
+   [Purge] Element: Nitrogen, Fraction: 0.00304315, N_template: 15081.2, N_purged: 72.0496, Scale: 0.00477743
+Total chi2/ndf: 0.140924
+   [Purge] Element: Boron, Fraction: 0.0307823, N_template: 22022.2, N_purged: 225.726, Scale: 0.01025
+   [Purge] Element: Carbon, Fraction: 0.0185638, N_template: 65112.7, N_purged: 136.128, Scale: 0.00209065
+Total chi2/ndf: 2.02444
+   [Purge] Element: Boron, Fraction: 0.0266454, N_template: 22022.2, N_purged: 195.39, Scale: 0.00887244
+   [Purge] Element: Carbon, Fraction: 0.0139591, N_template: 65112.7, N_purged: 102.362, Scale: 0.00157208
+Total chi2/ndf: 0.241548
+ [Bin 16] Ek=1.79538 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0725742, N_template: 44221, N_purged: 1180.42, Scale: 0.0266936
+Total chi2/ndf: 1.48773
+   [Purge] Element: Oxygen, Fraction: 0.0700537, N_template: 44221, N_purged: 1139.42, Scale: 0.0257666
+Total chi2/ndf: 0.0363968
+   [Purge] Element: Nitrogen, Fraction: 0.00829626, N_template: 15140.8, N_purged: 564.942, Scale: 0.0373124
+   [Purge] Element: Oxygen, Fraction: 0.00519103, N_template: 44221, N_purged: 353.488, Scale: 0.00799368
+Total chi2/ndf: 2.18362
+   [Purge] Element: Nitrogen, Fraction: 0.0082668, N_template: 15140.8, N_purged: 562.936, Scale: 0.0371799
+   [Purge] Element: Oxygen, Fraction: 0.00417624, N_template: 44221, N_purged: 284.385, Scale: 0.00643099
+Total chi2/ndf: 0.295054
+   [Purge] Element: Carbon, Fraction: 0.0693812, N_template: 67290.5, N_purged: 1657.17, Scale: 0.0246271
+   [Purge] Element: Nitrogen, Fraction: 0.00284296, N_template: 15140.8, N_purged: 67.9041, Scale: 0.00448483
+Total chi2/ndf: 2.56177
+   [Purge] Element: Carbon, Fraction: 0.0660284, N_template: 67290.5, N_purged: 1577.09, Scale: 0.023437
+   [Purge] Element: Nitrogen, Fraction: 0.00195247, N_template: 15140.8, N_purged: 46.6347, Scale: 0.00308006
+Total chi2/ndf: 0.254622
+   [Purge] Element: Boron, Fraction: 0.0250324, N_template: 22335.2, N_purged: 191.598, Scale: 0.00857827
+   [Purge] Element: Carbon, Fraction: 0.0133629, N_template: 67290.5, N_purged: 102.279, Scale: 0.00151997
+Total chi2/ndf: 3.26052
+   [Purge] Element: Boron, Fraction: 0.0215249, N_template: 22335.2, N_purged: 164.752, Scale: 0.00737631
+   [Purge] Element: Carbon, Fraction: 0.00890855, N_template: 67290.5, N_purged: 68.186, Scale: 0.00101331
+Total chi2/ndf: 0.21145
+ [Bin 17] Ek=2.03628 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0679812, N_template: 46222, N_purged: 1152.28, Scale: 0.0249293
+Total chi2/ndf: 3.3854
+   [Purge] Element: Oxygen, Fraction: 0.0650108, N_template: 46222, N_purged: 1101.93, Scale: 0.02384
+Total chi2/ndf: 0.0835478
+   [Purge] Element: Nitrogen, Fraction: 0.00854862, N_template: 15866.7, N_purged: 602.532, Scale: 0.0379747
+   [Purge] Element: Oxygen, Fraction: 0.00424022, N_template: 46222, N_purged: 298.863, Scale: 0.00646582
+Total chi2/ndf: 1.67558
+   [Purge] Element: Nitrogen, Fraction: 0.00867038, N_template: 15866.7, N_purged: 611.115, Scale: 0.0385156
+   [Purge] Element: Oxygen, Fraction: 0.00369793, N_template: 46222, N_purged: 260.641, Scale: 0.0056389
+Total chi2/ndf: 0.113204
+   [Purge] Element: Carbon, Fraction: 0.0669481, N_template: 69642.1, N_purged: 1637.75, Scale: 0.0235167
+   [Purge] Element: Nitrogen, Fraction: 0.00331467, N_template: 15866.7, N_purged: 81.0868, Scale: 0.00511051
+Total chi2/ndf: 2.36811
+   [Purge] Element: Carbon, Fraction: 0.066738, N_template: 69642.1, N_purged: 1632.61, Scale: 0.0234429
+   [Purge] Element: Nitrogen, Fraction: 0.00241398, N_template: 15866.7, N_purged: 59.0531, Scale: 0.00372183
+Total chi2/ndf: 0.398572
+   [Purge] Element: Boron, Fraction: 0.0249955, N_template: 22818.6, N_purged: 191.841, Scale: 0.0084072
+   [Purge] Element: Carbon, Fraction: 0.0164244, N_template: 69642.1, N_purged: 126.057, Scale: 0.00181007
+Total chi2/ndf: 2.07962
+   [Purge] Element: Boron, Fraction: 0.0238394, N_template: 22818.6, N_purged: 182.967, Scale: 0.00801835
+   [Purge] Element: Carbon, Fraction: 0.011595, N_template: 69642.1, N_purged: 88.9913, Scale: 0.00127784
+Total chi2/ndf: 0.412946
+ [Bin 18] Ek=2.29851 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0627095, N_template: 47773, N_purged: 1077.29, Scale: 0.0225501
+Total chi2/ndf: 2.5431
+   [Purge] Element: Oxygen, Fraction: 0.0589938, N_template: 47773, N_purged: 1013.45, Scale: 0.0212139
+Total chi2/ndf: 0.0822784
+   [Purge] Element: Nitrogen, Fraction: 0.00851203, N_template: 16186.6, N_purged: 613.581, Scale: 0.0379067
+   [Purge] Element: Oxygen, Fraction: 0.00487766, N_template: 47773, N_purged: 351.601, Scale: 0.00735983
+Total chi2/ndf: 1.74009
+   [Purge] Element: Nitrogen, Fraction: 0.00836422, N_template: 16186.6, N_purged: 602.927, Scale: 0.0372485
+   [Purge] Element: Oxygen, Fraction: 0.00421492, N_template: 47773, N_purged: 303.828, Scale: 0.00635984
+Total chi2/ndf: 0.287368
+   [Purge] Element: Carbon, Fraction: 0.0627477, N_template: 71217.6, N_purged: 1518.12, Scale: 0.0213166
+   [Purge] Element: Nitrogen, Fraction: 0.00281044, N_template: 16186.6, N_purged: 67.9957, Scale: 0.00420074
+Total chi2/ndf: 1.704
+   [Purge] Element: Carbon, Fraction: 0.0606924, N_template: 71217.6, N_purged: 1468.39, Scale: 0.0206184
+   [Purge] Element: Nitrogen, Fraction: 0.00219721, N_template: 16186.6, N_purged: 53.1592, Scale: 0.00328415
+Total chi2/ndf: 0.322842
+   [Purge] Element: Boron, Fraction: 0.0271807, N_template: 22733.6, N_purged: 206.247, Scale: 0.00907232
+   [Purge] Element: Carbon, Fraction: 0.0135011, N_template: 71217.6, N_purged: 102.446, Scale: 0.0014385
+Total chi2/ndf: 2.19515
+   [Purge] Element: Boron, Fraction: 0.0238321, N_template: 22733.6, N_purged: 180.838, Scale: 0.00795464
+   [Purge] Element: Carbon, Fraction: 0.00894907, N_template: 71217.6, N_purged: 67.9056, Scale: 0.000953494
+Total chi2/ndf: 0.301487
+ [Bin 19] Ek=2.58439 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0639072, N_template: 49396, N_purged: 1100.61, Scale: 0.0222814
+Total chi2/ndf: 3.12073
+   [Purge] Element: Oxygen, Fraction: 0.0621024, N_template: 49396, N_purged: 1069.53, Scale: 0.0216521
+Total chi2/ndf: 0.0119706
+   [Purge] Element: Nitrogen, Fraction: 0.00770037, N_template: 16166.1, N_purged: 559.532, Scale: 0.0346115
+   [Purge] Element: Oxygen, Fraction: 0.00471722, N_template: 49396, N_purged: 342.768, Scale: 0.00693918
+Total chi2/ndf: 2.24605
+   [Purge] Element: Nitrogen, Fraction: 0.00733283, N_template: 16166.1, N_purged: 532.826, Scale: 0.0329595
+   [Purge] Element: Oxygen, Fraction: 0.00423405, N_template: 49396, N_purged: 307.659, Scale: 0.00622841
+Total chi2/ndf: 0.369791
+   [Purge] Element: Carbon, Fraction: 0.0600032, N_template: 71867.2, N_purged: 1422.02, Scale: 0.0197867
+   [Purge] Element: Nitrogen, Fraction: 0.00277405, N_template: 16166.1, N_purged: 65.7423, Scale: 0.00406668
+Total chi2/ndf: 1.49436
+   [Purge] Element: Carbon, Fraction: 0.058994, N_template: 71867.2, N_purged: 1398.1, Scale: 0.0194539
+   [Purge] Element: Nitrogen, Fraction: 0.00187279, N_template: 16166.1, N_purged: 44.3832, Scale: 0.00274545
+Total chi2/ndf: 0.307583
+   [Purge] Element: Boron, Fraction: 0.0230456, N_template: 22308.4, N_purged: 175.193, Scale: 0.00785321
+   [Purge] Element: Carbon, Fraction: 0.0123306, N_template: 71867.2, N_purged: 93.7369, Scale: 0.00130431
+Total chi2/ndf: 2.70638
+   [Purge] Element: Boron, Fraction: 0.0203747, N_template: 22308.4, N_purged: 154.888, Scale: 0.00694304
+   [Purge] Element: Carbon, Fraction: 0.00917991, N_template: 71867.2, N_purged: 69.7857, Scale: 0.000971036
+Total chi2/ndf: 0.240322
+ [Bin 20] Ek=2.89629 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0640338, N_template: 47280, N_purged: 1029.02, Scale: 0.0217644
+Total chi2/ndf: 2.41453
+   [Purge] Element: Oxygen, Fraction: 0.0607862, N_template: 47280, N_purged: 976.835, Scale: 0.0206606
+Total chi2/ndf: 0.118303
+   [Purge] Element: Nitrogen, Fraction: 0.00757784, N_template: 15118.5, N_purged: 525.22, Scale: 0.0347401
+   [Purge] Element: Oxygen, Fraction: 0.00464737, N_template: 47280, N_purged: 322.109, Scale: 0.0068128
+Total chi2/ndf: 1.79521
+   [Purge] Element: Nitrogen, Fraction: 0.0076365, N_template: 15118.5, N_purged: 529.286, Scale: 0.035009
+   [Purge] Element: Oxygen, Fraction: 0.00406332, N_template: 47280, N_purged: 281.629, Scale: 0.00595662
+Total chi2/ndf: 0.0784217
+   [Purge] Element: Carbon, Fraction: 0.0547452, N_template: 68527, N_purged: 1214.69, Scale: 0.0177257
+   [Purge] Element: Nitrogen, Fraction: 0.00318716, N_template: 15118.5, N_purged: 70.7167, Scale: 0.00467748
+Total chi2/ndf: 1.72505
+   [Purge] Element: Carbon, Fraction: 0.0544654, N_template: 68527, N_purged: 1208.48, Scale: 0.0176351
+   [Purge] Element: Nitrogen, Fraction: 0.00234653, N_template: 15118.5, N_purged: 52.0649, Scale: 0.00344378
+Total chi2/ndf: 0.160921
+   [Purge] Element: Boron, Fraction: 0.0199409, N_template: 20966.7, N_purged: 150.793, Scale: 0.00719201
+   [Purge] Element: Carbon, Fraction: 0.0127883, N_template: 68527, N_purged: 96.7055, Scale: 0.0014112
+Total chi2/ndf: 2.28772
+   [Purge] Element: Boron, Fraction: 0.0187311, N_template: 20966.7, N_purged: 141.644, Scale: 0.00675568
+   [Purge] Element: Carbon, Fraction: 0.00873484, N_template: 68527, N_purged: 66.0529, Scale: 0.000963896
+Total chi2/ndf: 0.303445
+ [Bin 21] Ek=3.23418 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0654802, N_template: 44604, N_purged: 997.59, Scale: 0.0223655
+Total chi2/ndf: 1.62706
+   [Purge] Element: Oxygen, Fraction: 0.0634318, N_template: 44604, N_purged: 966.384, Scale: 0.0216659
+Total chi2/ndf: 0.0143647
+   [Purge] Element: Nitrogen, Fraction: 0.00664674, N_template: 14280.6, N_purged: 430.084, Scale: 0.0301167
+   [Purge] Element: Oxygen, Fraction: 0.00483789, N_template: 44604, N_purged: 313.04, Scale: 0.00701822
+Total chi2/ndf: 1.37044
+   [Purge] Element: Nitrogen, Fraction: 0.00644419, N_template: 14280.6, N_purged: 416.978, Scale: 0.0291989
+   [Purge] Element: Oxygen, Fraction: 0.0042133, N_template: 44604, N_purged: 272.625, Scale: 0.00611213
+Total chi2/ndf: 0.174508
+   [Purge] Element: Carbon, Fraction: 0.0556122, N_template: 64039.5, N_purged: 1130.54, Scale: 0.0176538
+   [Purge] Element: Nitrogen, Fraction: 0.0027236, N_template: 14280.6, N_purged: 55.3681, Scale: 0.00387716
+Total chi2/ndf: 2.22722
+   [Purge] Element: Carbon, Fraction: 0.0553042, N_template: 64039.5, N_purged: 1124.28, Scale: 0.017556
+   [Purge] Element: Nitrogen, Fraction: 0.0017929, N_template: 14280.6, N_purged: 36.4479, Scale: 0.00255227
+Total chi2/ndf: 0.251923
+   [Purge] Element: Boron, Fraction: 0.0162723, N_template: 19207.2, N_purged: 117.763, Scale: 0.00613119
+   [Purge] Element: Carbon, Fraction: 0.0123154, N_template: 64039.5, N_purged: 89.1262, Scale: 0.00139174
+Total chi2/ndf: 1.82035
+   [Purge] Element: Boron, Fraction: 0.0138793, N_template: 19207.2, N_purged: 100.444, Scale: 0.00522951
+   [Purge] Element: Carbon, Fraction: 0.0093314, N_template: 64039.5, N_purged: 67.5314, Scale: 0.00105453
+Total chi2/ndf: 0.157229
+ [Bin 22] Ek=3.60045 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0639335, N_template: 42031, N_purged: 875.122, Scale: 0.0208209
+Total chi2/ndf: 1.68157
+   [Purge] Element: Oxygen, Fraction: 0.0602204, N_template: 42031, N_purged: 824.296, Scale: 0.0196116
+Total chi2/ndf: 0.0940893
+   [Purge] Element: Nitrogen, Fraction: 0.0085646, N_template: 12878.9, N_purged: 513.791, Scale: 0.0398939
+   [Purge] Element: Oxygen, Fraction: 0.00474884, N_template: 42031, N_purged: 284.883, Scale: 0.00677792
+Total chi2/ndf: 1.83897
+   [Purge] Element: Nitrogen, Fraction: 0.00842794, N_template: 12878.9, N_purged: 505.592, Scale: 0.0392574
+   [Purge] Element: Oxygen, Fraction: 0.00424671, N_template: 42031, N_purged: 254.76, Scale: 0.00606124
+Total chi2/ndf: 0.16207
+   [Purge] Element: Carbon, Fraction: 0.0499781, N_template: 59259.8, N_purged: 902.255, Scale: 0.0152254
+   [Purge] Element: Nitrogen, Fraction: 0.00296324, N_template: 12878.9, N_purged: 53.4954, Scale: 0.00415372
+Total chi2/ndf: 2.1297
+   [Purge] Element: Carbon, Fraction: 0.0495026, N_template: 59259.8, N_purged: 893.67, Scale: 0.0150805
+   [Purge] Element: Nitrogen, Fraction: 0.0020203, N_template: 12878.9, N_purged: 36.4725, Scale: 0.00283195
+Total chi2/ndf: 0.188516
+   [Purge] Element: Boron, Fraction: 0.0203389, N_template: 17155.7, N_purged: 137.43, Scale: 0.00801076
+   [Purge] Element: Carbon, Fraction: 0.0124382, N_template: 59259.8, N_purged: 84.0451, Scale: 0.00141825
+Total chi2/ndf: 1.60131
+   [Purge] Element: Boron, Fraction: 0.018308, N_template: 17155.7, N_purged: 123.707, Scale: 0.00721088
+   [Purge] Element: Carbon, Fraction: 0.00894605, N_template: 59259.8, N_purged: 60.4485, Scale: 0.00102006
+Total chi2/ndf: 0.288387
+ [Bin 23] Ek=3.99748 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0638461, N_template: 38183, N_purged: 797.501, Scale: 0.0208863
+Total chi2/ndf: 2.6747
+   [Purge] Element: Oxygen, Fraction: 0.0593969, N_template: 38183, N_purged: 741.927, Scale: 0.0194308
+Total chi2/ndf: 0.132604
+   [Purge] Element: Nitrogen, Fraction: 0.00710148, N_template: 11776.5, N_purged: 391.781, Scale: 0.033268
+   [Purge] Element: Oxygen, Fraction: 0.00509001, N_template: 38183, N_purged: 280.811, Scale: 0.00735434
+Total chi2/ndf: 1.59165
+   [Purge] Element: Nitrogen, Fraction: 0.0072167, N_template: 11776.5, N_purged: 398.138, Scale: 0.0338078
+   [Purge] Element: Oxygen, Fraction: 0.00434451, N_template: 38183, N_purged: 239.682, Scale: 0.0062772
+Total chi2/ndf: 0.230044
+   [Purge] Element: Carbon, Fraction: 0.0469025, N_template: 54560.5, N_purged: 770.187, Scale: 0.0141162
+   [Purge] Element: Nitrogen, Fraction: 0.00263898, N_template: 11776.5, N_purged: 43.3348, Scale: 0.00367976
+Total chi2/ndf: 2.04042
+   [Purge] Element: Carbon, Fraction: 0.0474751, N_template: 54560.5, N_purged: 779.588, Scale: 0.0142885
+   [Purge] Element: Nitrogen, Fraction: 0.00157514, N_template: 11776.5, N_purged: 25.8654, Scale: 0.00219636
+Total chi2/ndf: 0.115049
+   [Purge] Element: Boron, Fraction: 0.016995, N_template: 15634.1, N_purged: 100.407, Scale: 0.0064223
+   [Purge] Element: Carbon, Fraction: 0.0128319, N_template: 54560.5, N_purged: 75.8107, Scale: 0.00138948
+Total chi2/ndf: 2.38685
+   [Purge] Element: Boron, Fraction: 0.0135063, N_template: 15634.1, N_purged: 79.7954, Scale: 0.00510395
+   [Purge] Element: Carbon, Fraction: 0.0101711, N_template: 54560.5, N_purged: 60.091, Scale: 0.00110137
+Total chi2/ndf: 0.398314
+ [Bin 24] Ek=4.42526 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0636715, N_template: 35580, N_purged: 723.754, Scale: 0.0203416
+Total chi2/ndf: 1.55954
+   [Purge] Element: Oxygen, Fraction: 0.0596491, N_template: 35580, N_purged: 678.031, Scale: 0.0190565
+Total chi2/ndf: 0.0484747
+   [Purge] Element: Nitrogen, Fraction: 0.00695944, N_template: 10701.7, N_purged: 350.053, Scale: 0.0327101
+   [Purge] Element: Oxygen, Fraction: 0.0055448, N_template: 35580, N_purged: 278.898, Scale: 0.00783862
+Total chi2/ndf: 1.55903
+   [Purge] Element: Nitrogen, Fraction: 0.00695028, N_template: 10701.7, N_purged: 349.592, Scale: 0.0326671
+   [Purge] Element: Oxygen, Fraction: 0.00485533, N_template: 35580, N_purged: 244.218, Scale: 0.00686392
+Total chi2/ndf: 0.317552
+   [Purge] Element: Carbon, Fraction: 0.0455943, N_template: 49727.9, N_purged: 661.755, Scale: 0.0133075
+   [Purge] Element: Nitrogen, Fraction: 0.00300501, N_template: 10701.7, N_purged: 43.6147, Scale: 0.0040755
+Total chi2/ndf: 2.66807
+   [Purge] Element: Carbon, Fraction: 0.0455831, N_template: 49727.9, N_purged: 661.593, Scale: 0.0133043
+   [Purge] Element: Nitrogen, Fraction: 0.00163867, N_template: 10701.7, N_purged: 23.7837, Scale: 0.00222242
+Total chi2/ndf: 0.141179
+   [Purge] Element: Boron, Fraction: 0.0200779, N_template: 13849.1, N_purged: 108.22, Scale: 0.00781423
+   [Purge] Element: Carbon, Fraction: 0.0119968, N_template: 49727.9, N_purged: 64.6629, Scale: 0.00130034
+Total chi2/ndf: 1.41079
+   [Purge] Element: Boron, Fraction: 0.0185871, N_template: 13849.1, N_purged: 100.184, Scale: 0.007234
+   [Purge] Element: Carbon, Fraction: 0.00812696, N_template: 49727.9, N_purged: 43.8043, Scale: 0.000880881
+Total chi2/ndf: 0.0862138
+ [Bin 25] Ek=4.8936 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0612455, N_template: 33678, N_purged: 651.101, Scale: 0.0193331
+Total chi2/ndf: 1.67577
+   [Purge] Element: Oxygen, Fraction: 0.0577628, N_template: 33678, N_purged: 614.077, Scale: 0.0182338
+Total chi2/ndf: 0.0971058
+   [Purge] Element: Nitrogen, Fraction: 0.00771305, N_template: 10028, N_purged: 365.36, Scale: 0.0364338
+   [Purge] Element: Oxygen, Fraction: 0.0045702, N_template: 33678, N_purged: 216.486, Scale: 0.00642811
+Total chi2/ndf: 1.80256
+   [Purge] Element: Nitrogen, Fraction: 0.00725664, N_template: 10028, N_purged: 343.74, Scale: 0.0342778
+   [Purge] Element: Oxygen, Fraction: 0.00362144, N_template: 33678, N_purged: 171.544, Scale: 0.00509365
+Total chi2/ndf: 0.244753
+   [Purge] Element: Carbon, Fraction: 0.0471202, N_template: 46885.5, N_purged: 628.207, Scale: 0.0133987
+   [Purge] Element: Nitrogen, Fraction: 0.00234232, N_template: 10028, N_purged: 31.2278, Scale: 0.00311405
+Total chi2/ndf: 2.27745
+   [Purge] Element: Carbon, Fraction: 0.0446521, N_template: 46885.5, N_purged: 595.302, Scale: 0.0126969
+   [Purge] Element: Nitrogen, Fraction: 0.00115928, N_template: 10028, N_purged: 15.4555, Scale: 0.00154123
+Total chi2/ndf: 0.230018
+   [Purge] Element: Boron, Fraction: 0.0197193, N_template: 12757.2, N_purged: 98.6556, Scale: 0.00773331
+   [Purge] Element: Carbon, Fraction: 0.0123299, N_template: 46885.5, N_purged: 61.6867, Scale: 0.00131569
+Total chi2/ndf: 2.03555
+   [Purge] Element: Boron, Fraction: 0.0159365, N_template: 12757.2, N_purged: 79.7302, Scale: 0.00624981
+   [Purge] Element: Carbon, Fraction: 0.00956714, N_template: 46885.5, N_purged: 47.8644, Scale: 0.00102088
+Total chi2/ndf: 0.395022
+ [Bin 26] Ek=5.38764 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 27] Ek=5.90734 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 28] Ek=6.47739 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 29] Ek=7.09781 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 30] Ek=7.76859 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 31] Ek=8.48974 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 32] Ek=9.26122 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 33] Ek=10.083 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 34] Ek=10.98 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 35] Ek=11.9523 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 36] Ek=12.9748 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 37] Ek=14.0725 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 38] Ek=15.2454 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 39] Ek=16.4935 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 40] Ek=17.8417 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 41] Ek=19.29 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 42] Ek=20.8385 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 43] Ek=22.4871 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 44] Ek=24.2608 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 45] Ek=26.1595 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 46] Ek=28.1834 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 47] Ek=30.3574 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 48] Ek=32.7064 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 49] Ek=35.2305 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 50] Ek=37.9297 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 51] Ek=40.8289 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 52] Ek=43.9532 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 53] Ek=47.3275 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 54] Ek=51.0769 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 55] Ek=55.0763 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 56] Ek=59.3257 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 57] Ek=64.0752 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 58] Ek=69.5747 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 59] Ek=75.8242 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 60] Ek=82.8237 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 61] Ek=90.8232 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 62] Ek=99.8228 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 63] Ek=110.072 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 64] Ek=122.072 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 65] Ek=136.572 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 66] Ek=154.321 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 67] Ek=176.321 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 68] Ek=204.071 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 69] Ek=240.57 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 70] Ek=295.32 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 71] Ek=384.07 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 72] Ek=544.069 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 73] Ek=1149.07 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+
+--- Processing Detector: AGL ---
+ [Bin 1] Ek=0.103981 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 2] Ek=0.145761 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 3] Ek=0.189414 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 4] Ek=0.240282 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 5] Ek=0.300226 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 6] Ek=0.369524 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 7] Ek=0.448539 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 8] Ek=0.539271 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 9] Ek=0.641983 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 10] Ek=0.758915 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 11] Ek=0.890201 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 12] Ek=1.03598 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 13] Ek=1.19844 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 14] Ek=1.37763 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 15] Ek=1.57583 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 16] Ek=1.79538 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 17] Ek=2.03628 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 18] Ek=2.29851 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 19] Ek=2.58439 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 20] Ek=2.89629 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 21] Ek=3.23418 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0748685, N_template: 275087, N_purged: 6762.87, Scale: 0.0245845
+Total chi2/ndf: 3.02176
+   [Purge] Element: Oxygen, Fraction: 0.0724582, N_template: 275087, N_purged: 6545.15, Scale: 0.023793
+Total chi2/ndf: 0.112388
+   [Purge] Element: Nitrogen, Fraction: 0.00857984, N_template: 83812.3, N_purged: 3206.71, Scale: 0.0382606
+   [Purge] Element: Oxygen, Fraction: 0.00529595, N_template: 275087, N_purged: 1979.36, Scale: 0.00719538
+Total chi2/ndf: 4.37395
+   [Purge] Element: Nitrogen, Fraction: 0.00862659, N_template: 83812.3, N_purged: 3224.18, Scale: 0.0384691
+   [Purge] Element: Oxygen, Fraction: 0.00497392, N_template: 275087, N_purged: 1859, Scale: 0.00675786
+Total chi2/ndf: 0.159243
+   [Purge] Element: Carbon, Fraction: 0.0602188, N_template: 368766, N_purged: 6883.91, Scale: 0.0186674
+   [Purge] Element: Nitrogen, Fraction: 0.00301145, N_template: 83812.3, N_purged: 344.254, Scale: 0.00410744
+Total chi2/ndf: 1.6499
+   [Purge] Element: Carbon, Fraction: 0.0609903, N_template: 368766, N_purged: 6972.1, Scale: 0.0189065
+   [Purge] Element: Nitrogen, Fraction: 0.00265298, N_template: 83812.3, N_purged: 303.275, Scale: 0.00361851
+Total chi2/ndf: 0.215522
+   [Purge] Element: Boron, Fraction: 0.0229792, N_template: 107139, N_purged: 909.448, Scale: 0.00848852
+   [Purge] Element: Carbon, Fraction: 0.0147423, N_template: 368766, N_purged: 583.455, Scale: 0.00158218
+Total chi2/ndf: 2.09381
+   [Purge] Element: Boron, Fraction: 0.0225384, N_template: 107139, N_purged: 892.001, Scale: 0.00832567
+   [Purge] Element: Carbon, Fraction: 0.0126377, N_template: 368766, N_purged: 500.162, Scale: 0.00135631
+Total chi2/ndf: 0.360578
+ [Bin 22] Ek=3.60045 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0707985, N_template: 262782, N_purged: 6006.47, Scale: 0.0228572
+Total chi2/ndf: 3.48476
+   [Purge] Element: Oxygen, Fraction: 0.0688715, N_template: 262782, N_purged: 5842.98, Scale: 0.0222351
+Total chi2/ndf: 0.0697627
+   [Purge] Element: Nitrogen, Fraction: 0.00723461, N_template: 79007.8, N_purged: 2557.35, Scale: 0.0323683
+   [Purge] Element: Oxygen, Fraction: 0.00515022, N_template: 262782, N_purged: 1820.54, Scale: 0.00692796
+Total chi2/ndf: 2.121
+   [Purge] Element: Nitrogen, Fraction: 0.00736374, N_template: 79007.8, N_purged: 2602.99, Scale: 0.032946
+   [Purge] Element: Oxygen, Fraction: 0.00486237, N_template: 262782, N_purged: 1718.79, Scale: 0.00654074
+Total chi2/ndf: 0.10581
+   [Purge] Element: Carbon, Fraction: 0.0587386, N_template: 349236, N_purged: 6209.26, Scale: 0.0177795
+   [Purge] Element: Nitrogen, Fraction: 0.00313171, N_template: 79007.8, N_purged: 331.053, Scale: 0.00419013
+Total chi2/ndf: 1.83191
+   [Purge] Element: Carbon, Fraction: 0.0591527, N_template: 349236, N_purged: 6253.04, Scale: 0.0179049
+   [Purge] Element: Nitrogen, Fraction: 0.00259893, N_template: 79007.8, N_purged: 274.733, Scale: 0.00347729
+Total chi2/ndf: 0.184778
+   [Purge] Element: Boron, Fraction: 0.0221128, N_template: 99287.1, N_purged: 821.647, Scale: 0.00827546
+   [Purge] Element: Carbon, Fraction: 0.013971, N_template: 349236, N_purged: 519.119, Scale: 0.00148644
+Total chi2/ndf: 2.11864
+   [Purge] Element: Boron, Fraction: 0.0214449, N_template: 99287.1, N_purged: 796.826, Scale: 0.00802547
+   [Purge] Element: Carbon, Fraction: 0.0122463, N_template: 349236, N_purged: 455.036, Scale: 0.00130295
+Total chi2/ndf: 0.240895
+ [Bin 23] Ek=3.99748 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0698397, N_template: 245351, N_purged: 5382.55, Scale: 0.0219382
+Total chi2/ndf: 1.70912
+   [Purge] Element: Oxygen, Fraction: 0.0678441, N_template: 245351, N_purged: 5228.75, Scale: 0.0213113
+Total chi2/ndf: 0.0701088
+   [Purge] Element: Nitrogen, Fraction: 0.00731795, N_template: 71864.2, N_purged: 2405.52, Scale: 0.0334732
+   [Purge] Element: Oxygen, Fraction: 0.00528431, N_template: 245351, N_purged: 1737.03, Scale: 0.00707979
+Total chi2/ndf: 1.93502
+   [Purge] Element: Nitrogen, Fraction: 0.00747892, N_template: 71864.2, N_purged: 2458.43, Scale: 0.0342094
+   [Purge] Element: Oxygen, Fraction: 0.00493685, N_template: 245351, N_purged: 1622.82, Scale: 0.00661426
+Total chi2/ndf: 0.13459
+   [Purge] Element: Carbon, Fraction: 0.0587802, N_template: 324712, N_purged: 5604.81, Scale: 0.0172608
+   [Purge] Element: Nitrogen, Fraction: 0.00318096, N_template: 71864.2, N_purged: 303.31, Scale: 0.00422061
+Total chi2/ndf: 1.55751
+   [Purge] Element: Carbon, Fraction: 0.0597037, N_template: 324712, N_purged: 5692.87, Scale: 0.017532
+   [Purge] Element: Nitrogen, Fraction: 0.00269264, N_template: 71864.2, N_purged: 256.749, Scale: 0.00357269
+Total chi2/ndf: 0.23208
+   [Purge] Element: Boron, Fraction: 0.0197618, N_template: 89465.4, N_purged: 683.66, Scale: 0.00764162
+   [Purge] Element: Carbon, Fraction: 0.0138803, N_template: 324712, N_purged: 480.188, Scale: 0.00147881
+Total chi2/ndf: 1.83087
+   [Purge] Element: Boron, Fraction: 0.0194946, N_template: 89465.4, N_purged: 674.415, Scale: 0.00753828
+   [Purge] Element: Carbon, Fraction: 0.0126072, N_template: 324712, N_purged: 436.145, Scale: 0.00134317
+Total chi2/ndf: 0.127645
+ [Bin 24] Ek=4.42526 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.069881, N_template: 225779, N_purged: 4920.6, Scale: 0.0217939
+Total chi2/ndf: 2.93693
+   [Purge] Element: Oxygen, Fraction: 0.0674516, N_template: 225779, N_purged: 4749.54, Scale: 0.0210362
+Total chi2/ndf: 0.112932
+   [Purge] Element: Nitrogen, Fraction: 0.00644755, N_template: 65695.3, N_purged: 1946.54, Scale: 0.0296298
+   [Purge] Element: Oxygen, Fraction: 0.00512275, N_template: 225779, N_purged: 1546.58, Scale: 0.00684997
+Total chi2/ndf: 2.26467
+   [Purge] Element: Nitrogen, Fraction: 0.00667291, N_template: 65695.3, N_purged: 2014.58, Scale: 0.0306655
+   [Purge] Element: Oxygen, Fraction: 0.00473959, N_template: 225779, N_purged: 1430.9, Scale: 0.00633762
+Total chi2/ndf: 0.202079
+   [Purge] Element: Carbon, Fraction: 0.0571519, N_template: 298505, N_purged: 4915.69, Scale: 0.0164677
+   [Purge] Element: Nitrogen, Fraction: 0.00313452, N_template: 65695.3, N_purged: 269.603, Scale: 0.00410384
+Total chi2/ndf: 2.02067
+   [Purge] Element: Carbon, Fraction: 0.0570423, N_template: 298505, N_purged: 4906.27, Scale: 0.0164361
+   [Purge] Element: Nitrogen, Fraction: 0.00259815, N_template: 65695.3, N_purged: 223.469, Scale: 0.0034016
+Total chi2/ndf: 0.327428
+   [Purge] Element: Boron, Fraction: 0.0176191, N_template: 80992.2, N_purged: 545.381, Scale: 0.00673374
+   [Purge] Element: Carbon, Fraction: 0.0129066, N_template: 298505, N_purged: 399.512, Scale: 0.00133837
+Total chi2/ndf: 1.27788
+   [Purge] Element: Boron, Fraction: 0.0172189, N_template: 80992.2, N_purged: 532.994, Scale: 0.00658081
+   [Purge] Element: Carbon, Fraction: 0.011755, N_template: 298505, N_purged: 363.866, Scale: 0.00121896
+Total chi2/ndf: 0.0944209
+ [Bin 25] Ek=4.8936 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0740329, N_template: 214930, N_purged: 4928.44, Scale: 0.0229305
+Total chi2/ndf: 2.38371
+   [Purge] Element: Oxygen, Fraction: 0.0706872, N_template: 214930, N_purged: 4705.72, Scale: 0.0218942
+Total chi2/ndf: 0.162081
+   [Purge] Element: Nitrogen, Fraction: 0.00613307, N_template: 61908, N_purged: 1749.68, Scale: 0.0282626
+   [Purge] Element: Oxygen, Fraction: 0.00509581, N_template: 214930, N_purged: 1453.76, Scale: 0.00676389
+Total chi2/ndf: 1.97221
+   [Purge] Element: Nitrogen, Fraction: 0.00633151, N_template: 61908, N_purged: 1806.29, Scale: 0.029177
+   [Purge] Element: Oxygen, Fraction: 0.0046697, N_template: 214930, N_purged: 1332.2, Scale: 0.00619829
+Total chi2/ndf: 0.188965
+   [Purge] Element: Carbon, Fraction: 0.0553314, N_template: 282198, N_purged: 4379.87, Scale: 0.0155205
+   [Purge] Element: Nitrogen, Fraction: 0.00291922, N_template: 61908, N_purged: 231.077, Scale: 0.00373258
+Total chi2/ndf: 1.41715
+   [Purge] Element: Carbon, Fraction: 0.0558012, N_template: 282198, N_purged: 4417.05, Scale: 0.0156523
+   [Purge] Element: Nitrogen, Fraction: 0.00242408, N_template: 61908, N_purged: 191.883, Scale: 0.00309948
+Total chi2/ndf: 0.155246
+   [Purge] Element: Boron, Fraction: 0.0177425, N_template: 74612.9, N_purged: 506.76, Scale: 0.00679185
+   [Purge] Element: Carbon, Fraction: 0.0116631, N_template: 282198, N_purged: 333.122, Scale: 0.00118046
+Total chi2/ndf: 1.58814
+   [Purge] Element: Boron, Fraction: 0.0172562, N_template: 74612.9, N_purged: 492.873, Scale: 0.00660573
+   [Purge] Element: Carbon, Fraction: 0.0103083, N_template: 282198, N_purged: 294.426, Scale: 0.00104333
+Total chi2/ndf: 0.132133
+ [Bin 26] Ek=5.38764 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0742426, N_template: 186675, N_purged: 4208.66, Scale: 0.0225454
+Total chi2/ndf: 3.17493
+   [Purge] Element: Oxygen, Fraction: 0.0706634, N_template: 186675, N_purged: 4005.77, Scale: 0.0214585
+Total chi2/ndf: 0.175939
+   [Purge] Element: Nitrogen, Fraction: 0.0056641, N_template: 52730.5, N_purged: 1395.86, Scale: 0.0264716
+   [Purge] Element: Oxygen, Fraction: 0.00519429, N_template: 186675, N_purged: 1280.08, Scale: 0.00685727
+Total chi2/ndf: 2.47431
+   [Purge] Element: Nitrogen, Fraction: 0.00587179, N_template: 52730.5, N_purged: 1447.04, Scale: 0.0274423
+   [Purge] Element: Oxygen, Fraction: 0.00482434, N_template: 186675, N_purged: 1188.91, Scale: 0.00636888
+Total chi2/ndf: 0.194805
+   [Purge] Element: Carbon, Fraction: 0.0529077, N_template: 243845, N_purged: 3551.96, Scale: 0.0145665
+   [Purge] Element: Nitrogen, Fraction: 0.00297689, N_template: 52730.5, N_purged: 199.854, Scale: 0.0037901
+Total chi2/ndf: 1.53909
+   [Purge] Element: Carbon, Fraction: 0.0530786, N_template: 243845, N_purged: 3563.43, Scale: 0.0146135
+   [Purge] Element: Nitrogen, Fraction: 0.0025415, N_template: 52730.5, N_purged: 170.624, Scale: 0.00323577
+Total chi2/ndf: 0.177384
+   [Purge] Element: Boron, Fraction: 0.0172831, N_template: 63464.7, N_purged: 414.257, Scale: 0.00652737
+   [Purge] Element: Carbon, Fraction: 0.0131481, N_template: 243845, N_purged: 315.147, Scale: 0.00129241
+Total chi2/ndf: 1.86387
+   [Purge] Element: Boron, Fraction: 0.0165295, N_template: 63464.7, N_purged: 396.194, Scale: 0.00624276
+   [Purge] Element: Carbon, Fraction: 0.0114576, N_template: 243845, N_purged: 274.628, Scale: 0.00112624
+Total chi2/ndf: 0.282591
+ [Bin 27] Ek=5.90734 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0697117, N_template: 178810, N_purged: 3687.89, Scale: 0.0206246
+Total chi2/ndf: 2.72823
+   [Purge] Element: Oxygen, Fraction: 0.0658101, N_template: 178810, N_purged: 3481.48, Scale: 0.0194703
+Total chi2/ndf: 0.286206
+   [Purge] Element: Nitrogen, Fraction: 0.00522858, N_template: 49483.3, N_purged: 1228.53, Scale: 0.0248271
+   [Purge] Element: Oxygen, Fraction: 0.00536802, N_template: 178810, N_purged: 1261.29, Scale: 0.00705381
+Total chi2/ndf: 1.96981
+   [Purge] Element: Nitrogen, Fraction: 0.00542486, N_template: 49483.3, N_purged: 1274.65, Scale: 0.0257591
+   [Purge] Element: Oxygen, Fraction: 0.0050228, N_template: 178810, N_purged: 1180.18, Scale: 0.00660017
+Total chi2/ndf: 0.111
+   [Purge] Element: Carbon, Fraction: 0.0543414, N_template: 232547, N_purged: 3407.09, Scale: 0.0146512
+   [Purge] Element: Nitrogen, Fraction: 0.00260984, N_template: 49483.3, N_purged: 163.632, Scale: 0.0033068
+Total chi2/ndf: 1.6261
+   [Purge] Element: Carbon, Fraction: 0.054543, N_template: 232547, N_purged: 3419.74, Scale: 0.0147056
+   [Purge] Element: Nitrogen, Fraction: 0.00209445, N_template: 49483.3, N_purged: 131.318, Scale: 0.00265377
+Total chi2/ndf: 0.207276
+   [Purge] Element: Boron, Fraction: 0.0192451, N_template: 59216.5, N_purged: 430.955, Scale: 0.00727763
+   [Purge] Element: Carbon, Fraction: 0.0125546, N_template: 232547, N_purged: 281.136, Scale: 0.00120894
+Total chi2/ndf: 1.94438
+   [Purge] Element: Boron, Fraction: 0.0182916, N_template: 59216.5, N_purged: 409.605, Scale: 0.00691707
+   [Purge] Element: Carbon, Fraction: 0.0111495, N_template: 232547, N_purged: 249.671, Scale: 0.00107363
+Total chi2/ndf: 0.185336
+ [Bin 28] Ek=6.47739 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0643208, N_template: 170500, N_purged: 3239, Scale: 0.0189971
+Total chi2/ndf: 2.71298
+   [Purge] Element: Oxygen, Fraction: 0.0625656, N_template: 170500, N_purged: 3150.61, Scale: 0.0184787
+Total chi2/ndf: 0.0384829
+   [Purge] Element: Nitrogen, Fraction: 0.0052898, N_template: 47222.9, N_purged: 1176.97, Scale: 0.0249238
+   [Purge] Element: Oxygen, Fraction: 0.00554103, N_template: 170500, N_purged: 1232.87, Scale: 0.00723093
+Total chi2/ndf: 1.72929
+   [Purge] Element: Nitrogen, Fraction: 0.00544824, N_template: 47222.9, N_purged: 1212.23, Scale: 0.0256703
+   [Purge] Element: Oxygen, Fraction: 0.00501379, N_template: 170500, N_purged: 1115.56, Scale: 0.00654289
+Total chi2/ndf: 0.0995191
+   [Purge] Element: Carbon, Fraction: 0.0537572, N_template: 220214, N_purged: 3110.12, Scale: 0.0141232
+   [Purge] Element: Nitrogen, Fraction: 0.00286408, N_template: 47222.9, N_purged: 165.701, Scale: 0.00350892
+Total chi2/ndf: 1.20378
+   [Purge] Element: Carbon, Fraction: 0.0536432, N_template: 220214, N_purged: 3103.53, Scale: 0.0140932
+   [Purge] Element: Nitrogen, Fraction: 0.00220235, N_template: 47222.9, N_purged: 127.417, Scale: 0.0026982
+Total chi2/ndf: 0.197348
+   [Purge] Element: Boron, Fraction: 0.015363, N_template: 54697.3, N_purged: 318.675, Scale: 0.00582616
+   [Purge] Element: Carbon, Fraction: 0.0126996, N_template: 220214, N_purged: 263.429, Scale: 0.00119624
+Total chi2/ndf: 1.79501
+   [Purge] Element: Boron, Fraction: 0.0146535, N_template: 54697.3, N_purged: 303.958, Scale: 0.00555709
+   [Purge] Element: Carbon, Fraction: 0.0109209, N_template: 220214, N_purged: 226.532, Scale: 0.00102869
+Total chi2/ndf: 0.427978
+ [Bin 29] Ek=7.09781 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0582542, N_template: 164527, N_purged: 2790.2, Scale: 0.0169589
+Total chi2/ndf: 7.12729
+   [Purge] Element: Oxygen, Fraction: 0.05634, N_template: 164527, N_purged: 2698.52, Scale: 0.0164017
+Total chi2/ndf: 0.0416452
+   [Purge] Element: Nitrogen, Fraction: 0.0054141, N_template: 45208.1, N_purged: 1165.78, Scale: 0.0257869
+   [Purge] Element: Oxygen, Fraction: 0.00538867, N_template: 164527, N_purged: 1160.3, Scale: 0.00705233
+Total chi2/ndf: 1.9146
+   [Purge] Element: Nitrogen, Fraction: 0.0055884, N_template: 45208.1, N_purged: 1203.3, Scale: 0.026617
+   [Purge] Element: Oxygen, Fraction: 0.00492083, N_template: 164527, N_purged: 1059.56, Scale: 0.00644005
+Total chi2/ndf: 0.315806
+   [Purge] Element: Carbon, Fraction: 0.051361, N_template: 213103, N_purged: 2805.95, Scale: 0.0131671
+   [Purge] Element: Nitrogen, Fraction: 0.00340844, N_template: 45208.1, N_purged: 186.21, Scale: 0.00411895
+Total chi2/ndf: 1.62613
+   [Purge] Element: Carbon, Fraction: 0.051219, N_template: 213103, N_purged: 2798.19, Scale: 0.0131307
+   [Purge] Element: Nitrogen, Fraction: 0.00285925, N_template: 45208.1, N_purged: 156.206, Scale: 0.00345528
+Total chi2/ndf: 0.184192
+   [Purge] Element: Boron, Fraction: 0.0164068, N_template: 51737.8, N_purged: 307.53, Scale: 0.00594401
+   [Purge] Element: Carbon, Fraction: 0.0115648, N_template: 213103, N_purged: 216.771, Scale: 0.00101721
+Total chi2/ndf: 1.79008
+   [Purge] Element: Boron, Fraction: 0.0147362, N_template: 51737.8, N_purged: 276.216, Scale: 0.00533876
+   [Purge] Element: Carbon, Fraction: 0.00947796, N_template: 213103, N_purged: 177.655, Scale: 0.000833658
+Total chi2/ndf: 0.29935
+ [Bin 30] Ek=7.76859 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0551274, N_template: 159368, N_purged: 2508.24, Scale: 0.0157387
+Total chi2/ndf: 11.5111
+   [Purge] Element: Oxygen, Fraction: 0.0533335, N_template: 159368, N_purged: 2426.62, Scale: 0.0152265
+Total chi2/ndf: 0.0354149
+   [Purge] Element: Nitrogen, Fraction: 0.00522437, N_template: 43075.1, N_purged: 1082.24, Scale: 0.0251246
+   [Purge] Element: Oxygen, Fraction: 0.00556284, N_template: 159368, N_purged: 1152.36, Scale: 0.0072308
+Total chi2/ndf: 1.65678
+   [Purge] Element: Nitrogen, Fraction: 0.00538544, N_template: 43075.1, N_purged: 1115.61, Scale: 0.0258992
+   [Purge] Element: Oxygen, Fraction: 0.00520748, N_template: 159368, N_purged: 1078.75, Scale: 0.0067689
+Total chi2/ndf: 0.0548999
+   [Purge] Element: Carbon, Fraction: 0.049017, N_template: 204981, N_purged: 2517.66, Scale: 0.0122824
+   [Purge] Element: Nitrogen, Fraction: 0.00223577, N_template: 43075.1, N_purged: 114.836, Scale: 0.00266595
+Total chi2/ndf: 1.86701
+   [Purge] Element: Carbon, Fraction: 0.0496888, N_template: 204981, N_purged: 2552.17, Scale: 0.0124508
+   [Purge] Element: Nitrogen, Fraction: 0.00152261, N_template: 43075.1, N_purged: 78.206, Scale: 0.00181557
+Total chi2/ndf: 0.23541
+   [Purge] Element: Boron, Fraction: 0.0168276, N_template: 48766, N_purged: 288.796, Scale: 0.00592208
+   [Purge] Element: Carbon, Fraction: 0.0131918, N_template: 204981, N_purged: 226.397, Scale: 0.00110448
+Total chi2/ndf: 1.55649
+   [Purge] Element: Boron, Fraction: 0.0162053, N_template: 48766, N_purged: 278.115, Scale: 0.00570306
+   [Purge] Element: Carbon, Fraction: 0.0108936, N_template: 204981, N_purged: 186.956, Scale: 0.000912067
+Total chi2/ndf: 0.153035
+ [Bin 31] Ek=8.48974 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0624357, N_template: 151706, N_purged: 2662.63, Scale: 0.0175513
+Total chi2/ndf: 3.00113
+   [Purge] Element: Oxygen, Fraction: 0.0599512, N_template: 151706, N_purged: 2556.68, Scale: 0.0168529
+Total chi2/ndf: 0.0590255
+   [Purge] Element: Nitrogen, Fraction: 0.00554677, N_template: 40106.2, N_purged: 1091.69, Scale: 0.0272201
+   [Purge] Element: Oxygen, Fraction: 0.00592814, N_template: 151706, N_purged: 1166.75, Scale: 0.00769088
+Total chi2/ndf: 2.2498
+   [Purge] Element: Nitrogen, Fraction: 0.00574757, N_template: 40106.2, N_purged: 1131.21, Scale: 0.0282055
+   [Purge] Element: Oxygen, Fraction: 0.00553497, N_template: 151706, N_purged: 1089.37, Scale: 0.0071808
+Total chi2/ndf: 0.0921352
+   [Purge] Element: Carbon, Fraction: 0.0523405, N_template: 194626, N_purged: 2505.9, Scale: 0.0128755
+   [Purge] Element: Nitrogen, Fraction: 0.00293731, N_template: 40106.2, N_purged: 140.629, Scale: 0.00350643
+Total chi2/ndf: 1.65334
+   [Purge] Element: Carbon, Fraction: 0.052343, N_template: 194626, N_purged: 2506.03, Scale: 0.0128761
+   [Purge] Element: Nitrogen, Fraction: 0.0023481, N_template: 40106.2, N_purged: 112.42, Scale: 0.00280306
+Total chi2/ndf: 0.146465
+   [Purge] Element: Boron, Fraction: 0.0107388, N_template: 45316.8, N_purged: 174.215, Scale: 0.00384439
+   [Purge] Element: Carbon, Fraction: 0.013326, N_template: 194626, N_purged: 216.188, Scale: 0.00111079
+Total chi2/ndf: 2.03848
+   [Purge] Element: Boron, Fraction: 0.0106067, N_template: 45316.8, N_purged: 172.072, Scale: 0.00379709
+   [Purge] Element: Carbon, Fraction: 0.0111845, N_template: 194626, N_purged: 181.446, Scale: 0.000932282
+Total chi2/ndf: 0.151411
+ [Bin 32] Ek=9.26122 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0742571, N_template: 143721, N_purged: 2955.51, Scale: 0.0205642
+Total chi2/ndf: 4.19751
+   [Purge] Element: Oxygen, Fraction: 0.0688988, N_template: 143721, N_purged: 2742.24, Scale: 0.0190803
+Total chi2/ndf: 0.297632
+   [Purge] Element: Nitrogen, Fraction: 0.00514357, N_template: 37110.9, N_purged: 959.527, Scale: 0.0258557
+   [Purge] Element: Oxygen, Fraction: 0.00628013, N_template: 143721, N_purged: 1171.55, Scale: 0.00815157
+Total chi2/ndf: 2.6407
+   [Purge] Element: Nitrogen, Fraction: 0.00528622, N_template: 37110.9, N_purged: 986.139, Scale: 0.0265727
+   [Purge] Element: Oxygen, Fraction: 0.00574564, N_template: 143721, N_purged: 1071.84, Scale: 0.0074578
+Total chi2/ndf: 0.13593
+   [Purge] Element: Carbon, Fraction: 0.0526738, N_template: 184528, N_purged: 2322.65, Scale: 0.012587
+   [Purge] Element: Nitrogen, Fraction: 0.00366029, N_template: 37110.9, N_purged: 161.401, Scale: 0.00434914
+Total chi2/ndf: 1.32447
+   [Purge] Element: Carbon, Fraction: 0.0528685, N_template: 184528, N_purged: 2331.24, Scale: 0.0126335
+   [Purge] Element: Nitrogen, Fraction: 0.00295476, N_template: 37110.9, N_purged: 130.29, Scale: 0.00351083
+Total chi2/ndf: 0.209548
+   [Purge] Element: Boron, Fraction: 0.0122401, N_template: 41685.1, N_purged: 185.573, Scale: 0.00445177
+   [Purge] Element: Carbon, Fraction: 0.0119217, N_template: 184528, N_purged: 180.745, Scale: 0.000979502
+Total chi2/ndf: 2.29483
+   [Purge] Element: Boron, Fraction: 0.0117824, N_template: 41685.1, N_purged: 178.633, Scale: 0.00428529
+   [Purge] Element: Carbon, Fraction: 0.00968058, N_template: 184528, N_purged: 146.767, Scale: 0.000795366
+Total chi2/ndf: 0.241453
+ [Bin 33] Ek=10.083 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.081098, N_template: 134803, N_purged: 2962.35, Scale: 0.0219754
+Total chi2/ndf: 8.94248
+   [Purge] Element: Oxygen, Fraction: 0.0723283, N_template: 134803, N_purged: 2642.01, Scale: 0.019599
+Total chi2/ndf: 0.50341
+   [Purge] Element: Nitrogen, Fraction: 0.00542815, N_template: 33956.5, N_purged: 940.444, Scale: 0.0276955
+   [Purge] Element: Oxygen, Fraction: 0.00615421, N_template: 134803, N_purged: 1066.24, Scale: 0.00790959
+Total chi2/ndf: 1.91241
+   [Purge] Element: Nitrogen, Fraction: 0.00548893, N_template: 33956.5, N_purged: 950.973, Scale: 0.0280056
+   [Purge] Element: Oxygen, Fraction: 0.00561025, N_template: 134803, N_purged: 971.993, Scale: 0.00721047
+Total chi2/ndf: 0.131954
+   [Purge] Element: Carbon, Fraction: 0.0480158, N_template: 171367, N_purged: 1898.55, Scale: 0.0110788
+   [Purge] Element: Nitrogen, Fraction: 0.00333001, N_template: 33956.5, N_purged: 131.669, Scale: 0.00387756
+Total chi2/ndf: 2.01085
+   [Purge] Element: Carbon, Fraction: 0.0474532, N_template: 171367, N_purged: 1876.3, Scale: 0.010949
+   [Purge] Element: Nitrogen, Fraction: 0.00262216, N_template: 33956.5, N_purged: 103.68, Scale: 0.00305332
+Total chi2/ndf: 0.325684
+   [Purge] Element: Boron, Fraction: 0.0126049, N_template: 37620.3, N_purged: 176.885, Scale: 0.00470185
+   [Purge] Element: Carbon, Fraction: 0.0124909, N_template: 171367, N_purged: 175.285, Scale: 0.00102286
+Total chi2/ndf: 1.88742
+   [Purge] Element: Boron, Fraction: 0.0103529, N_template: 37620.3, N_purged: 145.283, Scale: 0.00386181
+   [Purge] Element: Carbon, Fraction: 0.0102608, N_template: 171367, N_purged: 143.99, Scale: 0.000840244
+Total chi2/ndf: 0.221556
+ [Bin 34] Ek=10.98 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0850479, N_template: 127572, N_purged: 2914.68, Scale: 0.0228473
+Total chi2/ndf: 8.14892
+   [Purge] Element: Oxygen, Fraction: 0.0760032, N_template: 127572, N_purged: 2604.71, Scale: 0.0204175
+Total chi2/ndf: 0.424021
+   [Purge] Element: Nitrogen, Fraction: 0.00467367, N_template: 31727.7, N_purged: 767.819, Scale: 0.0242003
+   [Purge] Element: Oxygen, Fraction: 0.00687157, N_template: 127572, N_purged: 1128.9, Scale: 0.00884914
+Total chi2/ndf: 2.17838
+   [Purge] Element: Nitrogen, Fraction: 0.00474763, N_template: 31727.7, N_purged: 779.969, Scale: 0.0245832
+   [Purge] Element: Oxygen, Fraction: 0.00633517, N_template: 127572, N_purged: 1040.78, Scale: 0.00815837
+Total chi2/ndf: 0.103072
+   [Purge] Element: Carbon, Fraction: 0.0526671, N_template: 162497, N_purged: 1945.21, Scale: 0.0119707
+   [Purge] Element: Nitrogen, Fraction: 0.00280605, N_template: 31727.7, N_purged: 103.639, Scale: 0.0032665
+Total chi2/ndf: 2.3811
+   [Purge] Element: Carbon, Fraction: 0.0510894, N_template: 162497, N_purged: 1886.94, Scale: 0.0116121
+   [Purge] Element: Nitrogen, Fraction: 0.00206818, N_template: 31727.7, N_purged: 76.3862, Scale: 0.00240756
+Total chi2/ndf: 0.433473
+   [Purge] Element: Boron, Fraction: 0.00935859, N_template: 35038.9, N_purged: 125.321, Scale: 0.00357662
+   [Purge] Element: Carbon, Fraction: 0.0135828, N_template: 162497, N_purged: 181.887, Scale: 0.00111932
+Total chi2/ndf: 1.65893
+   [Purge] Element: Boron, Fraction: 0.00879389, N_template: 35038.9, N_purged: 117.759, Scale: 0.0033608
+   [Purge] Element: Carbon, Fraction: 0.011622, N_template: 162497, N_purged: 155.63, Scale: 0.000957739
+Total chi2/ndf: 0.106324
+ [Bin 35] Ek=11.9523 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0828295, N_template: 113072, N_purged: 2479.5, Scale: 0.0219285
+Total chi2/ndf: 6.26823
+   [Purge] Element: Oxygen, Fraction: 0.0738997, N_template: 113072, N_purged: 2212.19, Scale: 0.0195644
+Total chi2/ndf: 0.29079
+   [Purge] Element: Nitrogen, Fraction: 0.00465228, N_template: 27789.2, N_purged: 672.1, Scale: 0.0241856
+   [Purge] Element: Oxygen, Fraction: 0.00714738, N_template: 113072, N_purged: 1032.56, Scale: 0.00913188
+Total chi2/ndf: 2.76135
+   [Purge] Element: Nitrogen, Fraction: 0.00468794, N_template: 27789.2, N_purged: 677.253, Scale: 0.024371
+   [Purge] Element: Oxygen, Fraction: 0.00637653, N_template: 113072, N_purged: 921.199, Scale: 0.00814701
+Total chi2/ndf: 0.210813
+   [Purge] Element: Carbon, Fraction: 0.0520357, N_template: 142914, N_purged: 1647.24, Scale: 0.0115261
+   [Purge] Element: Nitrogen, Fraction: 0.0036495, N_template: 27789.2, N_purged: 115.529, Scale: 0.00415731
+Total chi2/ndf: 1.84269
+   [Purge] Element: Carbon, Fraction: 0.0504344, N_template: 142914, N_purged: 1596.55, Scale: 0.0111714
+   [Purge] Element: Nitrogen, Fraction: 0.00292962, N_template: 27789.2, N_purged: 92.7401, Scale: 0.00333727
+Total chi2/ndf: 0.268253
+   [Purge] Element: Boron, Fraction: 0.010881, N_template: 30029, N_purged: 130.442, Scale: 0.00434386
+   [Purge] Element: Carbon, Fraction: 0.01397, N_template: 142914, N_purged: 167.472, Scale: 0.00117184
+Total chi2/ndf: 2.06289
+   [Purge] Element: Boron, Fraction: 0.0104318, N_template: 30029, N_purged: 125.056, Scale: 0.0041645
+   [Purge] Element: Carbon, Fraction: 0.0116034, N_template: 142914, N_purged: 139.102, Scale: 0.000973324
+Total chi2/ndf: 0.134593
+ [Bin 36] Ek=12.9748 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0813343, N_template: 99659, N_purged: 2093.22, Scale: 0.0210038
+Total chi2/ndf: 4.03182
+   [Purge] Element: Oxygen, Fraction: 0.073825, N_template: 99659, N_purged: 1899.96, Scale: 0.0190646
+Total chi2/ndf: 0.303689
+   [Purge] Element: Nitrogen, Fraction: 0.00538568, N_template: 23892.3, N_purged: 682.263, Scale: 0.0285557
+   [Purge] Element: Oxygen, Fraction: 0.00703068, N_template: 99659, N_purged: 890.654, Scale: 0.00893701
+Total chi2/ndf: 1.99883
+   [Purge] Element: Nitrogen, Fraction: 0.00542895, N_template: 23892.3, N_purged: 687.744, Scale: 0.0287852
+   [Purge] Element: Oxygen, Fraction: 0.00645715, N_template: 99659, N_purged: 817.998, Scale: 0.00820797
+Total chi2/ndf: 0.110088
+   [Purge] Element: Carbon, Fraction: 0.0542581, N_template: 125210, N_purged: 1475.98, Scale: 0.0117881
+   [Purge] Element: Nitrogen, Fraction: 0.00436005, N_template: 23892.3, N_purged: 118.606, Scale: 0.00496421
+Total chi2/ndf: 1.51405
+   [Purge] Element: Carbon, Fraction: 0.0535542, N_template: 125210, N_purged: 1456.84, Scale: 0.0116351
+   [Purge] Element: Nitrogen, Fraction: 0.00370642, N_template: 23892.3, N_purged: 100.826, Scale: 0.00422001
+Total chi2/ndf: 0.123893
+   [Purge] Element: Boron, Fraction: 0.0112867, N_template: 25691.1, N_purged: 119.492, Scale: 0.00465112
+   [Purge] Element: Carbon, Fraction: 0.0146935, N_template: 125210, N_purged: 155.56, Scale: 0.0012424
+Total chi2/ndf: 2.09345
+   [Purge] Element: Boron, Fraction: 0.0103478, N_template: 25691.1, N_purged: 109.553, Scale: 0.00426423
+   [Purge] Element: Carbon, Fraction: 0.0117959, N_template: 125210, N_purged: 124.883, Scale: 0.000997392
+Total chi2/ndf: 0.225665
+ [Bin 37] Ek=14.0725 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0728727, N_template: 90019, N_purged: 1669.95, Scale: 0.0185511
+Total chi2/ndf: 1.50457
+   [Purge] Element: Oxygen, Fraction: 0.0699158, N_template: 90019, N_purged: 1602.19, Scale: 0.0177984
+Total chi2/ndf: 0.0340671
+   [Purge] Element: Nitrogen, Fraction: 0.00484767, N_template: 21329.3, N_purged: 556.135, Scale: 0.0260738
+   [Purge] Element: Oxygen, Fraction: 0.00716552, N_template: 90019, N_purged: 822.043, Scale: 0.00913188
+Total chi2/ndf: 2.11687
+   [Purge] Element: Nitrogen, Fraction: 0.00494504, N_template: 21329.3, N_purged: 567.305, Scale: 0.0265975
+   [Purge] Element: Oxygen, Fraction: 0.0065768, N_template: 90019, N_purged: 754.504, Scale: 0.00838161
+Total chi2/ndf: 0.102508
+   [Purge] Element: Carbon, Fraction: 0.0537782, N_template: 113430, N_purged: 1259.97, Scale: 0.0111079
+   [Purge] Element: Nitrogen, Fraction: 0.00410282, N_template: 21329.3, N_purged: 96.1249, Scale: 0.00450671
+Total chi2/ndf: 1.85181
+   [Purge] Element: Carbon, Fraction: 0.0518051, N_template: 113430, N_purged: 1213.74, Scale: 0.0107004
+   [Purge] Element: Nitrogen, Fraction: 0.00326578, N_template: 21329.3, N_purged: 76.5139, Scale: 0.00358727
+Total chi2/ndf: 0.316432
+   [Purge] Element: Boron, Fraction: 0.0100597, N_template: 22188.8, N_purged: 95.0344, Scale: 0.00428299
+   [Purge] Element: Carbon, Fraction: 0.0153132, N_template: 113430, N_purged: 144.664, Scale: 0.00127536
+Total chi2/ndf: 2.92985
+   [Purge] Element: Boron, Fraction: 0.00925064, N_template: 22188.8, N_purged: 87.3908, Scale: 0.00393851
+   [Purge] Element: Carbon, Fraction: 0.0109608, N_template: 113430, N_purged: 103.547, Scale: 0.000912873
+Total chi2/ndf: 0.278126
+ [Bin 38] Ek=15.2454 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0660414, N_template: 77985, N_purged: 1298.77, Scale: 0.0166541
+Total chi2/ndf: 2.90902
+   [Purge] Element: Oxygen, Fraction: 0.0637155, N_template: 77985, N_purged: 1253.03, Scale: 0.0160676
+Total chi2/ndf: 0.0223806
+   [Purge] Element: Nitrogen, Fraction: 0.00481967, N_template: 18423.9, N_purged: 473.301, Scale: 0.0256895
+   [Purge] Element: Oxygen, Fraction: 0.00736068, N_template: 77985, N_purged: 722.834, Scale: 0.00926888
+Total chi2/ndf: 1.71525
+   [Purge] Element: Nitrogen, Fraction: 0.00492261, N_template: 18423.9, N_purged: 483.411, Scale: 0.0262383
+   [Purge] Element: Oxygen, Fraction: 0.0067511, N_template: 77985, N_purged: 662.971, Scale: 0.00850127
+Total chi2/ndf: 0.0815232
+   [Purge] Element: Carbon, Fraction: 0.0535146, N_template: 97079, N_purged: 1058.41, Scale: 0.0109026
+   [Purge] Element: Nitrogen, Fraction: 0.00393915, N_template: 18423.9, N_purged: 77.9086, Scale: 0.00422867
+Total chi2/ndf: 2.27116
+   [Purge] Element: Carbon, Fraction: 0.050142, N_template: 97079, N_purged: 991.709, Scale: 0.0102155
+   [Purge] Element: Nitrogen, Fraction: 0.002712, N_template: 18423.9, N_purged: 53.6379, Scale: 0.00291133
+Total chi2/ndf: 0.398166
+   [Purge] Element: Boron, Fraction: 0.00957204, N_template: 18784.2, N_purged: 77.9164, Scale: 0.00414798
+   [Purge] Element: Carbon, Fraction: 0.0142332, N_template: 97079, N_purged: 115.858, Scale: 0.00119344
+Total chi2/ndf: 1.70416
+   [Purge] Element: Boron, Fraction: 0.00831718, N_template: 18784.2, N_purged: 67.7019, Scale: 0.00360419
+   [Purge] Element: Carbon, Fraction: 0.010502, N_template: 97079, N_purged: 85.4863, Scale: 0.000880585
+Total chi2/ndf: 0.0989061
+ [Bin 39] Ek=16.4935 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0749976, N_template: 69876, N_purged: 1268.13, Scale: 0.0181483
+Total chi2/ndf: 2.36127
+   [Purge] Element: Oxygen, Fraction: 0.0707406, N_template: 69876, N_purged: 1196.15, Scale: 0.0171182
+Total chi2/ndf: 0.257282
+   [Purge] Element: Nitrogen, Fraction: 0.00471641, N_template: 15738.1, N_purged: 412.459, Scale: 0.0262077
+   [Purge] Element: Oxygen, Fraction: 0.00766337, N_template: 69876, N_purged: 670.177, Scale: 0.00959095
+Total chi2/ndf: 1.54346
+   [Purge] Element: Nitrogen, Fraction: 0.00484797, N_template: 15738.1, N_purged: 423.964, Scale: 0.0269388
+   [Purge] Element: Oxygen, Fraction: 0.00666662, N_template: 69876, N_purged: 583.009, Scale: 0.00834348
+Total chi2/ndf: 0.182051
+   [Purge] Element: Carbon, Fraction: 0.0554249, N_template: 86481.1, N_purged: 941.558, Scale: 0.0108874
+   [Purge] Element: Nitrogen, Fraction: 0.00305449, N_template: 15738.1, N_purged: 51.8897, Scale: 0.00329708
+Total chi2/ndf: 2.04397
+   [Purge] Element: Carbon, Fraction: 0.051084, N_template: 86481.1, N_purged: 867.814, Scale: 0.0100347
+   [Purge] Element: Nitrogen, Fraction: 0.00233562, N_template: 15738.1, N_purged: 39.6775, Scale: 0.00252112
+Total chi2/ndf: 0.428713
+   [Purge] Element: Boron, Fraction: 0.00854194, N_template: 16129.6, N_purged: 60.4598, Scale: 0.00374837
+   [Purge] Element: Carbon, Fraction: 0.0122962, N_template: 86481.1, N_purged: 87.0326, Scale: 0.00100638
+Total chi2/ndf: 2.10447
+   [Purge] Element: Boron, Fraction: 0.00733252, N_template: 16129.6, N_purged: 51.8996, Scale: 0.00321766
+   [Purge] Element: Carbon, Fraction: 0.0100377, N_template: 86481.1, N_purged: 71.0467, Scale: 0.000821529
+Total chi2/ndf: 0.0868359
+ [Bin 40] Ek=17.8417 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0901054, N_template: 61229, N_purged: 1327.7, Scale: 0.0216842
+Total chi2/ndf: 3.12132
+   [Purge] Element: Oxygen, Fraction: 0.0821903, N_template: 61229, N_purged: 1211.07, Scale: 0.0197794
+Total chi2/ndf: 0.169784
+   [Purge] Element: Nitrogen, Fraction: 0.00518318, N_template: 13557.6, N_purged: 401.774, Scale: 0.0296346
+   [Purge] Element: Oxygen, Fraction: 0.00795, N_template: 61229, N_purged: 616.244, Scale: 0.0100646
+Total chi2/ndf: 2.38949
+   [Purge] Element: Nitrogen, Fraction: 0.00519285, N_template: 13557.6, N_purged: 402.524, Scale: 0.02969
+   [Purge] Element: Oxygen, Fraction: 0.00705213, N_template: 61229, N_purged: 546.646, Scale: 0.00892789
+Total chi2/ndf: 0.179792
+   [Purge] Element: Carbon, Fraction: 0.0574109, N_template: 76597.2, N_purged: 847.27, Scale: 0.0110614
+   [Purge] Element: Nitrogen, Fraction: 0.00479978, N_template: 13557.6, N_purged: 70.8351, Scale: 0.00522476
+Total chi2/ndf: 1.71778
+   [Purge] Element: Carbon, Fraction: 0.0558571, N_template: 76597.2, N_purged: 824.339, Scale: 0.010762
+   [Purge] Element: Nitrogen, Fraction: 0.00309281, N_template: 13557.6, N_purged: 45.6437, Scale: 0.00336666
+Total chi2/ndf: 0.335078
+   [Purge] Element: Boron, Fraction: 0.0137704, N_template: 13926.3, N_purged: 81.8513, Scale: 0.00587747
+   [Purge] Element: Carbon, Fraction: 0.0176497, N_template: 76597.2, N_purged: 104.91, Scale: 0.00136963
+Total chi2/ndf: 2.56274
+   [Purge] Element: Boron, Fraction: 0.0120144, N_template: 13926.3, N_purged: 71.4138, Scale: 0.00512798
+   [Purge] Element: Carbon, Fraction: 0.0143657, N_template: 76597.2, N_purged: 85.3899, Scale: 0.00111479
+Total chi2/ndf: 0.176251
+ [Bin 41] Ek=19.29 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0986523, N_template: 54114, N_purged: 1294.32, Scale: 0.0239184
+Total chi2/ndf: 4.46147
+   [Purge] Element: Oxygen, Fraction: 0.0873874, N_template: 54114, N_purged: 1146.52, Scale: 0.0211872
+Total chi2/ndf: 0.29337
+   [Purge] Element: Nitrogen, Fraction: 0.00546805, N_template: 12012.6, N_purged: 369.58, Scale: 0.0307659
+   [Purge] Element: Oxygen, Fraction: 0.00843576, N_template: 54114, N_purged: 570.165, Scale: 0.0105364
+Total chi2/ndf: 1.96438
+   [Purge] Element: Nitrogen, Fraction: 0.00525739, N_template: 12012.6, N_purged: 355.342, Scale: 0.0295806
+   [Purge] Element: Oxygen, Fraction: 0.00743679, N_template: 54114, N_purged: 502.645, Scale: 0.00928864
+Total chi2/ndf: 0.307408
+   [Purge] Element: Carbon, Fraction: 0.0545588, N_template: 66765.7, N_purged: 674.237, Scale: 0.0100986
+   [Purge] Element: Nitrogen, Fraction: 0.00467746, N_template: 12012.6, N_purged: 57.804, Scale: 0.00481193
+Total chi2/ndf: 1.64809
+   [Purge] Element: Carbon, Fraction: 0.053962, N_template: 66765.7, N_purged: 666.863, Scale: 0.00998811
+   [Purge] Element: Nitrogen, Fraction: 0.00275753, N_template: 12012.6, N_purged: 34.0775, Scale: 0.0028368
+Total chi2/ndf: 0.100329
+   [Purge] Element: Boron, Fraction: 0.0148086, N_template: 11680.9, N_purged: 73.8651, Scale: 0.00632356
+   [Purge] Element: Carbon, Fraction: 0.0156418, N_template: 66765.7, N_purged: 78.0213, Scale: 0.00116858
+Total chi2/ndf: 1.52281
+   [Purge] Element: Boron, Fraction: 0.0121234, N_template: 11680.9, N_purged: 60.4713, Scale: 0.00517692
+   [Purge] Element: Carbon, Fraction: 0.0111807, N_template: 66765.7, N_purged: 55.7694, Scale: 0.0008353
+Total chi2/ndf: 0.07893
+ [Bin 42] Ek=20.8385 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0961484, N_template: 48090, N_purged: 1088.5, Scale: 0.0226346
+Total chi2/ndf: 3.5568
+   [Purge] Element: Oxygen, Fraction: 0.0843587, N_template: 48090, N_purged: 955.025, Scale: 0.0198591
+Total chi2/ndf: 0.2211
+   [Purge] Element: Nitrogen, Fraction: 0.00464991, N_template: 10401.7, N_purged: 273.205, Scale: 0.0262655
+   [Purge] Element: Oxygen, Fraction: 0.00860864, N_template: 48090, N_purged: 505.801, Scale: 0.0105178
+Total chi2/ndf: 2.15781
+   [Purge] Element: Nitrogen, Fraction: 0.00474437, N_template: 10401.7, N_purged: 278.756, Scale: 0.0267991
+   [Purge] Element: Oxygen, Fraction: 0.0076786, N_template: 48090, N_purged: 451.156, Scale: 0.0093815
+Total chi2/ndf: 0.117955
+   [Purge] Element: Carbon, Fraction: 0.0587223, N_template: 58051.6, N_purged: 618.64, Scale: 0.0106567
+   [Purge] Element: Nitrogen, Fraction: 0.00320538, N_template: 10401.7, N_purged: 33.7687, Scale: 0.00324646
+Total chi2/ndf: 1.2923
+   [Purge] Element: Carbon, Fraction: 0.056173, N_template: 58051.6, N_purged: 591.783, Scale: 0.0101941
+   [Purge] Element: Nitrogen, Fraction: 0.00166325, N_template: 10401.7, N_purged: 17.5223, Scale: 0.00168457
+Total chi2/ndf: 0.328119
+   [Purge] Element: Boron, Fraction: 0.0122576, N_template: 9957.83, N_purged: 52.9775, Scale: 0.00532019
+   [Purge] Element: Carbon, Fraction: 0.0202861, N_template: 58051.6, N_purged: 87.6766, Scale: 0.00151032
+Total chi2/ndf: 2.15167
+   [Purge] Element: Boron, Fraction: 0.00950933, N_template: 9957.83, N_purged: 41.0993, Scale: 0.00412734
+   [Purge] Element: Carbon, Fraction: 0.0150751, N_template: 58051.6, N_purged: 65.1548, Scale: 0.00112236
+Total chi2/ndf: 0.189953
+ [Bin 43] Ek=22.4871 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 44] Ek=24.2608 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 45] Ek=26.1595 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 46] Ek=28.1834 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 47] Ek=30.3574 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 48] Ek=32.7064 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 49] Ek=35.2305 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 50] Ek=37.9297 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 51] Ek=40.8289 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 52] Ek=43.9532 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 53] Ek=47.3275 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 54] Ek=51.0769 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 55] Ek=55.0763 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 56] Ek=59.3257 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 57] Ek=64.0752 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 58] Ek=69.5747 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 59] Ek=75.8242 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 60] Ek=82.8237 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 61] Ek=90.8232 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 62] Ek=99.8228 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 63] Ek=110.072 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 64] Ek=122.072 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 65] Ek=136.572 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 66] Ek=154.321 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 67] Ek=176.321 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 68] Ek=204.071 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 69] Ek=240.57 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 70] Ek=295.32 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 71] Ek=384.07 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 72] Ek=544.069 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 73] Ek=1149.07 GeV/n is OUTSIDE range [2.9, 21]. Skipping.

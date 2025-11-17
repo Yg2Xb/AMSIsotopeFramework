@@ -50,7 +50,7 @@ extern const double MC_norm;
 extern const double Reweight_norm;
 
 // 初始化 AMS Flux TF1（线程安全，只执行一次）
-void initFluxFunctions(const std::string& filename = "/eos/user/z/zixuan/Isotope/FluxSmooth/FluxSmooth.root");
+void initFluxFunctions(const std::string& filename = "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleAnalysis/FluxSmooth/FluxSmooth.root");
 
 // 可选清理函数
 void cleanupFluxFunctions();
@@ -140,7 +140,7 @@ double GetRichWidth(int iz, bool isNaF);
 double GetSmearRichBeta(int iz, double beta, bool isNaF);
 
 // Initializes the charge tuning lookup tables. Thread-safe.
-void initChargeTuning(const std::string& filename = "/eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline.root");
+void initChargeTuning(const std::string& filename = "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleAnalysis/L2QTuning/CDFLookupTable_fromSpline.root");
 
 // Performs L2 charge tuning using pre-loaded tables.
 double tuneL2Charge(

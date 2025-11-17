@@ -104,7 +104,7 @@ static void findFitRange(TH1D* hist, double chargeValue, double leftRatio, doubl
 }
 
 static inline bool passEnergyWindow(const string& det, double ekCen) {
-    if (det == "TOF") return ekCen > 0.4 && ekCen <= 1.28;
+    if (det == "TOF") return ekCen > 0.33 && ekCen <= 1.28;
     if (det == "NaF") return ekCen > 0.71 && ekCen <= 5.1;
     if (det == "AGL") return ekCen > 2.8 && ekCen <= 20.00;
     return false;
@@ -400,15 +400,15 @@ static TF1* doFit(TH1D* h, TF1* (*builder)(double,double),
 
 void chargeHistFit(
     const string& histFile = "/eos/user/z/zixuan/Isotope/Add/Be_frag4.root",
-    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_BeToOxy_0.5_iter1.pdf",
-    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter1.root",
+    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_BeToOxy_0.6_test.pdf",
+    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_test.root",
     int rebin = 2,
-    bool firstFit = false,
+    bool firstFit = true,
     bool listKeysOnce = false // kept for compatibility, unused to stay simple
 ) {
-    const vector<string> chains = {"L1Inner", "UnbiasedL1Inner"};
-    const vector<string> nuclei = {"Beryllium","Boron","Carbon","Nitrogen","Oxygen"};
-    //const vector<string> nuclei = {"Nitrogen"};
+    const vector<string> chains = {"UnbiasedL1Inner"};
+    //const vector<string> nuclei = {"Beryllium","Boron","Carbon","Nitrogen","Oxygen"};
+    const vector<string> nuclei = {"Nitrogen"};
     const map<string,double> chargeZ = {{"Beryllium",4.0}, {"Boron",5.0}, {"Carbon",6.0}, {"Nitrogen",7.0}, {"Oxygen",8.0}};
     const vector<string> types = {"L1QTemplate", "L2QTemplate"};
     const vector<string> dets = {"TOF","NaF","AGL"};
@@ -419,8 +419,8 @@ void chargeHistFit(
     const vector<std::pair<string,int>> EGE_params = {{"Peak",0},{"SigmaL",1},{"AlphaL",2},{"SigmaR",3},{"AlphaR",4},{"Norm",5},{"xmin",6},{"xmax",7}};
 
     // --- FILE PATHS FOR SMART FITTING ---
-    const string splineFilePath = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.8_orig.root";
-    const string histOriFilePath = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_orig.root";
+    const string splineFilePath = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.6_iter1.root";
+    const string histOriFilePath = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_iter1.root";
 
     FitParameterManager pm(firstFit, splineFilePath, histOriFilePath);
 
@@ -433,7 +433,6 @@ void chargeHistFit(
     if (!fout || fout->IsZombie()) return;
 
     unique_ptr<TCanvas> c(new TCanvas("c","",900,700));
-    c->SetLogy(true);
     c->Print((pdfOut + "[").c_str(), "pdf");
 
     struct ParSet {
@@ -553,7 +552,7 @@ void chargeHistFit(
             h1->SetMarkerStyle(20); h1->SetMarkerSize(0.9); h1->SetMarkerColor(kBlack); h1->SetLineColor(kBlack);
             h1->GetXaxis()->SetRangeUser(z - 2.0, z + 1.5);
 
-            c->cd(); c->SetLogy(true);
+            c->cd(); c->SetLogy(1);
             h1->Draw("E");
 
             fLG->SetRange(h1->GetXaxis()->GetXmin(), h1->GetXaxis()->GetXmax());

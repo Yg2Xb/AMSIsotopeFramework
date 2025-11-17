@@ -1,0 +1,51 @@
+
+Processing ../rootlogon.C...
+Processing CalFrag.cpp...
+
+===================================================================
+Starting Analysis: Boron -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: Yes)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Boron_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Boron -> Beryllium ---
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Boron_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+===================================================================
+Starting Analysis: Carbon -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: Yes)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Carbon_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Carbon -> Beryllium ---
+[INFO] Zeroing MC Be9 point 8 (bin 10, E=2.74684 GeV)
+[INFO] Zeroing MC Be9 point 18 (bin 20, E=17.1926 GeV)
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Carbon_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+===================================================================
+Starting Analysis: Nitrogen -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: No)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Nitrogen_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Nitrogen -> Beryllium ---
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Nitrogen_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+===================================================================
+Starting Analysis: Oxygen -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: No)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Oxygen_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Oxygen -> Beryllium ---
+[WARNING] Could not find histogram: MC_FLUX_H3 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H1_TOF in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H1_NaF in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H1_AGL in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_TOF_Z4_Mass7 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_NaF_Z4_Mass7 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_AGL_Z4_Mass7 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_TOF_Z4_Mass9 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_NaF_Z4_Mass9 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_AGL_Z4_Mass9 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_TOF_Z4_Mass10 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_NaF_Z4_Mass10 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[WARNING] Could not find histogram: UnbiasedL1Inner_MC_BKG_H2_AGL_Z4_Mass10 in file root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/Add/O16_rew_frag4.root. Assuming it's zero.
+[INFO] Zeroing MC Total point 7 (bin 9, E=2.17272 GeV)
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Oxygen_to_Beryllium_UnbiasedL1Inner_Validation.root

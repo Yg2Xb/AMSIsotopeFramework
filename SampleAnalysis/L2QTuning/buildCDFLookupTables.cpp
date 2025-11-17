@@ -25,6 +25,8 @@ using namespace AMS_Iso;
 
 void buildCDFLookupTables(const std::string& nucleusName = "Beryllium");
 
+const double qmin_global = 2.5, qmax_global = 9.5;
+
 const std::vector<std::pair<std::string, int>> LG_PARAM_LIST = {
     {"Width", 0}, {"MPV", 1}, {"Area", 2}, {"Sigma", 3}
 };
@@ -54,12 +56,12 @@ struct LookupTable {
     std::vector<double> cdf_l1;
     std::vector<double> cdf_l2;
     
-    void build(TF1& f_l1, TF1& f_l2, double qmin, double qmax, const std::string& context, int npts = 2000) {
+    void build(TF1& f_l1, TF1& f_l2, double qmin, double qmax, const std::string& context, int npts = 3500) {
         if (npts <= 0) { std::cerr << "Error: npts must be positive." << std::endl; return; }
         q_values.resize(npts + 1); cdf_l1.resize(npts + 1); cdf_l2.resize(npts + 1);
         f_l1.SetRange(qmin, qmax); f_l2.SetRange(qmin, qmax);
-        double total_l1 = f_l1.Integral(qmin, qmax, 1e-9);
-        double total_l2 = f_l2.Integral(qmin, qmax, 1e-9);
+        double total_l1 = f_l1.Integral(qmin, qmax, 1e-10);
+        double total_l2 = f_l2.Integral(qmin, qmax, 1e-10);
         
         std::cout << "  [Debug] For context: " << context << std::endl;
         std::cout << "          Total Integral L1: " << total_l1 << ", Total Integral L2: " << total_l2 << std::endl;
@@ -110,7 +112,7 @@ void preloadSplines(std::map<std::string, std::unique_ptr<TF1>>& cache, TFile* f
 
 // 【新】用于修正参数的“安全”能量范围
 const std::map<std::string, std::pair<double, double>> SAFE_DETECTOR_RANGES = {
-    {"TOF", {0.43, 1.26}}, {"NaF", {0.75, 5.4}}, {"AGL", {2.95, 19.9}}
+    {"TOF", {0.33, 1.26}}, {"NaF", {0.75, 5.4}}, {"AGL", {2.95, 19.9}}
 };
 
 void getParamsFromSpline(const std::map<std::string, std::unique_ptr<TF1>>& splineCache, const std::string& chain, const std::string& elem, const std::string& det, 
@@ -184,8 +186,8 @@ void getParamsFromSpline(const std::map<std::string, std::unique_ptr<TF1>>& spli
 
     } else if (model == "EGE") {
         params[5] = 1.0;
-        params[6] = z - 2.0;
-        params[7] = z + 2.0;
+        params[6] = qmin_global;
+        params[7] = qmax_global;
     }
 }
 void buildCDFLookupTables(const std::string& nucleusName) {
@@ -199,11 +201,11 @@ void buildCDFLookupTables(const std::string& nucleusName) {
     const time_t start_time = time(nullptr);
     std::cout << "Starting performance monitoring..." << std::endl;
 
-    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.5_iter1.root";
+    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.6_iter2.root";
     const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline_" + nucleusName + ".root";
     
-    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter1.root";
-    const std::string binningHistName = "L1Inner_Beryllium_AGL_L1QTemplate_EGE_Peak";
+    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_iter2.root";
+    const std::string binningHistName = "UnbiasedL1Inner_Beryllium_AGL_L1QTemplate_EGE_Peak";
     std::vector<double> energyBins;
     auto finBinning = std::unique_ptr<TFile>(TFile::Open(binningFileName.c_str()));
     if (!finBinning || finBinning->IsZombie()) { std::cerr << "Error: Failed to open binning file: " << binningFileName << std::endl; return; }
@@ -224,7 +226,6 @@ void buildCDFLookupTables(const std::string& nucleusName) {
     std::cout << "Starting to build CDF lookup tables for: " << nucleusName << " -> " << outFileName << std::endl;
     
     for (const auto& chain : CHAINS) {
-        const double qmin_global = z - 2.0, qmax_global = z + 2.0;
         for (const auto& det : DETECTORS) {
             std::cout << "\nProcessing: " << chain << " / " << nucleusName << " / " << det << " ..." << std::endl;
             const size_t total_bins_in_loop = energyBins.size() - 1;

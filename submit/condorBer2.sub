@@ -1,5 +1,5 @@
 Universe  = vanilla
-executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer2.sh
+executable  = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh
 output      = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 error       = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 log         = /afs/cern.ch/work/z/zixuan/logISS/log_$(Cluster)
@@ -8,8 +8,7 @@ log         = /afs/cern.ch/work/z/zixuan/logISS/log_$(Cluster)
 transfer_output_files = ""
 
 request_cpus = 1
-request_memory = 700MB
-request_disk = 100MB 
+request_memory = 900MB
 
 queue arguments from /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_jobs_yzx.txt
 

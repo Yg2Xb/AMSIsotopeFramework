@@ -31,14 +31,15 @@ struct FitResult {
 };
 
 struct Config {
-    string file_v05 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter1.root";
-    string file_v08 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter1.root";
-    string main_analysis_file_path = file_v05; 
+    string file_v05 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter2.root";
+    string file_v06 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_iter2.root";
+    string file_v08 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter2.root";
+    string main_analysis_file_path = file_v06; 
     string output_dir = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/";
     vector<string> elements = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
     //vector<string> elements = {"Boron"};
     vector<string> detectors = {"TOF", "NaF", "AGL"};
-    vector<string> chains = {"L1Inner", "UnbiasedL1Inner"};
+    vector<string> chains = {"UnbiasedL1Inner","L1Inner"};
     vector<string> templates = {"L1QTemplate", "L2QTemplate"};
     vector<pair<string, string>> paramList = {
         {"LG", "Width"}, {"LG", "MPV"}, {"LG", "Sigma"}, {"LG", "Chi2NDF"},
@@ -51,9 +52,9 @@ struct Config {
     map<string, int> modelColors = {{"LG", kRed}, {"EGE", kBlue}};
     map<string, int> versionColors = {{"v05", kBlack}, {"v08", kRed}};
     map<string, pair<double, double>> detRanges = {
-        {"TOF", {0.4, 1.28}}, {"NaF", {0.71, 5.1}}, {"AGL", {2.8, 20.0}}
+        {"TOF", {0.33, 1.28}}, {"NaF", {0.71, 5.1}}, {"AGL", {2.8, 20.0}}
     };
-    vector<string> versionLabels = {"Version 0.5", "Version 0.8"};
+    vector<string> versionLabels = {"Version 0.5", "Version 0.6"};
 };
 
 Config gConfig;
@@ -432,19 +433,16 @@ void plotModelChi2Comparison(TFile* fin, TCanvas* c, const string& pdfName) {
 void compareFitResults() {
     cout << "[INFO] Starting compareFitResults..." << endl;
     gStyle->SetOptStat(0); gErrorIgnoreLevel = kWarning;
-    unique_ptr<TFile> fin_v05(TFile::Open(gConfig.file_v05.c_str()));
-    unique_ptr<TFile> fin_v08(TFile::Open(gConfig.file_v08.c_str()));
+    //unique_ptr<TFile> fin_v05(TFile::Open(gConfig.file_v05.c_str()));
+    //unique_ptr<TFile> fin_v08(TFile::Open(gConfig.file_v08.c_str()));
     unique_ptr<TFile> fin_main(TFile::Open(gConfig.main_analysis_file_path.c_str()));
-    if (!fin_v05 || fin_v05->IsZombie() || !fin_v08 || fin_v08->IsZombie() || !fin_main || fin_main->IsZombie()) {
-        cout << "[ERROR] Failed to open one or more input files." << endl;
-        return;
-    }
+
     TCanvas* c = new TCanvas("c", "c", 800, 400); c->SetGrid();
     
-    string main_version_tag = (gConfig.main_analysis_file_path == gConfig.file_v05) ? "0.5" : "0.8";
+    string main_version_tag = (gConfig.main_analysis_file_path == gConfig.file_v05) ? "0.5" : "0.6";
 
     // --- START OF MODIFICATION 5: Open the output file at the beginning ---
-    string splineOutFile = gConfig.output_dir + "allFitHistSplineSmooth_" + main_version_tag + "_iter1.root";
+    string splineOutFile = gConfig.output_dir + "allFitHistSplineSmooth_" + main_version_tag + "_iter2.root";
     gSplineOutFile = make_unique<TFile>(splineOutFile.c_str(), "RECREATE");
     if (!gSplineOutFile || gSplineOutFile->IsZombie()) {
         cout << "[ERROR] Cannot create output spline file: " << splineOutFile << endl;
@@ -458,22 +456,22 @@ void compareFitResults() {
     //plotFitFileVersionComparison(fin_v05.get(), fin_v08.get(), c, pdfName_version);
     c->Print((pdfName_version + "]").c_str());
 
-    string pdfName_template = gConfig.output_dir + "FitParam_TemplateCompare_" + main_version_tag + "_iter1.pdf";
+    string pdfName_template = gConfig.output_dir + "FitParam_TemplateCompare_" + main_version_tag + "_iter2.pdf";
     c->Print((pdfName_template + "[").c_str());
     plotTemplateComparison(fin_main.get(), c, pdfName_template);
     c->Print((pdfName_template + "]").c_str());
     
-    string pdfName_detector = gConfig.output_dir + "FitParam_DetectorCompare_" + main_version_tag + "_iter1.pdf";
+    string pdfName_detector = gConfig.output_dir + "FitParam_DetectorCompare_" + main_version_tag + "_iter2.pdf";
     c->Print((pdfName_detector + "[").c_str());
     plotDetectorComparison(fin_main.get(), c, pdfName_detector);
     c->Print((pdfName_detector + "]").c_str());
     
-    string pdfName_chain = gConfig.output_dir + "FitParam_ChainCompare_" + main_version_tag + "_iter1.pdf";
+    string pdfName_chain = gConfig.output_dir + "FitParam_ChainCompare_" + main_version_tag + "_iter2.pdf";
     c->Print((pdfName_chain + "[").c_str());
     plotChainComparison(fin_main.get(), c, pdfName_chain);
     c->Print((pdfName_chain + "]").c_str());
     
-    string pdfName_chi2 = gConfig.output_dir + "FitParam_Chi2ModelCompare_" + main_version_tag + "_iter1.pdf";
+    string pdfName_chi2 = gConfig.output_dir + "FitParam_Chi2ModelCompare_" + main_version_tag + "_iter2.pdf";
     c->Print((pdfName_chi2 + "[").c_str());
     plotModelChi2Comparison(fin_main.get(), c, pdfName_chi2);
     c->Print((pdfName_chi2 + "]").c_str());

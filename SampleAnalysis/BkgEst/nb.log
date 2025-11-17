@@ -1,0 +1,581 @@
+
+Processing rootlogon.C...
+Processing est_frag.cpp...
+
+>>> Processing channel: B11 -> B10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      49.7466
+NDf                       =           10
+Edm                       =   4.0888e-06
+NCalls                    =          279
+p0                        =     0.025124   +/-   0.00013916  
+p1                        =    0.0292402   +/-   0.000138875 
+p2                        =    0.0316018   +/-   0.000340192 
+p3                        =    0.0323063   +/-   0.000388664 
+p4                        =    0.0329754   +/-   0.000417935 
+p5                        =    0.0241184   +/-   0.000560128 
+p6                        =   -0.0184962   +/-   0.0101714   
+p7                        =   -0.0485246   +/-   0.0419124   
+p8                        =     0.146401   +/-   0.126452    
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_B11_to_B10.pdf
+
+>>> Processing channel: C12 -> B10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      23.4136
+NDf                       =           10
+Edm                       =  9.30679e-08
+NCalls                    =          277
+p0                        =   0.00461766   +/-   5.62362e-05 
+p1                        =    0.0051535   +/-   5.53606e-05 
+p2                        =   0.00503664   +/-   0.000129388 
+p3                        =   0.00567042   +/-   0.000141918 
+p4                        =   0.00497851   +/-   0.000136503 
+p5                        =   0.00389265   +/-   0.000172677 
+p6                        =  -0.00114902   +/-   0.00278002  
+p7                        =  -0.00472038   +/-   0.0113677   
+p8                        =    0.0142416   +/-   0.0342968   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_C12_to_B10.pdf
+
+>>> Processing channel: N14 -> B10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      10.1549
+NDf                       =           10
+Edm                       =  7.12854e-21
+NCalls                    =          278
+p0                        =   0.00104473   +/-   1.85391e-05 
+p1                        =   0.00109645   +/-   1.79976e-05 
+p2                        =  0.000811523   +/-   3.96867e-05 
+p3                        =   0.00095728   +/-   4.28908e-05 
+p4                        =  0.000771412   +/-   4.20359e-05 
+p5                        =  0.000986981   +/-   6.37215e-05 
+p6                        =   0.00250443   +/-   0.000987287 
+p7                        =    0.0030343   +/-   0.00402571  
+p8                        =  -0.00915464   +/-   0.0121458   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N14_to_B10.pdf
+
+>>> Processing channel: N15 -> B10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      19.5772
+NDf                       =           10
+Edm                       =  6.16074e-20
+NCalls                    =          278
+p0                        =   0.00160864   +/-   3.03354e-05 
+p1                        =   0.00217143   +/-   3.24172e-05 
+p2                        =   0.00177923   +/-   7.4556e-05  
+p3                        =   0.00193021   +/-   8.11313e-05 
+p4                        =   0.00182532   +/-   8.26621e-05 
+p5                        =   0.00115518   +/-   9.80592e-05 
+p6                        = -0.000363625   +/-   0.00156459  
+p7                        =   -0.0013465   +/-   0.00632807  
+p8                        =   0.00406245   +/-   0.0190921   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N15_to_B10.pdf
+
+>>> Processing channel: O16 -> B10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+
+>>> Processing channel: C12 -> B11...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      35.4737
+NDf                       =           12
+Edm                       =  1.61049e-06
+NCalls                    =          198
+p0                        =   0.00583561   +/-   5.39514e-05 
+p1                        =   0.00692511   +/-   8.11105e-05 
+p2                        =   0.00689173   +/-   0.00010695  
+p3                        =   0.00615437   +/-   0.000178552 
+p4                        =     0.010815   +/-   0.00326162  
+p5                        =   0.00877861   +/-   0.0137082   
+p6                        =   -0.0264855   +/-   0.0413584   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_C12_to_B11.pdf
+
+>>> Processing channel: N14 -> B11...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      31.7621
+NDf                       =           10
+Edm                       =  3.47197e-20
+NCalls                    =          279
+p0                        =   0.00198189   +/-   2.51359e-05 
+p1                        =   0.00198754   +/-   2.41232e-05 
+p2                        =   0.00169566   +/-   5.58643e-05 
+p3                        =   0.00142704   +/-   5.11701e-05 
+p4                        =   0.00165937   +/-   5.66253e-05 
+p5                        =   0.00136618   +/-   7.78807e-05 
+p6                        =  0.000356684   +/-   0.0012735   
+p7                        = -0.000467604   +/-   0.00511416  
+p8                        =   0.00141079   +/-   0.0154297   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N14_to_B11.pdf
+
+>>> Processing channel: N15 -> B11...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =       20.189
+NDf                       =           10
+Edm                       =  1.32488e-20
+NCalls                    =          278
+p0                        =   0.00269191   +/-   3.83973e-05 
+p1                        =   0.00285408   +/-   3.73547e-05 
+p2                        =   0.00332023   +/-   9.22148e-05 
+p3                        =   0.00264713   +/-   9.36175e-05 
+p4                        =   0.00269174   +/-   9.52517e-05 
+p5                        =   0.00221877   +/-   0.000130607 
+p6                        =  -0.00141861   +/-   0.00205154  
+p7                        =  -0.00308907   +/-   0.00837177  
+p8                        =   0.00931989   +/-   0.025258    
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N15_to_B11.pdf
+
+>>> Processing channel: O16 -> B11...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+
+>>> Processing channel: Be9 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      14.0861
+NDf                       =           10
+Edm                       =  4.23709e-08
+NCalls                    =          277
+p0                        =   0.00126739   +/-   2.8756e-05  
+p1                        =   0.00147512   +/-   2.76856e-05 
+p2                        =   0.00186661   +/-   6.86021e-05 
+p3                        =   0.00164153   +/-   7.26493e-05 
+p4                        =   0.00188554   +/-   8.10358e-05 
+p5                        =   0.00452073   +/-   0.00017644  
+p6                        =  -0.00687746   +/-   0.00369715  
+p7                        =   -0.0134511   +/-   0.0160181   
+p8                        =    0.0405826   +/-   0.0483274   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_Be9_to_Be7.pdf
+
+>>> Processing channel: Be10 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      38.3798
+NDf                       =           10
+Edm                       =   9.6402e-06
+NCalls                    =          277
+p0                        =  0.000659121   +/-   2.03967e-05 
+p1                        =  0.000598245   +/-   1.77677e-05 
+p2                        =  0.000685968   +/-   4.07962e-05 
+p3                        =  0.000679758   +/-   4.65616e-05 
+p4                        =  0.000727912   +/-   5.04279e-05 
+p5                        =    0.0010945   +/-   8.9508e-05  
+p6                        =  -0.00165565   +/-   0.00167742  
+p7                        =  -0.00286642   +/-   0.00703797  
+p8                        =   0.00864814   +/-   0.0212339   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_Be10_to_Be7.pdf
+
+>>> Processing channel: B10 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      52.4724
+NDf                       =           10
+Edm                       =  1.95447e-06
+NCalls                    =          279
+p0                        =  0.000336342   +/-   1.0001e-05  
+p1                        =  0.000417201   +/-   1.03552e-05 
+p2                        =  0.000361953   +/-   2.47207e-05 
+p3                        =  0.000445148   +/-   2.79499e-05 
+p4                        =  0.000575759   +/-   3.3317e-05  
+p5                        =   0.00150976   +/-   7.57627e-05 
+p6                        =    0.0053656   +/-   0.00132723  
+p7                        =   0.00675621   +/-   0.00544997  
+p8                        =   -0.0203838   +/-   0.0164428   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_B10_to_Be7.pdf
+
+>>> Processing channel: B11 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =       19.002
+NDf                       =           10
+Edm                       =  1.34931e-06
+NCalls                    =          277
+p0                        =  0.000542765   +/-   1.95035e-05 
+p1                        =  0.000614459   +/-   1.92603e-05 
+p2                        =  0.000513458   +/-   4.40331e-05 
+p3                        =  0.000530588   +/-   4.80922e-05 
+p4                        =  0.000641644   +/-   5.54566e-05 
+p5                        =  0.000883804   +/-   9.50733e-05 
+p6                        =   0.00217229   +/-   0.00153598  
+p7                        =   0.00264848   +/-   0.00633789  
+p8                        =   -0.0079906   +/-   0.0191217   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_B11_to_Be7.pdf
+
+>>> Processing channel: C12 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      47.5695
+NDf                       =           12
+Edm                       =  2.55378e-19
+NCalls                    =          184
+p0                        =   0.00303938   +/-   3.83766e-05 
+p1                        =   0.00381994   +/-   5.88119e-05 
+p2                        =   0.00265025   +/-   6.71398e-05 
+p3                        =   0.00157109   +/-   9.36394e-05 
+p4                        =   0.00147869   +/-   0.00154235  
+p5                        =  0.000790877   +/-   0.00637366  
+p6                        =  -0.00238611   +/-   0.0192297   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_C12_to_Be7.pdf
+
+>>> Processing channel: N14 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      32.1204
+NDf                       =           10
+Edm                       =  6.28962e-20
+NCalls                    =          278
+p0                        =   0.00103686   +/-   1.80006e-05 
+p1                        =   0.00122784   +/-   1.84795e-05 
+p2                        =   0.00118094   +/-   4.43845e-05 
+p3                        =  0.000920233   +/-   4.15378e-05 
+p4                        =  0.000908911   +/-   4.34016e-05 
+p5                        =  0.000631601   +/-   5.21605e-05 
+p6                        =   0.00030047   +/-   0.00075885  
+p7                        =  0.000137814   +/-   0.00306903  
+p8                        = -0.000415791   +/-   0.00925943  
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N14_to_Be7.pdf
+
+>>> Processing channel: N15 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =       59.623
+NDf                       =           12
+Edm                       =  3.11964e-19
+NCalls                    =          185
+p0                        =   0.00133929   +/-   2.33212e-05 
+p1                        =   0.00177499   +/-   3.68545e-05 
+p2                        =  0.000960255   +/-   4.14541e-05 
+p3                        =  0.000768509   +/-   6.49563e-05 
+p4                        =   0.00105245   +/-   0.000995723 
+p5                        =   0.00123099   +/-   0.00415402  
+p6                        =  -0.00371395   +/-   0.0125329   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N15_to_Be7.pdf
+
+>>> Processing channel: O16 -> Be7...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      46.0503
+NDf                       =           10
+Edm                       =  3.50392e-08
+NCalls                    =          278
+p0                        =   0.00201706   +/-   3.74394e-05 
+p1                        =   0.00239288   +/-   3.88402e-05 
+p2                        =    0.0020793   +/-   9.28768e-05 
+p3                        =   0.00203599   +/-   8.75691e-05 
+p4                        =   0.00141206   +/-   7.80632e-05 
+p5                        =  0.000870814   +/-   8.13811e-05 
+p6                        =   0.00120684   +/-   0.00100077  
+p7                        =   0.00145797   +/-   0.00381739  
+p8                        =  -0.00439877   +/-   0.0115172   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_O16_to_Be7.pdf
+
+>>> Processing channel: Be10 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      12.4189
+NDf                       =           10
+Edm                       =  2.07374e-07
+NCalls                    =          263
+p0                        =    0.0167384   +/-   0.000106622 
+p1                        =    0.0199336   +/-   0.000103862 
+p2                        =    0.0214117   +/-   0.000246782 
+p3                        =    0.0226272   +/-   0.000276165 
+p4                        =     0.023141   +/-   0.000296225 
+p5                        =    0.0231166   +/-   0.000436401 
+p6                        =    0.0217541   +/-   0.00753634  
+p7                        =    0.0140696   +/-   0.0309351   
+p8                        =   -0.0424488   +/-   0.0933329   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_Be10_to_Be9.pdf
+
+>>> Processing channel: B10 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      16.8041
+NDf                       =           10
+Edm                       =  9.30044e-07
+NCalls                    =          276
+p0                        =   0.00107576   +/-   1.87442e-05 
+p1                        =    0.0012067   +/-   1.87788e-05 
+p2                        =   0.00131322   +/-   4.60861e-05 
+p3                        =   0.00142129   +/-   5.17612e-05 
+p4                        =   0.00132178   +/-   5.44211e-05 
+p5                        =   0.00234897   +/-   0.000101593 
+p6                        =    0.0049846   +/-   0.00184989  
+p7                        =   0.00546866   +/-   0.00769301  
+p8                        =   -0.0164992   +/-   0.0232102   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_B10_to_Be9.pdf
+
+>>> Processing channel: B11 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      12.5748
+NDf                       =           10
+Edm                       =  2.60494e-21
+NCalls                    =          278
+p0                        =   0.00396353   +/-   5.51652e-05 
+p1                        =    0.0044595   +/-   5.47683e-05 
+p2                        =   0.00457435   +/-   0.000131488 
+p3                        =   0.00513981   +/-   0.000150922 
+p4                        =   0.00441581   +/-   0.000153007 
+p5                        =   0.00274238   +/-   0.000191643 
+p6                        =  -0.00306697   +/-   0.00322513  
+p7                        =  -0.00634472   +/-   0.0132547   
+p8                        =    0.0191423   +/-   0.03999     
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_B11_to_Be9.pdf
+
+>>> Processing channel: C12 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      20.7557
+NDf                       =           10
+Edm                       =  4.77928e-07
+NCalls                    =          308
+p0                        =  0.000908745   +/-   2.47681e-05 
+p1                        =  0.000963269   +/-   2.42367e-05 
+p2                        =   0.00112556   +/-   5.99123e-05 
+p3                        =  0.000991033   +/-   5.87478e-05 
+p4                        =  0.000868369   +/-   5.6625e-05  
+p5                        =  0.000778494   +/-   7.56254e-05 
+p6                        =  0.000133843   +/-   0.00108608  
+p7                        =  -0.00012033   +/-   0.00439746  
+p8                        =   0.00036304   +/-   0.0132674   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_C12_to_Be9.pdf
+
+>>> Processing channel: N14 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      8.34693
+NDf                       =           10
+Edm                       =  7.12702e-21
+NCalls                    =          280
+p0                        =   0.00060395   +/-   1.41962e-05 
+p1                        =  0.000594487   +/-   1.37004e-05 
+p2                        =   0.00067097   +/-   3.35416e-05 
+p3                        =  0.000550952   +/-   3.28518e-05 
+p4                        =  0.000539327   +/-   3.44002e-05 
+p5                        =  0.000365577   +/-   4.20897e-05 
+p6                        = -0.000605568   +/-   0.000668053 
+p7                        =  -0.00104114   +/-   0.00269612  
+p8                        =   0.00314118   +/-   0.00813434  
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N14_to_Be9.pdf
+
+>>> Processing channel: N15 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      4.43924
+NDf                       =           10
+Edm                       =  1.80265e-07
+NCalls                    =          281
+p0                        =   0.00143921   +/-   2.87186e-05 
+p1                        =   0.00153073   +/-   2.83775e-05 
+p2                        =   0.00153829   +/-   6.73167e-05 
+p3                        =   0.00137845   +/-   6.88501e-05 
+p4                        =   0.00134601   +/-   7.06886e-05 
+p5                        =  0.000738045   +/-   7.96747e-05 
+p6                        = -0.000371935   +/-   0.0011679   
+p7                        = -0.000926825   +/-   0.00454174  
+p8                        =   0.00279628   +/-   0.0137026   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N15_to_Be9.pdf
+
+>>> Processing channel: O16 -> Be9...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      9.09199
+NDf                       =           10
+Edm                       =  3.35262e-20
+NCalls                    =          281
+p0                        =  0.000952983   +/-   2.64894e-05 
+p1                        =   0.00108124   +/-   2.69664e-05 
+p2                        =  0.000941331   +/-   6.31718e-05 
+p3                        =  0.000945984   +/-   6.23478e-05 
+p4                        =   0.00078761   +/-   5.84694e-05 
+p5                        =  0.000520685   +/-   6.56314e-05 
+p6                        =  0.000308221   +/-   0.000827456 
+p7                        =  0.000307978   +/-   0.00310071  
+p8                        = -0.000929183   +/-   0.009355    
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_O16_to_Be9.pdf
+
+>>> Processing channel: B11 -> Be10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      9.83095
+NDf                       =           10
+Edm                       =  5.45741e-07
+NCalls                    =          280
+p0                        =    0.0045232   +/-   5.99172e-05 
+p1                        =   0.00555812   +/-   6.1078e-05  
+p2                        =   0.00521984   +/-   0.000141206 
+p3                        =   0.00590646   +/-   0.000163877 
+p4                        =   0.00560009   +/-   0.000171359 
+p5                        =    0.0048266   +/-   0.000244224 
+p6                        =   0.00198587   +/-   0.00436411  
+p7                        =  -0.00126149   +/-   0.0180247   
+p8                        =   0.00380596   +/-   0.0543814   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_B11_to_Be10.pdf
+
+>>> Processing channel: C12 -> Be10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      58.1475
+NDf                       =           12
+Edm                       =  4.84079e-18
+NCalls                    =          184
+p0                        =  0.000622538   +/-   1.79058e-05 
+p1                        =  0.000805458   +/-   2.76103e-05 
+p2                        =   0.00086333   +/-   3.96662e-05 
+p3                        =   0.00113956   +/-   7.35686e-05 
+p4                        =   0.00119507   +/-   0.00128965  
+p5                        =   0.00115517   +/-   0.00541273  
+p6                        =  -0.00348519   +/-   0.0163305   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_C12_to_Be10.pdf
+
+>>> Processing channel: N14 -> Be10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      25.9777
+NDf                       =           10
+Edm                       =  1.44733e-20
+NCalls                    =          278
+p0                        =  0.000359111   +/-   1.12562e-05 
+p1                        =  0.000394009   +/-   1.11545e-05 
+p2                        =   0.00047046   +/-   2.65211e-05 
+p3                        =  0.000352242   +/-   2.70256e-05 
+p4                        =  0.000442458   +/-   2.96504e-05 
+p5                        =  0.000466204   +/-   4.45015e-05 
+p6                        =  0.000739938   +/-   0.000728229 
+p7                        =  0.000757391   +/-   0.00293009  
+p8                        =  -0.00228509   +/-   0.00884023  
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N14_to_Be10.pdf
+
+>>> Processing channel: N15 -> Be10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      23.6179
+NDf                       =           10
+Edm                       =  8.35362e-21
+NCalls                    =          298
+p0                        =   0.00161573   +/-   3.05914e-05 
+p1                        =   0.00169061   +/-   3.00241e-05 
+p2                        =   0.00191272   +/-   7.27633e-05 
+p3                        =   0.00161612   +/-   7.33659e-05 
+p4                        =    0.0014689   +/-   7.49547e-05 
+p5                        =   0.00140407   +/-   0.000103143 
+p6                        =   0.00135908   +/-   0.00143119  
+p7                        =   0.00162936   +/-   0.00571564  
+p8                        =  -0.00491587   +/-   0.0172444   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_N15_to_Be10.pdf
+
+>>> Processing channel: O16 -> Be10...
+  -- Detector: TOF --
+  -- Detector: NaF --
+  -- Detector: AGL --
+****************************************
+Minimizer is Minuit2 / Migrad
+Chi2                      =      10.8709
+NDf                       =           12
+Edm                       =  1.60865e-20
+NCalls                    =          186
+p0                        =  0.000823995   +/-   2.17723e-05 
+p1                        =  0.000869894   +/-   3.25233e-05 
+p2                        =   0.00071288   +/-   3.76225e-05 
+p3                        =  0.000677861   +/-   6.3501e-05  
+p4                        =  0.000617453   +/-   0.000864326 
+p5                        =  0.000807296   +/-   0.00351387  
+p6                        =  -0.00243565   +/-   0.0106015   
+    INFO: Intermediate results saved to /eos/user/z/zixuan/Isotope/BkgEst/rew_results_O16_to_Be10.pdf
+
+--- All calculations finished. Starting to generate plots. ---
+
+>>> Successfully created plot: /eos/user/z/zixuan/Isotope/BkgEst/rew_frag_epsilon_B10.png
+>>> Successfully created plot: /eos/user/z/zixuan/Isotope/BkgEst/rew_frag_epsilon_B11.png
+>>> Successfully created plot: /eos/user/z/zixuan/Isotope/BkgEst/rew_frag_epsilon_Be10.png
+>>> Successfully created plot: /eos/user/z/zixuan/Isotope/BkgEst/rew_frag_epsilon_Be7.png
+>>> Successfully created plot: /eos/user/z/zixuan/Isotope/BkgEst/rew_frag_epsilon_Be9.png
+
+--- All plots generated and results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgEst/Epsilon_Results.root. Script finished. ---
+

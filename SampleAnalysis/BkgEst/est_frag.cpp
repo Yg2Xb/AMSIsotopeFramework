@@ -64,7 +64,7 @@ std::vector<double> xpoints2 = {0.33, 1.41, 5.62, 10.00, 30, 60, 100};
 const bool DO_REBIN = true;
 
 const vector<string> ALL_PARTICLES = {"Be7", "Be9", "Be10", "B10", "B11", "C12", "N14", "N15","O16"};
-const vector<string> ALL_SECONDARY_ISOTOPES = {"B10", "B11", "Be7", "Be9", "Be10"};
+const vector<string> ALL_SECONDARY_ISOTOPES = {"Be7", "Be9", "Be10"};
 
 const vector<string> DETECTORS = {"TOF", "NaF", "AGL"};
 
@@ -240,7 +240,7 @@ void est_frag() {
             
             string pdf_path = OUTPUT_DIR + "rew_results_" + primary + "_to_" + secondary + ".pdf";
             unique_ptr<TCanvas> intermediate_canvas(new TCanvas("intermediate_canvas", "Intermediate Results", 900, 700));
-            intermediate_canvas->SaveAs((pdf_path + "[").c_str());
+            intermediate_canvas->Print((pdf_path + "[").c_str());
             
             TF1* flux_X = fluxes.at(primary);
             TF1* flux_Y = fluxes.at(secondary);
@@ -260,7 +260,7 @@ void est_frag() {
                 leg->AddEntry(flux_X, Form("Flux(%s)", primary.c_str()), "l");
                 leg->AddEntry(flux_Y, Form("Flux(%s)", secondary.c_str()), "l");
                 leg->Draw();
-                intermediate_canvas->SaveAs(pdf_path.c_str());
+                intermediate_canvas->Print(pdf_path.c_str());
             }
             
             auto flux_ratio_func = [&](double ek) -> ValueWithError {
@@ -332,24 +332,25 @@ void est_frag() {
             
             if (!h_acc_ratio_combined) {
                 cerr << "ERROR: Combined acceptance ratio histogram could not be created for " << channel_label << ". Skipping." << endl;
-                intermediate_canvas->SaveAs((pdf_path + "]").c_str());
+                intermediate_canvas->Print((pdf_path + "]").c_str());
                 continue;
             }
             
             intermediate_canvas->Clear();
             intermediate_canvas->SetLogy(false);
             h_acc_ratio_combined->SetTitle(Form("Acceptance Ratio & Smooth (%s);E_{k}/n [GeV/n];Acc(X#rightarrowY)/Acc(Y)", "Combined"));
+            h_acc_ratio_combined->GetXaxis()->SetRangeUser(0.3, 20.5);
             h_acc_ratio_combined->Draw("PZ");
             
             unique_ptr<TF1> fit_acc_ratio_combined(smoothRatio(h_acc_ratio_combined.get(), Form("fit_acc_ratio_combined_%s_to_%s", primary.c_str(), secondary.c_str())));
             if (!fit_acc_ratio_combined) {
                 cerr << "    WARNING: Global spline fit failed for " << channel_label << ". Skipping final calculation." << endl;
-                intermediate_canvas->SaveAs((pdf_path + "]").c_str());
+                intermediate_canvas->Print((pdf_path + "]").c_str());
                 continue;
             }
             fit_acc_ratio_combined->SetLineColor(kRed);
             fit_acc_ratio_combined->Draw("SAME");
-            intermediate_canvas->SaveAs(pdf_path.c_str());
+            intermediate_canvas->Print(pdf_path.c_str());
             
             for (int i = 1; i <= h_final_epsilon->GetNbinsX(); ++i) {
                 double ek_n = h_final_epsilon->GetBinCenter(i);
@@ -381,11 +382,12 @@ void est_frag() {
                 h_final_epsilon->SetTitle(Form("Final #epsilon for %s;E_{k}/n [GeV/n];#epsilon", channel_label.c_str()));
                 setHistStyle(h_final_epsilon, kBlack);
                 h_final_epsilon->SetMinimum(0);
+                h_final_epsilon->GetXaxis()->SetRangeUser(0.3, 20.5);
                 h_final_epsilon->Draw("P");
-                intermediate_canvas->SaveAs(pdf_path.c_str());
+                intermediate_canvas->Print(pdf_path.c_str());
             }
             
-            intermediate_canvas->SaveAs((pdf_path + "]").c_str());
+            intermediate_canvas->Print((pdf_path + "]").c_str());
             cout << "    INFO: Intermediate results saved to " << pdf_path << endl;
 
         } // Primary loop
@@ -423,7 +425,7 @@ void est_frag() {
         y_max = std::max(y_max, h_sum->GetMaximum());
 
         y_min = (y_min < 1.0e9) ? y_min * 0.5 : 1e-6;
-        y_max = (y_max > 0) ? y_max * 1.2 : 1.0;
+        y_max = (y_max > 0) ? y_max * 1.4 : 1.0;
 
         TCanvas* c1 = new TCanvas(Form("c_%s", secondary_name.c_str()), Form("Epsilon for %s", secondary_name.c_str()), 800, 400);
         c1->SetGrid();

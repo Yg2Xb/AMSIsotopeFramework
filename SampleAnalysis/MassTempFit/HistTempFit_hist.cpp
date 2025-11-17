@@ -74,8 +74,8 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
     string fileSuffix = Form("_%s_%s_UseMass%d%s", chainName.c_str(), templateType.c_str(), UseMass, fitTypeSuffix.c_str());
     // --- END OF MODIFICATION ---
 
-    string outputPdfPath = outputDir + "/MassTF_" + config.name + fileSuffix + ".pdf";
-    string outputRootPath = outputDir + "/MassTF_" + config.name + fileSuffix + ".root";
+    string outputPdfPath = outputDir + "/wide_MassTF_" + config.name + fileSuffix + ".pdf";
+    string outputRootPath = outputDir + "/wide_MassTF_" + config.name + fileSuffix + ".root";
 
     unique_ptr<TFile> output_file(TFile::Open(outputRootPath.c_str(), "RECREATE"));
     cout << "[INFO] Output ROOT file: " << outputRootPath << endl;
@@ -334,8 +334,14 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
 
 // Entry point to run the analysis
 void HistTempFit_hist() {
-    //HistTempFit("Be", 7, false, true, 1, 2);
-    //HistTempFit("Be", 7, false, true, 2, 2, true, "Boron");
-    //HistTempFit("B", 10, false, true, 1, 2);
-    HistTempFit("B", 10, false, true, 1, 2, true, "Carbon");
+    HistTempFit("Be", 7, true, true, 1, 2);
+    HistTempFit("Be", 7, true, true, 2, 2, true, "Boron");
+    HistTempFit("Be", 7, true, true, 2, 2, true, "Carbon");
+    HistTempFit("Be", 7, true, true, 2, 2, true, "Nitrogen");
+    HistTempFit("Be", 7, true, true, 2, 2, true, "Oxygen");
+    
+    HistTempFit("B", 10, true, true, 1, 2);
+    HistTempFit("B", 10, true, true, 2, 2, true, "Carbon");
+    HistTempFit("B", 10, true, true, 2, 2, true, "Nitrogen");
+    HistTempFit("B", 10, true, true, 2, 2, true, "Oxygen");
 }

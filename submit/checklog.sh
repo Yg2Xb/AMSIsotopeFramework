@@ -47,7 +47,7 @@ if [ -z "$BATCH_NAMES" ]; then
 fi
 
 # 2. 对每一个批次名进行检查
-EXPECTED_COUNT=2951 # 0 到 2950 共有 2951 个文件
+EXPECTED_COUNT=2676 # 0 到 2950 共有 2951 个文件
 
 for BATCH_NAME in $BATCH_NAMES; do
     
@@ -61,7 +61,7 @@ for BATCH_NAME in $BATCH_NAMES; do
     FAILURE_COUNT=0
     
     # 检查 0 到 2950 的每个文件
-    for i in $(seq 0 2950); do
+    for i in $(seq 0 2676); do
         FILE_NAME="$LOG_DIR/output_${BATCH_NAME}.${i}"
         
         # 检查文件是否存在

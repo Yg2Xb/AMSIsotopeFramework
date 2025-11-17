@@ -1,2 +1,1 @@
-/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1307659177_10.root
-/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1307675163_10.root
+/eos/ams/user/z/zuhao/yanzx/ams_data/amsd69n_IHEPQcutDST/1305853512_10.root

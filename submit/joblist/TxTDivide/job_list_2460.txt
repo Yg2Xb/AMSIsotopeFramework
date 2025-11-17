@@ -6,3 +6,5 @@
 /eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699585677_10.root
 /eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699599599_10.root
 /eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699612135_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699641951_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699655342_10.root

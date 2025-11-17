@@ -49,8 +49,8 @@ bool TOFCut::cutBasicCharge(int charge) const {
 
 CutResult<2> TOFCut::cutBetaQuality(int charge) const {
     std::array<bool, 2> cuts{
-        true,
-        event_->tof_chisc < 5 && event_->tof_chist < 10
+        event_->tof_chisc < 5,
+        event_->tof_chist < 10
     };
 
     return CutResult<2>(cuts);
@@ -110,18 +110,34 @@ CutResult<2> TOFCut::cutTrapezoidEdges() const {
 }
 
 CutResult<2> TOFCut::cutTOF(int charge, bool isISS) const {
+    
     std::array<bool, 2> cuts{
-        //cutTrapezoidEdges().total,
-        isISS ? event_->tof_goodgeo[0] == 1 : cutTrapezoidEdges().total,
+        yanzx_dst ? event_->tof_goodgeo[0] == 1 : cutTrapezoidEdges().total,
         cutBetaQuality(charge).total
     };
-    return CutResult<2>(cuts);
+    
+    return CutResult<2>(cuts); 
+}
+
+CutResult<4> TOFCut::cutTOFforBkg(int charge, bool isISS) const {
+    auto geo_cut = yanzx_dst ? event_->tof_goodgeo[0] == 1 : cutTrapezoidEdges().total;
+    
+    auto beta_q_cut = cutBetaQuality(charge);
+    
+    std::array<bool, 4> cuts{
+        beta_q_cut.total && geo_cut,       // chi2 cut       
+        geo_cut,                           // no chi2 cut           
+        beta_q_cut.details[0] && geo_cut,  // only coordinate chi2 cut            
+        beta_q_cut.details[1] && geo_cut   // only time chi2 cut                
+    };
+    
+    return CutResult<4>(cuts, false); 
 }
 
 CutResult<2> TOFCut::cutTOFExcludeLayer4(int charge, bool isISS) const {
     std::array<bool, 2> cuts{
         //cutEdges().total,
-        isISS ? event_->tof_goodgeo[1] == 1 : cutEdges().total,
+        yanzx_dst ? event_->tof_goodgeo[1] == 1 : cutEdges().total,
         cutBetaQuality(charge).total
     };
     return CutResult<2>(cuts);

@@ -9,1083 +9,1089 @@ Starting to build CDF lookup tables for: Beryllium -> /eos/user/z/zixuan/Isotope
 
 Processing: L1Inner / Beryllium / TOF ...
 --> Processing Bin 4 (Ek_low = 0.2675, Ek_center = 0.3002)
-  [Info] Corrected param 'Width' at Ek=0.300. Extrapolated val -0.0044 was out of bounds. Using val 0.0238 from SAFE Ek boundary 0.430
-  [Info] Corrected param 'Width' at Ek=0.300. Extrapolated val -0.0169 was out of bounds. Using val 0.0181 from SAFE Ek boundary 0.430
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 4
-          Total Integral L1: 0.987453, Total Integral L2: 0.990458
-          Params for lg_l1 (L1): [ p0=0.02377 p1=3.98823 p2=1 p3=0.189073 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0181354 p1=4.00732 p2=1 p3=0.14918 p4=1 ]
+          Total Integral L1: 0.997143, Total Integral L2: 0.990094
+          Params for lg_l1 (L1): [ p0=0.0155854 p1=3.95031 p2=1 p3=0.164834 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0530788 p1=3.9059 p2=1 p3=0.122634 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 4
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=4.01688 p1=0.234264 p2=3.13152 p3=0.140064 p4=1.75013 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=4.08015 p1=0.227917 p2=2.31946 p3=0.0851497 p4=0.140706 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   5/73 (L1Inner/TOF) done. | Total CPU:    24.15 s | Total Wall:    25.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=4.0213 p1=0.206493 p2=3.01879 p3=0.114698 p4=0.680147 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93114 p1=0.138138 p2=2.39192 p3=0.137528 p4=0.978462 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   5/73 (L1Inner/TOF) done. | Total CPU:    62.81 s | Total Wall:    64.00 s | Mem:   468.23 MB
 --> Processing Bin 5 (Ek_low = 0.3329, Ek_center = 0.3695)
-  [Info] Corrected param 'Width' at Ek=0.370. Extrapolated val 0.0033 was out of bounds. Using val 0.0181 from SAFE Ek boundary 0.430
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 5
-          Total Integral L1: 0.993976, Total Integral L2: 0.990596
-          Params for lg_l1 (L1): [ p0=0.0118784 p1=3.95284 p2=1 p3=0.182815 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0181354 p1=3.97788 p2=1 p3=0.159008 p4=1 ]
+          Total Integral L1: 0.995842, Total Integral L2: 0.99324
+          Params for lg_l1 (L1): [ p0=0.0226484 p1=3.92715 p2=1 p3=0.172189 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0364114 p1=3.93539 p2=1 p3=0.149814 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 5
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97958 p1=0.206464 p2=3.13152 p3=0.185424 p4=1.69255 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=4.0332 p1=0.204646 p2=2.31946 p3=0.143533 p4=0.738623 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   6/73 (L1Inner/TOF) done. | Total CPU:    49.32 s | Total Wall:    51.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.9787 p1=0.191073 p2=3.01879 p3=0.177959 p4=1.14164 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.97328 p1=0.160787 p2=2.39192 p3=0.179272 p4=1.17954 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   6/73 (L1Inner/TOF) done. | Total CPU:   124.24 s | Total Wall:   126.00 s | Mem:   468.23 MB
 --> Processing Bin 6 (Ek_low = 0.4061, Ek_center = 0.4485)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 6
-          Total Integral L1: 0.986141, Total Integral L2: 0.988566
-          Params for lg_l1 (L1): [ p0=0.0270879 p1=3.92013 p2=1 p3=0.17677 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0221921 p1=3.95055 p2=1 p3=0.167882 p4=1 ]
+          Total Integral L1: 0.994424, Total Integral L2: 0.995097
+          Params for lg_l1 (L1): [ p0=0.0303077 p1=3.90718 p2=1 p3=0.17556 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0265295 p1=3.94749 p2=1 p3=0.169573 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 6
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94504 p1=0.180676 p2=3.13152 p3=0.227299 p4=1.63839 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.98963 p1=0.183045 p2=2.31946 p3=0.1975 p4=1.2891 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   7/73 (L1Inner/TOF) done. | Total CPU:    72.67 s | Total Wall:    74.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.94199 p1=0.176492 p2=3.01879 p3=0.229977 p4=1.49966 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9888 p1=0.175536 p2=2.39192 p3=0.215423 p4=1.34932 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   7/73 (L1Inner/TOF) done. | Total CPU:   184.64 s | Total Wall:   187.00 s | Mem:   468.23 MB
 --> Processing Bin 7 (Ek_low = 0.4909, Ek_center = 0.5393)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 7
-          Total Integral L1: 0.978536, Total Integral L2: 0.979823
-          Params for lg_l1 (L1): [ p0=0.0416926 p1=3.89385 p2=1 p3=0.167778 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0386802 p1=3.92668 p2=1 p3=0.171617 p4=1 ]
+          Total Integral L1: 0.992577, Total Integral L2: 0.994286
+          Params for lg_l1 (L1): [ p0=0.0401871 p1=3.89216 p2=1 p3=0.170282 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0309142 p1=3.9301 p2=1 p3=0.174746 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 7
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.91626 p1=0.158565 p2=3.13152 p3=0.260001 p4=1.58004 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95211 p1=0.164281 p2=2.31946 p3=0.240767 p4=1.69518 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   8/73 (L1Inner/TOF) done. | Total CPU:    94.95 s | Total Wall:    96.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.91447 p1=0.162159 p2=3.01879 p3=0.262398 p4=1.66361 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95959 p1=0.174039 p2=2.39192 p3=0.24299 p4=1.46738 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   8/73 (L1Inner/TOF) done. | Total CPU:   242.15 s | Total Wall:   244.00 s | Mem:   468.23 MB
 --> Processing Bin 8 (Ek_low = 0.5876, Ek_center = 0.6420)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 8
-          Total Integral L1: 0.970997, Total Integral L2: 0.973271
-          Params for lg_l1 (L1): [ p0=0.0558531 p1=3.88024 p2=1 p3=0.151691 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0509547 p1=3.90904 p2=1 p3=0.164179 p4=1 ]
+          Total Integral L1: 0.99032, Total Integral L2: 0.990706
+          Params for lg_l1 (L1): [ p0=0.0520961 p1=3.88368 p2=1 p3=0.155473 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0498771 p1=3.90616 p2=1 p3=0.163274 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 8
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.89852 p1=0.143253 p2=3.13152 p3=0.274359 p4=1.50882 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.92571 p1=0.150661 p2=2.31946 p3=0.26295 p4=1.80576 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   9/73 (L1Inner/TOF) done. | Total CPU:   116.89 s | Total Wall:   118.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.89906 p1=0.148785 p2=3.01879 p3=0.271092 p4=1.59974 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.92384 p1=0.155491 p2=2.39192 p3=0.259271 p4=1.5166 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   9/73 (L1Inner/TOF) done. | Total CPU:   297.49 s | Total Wall:   300.00 s | Mem:   468.23 MB
 --> Processing Bin 9 (Ek_low = 0.6964, Ek_center = 0.7589)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 9
-          Total Integral L1: 0.964057, Total Integral L2: 0.969596
-          Params for lg_l1 (L1): [ p0=0.0683877 p1=3.88138 p2=1 p3=0.129249 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0578841 p1=3.89932 p2=1 p3=0.14526 p4=1 ]
+          Total Integral L1: 0.988496, Total Integral L2: 0.987873
+          Params for lg_l1 (L1): [ p0=0.061577 p1=3.88264 p2=1 p3=0.139509 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0646344 p1=3.8958 p2=1 p3=0.146007 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 9
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.89533 p1=0.136737 p2=3.13152 p3=0.267296 p4=1.41714 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.91364 p1=0.143618 p2=2.31946 p3=0.260821 p4=1.58754 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  10/73 (L1Inner/TOF) done. | Total CPU:   139.93 s | Total Wall:   141.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.89749 p1=0.139946 p2=3.01879 p3=0.263224 p4=1.41894 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.91262 p1=0.139062 p2=2.39192 p3=0.262704 p4=1.48613 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  10/73 (L1Inner/TOF) done. | Total CPU:   352.45 s | Total Wall:   355.00 s | Mem:   468.23 MB
 --> Processing Bin 10 (Ek_low = 0.8215, Ek_center = 0.8902)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 10
-          Total Integral L1: 0.961637, Total Integral L2: 0.969002
-          Params for lg_l1 (L1): [ p0=0.0724218 p1=3.89069 p2=1 p3=0.116418 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0590384 p1=3.89817 p2=1 p3=0.130621 p4=1 ]
+          Total Integral L1: 0.988002, Total Integral L2: 0.988363
+          Params for lg_l1 (L1): [ p0=0.0640566 p1=3.88913 p2=1 p3=0.13112 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0620951 p1=3.89822 p2=1 p3=0.134308 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 10
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.90784 p1=0.139718 p2=3.13152 p3=0.249016 p4=1.3035 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.91704 p1=0.143679 p2=2.31946 p3=0.246585 p4=1.29632 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  11/73 (L1Inner/TOF) done. | Total CPU:   163.56 s | Total Wall:   165.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.90986 p1=0.139262 p2=3.01879 p3=0.246605 p4=1.23914 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.91818 p1=0.139241 p2=2.39192 p3=0.253181 p4=1.37552 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  11/73 (L1Inner/TOF) done. | Total CPU:   409.94 s | Total Wall:   413.00 s | Mem:   468.23 MB
 --> Processing Bin 11 (Ek_low = 0.9589, Ek_center = 1.0360)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 11
-          Total Integral L1: 0.966239, Total Integral L2: 0.970444
-          Params for lg_l1 (L1): [ p0=0.0638805 p1=3.90181 p2=1 p3=0.124169 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0563229 p1=3.90273 p2=1 p3=0.131865 p4=1 ]
+          Total Integral L1: 0.989216, Total Integral L2: 0.989832
+          Params for lg_l1 (L1): [ p0=0.0576697 p1=3.90045 p2=1 p3=0.134566 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0544432 p1=3.90434 p2=1 p3=0.134232 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 11
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93059 p1=0.14898 p2=3.13152 p3=0.229128 p4=1.17715 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9307 p1=0.148476 p2=2.31946 p3=0.231509 p4=1.14169 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  12/73 (L1Inner/TOF) done. | Total CPU:   186.93 s | Total Wall:   188.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.93122 p1=0.147892 p2=3.01879 p3=0.226922 p4=1.13021 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93146 p1=0.148289 p2=2.39192 p3=0.235285 p4=1.21401 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  12/73 (L1Inner/TOF) done. | Total CPU:   466.60 s | Total Wall:   470.00 s | Mem:   468.23 MB
 --> Processing Bin 12 (Ek_low = 1.1130, Ek_center = 1.1984)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 12
-          Total Integral L1: 0.975013, Total Integral L2: 0.972902
-          Params for lg_l1 (L1): [ p0=0.0477871 p1=3.91322 p2=1 p3=0.144781 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0516722 p1=3.91016 p2=1 p3=0.143398 p4=1 ]
+          Total Integral L1: 0.991426, Total Integral L2: 0.990147
+          Params for lg_l1 (L1): [ p0=0.0460649 p1=3.9141 p2=1 p3=0.145206 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.052774 p1=3.90788 p2=1 p3=0.141447 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 12
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95827 p1=0.161321 p2=3.13152 p3=0.20949 p4=1.04597 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94941 p1=0.155621 p2=2.31946 p3=0.217249 p4=1.08834 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  13/73 (L1Inner/TOF) done. | Total CPU:   209.73 s | Total Wall:   211.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95687 p1=0.161904 p2=3.01879 p3=0.206252 p4=1.07012 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94731 p1=0.157616 p2=2.39192 p3=0.213356 p4=1.02867 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  13/73 (L1Inner/TOF) done. | Total CPU:   522.30 s | Total Wall:   526.00 s | Mem:   468.23 MB
 --> Processing Bin 13 (Ek_low = 1.2839, Ek_center = 1.3776)
   [Debug] For context: LG model for L1Inner, Beryllium, TOF, bin 13
-          Total Integral L1: 0.984574, Total Integral L2: 0.975582
-          Params for lg_l1 (L1): [ p0=0.0299786 p1=3.92435 p2=1 p3=0.168526 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0465986 p1=3.91819 p2=1 p3=0.157595 p4=1 ]
+          Total Integral L1: 0.99384, Total Integral L2: 0.989914
+          Params for lg_l1 (L1): [ p0=0.0332904 p1=3.92799 p2=1 p3=0.157628 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0539587 p1=3.91003 p2=1 p3=0.150579 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, TOF, bin 13
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.98653 p1=0.174178 p2=3.13152 p3=0.190542 p4=0.917481 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96902 p1=0.163233 p2=2.31946 p3=0.203677 p4=1.06646 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  14/73 (L1Inner/TOF) done. | Total CPU:   232.42 s | Total Wall:   234.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.98298 p1=0.177058 p2=3.01879 p3=0.18594 p4=1.02629 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96327 p1=0.166226 p2=2.39192 p3=0.19093 p4=0.842146 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  14/73 (L1Inner/TOF) done. | Total CPU:   579.83 s | Total Wall:   583.00 s | Mem:   468.23 MB
 
 Processing: L1Inner / Beryllium / NaF ...
 --> Processing Bin 8 (Ek_low = 0.5876, Ek_center = 0.6420)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 8
-          Total Integral L1: 0.967728, Total Integral L2: 0.967968
-          Params for lg_l1 (L1): [ p0=0.0617123 p1=3.88552 p2=1 p3=0.123761 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0609994 p1=3.89489 p2=1 p3=0.126006 p4=1 ]
+          Total Integral L1: 0.988292, Total Integral L2: 0.988338
+          Params for lg_l1 (L1): [ p0=0.0627127 p1=3.87595 p2=1 p3=0.123517 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0622714 p1=3.89423 p2=1 p3=0.127101 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 8
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.90318 p1=0.127024 p2=2.44341 p3=0.252445 p4=0.99471 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.92998 p1=0.130063 p2=2.71434 p3=0.255414 p4=1.0551 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   9/73 (L1Inner/NaF) done. | Total CPU:   256.28 s | Total Wall:   258.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.86709 p1=0.12419 p2=2.49379 p3=0.204659 p4=1.25015 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.92883 p1=0.130899 p2=2.9322 p3=0.254999 p4=0.974901 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   9/73 (L1Inner/NaF) done. | Total CPU:   635.43 s | Total Wall:   639.00 s | Mem:   468.23 MB
 --> Processing Bin 9 (Ek_low = 0.6964, Ek_center = 0.7589)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 9
-          Total Integral L1: 0.96873, Total Integral L2: 0.969033
-          Params for lg_l1 (L1): [ p0=0.0597444 p1=3.8909 p2=1 p3=0.12721 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0590396 p1=3.89628 p2=1 p3=0.129684 p4=1 ]
+          Total Integral L1: 0.988676, Total Integral L2: 0.988776
+          Params for lg_l1 (L1): [ p0=0.0606253 p1=3.88515 p2=1 p3=0.126829 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0599927 p1=3.89581 p2=1 p3=0.130867 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 9
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.91186 p1=0.133567 p2=2.44341 p3=0.245232 p4=1.02323 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93206 p1=0.138378 p2=2.71434 p3=0.246306 p4=1.06785 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  10/73 (L1Inner/NaF) done. | Total CPU:   280.06 s | Total Wall:   282.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.8899 p1=0.131696 p2=2.49379 p3=0.207019 p4=1.21278 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.931 p1=0.138361 p2=2.9322 p3=0.246916 p4=0.999232 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  10/73 (L1Inner/NaF) done. | Total CPU:   692.32 s | Total Wall:   696.00 s | Mem:   468.23 MB
 --> Processing Bin 10 (Ek_low = 0.8215, Ek_center = 0.8902)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 10
-          Total Integral L1: 0.969689, Total Integral L2: 0.970047
-          Params for lg_l1 (L1): [ p0=0.0578679 p1=3.89598 p2=1 p3=0.130499 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0571708 p1=3.8976 p2=1 p3=0.133192 p4=1 ]
+          Total Integral L1: 0.989044, Total Integral L2: 0.989194
+          Params for lg_l1 (L1): [ p0=0.0586349 p1=3.89369 p2=1 p3=0.129988 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0578198 p1=3.89731 p2=1 p3=0.134458 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 10
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.92001 p1=0.139721 p2=2.44341 p3=0.238514 p4=1.05043 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93403 p1=0.146184 p2=2.71434 p3=0.237809 p4=1.08001 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  11/73 (L1Inner/NaF) done. | Total CPU:   303.78 s | Total Wall:   306.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.911 p1=0.138744 p2=2.49379 p3=0.20927 p4=1.17839 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93307 p1=0.145376 p2=2.9322 p3=0.239366 p4=1.02243 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  11/73 (L1Inner/NaF) done. | Total CPU:   750.30 s | Total Wall:   755.00 s | Mem:   468.23 MB
 --> Processing Bin 11 (Ek_low = 0.9589, Ek_center = 1.0360)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 11
-          Total Integral L1: 0.970605, Total Integral L2: 0.971009
-          Params for lg_l1 (L1): [ p0=0.0560844 p1=3.90065 p2=1 p3=0.133625 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0553946 p1=3.89885 p2=1 p3=0.136525 p4=1 ]
+          Total Integral L1: 0.989394, Total Integral L2: 0.98959
+          Params for lg_l1 (L1): [ p0=0.056743 p1=3.90113 p2=1 p3=0.13299 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0557545 p1=3.89874 p2=1 p3=0.137871 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 11
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.92741 p1=0.145321 p2=2.44341 p3=0.232588 p4=1.07627 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93591 p1=0.15325 p2=2.71434 p3=0.230277 p4=1.09157 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  12/73 (L1Inner/NaF) done. | Total CPU:   327.12 s | Total Wall:   329.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.92917 p1=0.145126 p2=2.49379 p3=0.211409 p4=1.14925 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93503 p1=0.151752 p2=2.9322 p3=0.232643 p4=1.04448 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  12/73 (L1Inner/NaF) done. | Total CPU:   806.71 s | Total Wall:   812.00 s | Mem:   468.23 MB
 --> Processing Bin 12 (Ek_low = 1.1130, Ek_center = 1.1984)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 12
-          Total Integral L1: 0.971489, Total Integral L2: 0.971932
-          Params for lg_l1 (L1): [ p0=0.0543711 p1=3.90489 p2=1 p3=0.136628 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0536884 p1=3.90006 p2=1 p3=0.139728 p4=1 ]
+          Total Integral L1: 0.989734, Total Integral L2: 0.989969
+          Params for lg_l1 (L1): [ p0=0.0549257 p1=3.90723 p2=1 p3=0.135874 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0537706 p1=3.90011 p2=1 p3=0.14115 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 12
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93398 p1=0.150316 p2=2.44341 p3=0.227604 p4=1.1011 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93771 p1=0.159495 p2=2.71434 p3=0.22388 p4=1.10267 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  13/73 (L1Inner/NaF) done. | Total CPU:   350.28 s | Total Wall:   353.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.94372 p1=0.150768 p2=2.49379 p3=0.213463 p4=1.12676 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93692 p1=0.157429 p2=2.9322 p3=0.226885 p4=1.06567 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  13/73 (L1Inner/NaF) done. | Total CPU:   863.23 s | Total Wall:   869.00 s | Mem:   468.23 MB
 --> Processing Bin 13 (Ek_low = 1.2839, Ek_center = 1.3776)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 13
-          Total Integral L1: 0.972342, Total Integral L2: 0.972814
-          Params for lg_l1 (L1): [ p0=0.0527324 p1=3.90863 p2=1 p3=0.1395 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0520564 p1=3.90121 p2=1 p3=0.142791 p4=1 ]
+          Total Integral L1: 0.990061, Total Integral L2: 0.990332
+          Params for lg_l1 (L1): [ p0=0.0531875 p1=3.91174 p2=1 p3=0.138632 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.051873 p1=3.90143 p2=1 p3=0.144286 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 13
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93959 p1=0.154607 p2=2.44341 p3=0.22374 p4=1.12485 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93944 p1=0.164775 p2=2.71434 p3=0.218827 p4=1.11329 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  14/73 (L1Inner/NaF) done. | Total CPU:   373.08 s | Total Wall:   376.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95394 p1=0.155543 p2=2.49379 p3=0.215429 p4=1.11223 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93873 p1=0.162288 p2=2.9322 p3=0.222267 p4=1.08593 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  14/73 (L1Inner/NaF) done. | Total CPU:   919.45 s | Total Wall:   925.00 s | Mem:   468.23 MB
 --> Processing Bin 14 (Ek_low = 1.4714, Ek_center = 1.5758)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 14
-          Total Integral L1: 0.97317, Total Integral L2: 0.973664
-          Params for lg_l1 (L1): [ p0=0.0511515 p1=3.91187 p2=1 p3=0.142271 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.050482 p1=3.90232 p2=1 p3=0.145746 p4=1 ]
+          Total Integral L1: 0.990379, Total Integral L2: 0.990682
+          Params for lg_l1 (L1): [ p0=0.0515106 p1=3.91453 p2=1 p3=0.141293 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0500424 p1=3.90269 p2=1 p3=0.147311 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 14
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.9442 p1=0.158173 p2=2.44341 p3=0.221071 p4=1.14776 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9411 p1=0.169057 p2=2.71434 p3=0.215206 p4=1.12354 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  15/73 (L1Inner/NaF) done. | Total CPU:   395.69 s | Total Wall:   398.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95947 p1=0.159419 p2=2.49379 p3=0.217325 p4=1.10642 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94047 p1=0.166307 p2=2.9322 p3=0.218858 p4=1.10547 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  15/73 (L1Inner/NaF) done. | Total CPU:   975.05 s | Total Wall:   981.00 s | Mem:   468.23 MB
 --> Processing Bin 15 (Ek_low = 1.6803, Ek_center = 1.7954)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 15
-          Total Integral L1: 0.97398, Total Integral L2: 0.974487
-          Params for lg_l1 (L1): [ p0=0.0496176 p1=3.9146 p2=1 p3=0.144959 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0489543 p1=3.9034 p2=1 p3=0.148613 p4=1 ]
+          Total Integral L1: 0.99069, Total Integral L2: 0.99102
+          Params for lg_l1 (L1): [ p0=0.0498835 p1=3.91563 p2=1 p3=0.143875 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0482661 p1=3.90392 p2=1 p3=0.150246 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 15
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94776 p1=0.160986 p2=2.44341 p3=0.219679 p4=1.16999 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94271 p1=0.172293 p2=2.71434 p3=0.213108 p4=1.13348 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  16/73 (L1Inner/NaF) done. | Total CPU:   417.95 s | Total Wall:   421.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.96033 p1=0.162356 p2=2.49379 p3=0.219165 p4=1.11005 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94216 p1=0.169448 p2=2.9322 p3=0.216731 p4=1.12444 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  16/73 (L1Inner/NaF) done. | Total CPU:  1029.89 s | Total Wall:  1037.00 s | Mem:   468.23 MB
 --> Processing Bin 16 (Ek_low = 1.9105, Ek_center = 2.0363)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 16
-          Total Integral L1: 0.974768, Total Integral L2: 0.975281
-          Params for lg_l1 (L1): [ p0=0.0481368 p1=3.91679 p2=1 p3=0.147554 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0474796 p1=3.90444 p2=1 p3=0.151381 p4=1 ]
+          Total Integral L1: 0.990992, Total Integral L2: 0.991346
+          Params for lg_l1 (L1): [ p0=0.0483128 p1=3.91567 p2=1 p3=0.146368 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0465514 p1=3.90511 p2=1 p3=0.15308 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 16
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95022 p1=0.162997 p2=2.44341 p3=0.219638 p4=1.19145 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94427 p1=0.174417 p2=2.71434 p3=0.212623 p4=1.14307 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  17/73 (L1Inner/NaF) done. | Total CPU:   440.40 s | Total Wall:   443.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95813 p1=0.164294 p2=2.49379 p3=0.220941 p4=1.12364 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94379 p1=0.171658 p2=2.9322 p3=0.215963 p4=1.14275 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  17/73 (L1Inner/NaF) done. | Total CPU:  1084.87 s | Total Wall:  1092.00 s | Mem:   468.23 MB
 --> Processing Bin 17 (Ek_low = 2.1621, Ek_center = 2.2985)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 17
-          Total Integral L1: 0.975531, Total Integral L2: 0.976044
-          Params for lg_l1 (L1): [ p0=0.0467122 p1=3.91841 p2=1 p3=0.150051 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0460608 p1=3.90544 p2=1 p3=0.154044 p4=1 ]
+          Total Integral L1: 0.991282, Total Integral L2: 0.99166
+          Params for lg_l1 (L1): [ p0=0.0468016 p1=3.91536 p2=1 p3=0.148766 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0449018 p1=3.90625 p2=1 p3=0.155806 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 17
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95155 p1=0.16419 p2=2.44341 p3=0.22097 p4=1.2121 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94577 p1=0.17541 p2=2.71434 p3=0.213777 p4=1.1523 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  18/73 (L1Inner/NaF) done. | Total CPU:   462.90 s | Total Wall:   466.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95459 p1=0.165213 p2=2.49379 p3=0.222649 p4=1.14733 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94536 p1=0.172917 p2=2.9322 p3=0.216578 p4=1.16036 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  18/73 (L1Inner/NaF) done. | Total CPU:  1139.17 s | Total Wall:  1146.00 s | Mem:   468.23 MB
 --> Processing Bin 18 (Ek_low = 2.4349, Ek_center = 2.5844)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 18
-          Total Integral L1: 0.976276, Total Integral L2: 0.976781
-          Params for lg_l1 (L1): [ p0=0.0453335 p1=3.91951 p2=1 p3=0.152468 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0446878 p1=3.90641 p2=1 p3=0.156621 p4=1 ]
+          Total Integral L1: 0.991563, Total Integral L2: 0.991963
+          Params for lg_l1 (L1): [ p0=0.0453392 p1=3.91523 p2=1 p3=0.151087 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0433053 p1=3.90735 p2=1 p3=0.158445 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 18
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95181 p1=0.164604 p2=2.44341 p3=0.223629 p4=1.23208 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94722 p1=0.175319 p2=2.71434 p3=0.216514 p4=1.16124 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  19/73 (L1Inner/NaF) done. | Total CPU:   485.67 s | Total Wall:   488.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95111 p1=0.165159 p2=2.49379 p3=0.224303 p4=1.18087 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94688 p1=0.173269 p2=2.9322 p3=0.218524 p4=1.17741 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  19/73 (L1Inner/NaF) done. | Total CPU:  1193.54 s | Total Wall:  1201.00 s | Mem:   468.23 MB
 --> Processing Bin 19 (Ek_low = 2.7338, Ek_center = 2.8963)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 19
-          Total Integral L1: 0.977003, Total Integral L2: 0.977496
-          Params for lg_l1 (L1): [ p0=0.0439934 p1=3.92018 p2=1 p3=0.154816 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433533 p1=3.90736 p2=1 p3=0.159126 p4=1 ]
+          Total Integral L1: 0.991834, Total Integral L2: 0.992257
+          Params for lg_l1 (L1): [ p0=0.0439178 p1=3.91576 p2=1 p3=0.153342 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0417536 p1=3.90843 p2=1 p3=0.161009 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 19
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95118 p1=0.164383 p2=2.44341 p3=0.227364 p4=1.2515 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94863 p1=0.174347 p2=2.71434 p3=0.220535 p4=1.16992 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  20/73 (L1Inner/NaF) done. | Total CPU:   508.77 s | Total Wall:   512.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.94882 p1=0.164314 p2=2.49379 p3=0.22591 p4=1.22239 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94835 p1=0.172884 p2=2.9322 p3=0.221552 p4=1.19398 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  20/73 (L1Inner/NaF) done. | Total CPU:  1248.69 s | Total Wall:  1256.00 s | Mem:   468.23 MB
 --> Processing Bin 20 (Ek_low = 3.0587, Ek_center = 3.2342)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 20
-          Total Integral L1: 0.97771, Total Integral L2: 0.978189
-          Params for lg_l1 (L1): [ p0=0.0426957 p1=3.92051 p2=1 p3=0.157091 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0420609 p1=3.90827 p2=1 p3=0.161552 p4=1 ]
+          Total Integral L1: 0.992095, Total Integral L2: 0.992542
+          Params for lg_l1 (L1): [ p0=0.0425413 p1=3.9172 p2=1 p3=0.155527 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0402508 p1=3.90947 p2=1 p3=0.163493 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 20
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.9499 p1=0.163683 p2=2.44341 p3=0.231883 p4=1.27031 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95 p1=0.172715 p2=2.71434 p3=0.225495 p4=1.17833 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  21/73 (L1Inner/NaF) done. | Total CPU:   531.61 s | Total Wall:   535.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.94845 p1=0.162874 p2=2.49379 p3=0.227466 p4=1.26957 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94978 p1=0.171941 p2=2.9322 p3=0.225373 p4=1.21002 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  21/73 (L1Inner/NaF) done. | Total CPU:  1303.69 s | Total Wall:  1311.00 s | Mem:   468.23 MB
 --> Processing Bin 21 (Ek_low = 3.4096, Ek_center = 3.6004)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 21
-          Total Integral L1: 0.978399, Total Integral L2: 0.97886
-          Params for lg_l1 (L1): [ p0=0.041434 p1=3.9206 p2=1 p3=0.159302 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0408044 p1=3.90916 p2=1 p3=0.16391 p4=1 ]
+          Total Integral L1: 0.992347, Total Integral L2: 0.992818
+          Params for lg_l1 (L1): [ p0=0.041203 p1=3.9194 p2=1 p3=0.15765 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0387898 p1=3.91048 p2=1 p3=0.165907 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 21
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94813 p1=0.162631 p2=2.44341 p3=0.236961 p4=1.28859 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95133 p1=0.170604 p2=2.71434 p3=0.231126 p4=1.18651 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  22/73 (L1Inner/NaF) done. | Total CPU:   554.65 s | Total Wall:   558.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.94968 p1=0.161003 p2=2.49379 p3=0.22898 p4=1.32074 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95117 p1=0.170592 p2=2.9322 p3=0.229763 p4=1.22562 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  22/73 (L1Inner/NaF) done. | Total CPU:  1359.22 s | Total Wall:  1367.00 s | Mem:   468.23 MB
 --> Processing Bin 22 (Ek_low = 3.7913, Ek_center = 3.9975)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 22
-          Total Integral L1: 0.979071, Total Integral L2: 0.979515
-          Params for lg_l1 (L1): [ p0=0.0402038 p1=3.92052 p2=1 p3=0.161458 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0395792 p1=3.91002 p2=1 p3=0.166209 p4=1 ]
+          Total Integral L1: 0.992592, Total Integral L2: 0.993087
+          Params for lg_l1 (L1): [ p0=0.039898 p1=3.92212 p2=1 p3=0.159721 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0373653 p1=3.91146 p2=1 p3=0.168261 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 22
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94603 p1=0.161338 p2=2.44341 p3=0.242408 p4=1.30642 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95262 p1=0.168164 p2=2.71434 p3=0.237204 p4=1.19448 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  23/73 (L1Inner/NaF) done. | Total CPU:   577.50 s | Total Wall:   582.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95204 p1=0.158837 p2=2.49379 p3=0.230455 p4=1.37448 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95253 p1=0.168962 p2=2.9322 p3=0.234534 p4=1.24083 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  23/73 (L1Inner/NaF) done. | Total CPU:  1415.27 s | Total Wall:  1423.00 s | Mem:   468.23 MB
 --> Processing Bin 23 (Ek_low = 4.2037, Ek_center = 4.4253)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 23
-          Total Integral L1: 0.979724, Total Integral L2: 0.98015
-          Params for lg_l1 (L1): [ p0=0.0390082 p1=3.92032 p2=1 p3=0.163554 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0383884 p1=3.91086 p2=1 p3=0.168444 p4=1 ]
+          Total Integral L1: 0.99283, Total Integral L2: 0.993348
+          Params for lg_l1 (L1): [ p0=0.0386298 p1=3.92514 p2=1 p3=0.161734 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0359808 p1=3.91242 p2=1 p3=0.170549 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 23
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94374 p1=0.159902 p2=2.44341 p3=0.248032 p4=1.32375 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95388 p1=0.16554 p2=2.71434 p3=0.2435 p4=1.20223 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  24/73 (L1Inner/NaF) done. | Total CPU:   600.24 s | Total Wall:   604.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95509 p1=0.156505 p2=2.49379 p3=0.231889 p4=1.42926 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95384 p1=0.16717 p2=2.9322 p3=0.239496 p4=1.25561 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  24/73 (L1Inner/NaF) done. | Total CPU:  1471.69 s | Total Wall:  1480.00 s | Mem:   468.23 MB
 --> Processing Bin 24 (Ek_low = 4.6468, Ek_center = 4.8936)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 24
-          Total Integral L1: 0.980369, Total Integral L2: 0.980778
-          Params for lg_l1 (L1): [ p0=0.037825 p1=3.92006 p2=1 p3=0.165627 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0372102 p1=3.9117 p2=1 p3=0.170656 p4=1 ]
+          Total Integral L1: 0.993064, Total Integral L2: 0.993606
+          Params for lg_l1 (L1): [ p0=0.0373748 p1=3.92835 p2=1 p3=0.163725 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0346108 p1=3.91337 p2=1 p3=0.172814 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 24
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94134 p1=0.158381 p2=2.44341 p3=0.253783 p4=1.3409 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95513 p1=0.162801 p2=2.71434 p3=0.24995 p4=1.20989 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  25/73 (L1Inner/NaF) done. | Total CPU:   622.78 s | Total Wall:   627.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95855 p1=0.154069 p2=2.49379 p3=0.233308 p4=1.4849 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95515 p1=0.165279 p2=2.9322 p3=0.244589 p4=1.27024 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  25/73 (L1Inner/NaF) done. | Total CPU:  1529.13 s | Total Wall:  1538.00 s | Mem:   468.23 MB
 --> Processing Bin 25 (Ek_low = 5.1404, Ek_center = 5.3876)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 25
-          Total Integral L1: 0.980984, Total Integral L2: 0.981377
-          Params for lg_l1 (L1): [ p0=0.0366939 p1=3.91979 p2=1 p3=0.16761 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0360837 p1=3.91249 p2=1 p3=0.17277 p4=1 ]
+          Total Integral L1: 0.993288, Total Integral L2: 0.993853
+          Params for lg_l1 (L1): [ p0=0.036175 p1=3.93148 p2=1 p3=0.165629 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0333009 p1=3.91427 p2=1 p3=0.174978 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 25
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.939 p1=0.156897 p2=2.44341 p3=0.259336 p4=1.35729 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95632 p1=0.16014 p2=2.71434 p3=0.256183 p4=1.21722 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  26/73 (L1Inner/NaF) done. | Total CPU:   645.30 s | Total Wall:   649.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.96198 p1=0.151702 p2=2.49379 p3=0.234665 p4=1.53853 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95639 p1=0.163437 p2=2.9322 p3=0.249513 p4=1.28423 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  26/73 (L1Inner/NaF) done. | Total CPU:  1587.27 s | Total Wall:  1596.00 s | Mem:   468.23 MB
 --> Processing Bin 26 (Ek_low = 5.6349, Ek_center = 5.9073)
   [Debug] For context: LG model for L1Inner, Beryllium, NaF, bin 26
-          Total Integral L1: 0.981572, Total Integral L2: 0.98195
-          Params for lg_l1 (L1): [ p0=0.0356109 p1=3.91953 p2=1 p3=0.169508 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0350051 p1=3.91325 p2=1 p3=0.174795 p4=1 ]
+          Total Integral L1: 0.993503, Total Integral L2: 0.994088
+          Params for lg_l1 (L1): [ p0=0.0350262 p1=3.93448 p2=1 p3=0.167452 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0320469 p1=3.91514 p2=1 p3=0.177051 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, NaF, bin 26
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93676 p1=0.155476 p2=2.44341 p3=0.264655 p4=1.37299 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95746 p1=0.157591 p2=2.71434 p3=0.262151 p4=1.22424 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  27/73 (L1Inner/NaF) done. | Total CPU:   667.46 s | Total Wall:   671.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.96527 p1=0.149434 p2=2.49379 p3=0.235964 p4=1.58989 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95759 p1=0.161672 p2=2.9322 p3=0.254229 p4=1.29762 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  27/73 (L1Inner/NaF) done. | Total CPU:  1645.20 s | Total Wall:  1654.00 s | Mem:   468.23 MB
 
 Processing: L1Inner / Beryllium / AGL ...
 --> Processing Bin 18 (Ek_low = 2.4349, Ek_center = 2.5844)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 18
-          Total Integral L1: 0.977964, Total Integral L2: 0.977439
-          Params for lg_l1 (L1): [ p0=0.0422333 p1=3.92064 p2=1 p3=0.156815 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433332 p1=3.91344 p2=1 p3=0.158414 p4=1 ]
+          Total Integral L1: 0.992286, Total Integral L2: 0.992057
+          Params for lg_l1 (L1): [ p0=0.0415061 p1=3.92156 p2=1 p3=0.158133 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0427692 p1=3.91318 p2=1 p3=0.159075 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 18
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95243 p1=0.163073 p2=2.74971 p3=0.230349 p4=1.28395 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94506 p1=0.16501 p2=2.80919 p3=0.235195 p4=1.29845 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  19/73 (L1Inner/AGL) done. | Total CPU:   690.26 s | Total Wall:   694.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95096 p1=0.162379 p2=2.72989 p3=0.23262 p4=1.32473 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94469 p1=0.165525 p2=2.87933 p3=0.23685 p4=1.31867 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  19/73 (L1Inner/AGL) done. | Total CPU:  1700.87 s | Total Wall:  1710.00 s | Mem:   468.35 MB
 --> Processing Bin 19 (Ek_low = 2.7338, Ek_center = 2.8963)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 19
-          Total Integral L1: 0.97793, Total Integral L2: 0.977415
-          Params for lg_l1 (L1): [ p0=0.0422687 p1=3.92195 p2=1 p3=0.156312 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433567 p1=3.91451 p2=1 p3=0.157769 p4=1 ]
+          Total Integral L1: 0.992267, Total Integral L2: 0.992044
+          Params for lg_l1 (L1): [ p0=0.0415985 p1=3.92283 p2=1 p3=0.157487 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0428263 p1=3.91423 p2=1 p3=0.158388 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 19
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95374 p1=0.162657 p2=2.74971 p3=0.229893 p4=1.28126 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94627 p1=0.164513 p2=2.80919 p3=0.234287 p4=1.2933 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  20/73 (L1Inner/AGL) done. | Total CPU:   713.14 s | Total Wall:   717.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.9525 p1=0.162019 p2=2.72989 p3=0.231837 p4=1.31605 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94596 p1=0.165009 p2=2.87933 p3=0.235477 p4=1.30928 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  20/73 (L1Inner/AGL) done. | Total CPU:  1755.23 s | Total Wall:  1764.00 s | Mem:   468.35 MB
 --> Processing Bin 20 (Ek_low = 3.0587, Ek_center = 3.2342)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 20
-          Total Integral L1: 0.977898, Total Integral L2: 0.977391
-          Params for lg_l1 (L1): [ p0=0.042303 p1=3.92322 p2=1 p3=0.155825 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433795 p1=3.91554 p2=1 p3=0.157144 p4=1 ]
+          Total Integral L1: 0.992248, Total Integral L2: 0.992032
+          Params for lg_l1 (L1): [ p0=0.0416879 p1=3.92407 p2=1 p3=0.156861 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0428815 p1=3.91524 p2=1 p3=0.157722 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 20
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95502 p1=0.162255 p2=2.74971 p3=0.229451 p4=1.27865 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94744 p1=0.164031 p2=2.80919 p3=0.233409 p4=1.28831 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  21/73 (L1Inner/AGL) done. | Total CPU:   735.96 s | Total Wall:   740.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95399 p1=0.16167 p2=2.72989 p3=0.231079 p4=1.30764 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94719 p1=0.164508 p2=2.87933 p3=0.234148 p4=1.3002 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  21/73 (L1Inner/AGL) done. | Total CPU:  1809.60 s | Total Wall:  1819.00 s | Mem:   468.35 MB
 --> Processing Bin 21 (Ek_low = 3.4096, Ek_center = 3.6004)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 21
-          Total Integral L1: 0.977867, Total Integral L2: 0.977369
-          Params for lg_l1 (L1): [ p0=0.0423363 p1=3.92446 p2=1 p3=0.155352 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434016 p1=3.91654 p2=1 p3=0.156536 p4=1 ]
+          Total Integral L1: 0.99223, Total Integral L2: 0.992021
+          Params for lg_l1 (L1): [ p0=0.0417749 p1=3.92527 p2=1 p3=0.156253 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429353 p1=3.91623 p2=1 p3=0.157075 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 21
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95626 p1=0.161864 p2=2.74971 p3=0.229021 p4=1.27611 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94857 p1=0.163562 p2=2.80919 p3=0.232555 p4=1.28346 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  22/73 (L1Inner/AGL) done. | Total CPU:   758.91 s | Total Wall:   763.00 s | Mem:   749.05 MB
+          Params for ege_l1 (L1): [ p0=3.95544 p1=0.161331 p2=2.72989 p3=0.230342 p4=1.29946 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94839 p1=0.164021 p2=2.87933 p3=0.232856 p4=1.29136 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  22/73 (L1Inner/AGL) done. | Total CPU:  1864.51 s | Total Wall:  1874.00 s | Mem:   468.35 MB
 --> Processing Bin 22 (Ek_low = 3.7913, Ek_center = 3.9975)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 22
-          Total Integral L1: 0.977836, Total Integral L2: 0.977347
-          Params for lg_l1 (L1): [ p0=0.0423688 p1=3.92566 p2=1 p3=0.15489 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434232 p1=3.91752 p2=1 p3=0.155944 p4=1 ]
+          Total Integral L1: 0.992212, Total Integral L2: 0.992009
+          Params for lg_l1 (L1): [ p0=0.0418598 p1=3.92644 p2=1 p3=0.15566 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429877 p1=3.91719 p2=1 p3=0.156445 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 22
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95747 p1=0.161482 p2=2.74971 p3=0.228603 p4=1.27364 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94968 p1=0.163105 p2=2.80919 p3=0.231722 p4=1.27873 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  23/73 (L1Inner/AGL) done. | Total CPU:   781.79 s | Total Wall:   786.00 s | Mem:   749.30 MB
+          Params for ege_l1 (L1): [ p0=3.95686 p1=0.161 p2=2.72989 p3=0.229623 p4=1.29149 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94956 p1=0.163547 p2=2.87933 p3=0.231596 p4=1.28275 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  23/73 (L1Inner/AGL) done. | Total CPU:  1919.64 s | Total Wall:  1930.00 s | Mem:   468.35 MB
 --> Processing Bin 23 (Ek_low = 4.2037, Ek_center = 4.4253)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 23
-          Total Integral L1: 0.977806, Total Integral L2: 0.977325
-          Params for lg_l1 (L1): [ p0=0.0424003 p1=3.92683 p2=1 p3=0.154441 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434442 p1=3.91847 p2=1 p3=0.155368 p4=1 ]
+          Total Integral L1: 0.992194, Total Integral L2: 0.991998
+          Params for lg_l1 (L1): [ p0=0.0419422 p1=3.92757 p2=1 p3=0.155083 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0430386 p1=3.91812 p2=1 p3=0.155832 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 23
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95864 p1=0.161111 p2=2.74971 p3=0.228196 p4=1.27124 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95076 p1=0.162661 p2=2.80919 p3=0.230912 p4=1.27414 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  24/73 (L1Inner/AGL) done. | Total CPU:   804.60 s | Total Wall:   809.00 s | Mem:   749.42 MB
+          Params for ege_l1 (L1): [ p0=3.95823 p1=0.160679 p2=2.72989 p3=0.228924 p4=1.28374 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95069 p1=0.163085 p2=2.87933 p3=0.230371 p4=1.27438 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  24/73 (L1Inner/AGL) done. | Total CPU:  1975.01 s | Total Wall:  1985.00 s | Mem:   468.35 MB
 --> Processing Bin 24 (Ek_low = 4.6468, Ek_center = 4.8936)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 24
-          Total Integral L1: 0.977776, Total Integral L2: 0.977304
-          Params for lg_l1 (L1): [ p0=0.0424316 p1=3.92798 p2=1 p3=0.153998 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.043465 p1=3.91941 p2=1 p3=0.154799 p4=1 ]
+          Total Integral L1: 0.992177, Total Integral L2: 0.991987
+          Params for lg_l1 (L1): [ p0=0.0420238 p1=3.9287 p2=1 p3=0.154513 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0430889 p1=3.91905 p2=1 p3=0.155225 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 24
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95981 p1=0.160744 p2=2.74971 p3=0.227793 p4=1.26886 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95182 p1=0.162221 p2=2.80919 p3=0.230111 p4=1.26959 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  25/73 (L1Inner/AGL) done. | Total CPU:   827.45 s | Total Wall:   832.00 s | Mem:   749.42 MB
+          Params for ege_l1 (L1): [ p0=3.95959 p1=0.160361 p2=2.72989 p3=0.228233 p4=1.27608 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95182 p1=0.162629 p2=2.87933 p3=0.22916 p4=1.26609 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  25/73 (L1Inner/AGL) done. | Total CPU:  2031.19 s | Total Wall:  2042.00 s | Mem:   468.35 MB
 --> Processing Bin 25 (Ek_low = 5.1404, Ek_center = 5.3876)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 25
-          Total Integral L1: 0.977748, Total Integral L2: 0.977283
-          Params for lg_l1 (L1): [ p0=0.0424614 p1=3.92909 p2=1 p3=0.153573 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434848 p1=3.92031 p2=1 p3=0.154254 p4=1 ]
+          Total Integral L1: 0.992161, Total Integral L2: 0.991977
+          Params for lg_l1 (L1): [ p0=0.0421018 p1=3.92978 p2=1 p3=0.153967 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0431371 p1=3.91993 p2=1 p3=0.154645 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 25
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96092 p1=0.160394 p2=2.74971 p3=0.227408 p4=1.26659 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95284 p1=0.161801 p2=2.80919 p3=0.229345 p4=1.26524 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  26/73 (L1Inner/AGL) done. | Total CPU:   850.29 s | Total Wall:   855.00 s | Mem:   749.42 MB
+          Params for ege_l1 (L1): [ p0=3.96089 p1=0.160057 p2=2.72989 p3=0.227572 p4=1.26875 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95289 p1=0.162193 p2=2.87933 p3=0.228001 p4=1.25817 p5=1 p6=2.5 p7=9.5 ]
+Error in <GSLError>: Error 18 in qags.c at 547 : cannot reach tolerance because of roundoff error
+Warning in <TF1::IntegralOneDim>: Error found in integrating function ege_l1 in [2.500000,9.274000] using AdaptiveSingular. Result = 1.000000 +/- 0.000000  - status = 18
+Info in <TF1::IntegralOneDim>: 		Function Parameters = { p0 =  3.960893 , p1 =  0.160057 , p2 =  2.729895 , p3 =  0.227572 , p4 =  1.268747 , p5 =  1.000000 , p6 =  2.500000 , p7 =  9.500000 }
+  [Progress] Bin  26/73 (L1Inner/AGL) done. | Total CPU:  2087.10 s | Total Wall:  2098.00 s | Mem:   468.35 MB
 --> Processing Bin 26 (Ek_low = 5.6349, Ek_center = 5.9073)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 26
-          Total Integral L1: 0.977721, Total Integral L2: 0.977264
-          Params for lg_l1 (L1): [ p0=0.04249 p1=3.93015 p2=1 p3=0.153167 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435038 p1=3.92117 p2=1 p3=0.153733 p4=1 ]
+          Total Integral L1: 0.992145, Total Integral L2: 0.991967
+          Params for lg_l1 (L1): [ p0=0.0421765 p1=3.93081 p2=1 p3=0.153445 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0431832 p1=3.92078 p2=1 p3=0.154089 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 26
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96198 p1=0.160058 p2=2.74971 p3=0.227039 p4=1.26441 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95382 p1=0.161399 p2=2.80919 p3=0.228612 p4=1.26108 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  27/73 (L1Inner/AGL) done. | Total CPU:   873.19 s | Total Wall:   878.00 s | Mem:   749.42 MB
+          Params for ege_l1 (L1): [ p0=3.96214 p1=0.159765 p2=2.72989 p3=0.22694 p4=1.26173 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95392 p1=0.161775 p2=2.87933 p3=0.226892 p4=1.25059 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  27/73 (L1Inner/AGL) done. | Total CPU:  2143.15 s | Total Wall:  2154.00 s | Mem:   468.35 MB
 --> Processing Bin 27 (Ek_low = 6.1798, Ek_center = 6.4774)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 27
-          Total Integral L1: 0.977693, Total Integral L2: 0.977244
-          Params for lg_l1 (L1): [ p0=0.0425187 p1=3.93121 p2=1 p3=0.15276 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435228 p1=3.92203 p2=1 p3=0.153211 p4=1 ]
+          Total Integral L1: 0.992129, Total Integral L2: 0.991957
+          Params for lg_l1 (L1): [ p0=0.0422512 p1=3.93184 p2=1 p3=0.152923 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0432294 p1=3.92162 p2=1 p3=0.153534 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 27
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96305 p1=0.159722 p2=2.74971 p3=0.22667 p4=1.26224 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95479 p1=0.160996 p2=2.80919 p3=0.227878 p4=1.25691 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  28/73 (L1Inner/AGL) done. | Total CPU:   896.11 s | Total Wall:   901.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.96338 p1=0.159474 p2=2.72989 p3=0.226307 p4=1.25471 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95495 p1=0.161357 p2=2.87933 p3=0.225782 p4=1.24301 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  28/73 (L1Inner/AGL) done. | Total CPU:  2199.38 s | Total Wall:  2211.00 s | Mem:   468.35 MB
 --> Processing Bin 28 (Ek_low = 6.7750, Ek_center = 7.0978)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 28
-          Total Integral L1: 0.977666, Total Integral L2: 0.977225
-          Params for lg_l1 (L1): [ p0=0.0425471 p1=3.93226 p2=1 p3=0.152356 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435417 p1=3.92289 p2=1 p3=0.152693 p4=1 ]
+          Total Integral L1: 0.992114, Total Integral L2: 0.991947
+          Params for lg_l1 (L1): [ p0=0.0423254 p1=3.93286 p2=1 p3=0.152404 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0432752 p1=3.92246 p2=1 p3=0.152982 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 28
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.9641 p1=0.159388 p2=2.74971 p3=0.226304 p4=1.26008 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95576 p1=0.160597 p2=2.80919 p3=0.22715 p4=1.25277 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  29/73 (L1Inner/AGL) done. | Total CPU:   919.02 s | Total Wall:   924.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.96462 p1=0.159185 p2=2.72989 p3=0.225678 p4=1.24774 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95597 p1=0.160942 p2=2.87933 p3=0.22468 p4=1.23547 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  29/73 (L1Inner/AGL) done. | Total CPU:  2256.03 s | Total Wall:  2267.00 s | Mem:   468.35 MB
 --> Processing Bin 29 (Ek_low = 7.4206, Ek_center = 7.7686)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 29
-          Total Integral L1: 0.977639, Total Integral L2: 0.977205
-          Params for lg_l1 (L1): [ p0=0.0425751 p1=3.9333 p2=1 p3=0.151958 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435603 p1=3.92373 p2=1 p3=0.152182 p4=1 ]
+          Total Integral L1: 0.992098, Total Integral L2: 0.991937
+          Params for lg_l1 (L1): [ p0=0.0423986 p1=3.93387 p2=1 p3=0.151892 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0433204 p1=3.92329 p2=1 p3=0.152438 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 29
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96515 p1=0.159059 p2=2.74971 p3=0.225942 p4=1.25794 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95672 p1=0.160202 p2=2.80919 p3=0.226431 p4=1.24869 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  30/73 (L1Inner/AGL) done. | Total CPU:   941.90 s | Total Wall:   947.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.96584 p1=0.158899 p2=2.72989 p3=0.225058 p4=1.24086 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95698 p1=0.160532 p2=2.87933 p3=0.223593 p4=1.22804 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  30/73 (L1Inner/AGL) done. | Total CPU:  2311.80 s | Total Wall:  2323.00 s | Mem:   468.35 MB
 --> Processing Bin 30 (Ek_low = 8.1166, Ek_center = 8.4897)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 30
-          Total Integral L1: 0.977613, Total Integral L2: 0.977186
-          Params for lg_l1 (L1): [ p0=0.0426027 p1=3.93432 p2=1 p3=0.151566 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435787 p1=3.92456 p2=1 p3=0.151679 p4=1 ]
+          Total Integral L1: 0.992083, Total Integral L2: 0.991927
+          Params for lg_l1 (L1): [ p0=0.0424706 p1=3.93486 p2=1 p3=0.151388 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0433648 p1=3.92411 p2=1 p3=0.151902 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 30
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96617 p1=0.158735 p2=2.74971 p3=0.225587 p4=1.25585 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95766 p1=0.159814 p2=2.80919 p3=0.225724 p4=1.24468 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  31/73 (L1Inner/AGL) done. | Total CPU:   964.70 s | Total Wall:   969.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.96704 p1=0.158619 p2=2.72989 p3=0.224448 p4=1.23409 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95797 p1=0.16013 p2=2.87933 p3=0.222523 p4=1.22073 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  31/73 (L1Inner/AGL) done. | Total CPU:  2368.22 s | Total Wall:  2380.00 s | Mem:   468.35 MB
 --> Processing Bin 31 (Ek_low = 8.8629, Ek_center = 9.2612)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 31
-          Total Integral L1: 0.977587, Total Integral L2: 0.977168
-          Params for lg_l1 (L1): [ p0=0.0426297 p1=3.93532 p2=1 p3=0.151182 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435966 p1=3.92538 p2=1 p3=0.151186 p4=1 ]
+          Total Integral L1: 0.992068, Total Integral L2: 0.991918
+          Params for lg_l1 (L1): [ p0=0.0425411 p1=3.93584 p2=1 p3=0.150895 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0434084 p1=3.92491 p2=1 p3=0.151378 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 31
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96718 p1=0.158418 p2=2.74971 p3=0.225239 p4=1.25379 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95858 p1=0.159434 p2=2.80919 p3=0.225031 p4=1.24075 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  32/73 (L1Inner/AGL) done. | Total CPU:   987.49 s | Total Wall:   992.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.96822 p1=0.158344 p2=2.72989 p3=0.22385 p4=1.22746 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95895 p1=0.159735 p2=2.87933 p3=0.221476 p4=1.21356 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  32/73 (L1Inner/AGL) done. | Total CPU:  2424.68 s | Total Wall:  2437.00 s | Mem:   468.35 MB
 --> Processing Bin 32 (Ek_low = 9.6595, Ek_center = 10.0830)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 32
-          Total Integral L1: 0.977562, Total Integral L2: 0.97715
-          Params for lg_l1 (L1): [ p0=0.0426561 p1=3.93629 p2=1 p3=0.150807 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436142 p1=3.92617 p2=1 p3=0.150705 p4=1 ]
+          Total Integral L1: 0.992053, Total Integral L2: 0.991909
+          Params for lg_l1 (L1): [ p0=0.0426101 p1=3.93679 p2=1 p3=0.150413 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.043451 p1=3.92569 p2=1 p3=0.150865 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 32
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96816 p1=0.158108 p2=2.74971 p3=0.224898 p4=1.25178 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95948 p1=0.159063 p2=2.80919 p3=0.224354 p4=1.2369 p5=1 p6=2 p7=6 ]
-Error in <GSLError>: Error 18 in qags.c at 547 : cannot reach tolerance because of roundoff error
-Warning in <TF1::IntegralOneDim>: Error found in integrating function ege_l1 in [2.000000,4.626000] using AdaptiveSingular. Result = 0.979914 +/- 0.000000  - status = 18
-Info in <TF1::IntegralOneDim>: 		Function Parameters = { p0 =  3.968161 , p1 =  0.158108 , p2 =  2.749711 , p3 =  0.224898 , p4 =  1.251782 , p5 =  1.000000 , p6 =  2.000000 , p7 =  6.000000 }
-  [Progress] Bin  33/73 (L1Inner/AGL) done. | Total CPU:  1010.28 s | Total Wall:  1015.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.96937 p1=0.158075 p2=2.72989 p3=0.223266 p4=1.22099 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9599 p1=0.159349 p2=2.87933 p3=0.220452 p4=1.20656 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  33/73 (L1Inner/AGL) done. | Total CPU:  2480.86 s | Total Wall:  2493.00 s | Mem:   468.35 MB
 --> Processing Bin 33 (Ek_low = 10.5065, Ek_center = 10.9800)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 33
-          Total Integral L1: 0.977537, Total Integral L2: 0.977132
-          Params for lg_l1 (L1): [ p0=0.0426825 p1=3.93727 p2=1 p3=0.150431 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436318 p1=3.92697 p2=1 p3=0.150222 p4=1 ]
+          Total Integral L1: 0.992039, Total Integral L2: 0.991899
+          Params for lg_l1 (L1): [ p0=0.0426792 p1=3.93774 p2=1 p3=0.14993 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0434937 p1=3.92647 p2=1 p3=0.150351 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 33
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96915 p1=0.157797 p2=2.74971 p3=0.224557 p4=1.24977 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96039 p1=0.158691 p2=2.80919 p3=0.223676 p4=1.23305 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  34/73 (L1Inner/AGL) done. | Total CPU:  1033.02 s | Total Wall:  1038.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.97052 p1=0.157805 p2=2.72989 p3=0.222681 p4=1.21449 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96085 p1=0.158963 p2=2.87933 p3=0.219425 p4=1.19955 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  34/73 (L1Inner/AGL) done. | Total CPU:  2537.39 s | Total Wall:  2550.00 s | Mem:   468.35 MB
 --> Processing Bin 34 (Ek_low = 11.4536, Ek_center = 11.9523)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 34
-          Total Integral L1: 0.977511, Total Integral L2: 0.977113
-          Params for lg_l1 (L1): [ p0=0.0427089 p1=3.93825 p2=1 p3=0.150057 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436493 p1=3.92776 p2=1 p3=0.149742 p4=1 ]
+          Total Integral L1: 0.992024, Total Integral L2: 0.99189
+          Params for lg_l1 (L1): [ p0=0.042748 p1=3.93869 p2=1 p3=0.149449 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0435361 p1=3.92725 p2=1 p3=0.14984 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 34
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97013 p1=0.157488 p2=2.74971 p3=0.224217 p4=1.24776 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96128 p1=0.15832 p2=2.80919 p3=0.223 p4=1.22921 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  35/73 (L1Inner/AGL) done. | Total CPU:  1055.86 s | Total Wall:  1061.00 s | Mem:   749.55 MB
+          Params for ege_l1 (L1): [ p0=3.97167 p1=0.157537 p2=2.72989 p3=0.222098 p4=1.20802 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9618 p1=0.158578 p2=2.87933 p3=0.218403 p4=1.19256 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  35/73 (L1Inner/AGL) done. | Total CPU:  2594.07 s | Total Wall:  2607.00 s | Mem:   468.35 MB
 --> Processing Bin 35 (Ek_low = 12.4510, Ek_center = 12.9748)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 35
-          Total Integral L1: 0.977487, Total Integral L2: 0.977096
-          Params for lg_l1 (L1): [ p0=0.0427344 p1=3.93919 p2=1 p3=0.149694 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436662 p1=3.92853 p2=1 p3=0.149277 p4=1 ]
+          Total Integral L1: 0.99201, Total Integral L2: 0.991881
+          Params for lg_l1 (L1): [ p0=0.0428146 p1=3.93961 p2=1 p3=0.148983 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0435773 p1=3.928 p2=1 p3=0.149345 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 35
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97107 p1=0.157189 p2=2.74971 p3=0.223889 p4=1.24582 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96215 p1=0.157961 p2=2.80919 p3=0.222346 p4=1.2255 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  36/73 (L1Inner/AGL) done. | Total CPU:  1078.74 s | Total Wall:  1083.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97278 p1=0.157278 p2=2.72989 p3=0.221534 p4=1.20177 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96271 p1=0.158205 p2=2.87933 p3=0.217415 p4=1.1858 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  36/73 (L1Inner/AGL) done. | Total CPU:  2651.34 s | Total Wall:  2664.00 s | Mem:   468.35 MB
 --> Processing Bin 36 (Ek_low = 13.4986, Ek_center = 14.0725)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 36
-          Total Integral L1: 0.977462, Total Integral L2: 0.977078
-          Params for lg_l1 (L1): [ p0=0.0427596 p1=3.94013 p2=1 p3=0.149336 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.043683 p1=3.92929 p2=1 p3=0.148817 p4=1 ]
+          Total Integral L1: 0.991996, Total Integral L2: 0.991872
+          Params for lg_l1 (L1): [ p0=0.0428804 p1=3.94052 p2=1 p3=0.148523 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0436179 p1=3.92875 p2=1 p3=0.148855 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 36
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97201 p1=0.156892 p2=2.74971 p3=0.223564 p4=1.2439 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96301 p1=0.157607 p2=2.80919 p3=0.2217 p4=1.22183 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  37/73 (L1Inner/AGL) done. | Total CPU:  1101.12 s | Total Wall:  1106.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97388 p1=0.157021 p2=2.72989 p3=0.220976 p4=1.19558 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96362 p1=0.157837 p2=2.87933 p3=0.216436 p4=1.17911 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  37/73 (L1Inner/AGL) done. | Total CPU:  2710.98 s | Total Wall:  2724.00 s | Mem:   468.35 MB
 --> Processing Bin 37 (Ek_low = 14.6464, Ek_center = 15.2454)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 37
-          Total Integral L1: 0.977439, Total Integral L2: 0.977061
-          Params for lg_l1 (L1): [ p0=0.0427845 p1=3.94105 p2=1 p3=0.148983 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436995 p1=3.93004 p2=1 p3=0.148364 p4=1 ]
+          Total Integral L1: 0.991982, Total Integral L2: 0.991863
+          Params for lg_l1 (L1): [ p0=0.0429454 p1=3.94141 p2=1 p3=0.148069 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.043658 p1=3.92949 p2=1 p3=0.148372 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 37
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97294 p1=0.1566 p2=2.74971 p3=0.223243 p4=1.24201 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96386 p1=0.157257 p2=2.80919 p3=0.221062 p4=1.21821 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  38/73 (L1Inner/AGL) done. | Total CPU:  1123.70 s | Total Wall:  1129.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97496 p1=0.156768 p2=2.72989 p3=0.220426 p4=1.18948 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96451 p1=0.157474 p2=2.87933 p3=0.215472 p4=1.17252 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  38/73 (L1Inner/AGL) done. | Total CPU:  2769.11 s | Total Wall:  2784.00 s | Mem:   468.35 MB
 --> Processing Bin 38 (Ek_low = 15.8444, Ek_center = 16.4935)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 38
-          Total Integral L1: 0.977415, Total Integral L2: 0.977044
-          Params for lg_l1 (L1): [ p0=0.0428089 p1=3.94195 p2=1 p3=0.148635 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0437157 p1=3.93077 p2=1 p3=0.147918 p4=1 ]
+          Total Integral L1: 0.991969, Total Integral L2: 0.991855
+          Params for lg_l1 (L1): [ p0=0.0430092 p1=3.94229 p2=1 p3=0.147622 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0436974 p1=3.93021 p2=1 p3=0.147898 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 38
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97385 p1=0.156314 p2=2.74971 p3=0.222928 p4=1.24015 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9647 p1=0.156913 p2=2.80919 p3=0.220436 p4=1.21465 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  39/73 (L1Inner/AGL) done. | Total CPU:  1145.91 s | Total Wall:  1151.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97602 p1=0.156519 p2=2.72989 p3=0.219885 p4=1.18348 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96539 p1=0.157117 p2=2.87933 p3=0.214524 p4=1.16604 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  39/73 (L1Inner/AGL) done. | Total CPU:  2827.89 s | Total Wall:  2843.00 s | Mem:   468.35 MB
 --> Processing Bin 39 (Ek_low = 17.1425, Ek_center = 17.8417)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 39
-          Total Integral L1: 0.977391, Total Integral L2: 0.977027
-          Params for lg_l1 (L1): [ p0=0.0428333 p1=3.94286 p2=1 p3=0.148289 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0437319 p1=3.93151 p2=1 p3=0.147473 p4=1 ]
+          Total Integral L1: 0.991955, Total Integral L2: 0.991846
+          Params for lg_l1 (L1): [ p0=0.0430729 p1=3.94317 p2=1 p3=0.147177 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0437368 p1=3.93093 p2=1 p3=0.147424 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 39
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97476 p1=0.156027 p2=2.74971 p3=0.222613 p4=1.2383 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96553 p1=0.15657 p2=2.80919 p3=0.21981 p4=1.2111 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  40/73 (L1Inner/AGL) done. | Total CPU:  1168.14 s | Total Wall:  1173.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97709 p1=0.15627 p2=2.72989 p3=0.219345 p4=1.1775 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96627 p1=0.15676 p2=2.87933 p3=0.213578 p4=1.15957 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  40/73 (L1Inner/AGL) done. | Total CPU:  2886.31 s | Total Wall:  2901.00 s | Mem:   468.35 MB
 --> Processing Bin 40 (Ek_low = 18.5408, Ek_center = 19.2900)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 40
-          Total Integral L1: 0.977368, Total Integral L2: 0.977011
-          Params for lg_l1 (L1): [ p0=0.0428575 p1=3.94375 p2=1 p3=0.147944 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0437481 p1=3.93224 p2=1 p3=0.147031 p4=1 ]
+          Total Integral L1: 0.991942, Total Integral L2: 0.991838
+          Params for lg_l1 (L1): [ p0=0.0431362 p1=3.94405 p2=1 p3=0.146734 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0437759 p1=3.93165 p2=1 p3=0.146953 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 40
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97566 p1=0.155742 p2=2.74971 p3=0.222301 p4=1.23645 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96636 p1=0.156229 p2=2.80919 p3=0.219188 p4=1.20757 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  41/73 (L1Inner/AGL) done. | Total CPU:  1190.44 s | Total Wall:  1196.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97814 p1=0.156024 p2=2.72989 p3=0.218809 p4=1.17155 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96714 p1=0.156406 p2=2.87933 p3=0.212638 p4=1.15314 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  41/73 (L1Inner/AGL) done. | Total CPU:  2944.52 s | Total Wall:  2960.00 s | Mem:   468.35 MB
 --> Processing Bin 41 (Ek_low = 20.0392, Ek_center = 20.8385)
   [Debug] For context: LG model for L1Inner, Beryllium, AGL, bin 41
-          Total Integral L1: 0.977345, Total Integral L2: 0.976994
-          Params for lg_l1 (L1): [ p0=0.0428815 p1=3.94464 p2=1 p3=0.147604 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.043764 p1=3.93296 p2=1 p3=0.146594 p4=1 ]
+          Total Integral L1: 0.991929, Total Integral L2: 0.991829
+          Params for lg_l1 (L1): [ p0=0.0431988 p1=3.94491 p2=1 p3=0.146296 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0438145 p1=3.93236 p2=1 p3=0.146487 p4=1 ]
   [Debug] For context: EGE model for L1Inner, Beryllium, AGL, bin 41
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97655 p1=0.155461 p2=2.74971 p3=0.221992 p4=1.23463 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96717 p1=0.155892 p2=2.80919 p3=0.218574 p4=1.20408 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  42/73 (L1Inner/AGL) done. | Total CPU:  1212.60 s | Total Wall:  1218.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97919 p1=0.155779 p2=2.72989 p3=0.218279 p4=1.16566 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96801 p1=0.156056 p2=2.87933 p3=0.211708 p4=1.14679 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  42/73 (L1Inner/AGL) done. | Total CPU:  3002.41 s | Total Wall:  3018.00 s | Mem:   468.35 MB
 
 Processing: UnbiasedL1Inner / Beryllium / TOF ...
 --> Processing Bin 4 (Ek_low = 0.2675, Ek_center = 0.3002)
-  [Info] Corrected param 'Width' at Ek=0.300. Extrapolated val -0.0263 was out of bounds. Using val 0.0223 from SAFE Ek boundary 0.430
-  [Info] Corrected param 'Width' at Ek=0.300. Extrapolated val -0.0124 was out of bounds. Using val 0.0199 from SAFE Ek boundary 0.430
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 4
-          Total Integral L1: 0.988308, Total Integral L2: 0.98954
-          Params for lg_l1 (L1): [ p0=0.0223138 p1=3.97924 p2=1 p3=0.186598 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.019869 p1=4.00457 p2=1 p3=0.136439 p4=1 ]
+          Total Integral L1: 0.996984, Total Integral L2: 0.989609
+          Params for lg_l1 (L1): [ p0=0.0164442 p1=3.94939 p2=1 p3=0.164162 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0556212 p1=3.90301 p2=1 p3=0.119238 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 4
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=4.01352 p1=0.2277 p2=3.00674 p3=0.150903 p4=1.6733 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=4.07913 p1=0.203786 p2=2.34681 p3=0.081964 p4=0.10931 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   5/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1236.29 s | Total Wall:  1242.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=4.02193 p1=0.206113 p2=3.05063 p3=0.11929 p4=0.665236 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.92126 p1=0.112118 p2=2.29315 p3=0.223637 p4=0.945339 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   5/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3066.62 s | Total Wall:  3083.00 s | Mem:   468.48 MB
 --> Processing Bin 5 (Ek_low = 0.3329, Ek_center = 0.3695)
-  [Info] Corrected param 'Width' at Ek=0.370. Extrapolated val 0.0018 was out of bounds. Using val 0.0223 from SAFE Ek boundary 0.430
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 5
-          Total Integral L1: 0.988513, Total Integral L2: 0.996828
-          Params for lg_l1 (L1): [ p0=0.0223138 p1=3.94607 p2=1 p3=0.181571 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.00627276 p1=3.97584 p2=1 p3=0.151596 p4=1 ]
+          Total Integral L1: 0.995805, Total Integral L2: 0.992967
+          Params for lg_l1 (L1): [ p0=0.0228501 p1=3.92681 p2=1 p3=0.172411 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0378508 p1=3.93396 p2=1 p3=0.147799 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 5
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97781 p1=0.202051 p2=3.00674 p3=0.192118 p4=1.63527 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=4.03337 p1=0.190441 p2=2.34681 p3=0.141238 p4=0.709341 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   6/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1262.39 s | Total Wall:  1268.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.97925 p1=0.191491 p2=3.05063 p3=0.179267 p4=1.13701 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.97091 p1=0.156402 p2=2.29315 p3=0.201352 p4=1.14228 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   6/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3129.44 s | Total Wall:  3146.00 s | Mem:   468.48 MB
 --> Processing Bin 6 (Ek_low = 0.4061, Ek_center = 0.4485)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 6
-          Total Integral L1: 0.985734, Total Integral L2: 0.987824
-          Params for lg_l1 (L1): [ p0=0.0279156 p1=3.91542 p2=1 p3=0.17666 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0236007 p1=3.94916 p2=1 p3=0.165387 p4=1 ]
+          Total Integral L1: 0.994484, Total Integral L2: 0.994988
+          Params for lg_l1 (L1): [ p0=0.0299893 p1=3.90734 p2=1 p3=0.176475 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0271102 p1=3.94704 p2=1 p3=0.16863 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 6
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94474 p1=0.178261 p2=3.00674 p3=0.230158 p4=1.59926 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9909 p1=0.177979 p2=2.34681 p3=0.196031 p4=1.26184 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   7/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1286.26 s | Total Wall:  1292.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.94247 p1=0.177469 p2=3.05063 p3=0.228843 p4=1.50409 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.99057 p1=0.181045 p2=2.29315 p3=0.200618 p4=1.30918 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   7/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3190.64 s | Total Wall:  3208.00 s | Mem:   468.48 MB
 --> Processing Bin 7 (Ek_low = 0.4909, Ek_center = 0.5393)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 7
-          Total Integral L1: 0.973852, Total Integral L2: 0.979764
-          Params for lg_l1 (L1): [ p0=0.0503278 p1=3.89101 p2=1 p3=0.168497 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0387977 p1=3.92587 p2=1 p3=0.172935 p4=1 ]
+          Total Integral L1: 0.992687, Total Integral L2: 0.994253
+          Params for lg_l1 (L1): [ p0=0.0396004 p1=3.89269 p2=1 p3=0.171507 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.031093 p1=3.92989 p2=1 p3=0.174294 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 7
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.91722 p1=0.15788 p2=3.00674 p3=0.259734 p4=1.55665 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95429 p1=0.165961 p2=2.34681 p3=0.239996 p4=1.67057 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   8/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1308.33 s | Total Wall:  1314.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.9149 p1=0.163217 p2=3.05063 p3=0.260453 p4=1.67535 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9601 p1=0.172491 p2=2.29315 p3=0.235403 p4=1.42687 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   8/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3249.23 s | Total Wall:  3267.00 s | Mem:   468.48 MB
 --> Processing Bin 8 (Ek_low = 0.5876, Ek_center = 0.6420)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 8
-          Total Integral L1: 0.965396, Total Integral L2: 0.973689
-          Params for lg_l1 (L1): [ p0=0.0659681 p1=3.87897 p2=1 p3=0.152613 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0501999 p1=3.90869 p2=1 p3=0.167095 p4=1 ]
+          Total Integral L1: 0.990425, Total Integral L2: 0.99065
+          Params for lg_l1 (L1): [ p0=0.0515422 p1=3.8844 p2=1 p3=0.156559 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0501688 p1=3.90605 p2=1 p3=0.162672 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 8
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.90031 p1=0.143811 p2=3.00674 p3=0.272346 p4=1.49681 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.92841 p1=0.15419 p2=2.34681 p3=0.262634 p4=1.78538 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   9/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1329.77 s | Total Wall:  1335.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.89948 p1=0.149396 p2=3.05063 p3=0.270167 p4=1.61607 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.92278 p1=0.152361 p2=2.29315 p3=0.266606 p4=1.47915 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin   9/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3305.16 s | Total Wall:  3323.00 s | Mem:   468.48 MB
 --> Processing Bin 9 (Ek_low = 0.6964, Ek_center = 0.7589)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 9
-          Total Integral L1: 0.961539, Total Integral L2: 0.970197
-          Params for lg_l1 (L1): [ p0=0.0728629 p1=3.8813 p2=1 p3=0.129685 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0568013 p1=3.89927 p2=1 p3=0.147318 p4=1 ]
+          Total Integral L1: 0.988559, Total Integral L2: 0.987763
+          Params for lg_l1 (L1): [ p0=0.0612421 p1=3.88337 p2=1 p3=0.14023 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0651972 p1=3.89595 p2=1 p3=0.145136 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 9
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.89741 p1=0.137914 p2=3.00674 p3=0.26512 p4=1.41091 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.91635 p1=0.143617 p2=2.34681 p3=0.260652 p4=1.57295 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  10/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1352.46 s | Total Wall:  1358.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.89793 p1=0.140017 p2=3.05063 p3=0.263791 p4=1.43481 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.913 p1=0.140864 p2=2.29315 p3=0.265496 p4=1.45587 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  10/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3359.77 s | Total Wall:  3378.00 s | Mem:   468.48 MB
 --> Processing Bin 10 (Ek_low = 0.8215, Ek_center = 0.8902)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 10
-          Total Integral L1: 0.962821, Total Integral L2: 0.969459
-          Params for lg_l1 (L1): [ p0=0.0703138 p1=3.89114 p2=1 p3=0.116261 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0582152 p1=3.89823 p2=1 p3=0.131205 p4=1 ]
+          Total Integral L1: 0.988012, Total Integral L2: 0.988243
+          Params for lg_l1 (L1): [ p0=0.064001 p1=3.88966 p2=1 p3=0.131483 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0627132 p1=3.89815 p2=1 p3=0.13357 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 10
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.90961 p1=0.14084 p2=3.00674 p3=0.247461 p4=1.29702 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.91922 p1=0.139985 p2=2.34681 p3=0.24622 p4=1.28619 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  11/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1376.09 s | Total Wall:  1382.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.91037 p1=0.139146 p2=3.05063 p3=0.247739 p4=1.24738 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.91931 p1=0.140946 p2=2.29315 p3=0.249396 p4=1.35656 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  11/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3416.84 s | Total Wall:  3435.00 s | Mem:   468.48 MB
 --> Processing Bin 11 (Ek_low = 0.9589, Ek_center = 1.0360)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 11
-          Total Integral L1: 0.967567, Total Integral L2: 0.970541
-          Params for lg_l1 (L1): [ p0=0.0615123 p1=3.90207 p2=1 p3=0.123777 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0561466 p1=3.9028 p2=1 p3=0.131877 p4=1 ]
+          Total Integral L1: 0.989177, Total Integral L2: 0.989803
+          Params for lg_l1 (L1): [ p0=0.0578723 p1=3.90067 p2=1 p3=0.134717 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0545957 p1=3.90425 p2=1 p3=0.134293 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 11
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93168 p1=0.149599 p2=3.00674 p3=0.228247 p4=1.1664 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93199 p1=0.146725 p2=2.34681 p3=0.230636 p4=1.13259 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  12/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1399.72 s | Total Wall:  1405.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.93181 p1=0.148166 p2=3.05063 p3=0.226987 p4=1.12324 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93236 p1=0.148135 p2=2.29315 p3=0.231171 p4=1.20888 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  12/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3472.88 s | Total Wall:  3492.00 s | Mem:   468.48 MB
 --> Processing Bin 12 (Ek_low = 1.1130, Ek_center = 1.1984)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 12
-          Total Integral L1: 0.973991, Total Integral L2: 0.972535
-          Params for lg_l1 (L1): [ p0=0.0496411 p1=3.91285 p2=1 p3=0.144409 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0523317 p1=3.91016 p2=1 p3=0.143517 p4=1 ]
+          Total Integral L1: 0.991342, Total Integral L2: 0.990326
+          Params for lg_l1 (L1): [ p0=0.0465026 p1=3.91394 p2=1 p3=0.145246 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0518382 p1=3.90856 p2=1 p3=0.142707 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 12
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95848 p1=0.161214 p2=3.00674 p3=0.209232 p4=1.02896 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94963 p1=0.159704 p2=2.34681 p3=0.215695 p4=1.07811 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  13/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1422.20 s | Total Wall:  1428.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95756 p1=0.162917 p2=3.05063 p3=0.204244 p4=1.04371 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94767 p1=0.158365 p2=2.29315 p3=0.216333 p4=1.03847 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  13/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3529.30 s | Total Wall:  3548.00 s | Mem:   468.48 MB
 --> Processing Bin 13 (Ek_low = 1.2839, Ek_center = 1.3776)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, TOF, bin 13
-          Total Integral L1: 0.980652, Total Integral L2: 0.974737
-          Params for lg_l1 (L1): [ p0=0.0372402 p1=3.92325 p2=1 p3=0.168249 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0481232 p1=3.91812 p2=1 p3=0.158017 p4=1 ]
+          Total Integral L1: 0.993716, Total Integral L2: 0.990338
+          Params for lg_l1 (L1): [ p0=0.033949 p1=3.92745 p2=1 p3=0.157588 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0517411 p1=3.91174 p2=1 p3=0.153118 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, TOF, bin 13
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.98584 p1=0.173304 p2=3.00674 p3=0.190872 p4=0.893819 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96815 p1=0.174109 p2=2.34681 p3=0.201412 p4=1.05448 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  14/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  1444.66 s | Total Wall:  1451.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.98377 p1=0.17889 p2=3.05063 p3=0.18163 p4=0.979801 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96306 p1=0.169108 p2=2.29315 p3=0.203475 p4=0.866726 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  14/73 (UnbiasedL1Inner/TOF) done. | Total CPU:  3588.63 s | Total Wall:  3608.00 s | Mem:   468.48 MB
 
 Processing: UnbiasedL1Inner / Beryllium / NaF ...
 --> Processing Bin 8 (Ek_low = 0.5876, Ek_center = 0.6420)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 8
-          Total Integral L1: 0.967536, Total Integral L2: 0.967349
-          Params for lg_l1 (L1): [ p0=0.0618199 p1=3.89349 p2=1 p3=0.124303 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0620726 p1=3.89469 p2=1 p3=0.136292 p4=1 ]
+          Total Integral L1: 0.988302, Total Integral L2: 0.988679
+          Params for lg_l1 (L1): [ p0=0.0626484 p1=3.87724 p2=1 p3=0.124052 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0605011 p1=3.89516 p2=1 p3=0.129848 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 8
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.89631 p1=0.126438 p2=2.35887 p3=0.259667 p4=1.03452 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93446 p1=0.134558 p2=2.80256 p3=0.229001 p4=0.968343 p5=1 p6=2 p7=6 ]
-  [Progress] Bin   9/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1468.41 s | Total Wall:  1475.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.89557 p1=0.12596 p2=2.72226 p3=0.254784 p4=0.966195 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.92938 p1=0.130482 p2=2.6986 p3=0.262863 p4=0.923973 p5=1 p6=2.5 p7=9.5 ]
+Error in <GSLError>: Error 18 in qags.c at 547 : cannot reach tolerance because of roundoff error
+Warning in <TF1::IntegralOneDim>: Error found in integrating function ege_l1 in [2.500000,9.046000] using AdaptiveSingular. Result = 1.000000 +/- 0.000000  - status = 18
+Info in <TF1::IntegralOneDim>: 		Function Parameters = { p0 =  3.895566 , p1 =  0.125960 , p2 =  2.722262 , p3 =  0.254784 , p4 =  0.966195 , p5 =  1.000000 , p6 =  2.500000 , p7 =  9.500000 }
+  [Progress] Bin   9/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3645.45 s | Total Wall:  3665.00 s | Mem:   468.60 MB
 --> Processing Bin 9 (Ek_low = 0.6964, Ek_center = 0.7589)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 9
-          Total Integral L1: 0.968573, Total Integral L2: 0.968659
-          Params for lg_l1 (L1): [ p0=0.059869 p1=3.89633 p2=1 p3=0.127648 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.059683 p1=3.89643 p2=1 p3=0.135452 p4=1 ]
+          Total Integral L1: 0.988689, Total Integral L2: 0.989064
+          Params for lg_l1 (L1): [ p0=0.0605489 p1=3.88596 p2=1 p3=0.127397 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0584961 p1=3.89657 p2=1 p3=0.133244 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 9
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.90738 p1=0.133289 p2=2.35887 p3=0.250759 p4=1.05671 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93604 p1=0.141926 p2=2.80256 p3=0.228898 p4=0.991945 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  10/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1492.30 s | Total Wall:  1499.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.90724 p1=0.133254 p2=2.72226 p3=0.247099 p4=0.995632 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93129 p1=0.138567 p2=2.6986 p3=0.253571 p4=0.95464 p5=1 p6=2.5 p7=9.5 ]
+Error in <GSLError>: Error 18 in qags.c at 547 : cannot reach tolerance because of roundoff error
+Warning in <TF1::IntegralOneDim>: Error found in integrating function ege_l1 in [2.500000,5.796000] using AdaptiveSingular. Result = 0.999619 +/- 0.000000  - status = 18
+Info in <TF1::IntegralOneDim>: 		Function Parameters = { p0 =  3.907240 , p1 =  0.133254 , p2 =  2.722262 , p3 =  0.247099 , p4 =  0.995632 , p5 =  1.000000 , p6 =  2.500000 , p7 =  9.500000 }
+  [Progress] Bin  10/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3701.51 s | Total Wall:  3722.00 s | Mem:   468.60 MB
 --> Processing Bin 10 (Ek_low = 0.8215, Ek_center = 0.8902)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 10
-          Total Integral L1: 0.969563, Total Integral L2: 0.969906
-          Params for lg_l1 (L1): [ p0=0.0580086 p1=3.89903 p2=1 p3=0.130838 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0574045 p1=3.89807 p2=1 p3=0.134921 p4=1 ]
+          Total Integral L1: 0.98906, Total Integral L2: 0.989431
+          Params for lg_l1 (L1): [ p0=0.0585469 p1=3.89407 p2=1 p3=0.130587 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0565841 p1=3.89791 p2=1 p3=0.136482 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 10
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.91777 p1=0.139726 p2=2.35887 p3=0.242462 p4=1.07787 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93754 p1=0.148844 p2=2.80256 p3=0.228799 p4=1.01445 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  11/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1516.37 s | Total Wall:  1523.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.9182 p1=0.140097 p2=2.72226 p3=0.239942 p4=1.0237 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9331 p1=0.146159 p2=2.6986 p3=0.244883 p4=0.983883 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  11/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3757.87 s | Total Wall:  3778.00 s | Mem:   468.60 MB
 --> Processing Bin 11 (Ek_low = 0.9589, Ek_center = 1.0360)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 11
-          Total Integral L1: 0.970503, Total Integral L2: 0.971088
-          Params for lg_l1 (L1): [ p0=0.0562404 p1=3.9016 p2=1 p3=0.133869 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0552388 p1=3.89959 p2=1 p3=0.135194 p4=1 ]
+          Total Integral L1: 0.989413, Total Integral L2: 0.989779
+          Params for lg_l1 (L1): [ p0=0.056644 p1=3.90116 p2=1 p3=0.133618 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0547668 p1=3.89919 p2=1 p3=0.13956 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 11
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.92716 p1=0.145568 p2=2.35887 p3=0.235147 p4=1.09798 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.93897 p1=0.155109 p2=2.80256 p3=0.228706 p4=1.03584 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  12/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1540.03 s | Total Wall:  1547.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.9281 p1=0.146279 p2=2.72226 p3=0.233629 p4=1.05038 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93483 p1=0.153034 p2=2.6986 p3=0.237123 p4=1.01168 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  12/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3813.84 s | Total Wall:  3834.00 s | Mem:   468.60 MB
 --> Processing Bin 12 (Ek_low = 1.1130, Ek_center = 1.1984)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 12
-          Total Integral L1: 0.971406, Total Integral L2: 0.972219
-          Params for lg_l1 (L1): [ p0=0.0545419 p1=3.90407 p2=1 p3=0.136782 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0531585 p1=3.90098 p2=1 p3=0.136657 p4=1 ]
+          Total Integral L1: 0.989755, Total Integral L2: 0.990113
+          Params for lg_l1 (L1): [ p0=0.0548161 p1=3.90703 p2=1 p3=0.13653 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0530212 p1=3.90041 p2=1 p3=0.142517 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 12
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93544 p1=0.150753 p2=2.35887 p3=0.229 p4=1.1173 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94034 p1=0.160647 p2=2.80256 p3=0.228616 p4=1.05639 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  13/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1563.28 s | Total Wall:  1570.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.93683 p1=0.151721 p2=2.72226 p3=0.228322 p4=1.07601 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93648 p1=0.159113 p2=2.6986 p3=0.230437 p4=1.03838 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  13/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3869.61 s | Total Wall:  3890.00 s | Mem:   468.60 MB
 --> Processing Bin 13 (Ek_low = 1.2839, Ek_center = 1.3776)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 13
-          Total Integral L1: 0.97227, Total Integral L2: 0.973298
-          Params for lg_l1 (L1): [ p0=0.0529173 p1=3.90643 p2=1 p3=0.139567 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0511687 p1=3.90222 p2=1 p3=0.139583 p4=1 ]
+          Total Integral L1: 0.990084, Total Integral L2: 0.990432
+          Params for lg_l1 (L1): [ p0=0.0530678 p1=3.91144 p2=1 p3=0.139316 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0513515 p1=3.90158 p2=1 p3=0.145345 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 13
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94242 p1=0.15517 p2=2.35887 p3=0.22424 p4=1.13578 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94166 p1=0.165334 p2=2.80256 p3=0.22853 p4=1.07604 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  14/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1586.54 s | Total Wall:  1594.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.94419 p1=0.156295 p2=2.72226 p3=0.224207 p4=1.10052 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.93807 p1=0.164259 p2=2.6986 p3=0.22502 p4=1.06391 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  14/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3926.22 s | Total Wall:  3947.00 s | Mem:   468.60 MB
 --> Processing Bin 14 (Ek_low = 1.4714, Ek_center = 1.5758)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 14
-          Total Integral L1: 0.973103, Total Integral L2: 0.974334
-          Params for lg_l1 (L1): [ p0=0.05135 p1=3.9087 p2=1 p3=0.142254 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0492491 p1=3.90332 p2=1 p3=0.144199 p4=1 ]
+          Total Integral L1: 0.990404, Total Integral L2: 0.990739
+          Params for lg_l1 (L1): [ p0=0.0513811 p1=3.91428 p2=1 p3=0.142003 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0497407 p1=3.90271 p2=1 p3=0.148073 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 14
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94805 p1=0.158793 p2=2.35887 p3=0.220964 p4=1.15361 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94292 p1=0.16914 p2=2.80256 p3=0.228447 p4=1.09501 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  15/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1609.37 s | Total Wall:  1617.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95011 p1=0.159966 p2=2.72226 p3=0.221369 p4=1.12417 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9396 p1=0.168439 p2=2.6986 p3=0.220941 p4=1.08855 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  15/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  3983.46 s | Total Wall:  4005.00 s | Mem:   468.60 MB
 --> Processing Bin 15 (Ek_low = 1.6803, Ek_center = 1.7954)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 15
-          Total Integral L1: 0.973912, Total Integral L2: 0.975336
-          Params for lg_l1 (L1): [ p0=0.0498292 p1=3.91091 p2=1 p3=0.144862 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0473864 p1=3.90427 p2=1 p3=0.150431 p4=1 ]
+          Total Integral L1: 0.990717, Total Integral L2: 0.991037
+          Params for lg_l1 (L1): [ p0=0.0497445 p1=3.91559 p2=1 p3=0.14461 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0481778 p1=3.90381 p2=1 p3=0.150721 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 15
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95226 p1=0.161588 p2=2.35887 p3=0.21927 p4=1.1709 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94415 p1=0.172023 p2=2.80256 p3=0.228366 p4=1.1134 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  16/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1631.89 s | Total Wall:  1639.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95454 p1=0.162689 p2=2.72226 p3=0.219892 p4=1.14712 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94108 p1=0.171607 p2=2.6986 p3=0.218281 p4=1.11245 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  16/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4040.50 s | Total Wall:  4062.00 s | Mem:   468.60 MB
 --> Processing Bin 16 (Ek_low = 1.9105, Ek_center = 2.0363)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 16
-          Total Integral L1: 0.974692, Total Integral L2: 0.976302
-          Params for lg_l1 (L1): [ p0=0.0483612 p1=3.91305 p2=1 p3=0.147379 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0455884 p1=3.90507 p2=1 p3=0.157108 p4=1 ]
+          Total Integral L1: 0.99102, Total Integral L2: 0.991324
+          Params for lg_l1 (L1): [ p0=0.0481647 p1=3.91593 p2=1 p3=0.147127 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.046669 p1=3.90487 p2=1 p3=0.153276 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 16
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95497 p1=0.163502 p2=2.35887 p3=0.219252 p4=1.1876 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94534 p1=0.173925 p2=2.80256 p3=0.228289 p4=1.13116 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  17/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1654.36 s | Total Wall:  1662.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95737 p1=0.164406 p2=2.72226 p3=0.219856 p4=1.16927 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94251 p1=0.173701 p2=2.6986 p3=0.217124 p4=1.13553 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  17/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4097.90 s | Total Wall:  4119.00 s | Mem:   468.60 MB
 --> Processing Bin 17 (Ek_low = 2.1621, Ek_center = 2.2985)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 17
-          Total Integral L1: 0.975443, Total Integral L2: 0.977231
-          Params for lg_l1 (L1): [ p0=0.0469488 p1=3.9151 p2=1 p3=0.149801 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0438585 p1=3.90571 p2=1 p3=0.163025 p4=1 ]
+          Total Integral L1: 0.991312, Total Integral L2: 0.9916
+          Params for lg_l1 (L1): [ p0=0.0466448 p1=3.91591 p2=1 p3=0.149548 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0452174 p1=3.90589 p2=1 p3=0.155735 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 17
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95615 p1=0.164519 p2=2.35887 p3=0.220935 p4=1.20366 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94648 p1=0.174828 p2=2.80256 p3=0.228214 p4=1.14825 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  18/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1676.83 s | Total Wall:  1684.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95858 p1=0.165097 p2=2.72226 p3=0.221284 p4=1.19058 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94389 p1=0.1747 p2=2.6986 p3=0.217496 p4=1.15773 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  18/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4154.68 s | Total Wall:  4176.00 s | Mem:   468.60 MB
 --> Processing Bin 18 (Ek_low = 2.4349, Ek_center = 2.5844)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 18
-          Total Integral L1: 0.976169, Total Integral L2: 0.978133
-          Params for lg_l1 (L1): [ p0=0.045582 p1=3.91708 p2=1 p3=0.152144 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0421844 p1=3.9062 p2=1 p3=0.16727 p4=1 ]
+          Total Integral L1: 0.991593, Total Integral L2: 0.991867
+          Params for lg_l1 (L1): [ p0=0.0451738 p1=3.91602 p2=1 p3=0.151892 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0438127 p1=3.90687 p2=1 p3=0.158114 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 18
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95586 p1=0.164678 p2=2.35887 p3=0.224266 p4=1.21921 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94759 p1=0.174775 p2=2.80256 p3=0.228141 p4=1.16479 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  19/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1699.36 s | Total Wall:  1707.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95824 p1=0.164807 p2=2.72226 p3=0.224128 p4=1.2112 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94522 p1=0.174652 p2=2.6986 p3=0.219341 p4=1.17922 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  19/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4210.69 s | Total Wall:  4233.00 s | Mem:   468.60 MB
 --> Processing Bin 19 (Ek_low = 2.7338, Ek_center = 2.8963)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 19
-          Total Integral L1: 0.976875, Total Integral L2: 0.979014
-          Params for lg_l1 (L1): [ p0=0.0442535 p1=3.91901 p2=1 p3=0.154422 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0405573 p1=3.90657 p2=1 p3=0.16908 p4=1 ]
+          Total Integral L1: 0.991866, Total Integral L2: 0.992126
+          Params for lg_l1 (L1): [ p0=0.0437441 p1=3.91668 p2=1 p3=0.15417 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0424473 p1=3.90783 p2=1 p3=0.160427 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 19
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95437 p1=0.16414 p2=2.35887 p3=0.228931 p4=1.23432 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94866 p1=0.173946 p2=2.80256 p3=0.228071 p4=1.18086 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  20/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1722.18 s | Total Wall:  1730.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95664 p1=0.163719 p2=2.72226 p3=0.228121 p4=1.23125 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94652 p1=0.173752 p2=2.6986 p3=0.222381 p4=1.2001 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  20/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4267.33 s | Total Wall:  4289.00 s | Mem:   468.60 MB
 --> Processing Bin 20 (Ek_low = 3.0587, Ek_center = 3.2342)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 20
-          Total Integral L1: 0.977558, Total Integral L2: 0.97987
-          Params for lg_l1 (L1): [ p0=0.0429669 p1=3.92088 p2=1 p3=0.156628 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0389815 p1=3.90684 p2=1 p3=0.16805 p4=1 ]
+          Total Integral L1: 0.992128, Total Integral L2: 0.992376
+          Params for lg_l1 (L1): [ p0=0.0423596 p1=3.91812 p2=1 p3=0.156375 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0411251 p1=3.90876 p2=1 p3=0.162666 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 20
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95199 p1=0.163077 p2=2.35887 p3=0.234568 p4=1.24895 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9497 p1=0.172533 p2=2.80256 p3=0.228003 p4=1.19642 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  21/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1745.11 s | Total Wall:  1753.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95409 p1=0.162035 p2=2.72226 p3=0.232948 p4=1.25066 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94778 p1=0.172213 p2=2.6986 p3=0.226302 p4=1.22032 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  21/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4323.59 s | Total Wall:  4346.00 s | Mem:   468.60 MB
 --> Processing Bin 21 (Ek_low = 3.4096, Ek_center = 3.6004)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 21
-          Total Integral L1: 0.978222, Total Integral L2: 0.980704
-          Params for lg_l1 (L1): [ p0=0.0417161 p1=3.9227 p2=1 p3=0.158772 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0374495 p1=3.90704 p2=1 p3=0.164748 p4=1 ]
+          Total Integral L1: 0.992382, Total Integral L2: 0.99262
+          Params for lg_l1 (L1): [ p0=0.0410135 p1=3.92021 p2=1 p3=0.15852 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0398395 p1=3.90966 p2=1 p3=0.164844 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 21
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94897 p1=0.161631 p2=2.35887 p3=0.240897 p4=1.26318 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95071 p1=0.170697 p2=2.80256 p3=0.227937 p4=1.21155 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  22/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1768.37 s | Total Wall:  1777.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.95086 p1=0.159918 p2=2.72226 p3=0.238372 p4=1.26953 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.949 p1=0.17021 p2=2.6986 p3=0.230855 p4=1.23999 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  22/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4380.06 s | Total Wall:  4403.00 s | Mem:   468.60 MB
 --> Processing Bin 22 (Ek_low = 3.7913, Ek_center = 3.9975)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 22
-          Total Integral L1: 0.978869, Total Integral L2: 0.981517
-          Params for lg_l1 (L1): [ p0=0.0404964 p1=3.92447 p2=1 p3=0.160864 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0359557 p1=3.90719 p2=1 p3=0.159859 p4=1 ]
+          Total Integral L1: 0.992629, Total Integral L2: 0.992857
+          Params for lg_l1 (L1): [ p0=0.0397009 p1=3.92275 p2=1 p3=0.160611 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.038586 p1=3.91054 p2=1 p3=0.166967 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 22
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.9455 p1=0.159923 p2=2.35887 p3=0.247685 p4=1.27705 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9517 p1=0.168571 p2=2.80256 p3=0.227872 p4=1.22631 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  23/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1791.77 s | Total Wall:  1800.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.94715 p1=0.157506 p2=2.72226 p3=0.24419 p4=1.28794 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95019 p1=0.167889 p2=2.6986 p3=0.235832 p4=1.25916 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  23/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4436.39 s | Total Wall:  4459.00 s | Mem:   468.60 MB
 --> Processing Bin 23 (Ek_low = 4.2037, Ek_center = 4.4253)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 23
-          Total Integral L1: 0.979498, Total Integral L2: 0.982306
-          Params for lg_l1 (L1): [ p0=0.0393111 p1=3.92619 p2=1 p3=0.162896 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0345039 p1=3.9073 p2=1 p3=0.154001 p4=1 ]
+          Total Integral L1: 0.992868, Total Integral L2: 0.993087
+          Params for lg_l1 (L1): [ p0=0.0384253 p1=3.92554 p2=1 p3=0.162643 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0373678 p1=3.9114 p2=1 p3=0.16903 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 23
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.94179 p1=0.158064 p2=2.35887 p3=0.25469 p4=1.29053 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95266 p1=0.166282 p2=2.80256 p3=0.227809 p4=1.24065 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  24/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1815.17 s | Total Wall:  1824.00 s | Mem:   750.42 MB
+          Params for ege_l1 (L1): [ p0=3.94319 p1=0.154932 p2=2.72226 p3=0.250196 p4=1.30582 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95134 p1=0.165389 p2=2.6986 p3=0.241027 p4=1.27779 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  24/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4492.26 s | Total Wall:  4515.00 s | Mem:   468.60 MB
 --> Processing Bin 24 (Ek_low = 4.6468, Ek_center = 4.8936)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 24
-          Total Integral L1: 0.980119, Total Integral L2: 0.983084
-          Params for lg_l1 (L1): [ p0=0.0381381 p1=3.9279 p2=1 p3=0.164907 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0330672 p1=3.90739 p2=1 p3=0.147579 p4=1 ]
+          Total Integral L1: 0.993104, Total Integral L2: 0.993314
+          Params for lg_l1 (L1): [ p0=0.037163 p1=3.92849 p2=1 p3=0.164654 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0361623 p1=3.91224 p2=1 p3=0.171072 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 24
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93792 p1=0.156114 p2=2.35887 p3=0.261853 p4=1.30387 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.9536 p1=0.163891 p2=2.80256 p3=0.227747 p4=1.25484 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  25/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1838.40 s | Total Wall:  1847.00 s | Mem:   751.30 MB
+          Params for ege_l1 (L1): [ p0=3.93907 p1=0.152254 p2=2.72226 p3=0.256338 p4=1.32352 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95249 p1=0.162778 p2=2.6986 p3=0.246368 p4=1.29623 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  25/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4547.58 s | Total Wall:  4571.00 s | Mem:   468.60 MB
 --> Processing Bin 25 (Ek_low = 5.1404, Ek_center = 5.3876)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 25
-          Total Integral L1: 0.980714, Total Integral L2: 0.983825
-          Params for lg_l1 (L1): [ p0=0.0370167 p1=3.92953 p2=1 p3=0.16683 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0316938 p1=3.90748 p2=1 p3=0.141253 p4=1 ]
+          Total Integral L1: 0.99333, Total Integral L2: 0.993531
+          Params for lg_l1 (L1): [ p0=0.0359562 p1=3.93137 p2=1 p3=0.166577 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0350098 p1=3.91305 p2=1 p3=0.173024 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 25
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93416 p1=0.154215 p2=2.35887 p3=0.26877 p4=1.31663 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95451 p1=0.161568 p2=2.80256 p3=0.227688 p4=1.26841 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  26/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1862.18 s | Total Wall:  1871.00 s | Mem:   751.30 MB
+          Params for ege_l1 (L1): [ p0=3.93506 p1=0.149656 p2=2.72226 p3=0.262268 p4=1.34044 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95358 p1=0.16024 p2=2.6986 p3=0.251534 p4=1.31385 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  26/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4604.15 s | Total Wall:  4628.00 s | Mem:   468.60 MB
 --> Processing Bin 26 (Ek_low = 5.6349, Ek_center = 5.9073)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, NaF, bin 26
-          Total Integral L1: 0.981283, Total Integral L2: 0.984531
-          Params for lg_l1 (L1): [ p0=0.035943 p1=3.93109 p2=1 p3=0.168671 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0303787 p1=3.90756 p2=1 p3=0.135191 p4=1 ]
+          Total Integral L1: 0.993546, Total Integral L2: 0.993739
+          Params for lg_l1 (L1): [ p0=0.0348008 p1=3.93413 p2=1 p3=0.168418 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0339063 p1=3.91383 p2=1 p3=0.174893 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, NaF, bin 26
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.93056 p1=0.152396 p2=2.35887 p3=0.275394 p4=1.32884 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95538 p1=0.159342 p2=2.80256 p3=0.227631 p4=1.28139 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  27/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  1885.54 s | Total Wall:  1895.00 s | Mem:   751.30 MB
+          Params for ege_l1 (L1): [ p0=3.93123 p1=0.147166 p2=2.72226 p3=0.267948 p4=1.35664 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95463 p1=0.15781 p2=2.6986 p3=0.256483 p4=1.33073 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  27/73 (UnbiasedL1Inner/NaF) done. | Total CPU:  4661.20 s | Total Wall:  4685.00 s | Mem:   468.60 MB
 
 Processing: UnbiasedL1Inner / Beryllium / AGL ...
 --> Processing Bin 18 (Ek_low = 2.4349, Ek_center = 2.5844)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 18
-          Total Integral L1: 0.977702, Total Integral L2: 0.977464
-          Params for lg_l1 (L1): [ p0=0.0427893 p1=3.9169 p2=1 p3=0.156281 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0432819 p1=3.91369 p2=1 p3=0.158389 p4=1 ]
+          Total Integral L1: 0.992145, Total Integral L2: 0.992024
+          Params for lg_l1 (L1): [ p0=0.0422475 p1=3.92113 p2=1 p3=0.157016 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429408 p1=3.91326 p2=1 p3=0.158838 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 18
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95409 p1=0.163069 p2=2.80985 p3=0.232094 p4=1.28076 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94863 p1=0.166172 p2=2.76238 p3=0.232294 p4=1.31059 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  19/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  1908.39 s | Total Wall:  1917.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.95043 p1=0.161689 p2=2.72875 p3=0.232716 p4=1.32773 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94487 p1=0.165029 p2=2.65572 p3=0.234915 p4=1.31081 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  19/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  4715.10 s | Total Wall:  4739.00 s | Mem:   468.73 MB
 --> Processing Bin 19 (Ek_low = 2.7338, Ek_center = 2.8963)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 19
-          Total Integral L1: 0.977657, Total Integral L2: 0.97744
-          Params for lg_l1 (L1): [ p0=0.0428251 p1=3.91915 p2=1 p3=0.155792 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433064 p1=3.91474 p2=1 p3=0.157746 p4=1 ]
+          Total Integral L1: 0.992134, Total Integral L2: 0.992022
+          Params for lg_l1 (L1): [ p0=0.0422965 p1=3.92239 p2=1 p3=0.156478 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429414 p1=3.91434 p2=1 p3=0.15822 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 19
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.9552 p1=0.162622 p2=2.80985 p3=0.231294 p4=1.27626 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.94949 p1=0.165563 p2=2.76238 p3=0.231478 p4=1.30583 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  20/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  1931.17 s | Total Wall:  1940.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.95215 p1=0.161523 p2=2.72875 p3=0.232095 p4=1.31897 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94618 p1=0.164631 p2=2.65572 p3=0.233836 p4=1.30302 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  20/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  4769.65 s | Total Wall:  4793.00 s | Mem:   468.73 MB
 --> Processing Bin 20 (Ek_low = 3.0587, Ek_center = 3.2342)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 20
-          Total Integral L1: 0.977614, Total Integral L2: 0.977416
-          Params for lg_l1 (L1): [ p0=0.0428598 p1=3.92132 p2=1 p3=0.155319 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433302 p1=3.91576 p2=1 p3=0.157124 p4=1 ]
+          Total Integral L1: 0.992123, Total Integral L2: 0.992021
+          Params for lg_l1 (L1): [ p0=0.0423439 p1=3.92361 p2=1 p3=0.155957 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429418 p1=3.91538 p2=1 p3=0.157622 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 20
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95627 p1=0.16219 p2=2.80985 p3=0.230519 p4=1.2719 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95033 p1=0.164974 p2=2.76238 p3=0.230688 p4=1.30122 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  21/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  1953.92 s | Total Wall:  1963.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.95383 p1=0.161363 p2=2.72875 p3=0.231494 p4=1.31049 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94744 p1=0.164246 p2=2.65572 p3=0.232791 p4=1.29547 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  21/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  4823.93 s | Total Wall:  4848.00 s | Mem:   468.73 MB
 --> Processing Bin 21 (Ek_low = 3.4096, Ek_center = 3.6004)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 21
-          Total Integral L1: 0.977572, Total Integral L2: 0.977393
-          Params for lg_l1 (L1): [ p0=0.0428935 p1=3.92339 p2=1 p3=0.15486 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433534 p1=3.91675 p2=1 p3=0.156519 p4=1 ]
+          Total Integral L1: 0.992113, Total Integral L2: 0.992019
+          Params for lg_l1 (L1): [ p0=0.0423901 p1=3.9248 p2=1 p3=0.15545 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429423 p1=3.91639 p2=1 p3=0.15704 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 21
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95731 p1=0.161769 p2=2.80985 p3=0.229766 p4=1.26765 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95115 p1=0.164401 p2=2.76238 p3=0.229919 p4=1.29674 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  22/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  1976.67 s | Total Wall:  1986.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.95545 p1=0.161207 p2=2.72875 p3=0.23091 p4=1.30225 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94867 p1=0.163871 p2=2.65572 p3=0.231776 p4=1.28813 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  22/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  4878.31 s | Total Wall:  4903.00 s | Mem:   468.73 MB
 --> Processing Bin 22 (Ek_low = 3.7913, Ek_center = 3.9975)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 22
-          Total Integral L1: 0.977532, Total Integral L2: 0.97737
-          Params for lg_l1 (L1): [ p0=0.0429263 p1=3.92536 p2=1 p3=0.154411 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433759 p1=3.91771 p2=1 p3=0.155929 p4=1 ]
+          Total Integral L1: 0.992102, Total Integral L2: 0.992018
+          Params for lg_l1 (L1): [ p0=0.0424351 p1=3.92596 p2=1 p3=0.154956 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429428 p1=3.91738 p2=1 p3=0.156472 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 22
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95833 p1=0.161359 p2=2.80985 p3=0.229031 p4=1.26352 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95195 p1=0.163842 p2=2.76238 p3=0.22917 p4=1.29237 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  23/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  1999.86 s | Total Wall:  2009.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.95704 p1=0.161055 p2=2.72875 p3=0.23034 p4=1.29421 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.94987 p1=0.163506 p2=2.65572 p3=0.230785 p4=1.28097 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  23/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  4932.72 s | Total Wall:  4957.00 s | Mem:   468.73 MB
 --> Processing Bin 23 (Ek_low = 4.2037, Ek_center = 4.4253)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 23
-          Total Integral L1: 0.977494, Total Integral L2: 0.977349
-          Params for lg_l1 (L1): [ p0=0.0429583 p1=3.92719 p2=1 p3=0.153976 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0433979 p1=3.91865 p2=1 p3=0.155356 p4=1 ]
+          Total Integral L1: 0.992092, Total Integral L2: 0.992016
+          Params for lg_l1 (L1): [ p0=0.0424788 p1=3.92709 p2=1 p3=0.154476 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429433 p1=3.91834 p2=1 p3=0.155921 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 23
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.95932 p1=0.160961 p2=2.80985 p3=0.228317 p4=1.2595 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95272 p1=0.163299 p2=2.76238 p3=0.228442 p4=1.28812 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  24/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2023.10 s | Total Wall:  2033.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.95858 p1=0.160908 p2=2.72875 p3=0.229786 p4=1.28639 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95104 p1=0.163151 p2=2.65572 p3=0.229823 p4=1.27401 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  24/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  4987.34 s | Total Wall:  5012.00 s | Mem:   468.73 MB
 --> Processing Bin 24 (Ek_low = 4.6468, Ek_center = 4.8936)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 24
-          Total Integral L1: 0.977458, Total Integral L2: 0.977327
-          Params for lg_l1 (L1): [ p0=0.0429899 p1=3.92892 p2=1 p3=0.153544 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434196 p1=3.91957 p2=1 p3=0.154788 p4=1 ]
+          Total Integral L1: 0.992083, Total Integral L2: 0.992015
+          Params for lg_l1 (L1): [ p0=0.0425221 p1=3.9282 p2=1 p3=0.154 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429437 p1=3.91929 p2=1 p3=0.155375 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 24
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96029 p1=0.160567 p2=2.80985 p3=0.227611 p4=1.25552 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95349 p1=0.162762 p2=2.76238 p3=0.227721 p4=1.28392 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  25/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2045.98 s | Total Wall:  2056.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.9601 p1=0.160762 p2=2.72875 p3=0.229238 p4=1.27866 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95219 p1=0.162799 p2=2.65572 p3=0.22887 p4=1.26713 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  25/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5042.12 s | Total Wall:  5067.00 s | Mem:   468.73 MB
 --> Processing Bin 25 (Ek_low = 5.1404, Ek_center = 5.3876)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 25
-          Total Integral L1: 0.977424, Total Integral L2: 0.977306
-          Params for lg_l1 (L1): [ p0=0.0430201 p1=3.93047 p2=1 p3=0.153132 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434403 p1=3.92046 p2=1 p3=0.154246 p4=1 ]
+          Total Integral L1: 0.992073, Total Integral L2: 0.992013
+          Params for lg_l1 (L1): [ p0=0.0425634 p1=3.92927 p2=1 p3=0.153546 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429442 p1=3.9202 p2=1 p3=0.154854 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 25
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96123 p1=0.16019 p2=2.80985 p3=0.226935 p4=1.25172 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95422 p1=0.162248 p2=2.76238 p3=0.227032 p4=1.2799 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  26/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2068.87 s | Total Wall:  2079.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96156 p1=0.160622 p2=2.72875 p3=0.228714 p4=1.27127 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95329 p1=0.162463 p2=2.65572 p3=0.22796 p4=1.26055 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  26/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5097.41 s | Total Wall:  5122.00 s | Mem:   468.73 MB
 --> Processing Bin 26 (Ek_low = 5.6349, Ek_center = 5.9073)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 26
-          Total Integral L1: 0.977392, Total Integral L2: 0.977286
-          Params for lg_l1 (L1): [ p0=0.043049 p1=3.93184 p2=1 p3=0.152738 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434602 p1=3.92131 p2=1 p3=0.153727 p4=1 ]
+          Total Integral L1: 0.992064, Total Integral L2: 0.992012
+          Params for lg_l1 (L1): [ p0=0.0426031 p1=3.93029 p2=1 p3=0.153111 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429446 p1=3.92107 p2=1 p3=0.154354 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 26
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96212 p1=0.159829 p2=2.80985 p3=0.226289 p4=1.24808 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95492 p1=0.161756 p2=2.76238 p3=0.226373 p4=1.27605 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  27/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2091.91 s | Total Wall:  2102.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96296 p1=0.160489 p2=2.72875 p3=0.228213 p4=1.26419 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95435 p1=0.162141 p2=2.65572 p3=0.227088 p4=1.25425 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  27/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5152.25 s | Total Wall:  5177.00 s | Mem:   468.73 MB
 --> Processing Bin 27 (Ek_low = 6.1798, Ek_center = 6.4774)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 27
-          Total Integral L1: 0.977363, Total Integral L2: 0.977266
-          Params for lg_l1 (L1): [ p0=0.043078 p1=3.93308 p2=1 p3=0.152343 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434801 p1=3.92216 p2=1 p3=0.153207 p4=1 ]
+          Total Integral L1: 0.992055, Total Integral L2: 0.992011
+          Params for lg_l1 (L1): [ p0=0.0426427 p1=3.93131 p2=1 p3=0.152676 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.042945 p1=3.92194 p2=1 p3=0.153854 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 27
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96302 p1=0.159468 p2=2.80985 p3=0.225642 p4=1.24444 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95562 p1=0.161264 p2=2.76238 p3=0.225713 p4=1.2722 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  28/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2114.82 s | Total Wall:  2125.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96436 p1=0.160355 p2=2.72875 p3=0.227711 p4=1.25711 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95541 p1=0.16182 p2=2.65572 p3=0.226216 p4=1.24794 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  28/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5206.95 s | Total Wall:  5232.00 s | Mem:   468.73 MB
 --> Processing Bin 28 (Ek_low = 6.7750, Ek_center = 7.0978)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 28
-          Total Integral L1: 0.977335, Total Integral L2: 0.977247
-          Params for lg_l1 (L1): [ p0=0.0431067 p1=3.93418 p2=1 p3=0.151951 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0434998 p1=3.923 p2=1 p3=0.152692 p4=1 ]
+          Total Integral L1: 0.992046, Total Integral L2: 0.99201
+          Params for lg_l1 (L1): [ p0=0.042682 p1=3.93232 p2=1 p3=0.152244 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429454 p1=3.92281 p2=1 p3=0.153358 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 28
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96391 p1=0.159109 p2=2.80985 p3=0.224999 p4=1.24082 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95632 p1=0.160776 p2=2.76238 p3=0.225058 p4=1.26838 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  29/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2137.86 s | Total Wall:  2148.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96574 p1=0.160222 p2=2.72875 p3=0.227213 p4=1.25008 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95645 p1=0.1615 p2=2.65572 p3=0.22535 p4=1.24169 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  29/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5261.87 s | Total Wall:  5287.00 s | Mem:   468.73 MB
 --> Processing Bin 29 (Ek_low = 7.4206, Ek_center = 7.7686)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 29
-          Total Integral L1: 0.977309, Total Integral L2: 0.977227
-          Params for lg_l1 (L1): [ p0=0.0431351 p1=3.93511 p2=1 p3=0.151564 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435193 p1=3.92383 p2=1 p3=0.152182 p4=1 ]
+          Total Integral L1: 0.992037, Total Integral L2: 0.992008
+          Params for lg_l1 (L1): [ p0=0.0427209 p1=3.93332 p2=1 p3=0.151818 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429458 p1=3.92366 p2=1 p3=0.152868 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 29
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96478 p1=0.158755 p2=2.80985 p3=0.224365 p4=1.23725 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.957 p1=0.160293 p2=2.76238 p3=0.224411 p4=1.26461 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  30/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2160.83 s | Total Wall:  2171.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96711 p1=0.160091 p2=2.72875 p3=0.226721 p4=1.24314 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95749 p1=0.161185 p2=2.65572 p3=0.224495 p4=1.23551 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  30/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5317.41 s | Total Wall:  5343.00 s | Mem:   468.73 MB
 --> Processing Bin 30 (Ek_low = 8.1166, Ek_center = 8.4897)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 30
-          Total Integral L1: 0.977285, Total Integral L2: 0.977208
-          Params for lg_l1 (L1): [ p0=0.043163 p1=3.93587 p2=1 p3=0.151183 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435384 p1=3.92465 p2=1 p3=0.151682 p4=1 ]
+          Total Integral L1: 0.992028, Total Integral L2: 0.992007
+          Params for lg_l1 (L1): [ p0=0.042759 p1=3.9343 p2=1 p3=0.151398 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429462 p1=3.9245 p2=1 p3=0.152387 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 30
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96565 p1=0.158408 p2=2.80985 p3=0.223742 p4=1.23374 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95768 p1=0.159819 p2=2.76238 p3=0.223775 p4=1.2609 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  31/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2183.59 s | Total Wall:  2194.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96846 p1=0.159962 p2=2.72875 p3=0.226238 p4=1.23632 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95851 p1=0.160875 p2=2.65572 p3=0.223654 p4=1.22943 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  31/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5373.03 s | Total Wall:  5399.00 s | Mem:   468.73 MB
 --> Processing Bin 31 (Ek_low = 8.8629, Ek_center = 9.2612)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 31
-          Total Integral L1: 0.977264, Total Integral L2: 0.977189
-          Params for lg_l1 (L1): [ p0=0.0431903 p1=3.93645 p2=1 p3=0.15081 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435572 p1=3.92545 p2=1 p3=0.151191 p4=1 ]
+          Total Integral L1: 0.99202, Total Integral L2: 0.992006
+          Params for lg_l1 (L1): [ p0=0.0427965 p1=3.93527 p2=1 p3=0.150988 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429466 p1=3.92532 p2=1 p3=0.151915 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 31
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96649 p1=0.158067 p2=2.80985 p3=0.223131 p4=1.2303 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95834 p1=0.159355 p2=2.76238 p3=0.223152 p4=1.25727 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  32/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2206.47 s | Total Wall:  2217.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.96977 p1=0.159836 p2=2.72875 p3=0.225764 p4=1.22964 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.95951 p1=0.160571 p2=2.65572 p3=0.222831 p4=1.22348 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  32/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5428.49 s | Total Wall:  5454.00 s | Mem:   468.73 MB
 --> Processing Bin 32 (Ek_low = 9.6595, Ek_center = 10.0830)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 32
-          Total Integral L1: 0.977244, Total Integral L2: 0.97717
-          Params for lg_l1 (L1): [ p0=0.043217 p1=3.93687 p2=1 p3=0.150446 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435755 p1=3.92623 p2=1 p3=0.150712 p4=1 ]
+          Total Integral L1: 0.992011, Total Integral L2: 0.992004
+          Params for lg_l1 (L1): [ p0=0.042833 p1=3.93621 p2=1 p3=0.150586 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.042947 p1=3.92612 p2=1 p3=0.151454 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 32
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96732 p1=0.157733 p2=2.80985 p3=0.222534 p4=1.22694 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95899 p1=0.158901 p2=2.76238 p3=0.222543 p4=1.25372 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  33/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2229.27 s | Total Wall:  2240.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97106 p1=0.159713 p2=2.72875 p3=0.225301 p4=1.2231 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96048 p1=0.160274 p2=2.65572 p3=0.222026 p4=1.21767 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  33/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5484.02 s | Total Wall:  5510.00 s | Mem:   468.73 MB
 --> Processing Bin 33 (Ek_low = 10.5065, Ek_center = 10.9800)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 33
-          Total Integral L1: 0.977227, Total Integral L2: 0.977152
-          Params for lg_l1 (L1): [ p0=0.0432438 p1=3.93717 p2=1 p3=0.150081 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0435939 p1=3.92702 p2=1 p3=0.150231 p4=1 ]
+          Total Integral L1: 0.992003, Total Integral L2: 0.992003
+          Params for lg_l1 (L1): [ p0=0.0428697 p1=3.93715 p2=1 p3=0.150183 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429474 p1=3.92693 p2=1 p3=0.150992 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 33
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96815 p1=0.157399 p2=2.80985 p3=0.221935 p4=1.22357 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.95964 p1=0.158446 p2=2.76238 p3=0.221932 p4=1.25015 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  34/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2252.29 s | Total Wall:  2263.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97236 p1=0.159589 p2=2.72875 p3=0.224837 p4=1.21655 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96146 p1=0.159976 p2=2.65572 p3=0.221219 p4=1.21183 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  34/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5539.26 s | Total Wall:  5565.00 s | Mem:   468.73 MB
 --> Processing Bin 34 (Ek_low = 11.4536, Ek_center = 11.9523)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 34
-          Total Integral L1: 0.97721, Total Integral L2: 0.977133
-          Params for lg_l1 (L1): [ p0=0.0432705 p1=3.93735 p2=1 p3=0.149717 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436122 p1=3.9278 p2=1 p3=0.149753 p4=1 ]
+          Total Integral L1: 0.991995, Total Integral L2: 0.992002
+          Params for lg_l1 (L1): [ p0=0.0429062 p1=3.93809 p2=1 p3=0.149783 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429478 p1=3.92773 p2=1 p3=0.150532 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 34
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96897 p1=0.157067 p2=2.80985 p3=0.221339 p4=1.22021 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96028 p1=0.157992 p2=2.76238 p3=0.221325 p4=1.24661 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  35/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2275.01 s | Total Wall:  2286.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97364 p1=0.159466 p2=2.72875 p3=0.224375 p4=1.21003 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96243 p1=0.15968 p2=2.65572 p3=0.220416 p4=1.20603 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  35/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5594.34 s | Total Wall:  5620.00 s | Mem:   468.73 MB
 --> Processing Bin 35 (Ek_low = 12.4510, Ek_center = 12.9748)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 35
-          Total Integral L1: 0.977196, Total Integral L2: 0.977116
-          Params for lg_l1 (L1): [ p0=0.0432963 p1=3.93744 p2=1 p3=0.149365 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436299 p1=3.92856 p2=1 p3=0.14929 p4=1 ]
+          Total Integral L1: 0.991987, Total Integral L2: 0.992001
+          Params for lg_l1 (L1): [ p0=0.0429415 p1=3.939 p2=1 p3=0.149395 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429481 p1=3.9285 p2=1 p3=0.150086 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 35
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.96977 p1=0.156745 p2=2.80985 p3=0.220763 p4=1.21697 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96091 p1=0.157554 p2=2.76238 p3=0.220737 p4=1.24318 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  36/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2297.65 s | Total Wall:  2308.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97489 p1=0.159347 p2=2.72875 p3=0.223928 p4=1.20372 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96337 p1=0.159393 p2=2.65572 p3=0.219639 p4=1.20041 p5=1 p6=2.5 p7=9.5 ]
+Error in <GSLError>: Error 18 in qags.c at 547 : cannot reach tolerance because of roundoff error
+Warning in <TF1::IntegralOneDim>: Error found in integrating function ege_l1 in [2.500000,5.452000] using AdaptiveSingular. Result = 0.999730 +/- 0.000000  - status = 18
+Info in <TF1::IntegralOneDim>: 		Function Parameters = { p0 =  3.974886 , p1 =  0.159347 , p2 =  2.728748 , p3 =  0.223928 , p4 =  1.203722 , p5 =  1.000000 , p6 =  2.500000 , p7 =  9.500000 }
+Error in <GSLError>: Error 18 in qags.c at 547 : cannot reach tolerance because of roundoff error
+Warning in <TF1::IntegralOneDim>: Error found in integrating function ege_l1 in [2.500000,8.404000] using AdaptiveSingular. Result = 1.000000 +/- 0.000000  - status = 18
+Info in <TF1::IntegralOneDim>: 		Function Parameters = { p0 =  3.974886 , p1 =  0.159347 , p2 =  2.728748 , p3 =  0.223928 , p4 =  1.203722 , p5 =  1.000000 , p6 =  2.500000 , p7 =  9.500000 }
+  [Progress] Bin  36/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5649.79 s | Total Wall:  5676.00 s | Mem:   468.73 MB
 --> Processing Bin 36 (Ek_low = 13.4986, Ek_center = 14.0725)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 36
-          Total Integral L1: 0.977182, Total Integral L2: 0.977098
-          Params for lg_l1 (L1): [ p0=0.0433218 p1=3.93746 p2=1 p3=0.149017 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436474 p1=3.92931 p2=1 p3=0.148832 p4=1 ]
+          Total Integral L1: 0.991979, Total Integral L2: 0.992
+          Params for lg_l1 (L1): [ p0=0.0429764 p1=3.9399 p2=1 p3=0.149011 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429485 p1=3.92927 p2=1 p3=0.149646 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 36
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97056 p1=0.156427 p2=2.80985 p3=0.220192 p4=1.21376 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96152 p1=0.15712 p2=2.76238 p3=0.220155 p4=1.23979 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  37/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2320.18 s | Total Wall:  2331.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97612 p1=0.159229 p2=2.72875 p3=0.223485 p4=1.19748 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9643 p1=0.159109 p2=2.65572 p3=0.21887 p4=1.19486 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  37/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5705.56 s | Total Wall:  5732.00 s | Mem:   468.73 MB
 --> Processing Bin 37 (Ek_low = 14.6464, Ek_center = 15.2454)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 37
-          Total Integral L1: 0.977169, Total Integral L2: 0.97708
-          Params for lg_l1 (L1): [ p0=0.0433469 p1=3.93741 p2=1 p3=0.148674 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436647 p1=3.93004 p2=1 p3=0.148381 p4=1 ]
+          Total Integral L1: 0.991971, Total Integral L2: 0.991999
+          Params for lg_l1 (L1): [ p0=0.0430109 p1=3.94079 p2=1 p3=0.148633 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429489 p1=3.93003 p2=1 p3=0.149212 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 37
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97134 p1=0.156113 p2=2.80985 p3=0.21963 p4=1.21059 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96213 p1=0.156693 p2=2.76238 p3=0.219582 p4=1.23644 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  38/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2342.56 s | Total Wall:  2354.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97733 p1=0.159113 p2=2.72875 p3=0.223049 p4=1.19133 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96522 p1=0.15883 p2=2.65572 p3=0.218112 p4=1.18938 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  38/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5761.23 s | Total Wall:  5788.00 s | Mem:   468.73 MB
 --> Processing Bin 38 (Ek_low = 15.8444, Ek_center = 16.4935)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 38
-          Total Integral L1: 0.977157, Total Integral L2: 0.977063
-          Params for lg_l1 (L1): [ p0=0.0433717 p1=3.93733 p2=1 p3=0.148337 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436816 p1=3.93077 p2=1 p3=0.147937 p4=1 ]
+          Total Integral L1: 0.991963, Total Integral L2: 0.991997
+          Params for lg_l1 (L1): [ p0=0.0430447 p1=3.94166 p2=1 p3=0.148262 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429492 p1=3.93077 p2=1 p3=0.148785 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 38
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.9721 p1=0.155805 p2=2.80985 p3=0.219078 p4=1.20748 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96273 p1=0.156272 p2=2.76238 p3=0.219018 p4=1.23316 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  39/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2364.83 s | Total Wall:  2376.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97852 p1=0.158998 p2=2.72875 p3=0.222621 p4=1.18528 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96612 p1=0.158555 p2=2.65572 p3=0.217367 p4=1.18399 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  39/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5816.86 s | Total Wall:  5843.00 s | Mem:   468.73 MB
 --> Processing Bin 39 (Ek_low = 17.1425, Ek_center = 17.8417)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 39
-          Total Integral L1: 0.977145, Total Integral L2: 0.977046
-          Params for lg_l1 (L1): [ p0=0.0433963 p1=3.93721 p2=1 p3=0.148 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0436986 p1=3.93149 p2=1 p3=0.147494 p4=1 ]
+          Total Integral L1: 0.991955, Total Integral L2: 0.991996
+          Params for lg_l1 (L1): [ p0=0.0430785 p1=3.94253 p2=1 p3=0.147891 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429496 p1=3.93151 p2=1 p3=0.148359 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 39
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97286 p1=0.155497 p2=2.80985 p3=0.218526 p4=1.20437 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96333 p1=0.155853 p2=2.76238 p3=0.218455 p4=1.22987 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  40/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2387.17 s | Total Wall:  2398.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.97971 p1=0.158884 p2=2.72875 p3=0.222193 p4=1.17924 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96702 p1=0.15828 p2=2.65572 p3=0.216623 p4=1.17862 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  40/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5873.31 s | Total Wall:  5900.00 s | Mem:   468.73 MB
 --> Processing Bin 40 (Ek_low = 18.5408, Ek_center = 19.2900)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 40
-          Total Integral L1: 0.977134, Total Integral L2: 0.977029
-          Params for lg_l1 (L1): [ p0=0.0434209 p1=3.93707 p2=1 p3=0.147666 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0437154 p1=3.93221 p2=1 p3=0.147054 p4=1 ]
+          Total Integral L1: 0.991947, Total Integral L2: 0.991995
+          Params for lg_l1 (L1): [ p0=0.0431121 p1=3.9434 p2=1 p3=0.147522 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429499 p1=3.93225 p2=1 p3=0.147935 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 40
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97362 p1=0.155191 p2=2.80985 p3=0.217978 p4=1.20129 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96393 p1=0.155436 p2=2.76238 p3=0.217896 p4=1.22661 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  41/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2409.46 s | Total Wall:  2421.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.9809 p1=0.158771 p2=2.72875 p3=0.221768 p4=1.17324 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.96792 p1=0.158008 p2=2.65572 p3=0.215884 p4=1.17328 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  41/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5929.51 s | Total Wall:  5956.00 s | Mem:   468.73 MB
 --> Processing Bin 41 (Ek_low = 20.0392, Ek_center = 20.8385)
   [Debug] For context: LG model for UnbiasedL1Inner, Beryllium, AGL, bin 41
-          Total Integral L1: 0.977123, Total Integral L2: 0.977012
-          Params for lg_l1 (L1): [ p0=0.0434451 p1=3.93694 p2=1 p3=0.147335 p4=1 ]
-          Params for lg_l2 (L2): [ p0=0.0437321 p1=3.93292 p2=1 p3=0.146618 p4=1 ]
+          Total Integral L1: 0.99194, Total Integral L2: 0.991994
+          Params for lg_l1 (L1): [ p0=0.0431453 p1=3.94425 p2=1 p3=0.147157 p4=1 ]
+          Params for lg_l2 (L2): [ p0=0.0429503 p1=3.93298 p2=1 p3=0.147516 p4=1 ]
   [Debug] For context: EGE model for UnbiasedL1Inner, Beryllium, AGL, bin 41
           Total Integral L1: 1, Total Integral L2: 1
-          Params for ege_l1 (L1): [ p0=3.97437 p1=0.154888 p2=2.80985 p3=0.217435 p4=1.19824 p5=1 p6=2 p7=6 ]
-          Params for ege_l2 (L2): [ p0=3.96451 p1=0.155023 p2=2.76238 p3=0.217343 p4=1.22339 p5=1 p6=2 p7=6 ]
-  [Progress] Bin  42/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  2431.83 s | Total Wall:  2443.00 s | Mem:   751.42 MB
+          Params for ege_l1 (L1): [ p0=3.98207 p1=0.158659 p2=2.72875 p3=0.221347 p4=1.16731 p5=1 p6=2.5 p7=9.5 ]
+          Params for ege_l2 (L2): [ p0=3.9688 p1=0.157738 p2=2.65572 p3=0.215153 p4=1.168 p5=1 p6=2.5 p7=9.5 ]
+  [Progress] Bin  42/73 (UnbiasedL1Inner/AGL) done. | Total CPU:  5985.53 s | Total Wall:  6012.00 s | Mem:   468.73 MB
 
 Successfully built and saved all CDF lookup tables to: /eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline_Beryllium.root

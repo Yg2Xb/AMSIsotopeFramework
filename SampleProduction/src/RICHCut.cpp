@@ -128,7 +128,7 @@
  CutResult<3> RICHCut::cutRICH(int charge, bool isISS, bool interpolate) const {
      std::array<bool, 3> cuts{
          //cutGeometry(interpolate).total,
-         isISS ? event_->rich_goodgeo : cutGeometry(interpolate).total,
+         yanzx_dst ? event_->rich_goodgeo : cutGeometry(interpolate).total,
          cutBasic().total,
          cutCharge(charge).total
      };
@@ -147,7 +147,7 @@
  
  CutResult<2> RICHCut::cutRICHforBkg(int charge, bool isISS, bool interpolate) const {
      std::array<bool, 2> cuts{
-         isISS ? event_->rich_goodgeo : cutGeometry(interpolate).total,
+         yanzx_dst ? event_->rich_goodgeo : cutGeometry(interpolate).total,
          cutBasic().total
          // no charge cut
      };

@@ -264,7 +264,6 @@ bool isValidBeta(double beta) {
 }
 
 int findBin(std::vector<double> Rbins_beta, double beta) {
-    if (!isValidBeta(beta)) return -1;
     if (beta < Rbins_beta.front() || beta >= Rbins_beta.back()) {
         return -1;
     }
@@ -325,7 +324,7 @@ double CorrectCalibrationBiasInData(
     double H=47;
     double n=naf_rad?1.332:1.05;
     double dbeta=naf_rad?1.12123e-04:1.61485e-05;
-    double dH=0.239239;
+    double dH=0.239239*1.5; //2025Nov5,new correction factor 1.4 // 11.12 factor 1.5
     double dn=naf_rad?2.56350e-03:0;
     double dh=0;
 

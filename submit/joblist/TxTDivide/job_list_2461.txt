@@ -1,0 +1,10 @@
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699669280_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699683212_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699697148_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699711081_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699725015_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699738947_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699752882_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699766813_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699780746_10.root
+/eos/ams/group/mit/amsd69n_TMTFNTotHB_B1236P8/1699794679_10.root

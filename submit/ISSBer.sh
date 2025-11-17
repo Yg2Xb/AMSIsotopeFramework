@@ -27,7 +27,7 @@ fi
 LISTFILE="$1"
 
 # 输出目录与文件名（基于子列表名生成，确保一作业一个输出）
-OUTDIR="/eos/user/z/zixuan/Isotope/ISS/Be"
+OUTDIR="/eos/user/z/zixuan/Isotope/ISS/Be_mit"
 BASENAME="$(basename "${LISTFILE%.*}")"   # 例如 job_list_4
 OUTNAME="${BASENAME}.root"                # 例如 job_list_4.root
 
@@ -36,6 +36,6 @@ echo "[INFO] Output file: $OUTDIR/$OUTNAME"
 
 # 一次性运行：将列表文件作为 inData 传入，程序内部 TChain 读取多个 ROOT 并写出一个输出
 /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/SampleProduction \
-  "$OUTDIR" "$OUTNAME" "$LISTFILE" 4 7 0
+  "$OUTDIR" "$OUTNAME" "$LISTFILE" 4 7 0 4
 
 echo "[INFO] Finished: $OUTDIR/$OUTNAME"

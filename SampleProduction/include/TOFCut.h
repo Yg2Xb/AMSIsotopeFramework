@@ -61,6 +61,7 @@ public:
 
     // 综合切割
     CutResult<2> cutTOF(int charge, bool isISS) const;
+    CutResult<4> cutTOFforBkg(int charge, bool isISS) const;
     CutResult<2> cutTOFExcludeLayer4(int charge, bool isISS) const;
     bool cutNoGeometry(int charge) const;
 

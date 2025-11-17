@@ -123,9 +123,9 @@ namespace Binning {
 namespace Detector {
     // Beta ExpoTime types
     const std::array<BetaExpoT, Constants::BETA_TYPES> BetaTypes {{
-        BetaExpoT("TOF",  1.06,   0.4,   {{1, 7}}),
-        BetaExpoT("NaF",  1.005,  0.75,  {{8, 20}}),
-        BetaExpoT("Aero", 1.0005, 0.953, {{21, 27}})
+        BetaExpoT("TOF",  1.01,   0.4,   {{1, 6}}), //1.06
+        BetaExpoT("NaF",  1.001,  0.75,  {{7, 14}}), //1.005
+        BetaExpoT("Aero", 1.0005,  0.953, {{15, 37}}) //1.0005
     }};
 
 

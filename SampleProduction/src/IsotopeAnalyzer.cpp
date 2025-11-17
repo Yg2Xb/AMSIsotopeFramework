@@ -15,13 +15,14 @@ IsotopeAnalyzer& IsotopeAnalyzer::Instance() {
 
 void IsotopeAnalyzer::setConfig(const TString& outDir, const TString& outName,
                                const TString& inData, const TString& inOptions,
-                               int UseMass, bool NoBkgCut) {
+                               int UseMass, bool NoBkgCut, int FragmentZ) {
     outDir_ = outDir;
     outName_ = outName;
     inData_ = inData;
     inOptions_ = inOptions;
     isISS_ = !inOptions.Contains("|MC");
     isNoBkgCut_ = NoBkgCut;
+    FragmentZ_ = FragmentZ;                           
 
 
     int charge = std::stoi(inOptions.Data());
@@ -35,7 +36,7 @@ void IsotopeAnalyzer::setConfig(const TString& outDir, const TString& outName,
 
     std::cout << "Analyzer configured for: " << isotope->getName()
               << (isISS_ ? " (ISS Data)" : " (MC Data)")
-              << ", Z=" << charge << ", A=" << UseMass_ << ", isNoBkgCut=" << isNoBkgCut_ << std::endl;
+              << ", Z=" << charge << ", A=" << UseMass_ << ", isNoBkgCut=" << isNoBkgCut_ << ", FragmentZ=" << FragmentZ_ << std::endl;
 }
 
 void IsotopeAnalyzer::readDataFrom(TChain* chain, const TString& filename) {
@@ -69,13 +70,19 @@ void IsotopeAnalyzer::initialize() {
                                                   active_chains_,
                                                   isotope->getCharge(),
                                                   isotope,
-                                                  UseMass_);
+                                                  UseMass_,
+                                                  FragmentZ_);
 
     // 4. 设置数据链
     dataChain = std::make_unique<TChain>("amstreea");
     readDataFrom(dataChain.get(), inData_);
 
     std::cout << "IsotopeAnalyzer initialized with " << dataChain->GetEntries() << " entries." << std::endl;
+
+    // ===== 新增：准备筛选后的树 =====
+    if (true && m_histManager && dataChain) {
+        m_histManager->PrepareFilteredTree(dataChain.get());
+    }
 }
 
 std::vector<int> IsotopeAnalyzer::getBkgFragIDs(int fragZ) const {
@@ -112,13 +119,8 @@ void IsotopeAnalyzer::write() {
 
     std::cout << "Saving all results to file..." << std::endl;
     
-    // 将 dataChain 传递给 HistManager
-    if (dataChain) {
-        m_histManager->SetDataChain(dataChain.get());
-    }
-    
     // 调用 Save()，默认会保存直方图和 TTree
-    m_histManager->Save(false); // true = 保存 TTree
+    m_histManager->Save(1); // true = 保存 TTree
 }
 
 void IsotopeAnalyzer::cleanup() {

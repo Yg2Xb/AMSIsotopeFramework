@@ -1,1646 +1,1145 @@
 
 Processing ../rootlogon.C...
-Processing ChargeTempFit.cpp...
-
-======================================================================
-Starting analysis for: Boron -> Beryllium (L1Inner)
-======================================================================
+Processing CalPureQTemp.cpp...
 
 --- Processing Detector: TOF ---
-  [bin 1] Eklow = 0.0822516 GeV/n
-  [bin 2] Eklow = 0.165811 GeV/n
-  [bin 3] Eklow = 0.267548 GeV/n
-  [bin 4] Eklow = 0.406144 GeV/n
-    Processing energy bin 4 (Ek=0.496877 GeV/n)
-      -> Attempting fit with range [3.6, 6.5]...
-Total chi2/ndf: 17.5838
-      -> Fit Successful! Chi2/NDF = 17.5838 in range [3.6, 6.5]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 4
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 455592.00000
-N_sig_narrow (in unified range): 246184.00000 +/- 496.16933
-R_total (model integral in narrow range): 0.56120 +/- 0.00074
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.21602 +/- 0.00061
-    R_A (shape factor, from PDF integral): 0.00181 +/- 0.00000
-    P_A (narrow fraction): 0.00070 +/- 0.00000
-    Yield_A: 171.62974 +/- 0.63628
-  Element: Boron
-    F_A (fit fraction): 0.70660 +/- 0.00067
-    R_A (shape factor, from PDF integral): 0.79243 +/- 0.00096
-    P_A (narrow fraction): 0.99773 +/- 0.00202
-    Yield_A: 245626.11928 +/- 701.82182
-  Element: Carbon
-    F_A (fit fraction): 0.07737 +/- 0.00040
-    R_A (shape factor, from PDF integral): 0.01138 +/- 0.00053
-    P_A (narrow fraction): 0.00157 +/- 0.00007
-    Yield_A: 386.25098 +/- 18.13969
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 17.58382
-  [bin 5] Eklow = 0.58761 GeV/n
-    Processing energy bin 5 (Ek=0.70454 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 13.58323
-      -> Fit Successful! Chi2/NDF = 13.58323 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 5
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 611655.00000
-N_sig_narrow (in unified range): 326091.00000 +/- 571.04378
-R_total (model integral in narrow range): 0.54766 +/- 0.00064
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.22514 +/- 0.00053
-    R_A (shape factor, from PDF integral): 0.00249 +/- 0.00000
-    P_A (narrow fraction): 0.00102 +/- 0.00000
-    Yield_A: 333.31275 +/- 1.05633
-  Element: Boron
-    F_A (fit fraction): 0.70724 +/- 0.00058
-    R_A (shape factor, from PDF integral): 0.77266 +/- 0.00085
-    P_A (narrow fraction): 0.99780 +/- 0.00180
-    Yield_A: 325375.12484 +/- 817.74447
-  Element: Carbon
-    F_A (fit fraction): 0.06762 +/- 0.00032
-    R_A (shape factor, from PDF integral): 0.00950 +/- 0.00046
-    P_A (narrow fraction): 0.00117 +/- 0.00006
-    Yield_A: 382.56241 +/- 18.71134
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 13.58323
-  [bin 6] Eklow = 0.82147 GeV/n
-    Processing energy bin 6 (Ek=0.96725 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 6.49806
-      -> Fit Successful! Chi2/NDF = 6.49806 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 6
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 725140.00000
-N_sig_narrow (in unified range): 388775.00000 +/- 623.51824
-R_total (model integral in narrow range): 0.54263 +/- 0.00059
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.23357 +/- 0.00050
-    R_A (shape factor, from PDF integral): 0.00330 +/- 0.00001
-    P_A (narrow fraction): 0.00142 +/- 0.00001
-    Yield_A: 551.91857 +/- 2.63056
-  Element: Boron
-    F_A (fit fraction): 0.70677 +/- 0.00053
-    R_A (shape factor, from PDF integral): 0.76588 +/- 0.00079
-    P_A (narrow fraction): 0.99755 +/- 0.00167
-    Yield_A: 387821.15773 +/- 898.94218
-  Element: Carbon
-    F_A (fit fraction): 0.05966 +/- 0.00028
-    R_A (shape factor, from PDF integral): 0.00940 +/- 0.00043
-    P_A (narrow fraction): 0.00103 +/- 0.00005
-    Yield_A: 401.92370 +/- 18.35542
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 6.49806
-  [bin 7] Eklow = 1.11303 GeV/n
-  [bin 8] Eklow = 1.47140 GeV/n
-  [bin 9] Eklow = 1.91049 GeV/n
-  [bin 10] Eklow = 2.43494 GeV/n
-  [bin 11] Eklow = 3.05875 GeV/n
-  [bin 12] Eklow = 3.79127 GeV/n
-  [bin 13] Eklow = 4.64682 GeV/n
-  [bin 14] Eklow = 5.63491 GeV/n
-  [bin 15] Eklow = 6.77500 GeV/n
-  [bin 16] Eklow = 8.11658 GeV/n
-  [bin 17] Eklow = 9.65954 GeV/n
-  [bin 18] Eklow = 11.45358 GeV/n
-  [bin 19] Eklow = 13.49860 GeV/n
-  [bin 20] Eklow = 15.84438 GeV/n
-  [bin 21] Eklow = 18.54079 GeV/n
-  [bin 22] Eklow = 21.63773 GeV/n
-  [bin 23] Eklow = 25.18512 GeV/n
-  [bin 24] Eklow = 29.23289 GeV/n
-  [bin 25] Eklow = 33.93095 GeV/n
-  [bin 26] Eklow = 39.32928 GeV/n
-  [bin 27] Eklow = 45.57783 GeV/n
-  [bin 28] Eklow = 53.07653 GeV/n
-  [bin 29] Eklow = 61.57544 GeV/n
-  [bin 30] Eklow = 72.57440 GeV/n
-  [bin 31] Eklow = 86.57346 GeV/n
-  [bin 32] Eklow = 104.57261 GeV/n
-  [bin 33] Eklow = 128.57185 GeV/n
-  [bin 34] Eklow = 164.07113 GeV/n
-  [bin 35] Eklow = 219.57047 GeV/n
-  [bin 36] Eklow = 329.06981 GeV/n
+ [Bin 1] Ek=0.103981 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 2] Ek=0.145761 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 3] Ek=0.189414 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 4] Ek=0.240282 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 5] Ek=0.300226 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 6] Ek=0.369524 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.136003, N_template: 173818, N_purged: 9114.23, Scale: 0.0524355
+Total chi2/ndf: 3.20268
+   [Purge] Element: Oxygen, Fraction: 0.134578, N_template: 173818, N_purged: 9018.76, Scale: 0.0518862
+Total chi2/ndf: 0.0814861
+   [Purge] Element: Nitrogen, Fraction: 0.0159478, N_template: 58111.9, N_purged: 3883.35, Scale: 0.0668255
+   [Purge] Element: Oxygen, Fraction: 0.0110112, N_template: 173818, N_purged: 2681.27, Scale: 0.0154257
+Total chi2/ndf: 5.67001
+   [Purge] Element: Nitrogen, Fraction: 0.0146513, N_template: 58111.9, N_purged: 3567.66, Scale: 0.0613929
+   [Purge] Element: Oxygen, Fraction: 0.0101088, N_template: 173818, N_purged: 2461.53, Scale: 0.0141615
+Total chi2/ndf: 0.471293
+   [Purge] Element: Carbon, Fraction: 0.113459, N_template: 237752, N_purged: 10234.5, Scale: 0.043047
+   [Purge] Element: Nitrogen, Fraction: 0.00891532, N_template: 58111.9, N_purged: 804.207, Scale: 0.0138389
+Total chi2/ndf: 3.63481
+   [Purge] Element: Carbon, Fraction: 0.113548, N_template: 237752, N_purged: 10242.6, Scale: 0.043081
+   [Purge] Element: Nitrogen, Fraction: 0.00717411, N_template: 58111.9, N_purged: 647.141, Scale: 0.0111361
+Total chi2/ndf: 0.161149
+   [Purge] Element: Boron, Fraction: 0.0711611, N_template: 79481.8, N_purged: 1500.15, Scale: 0.0188741
+   [Purge] Element: Carbon, Fraction: 0.0507062, N_template: 237752, N_purged: 1068.94, Scale: 0.00449601
+Total chi2/ndf: 2.35537
+   [Purge] Element: Boron, Fraction: 0.0643784, N_template: 79481.8, N_purged: 1357.16, Scale: 0.0170751
+   [Purge] Element: Carbon, Fraction: 0.0455484, N_template: 237752, N_purged: 960.207, Scale: 0.00403869
+Total chi2/ndf: 0.351071
+ [Bin 7] Ek=0.448539 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.132171, N_template: 229288, N_purged: 11549.6, Scale: 0.0503716
+Total chi2/ndf: 2.40362
+   [Purge] Element: Oxygen, Fraction: 0.129493, N_template: 229288, N_purged: 11315.6, Scale: 0.0493511
+Total chi2/ndf: 0.125215
+   [Purge] Element: Nitrogen, Fraction: 0.0132949, N_template: 76250.4, N_purged: 4200.9, Scale: 0.0550934
+   [Purge] Element: Oxygen, Fraction: 0.00986015, N_template: 229288, N_purged: 3115.6, Scale: 0.0135881
+Total chi2/ndf: 4.98283
+   [Purge] Element: Nitrogen, Fraction: 0.0129962, N_template: 76250.4, N_purged: 4106.52, Scale: 0.0538558
+   [Purge] Element: Oxygen, Fraction: 0.00915598, N_template: 229288, N_purged: 2893.1, Scale: 0.0126177
+Total chi2/ndf: 0.250415
+   [Purge] Element: Carbon, Fraction: 0.104793, N_template: 309180, N_purged: 12222.5, Scale: 0.0395319
+   [Purge] Element: Nitrogen, Fraction: 0.00829869, N_template: 76250.4, N_purged: 967.917, Scale: 0.0126939
+Total chi2/ndf: 2.63826
+   [Purge] Element: Carbon, Fraction: 0.104899, N_template: 309180, N_purged: 12234.8, Scale: 0.0395719
+   [Purge] Element: Nitrogen, Fraction: 0.00670502, N_template: 76250.4, N_purged: 782.04, Scale: 0.0102562
+Total chi2/ndf: 0.210486
+   [Purge] Element: Boron, Fraction: 0.0584625, N_template: 103808, N_purged: 1649.05, Scale: 0.0158856
+   [Purge] Element: Carbon, Fraction: 0.0438614, N_template: 309180, N_purged: 1237.2, Scale: 0.00400155
+Total chi2/ndf: 1.69927
+   [Purge] Element: Boron, Fraction: 0.055682, N_template: 103808, N_purged: 1570.62, Scale: 0.0151301
+   [Purge] Element: Carbon, Fraction: 0.0391738, N_template: 309180, N_purged: 1104.98, Scale: 0.00357388
+Total chi2/ndf: 0.19354
+ [Bin 8] Ek=0.539271 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.120882, N_template: 284646, N_purged: 12988.8, Scale: 0.0456314
+Total chi2/ndf: 4.84806
+   [Purge] Element: Oxygen, Fraction: 0.119576, N_template: 284646, N_purged: 12848.5, Scale: 0.0451384
+Total chi2/ndf: 0.149022
+   [Purge] Element: Nitrogen, Fraction: 0.0130582, N_template: 94753.7, N_purged: 5073.38, Scale: 0.0535429
+   [Purge] Element: Oxygen, Fraction: 0.00948811, N_template: 284646, N_purged: 3686.32, Scale: 0.0129505
+Total chi2/ndf: 3.89622
+   [Purge] Element: Nitrogen, Fraction: 0.0126914, N_template: 94753.7, N_purged: 4930.84, Scale: 0.0520385
+   [Purge] Element: Oxygen, Fraction: 0.00896375, N_template: 284646, N_purged: 3482.59, Scale: 0.0122348
+Total chi2/ndf: 0.310596
+   [Purge] Element: Carbon, Fraction: 0.103304, N_template: 380350, N_purged: 14768.7, Scale: 0.0388293
+   [Purge] Element: Nitrogen, Fraction: 0.0074358, N_template: 94753.7, N_purged: 1063.05, Scale: 0.0112191
+Total chi2/ndf: 3.20215
+   [Purge] Element: Carbon, Fraction: 0.10239, N_template: 380350, N_purged: 14638.1, Scale: 0.0384858
+   [Purge] Element: Nitrogen, Fraction: 0.00605132, N_template: 94753.7, N_purged: 865.12, Scale: 0.0091302
+Total chi2/ndf: 0.19617
+   [Purge] Element: Boron, Fraction: 0.0576668, N_template: 127717, N_purged: 2036.67, Scale: 0.0159468
+   [Purge] Element: Carbon, Fraction: 0.0387709, N_template: 380350, N_purged: 1369.31, Scale: 0.00360014
+Total chi2/ndf: 1.79187
+   [Purge] Element: Boron, Fraction: 0.0538125, N_template: 127717, N_purged: 1900.55, Scale: 0.014881
+   [Purge] Element: Carbon, Fraction: 0.0353224, N_template: 380350, N_purged: 1247.52, Scale: 0.00327992
+Total chi2/ndf: 0.211452
+ [Bin 9] Ek=0.641983 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.115581, N_template: 330504, N_purged: 14427.6, Scale: 0.0436532
+Total chi2/ndf: 3.17272
+   [Purge] Element: Oxygen, Fraction: 0.115159, N_template: 330504, N_purged: 14374.9, Scale: 0.0434938
+Total chi2/ndf: 0.122918
+   [Purge] Element: Nitrogen, Fraction: 0.013318, N_template: 110576, N_purged: 5980.85, Scale: 0.0540882
+   [Purge] Element: Oxygen, Fraction: 0.00857095, N_template: 330504, N_purged: 3849.05, Scale: 0.011646
+Total chi2/ndf: 3.31292
+   [Purge] Element: Nitrogen, Fraction: 0.0128622, N_template: 110576, N_purged: 5776.16, Scale: 0.052237
+   [Purge] Element: Oxygen, Fraction: 0.00816861, N_template: 330504, N_purged: 3668.37, Scale: 0.0110993
+Total chi2/ndf: 0.263103
+   [Purge] Element: Carbon, Fraction: 0.100786, N_template: 439890, N_purged: 16649.5, Scale: 0.0378491
+   [Purge] Element: Nitrogen, Fraction: 0.00688687, N_template: 110576, N_purged: 1137.69, Scale: 0.0102888
+Total chi2/ndf: 3.63413
+   [Purge] Element: Carbon, Fraction: 0.0994154, N_template: 439890, N_purged: 16423.1, Scale: 0.0373346
+   [Purge] Element: Nitrogen, Fraction: 0.00559986, N_template: 110576, N_purged: 925.08, Scale: 0.00836602
+Total chi2/ndf: 0.259255
+   [Purge] Element: Boron, Fraction: 0.0531568, N_template: 148196, N_purged: 2265.97, Scale: 0.0152903
+   [Purge] Element: Carbon, Fraction: 0.0347022, N_template: 439890, N_purged: 1479.29, Scale: 0.00336285
+Total chi2/ndf: 2.22812
+   [Purge] Element: Boron, Fraction: 0.0499571, N_template: 148196, N_purged: 2129.57, Scale: 0.0143699
+   [Purge] Element: Carbon, Fraction: 0.0312732, N_template: 439890, N_purged: 1333.11, Scale: 0.00303056
+Total chi2/ndf: 0.228717
+ [Bin 10] Ek=0.758915 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.109323, N_template: 402030, N_purged: 16389, Scale: 0.0407656
+Total chi2/ndf: 2.94773
+   [Purge] Element: Oxygen, Fraction: 0.108541, N_template: 402030, N_purged: 16271.7, Scale: 0.040474
+Total chi2/ndf: 0.119382
+   [Purge] Element: Nitrogen, Fraction: 0.0116819, N_template: 133813, N_purged: 6314.9, Scale: 0.0471918
+   [Purge] Element: Oxygen, Fraction: 0.00824088, N_template: 402030, N_purged: 4454.79, Scale: 0.0110807
+Total chi2/ndf: 5.24019
+   [Purge] Element: Nitrogen, Fraction: 0.0116699, N_template: 133813, N_purged: 6308.42, Scale: 0.0471434
+   [Purge] Element: Oxygen, Fraction: 0.00783787, N_template: 402030, N_purged: 4236.94, Scale: 0.0105389
+Total chi2/ndf: 0.163234
+   [Purge] Element: Carbon, Fraction: 0.0933761, N_template: 530232, N_purged: 18439.5, Scale: 0.0347764
+   [Purge] Element: Nitrogen, Fraction: 0.00647452, N_template: 133813, N_purged: 1278.56, Scale: 0.00955483
+Total chi2/ndf: 3.54627
+   [Purge] Element: Carbon, Fraction: 0.0925682, N_template: 530232, N_purged: 18280, Scale: 0.0344755
+   [Purge] Element: Nitrogen, Fraction: 0.00543915, N_template: 133813, N_purged: 1074.1, Scale: 0.00802686
+Total chi2/ndf: 0.271818
+   [Purge] Element: Boron, Fraction: 0.047918, N_template: 178447, N_purged: 2368.49, Scale: 0.0132728
+   [Purge] Element: Carbon, Fraction: 0.0338067, N_template: 530232, N_purged: 1671, Scale: 0.00315145
+Total chi2/ndf: 2.09446
+   [Purge] Element: Boron, Fraction: 0.0461931, N_template: 178447, N_purged: 2283.23, Scale: 0.012795
+   [Purge] Element: Carbon, Fraction: 0.0310604, N_template: 530232, N_purged: 1535.25, Scale: 0.00289544
+Total chi2/ndf: 0.182584
+ [Bin 11] Ek=0.890201 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.108998, N_template: 427818, N_purged: 17194.1, Scale: 0.0401902
+Total chi2/ndf: 3.14052
+   [Purge] Element: Oxygen, Fraction: 0.107298, N_template: 427818, N_purged: 16925.9, Scale: 0.0395634
+Total chi2/ndf: 0.256681
+   [Purge] Element: Nitrogen, Fraction: 0.0102734, N_template: 141077, N_purged: 5899.9, Scale: 0.0418205
+   [Purge] Element: Oxygen, Fraction: 0.00773849, N_template: 427818, N_purged: 4444.13, Scale: 0.0103879
+Total chi2/ndf: 4.25225
+   [Purge] Element: Nitrogen, Fraction: 0.0103094, N_template: 141077, N_purged: 5920.58, Scale: 0.0419671
+   [Purge] Element: Oxygen, Fraction: 0.00736926, N_template: 427818, N_purged: 4232.09, Scale: 0.00989226
+Total chi2/ndf: 0.13079
+   [Purge] Element: Carbon, Fraction: 0.0866526, N_template: 564319, N_purged: 18010.7, Scale: 0.0319158
+   [Purge] Element: Nitrogen, Fraction: 0.00612891, N_template: 141077, N_purged: 1273.89, Scale: 0.00902976
+Total chi2/ndf: 3.69205
+   [Purge] Element: Carbon, Fraction: 0.0867147, N_template: 564319, N_purged: 18023.6, Scale: 0.0319386
+   [Purge] Element: Nitrogen, Fraction: 0.00507669, N_template: 141077, N_purged: 1055.18, Scale: 0.00747952
+Total chi2/ndf: 0.275471
+   [Purge] Element: Boron, Fraction: 0.0410352, N_template: 188997, N_purged: 2315.74, Scale: 0.0122528
+   [Purge] Element: Carbon, Fraction: 0.0299282, N_template: 564319, N_purged: 1688.94, Scale: 0.00299288
+Total chi2/ndf: 2.53979
+   [Purge] Element: Boron, Fraction: 0.0398894, N_template: 188997, N_purged: 2251.08, Scale: 0.0119106
+   [Purge] Element: Carbon, Fraction: 0.0279707, N_template: 564319, N_purged: 1578.47, Scale: 0.00279713
+Total chi2/ndf: 0.105394
+ [Bin 12] Ek=1.03598 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.102129, N_template: 462548, N_purged: 17214.7, Scale: 0.0372172
+Total chi2/ndf: 3.0785
+   [Purge] Element: Oxygen, Fraction: 0.101068, N_template: 462548, N_purged: 17035.9, Scale: 0.0368306
+Total chi2/ndf: 0.148922
+   [Purge] Element: Nitrogen, Fraction: 0.00952137, N_template: 151728, N_purged: 5870.12, Scale: 0.0386884
+   [Purge] Element: Oxygen, Fraction: 0.0077295, N_template: 462548, N_purged: 4765.39, Scale: 0.0103025
+Total chi2/ndf: 4.13641
+   [Purge] Element: Nitrogen, Fraction: 0.00958939, N_template: 151728, N_purged: 5912.05, Scale: 0.0389648
+   [Purge] Element: Oxygen, Fraction: 0.00736457, N_template: 462548, N_purged: 4540.4, Scale: 0.00981607
+Total chi2/ndf: 0.108626
+   [Purge] Element: Carbon, Fraction: 0.0805891, N_template: 606237, N_purged: 17663.1, Scale: 0.0291356
+   [Purge] Element: Nitrogen, Fraction: 0.00586518, N_template: 151728, N_purged: 1285.5, Scale: 0.0084724
+Total chi2/ndf: 3.71858
+   [Purge] Element: Carbon, Fraction: 0.0809641, N_template: 606237, N_purged: 17745.3, Scale: 0.0292712
+   [Purge] Element: Nitrogen, Fraction: 0.00462155, N_template: 151728, N_purged: 1012.93, Scale: 0.00667595
+Total chi2/ndf: 0.232458
+   [Purge] Element: Boron, Fraction: 0.0392763, N_template: 200599, N_purged: 2408.62, Scale: 0.0120071
+   [Purge] Element: Carbon, Fraction: 0.0281573, N_template: 606237, N_purged: 1726.75, Scale: 0.0028483
+Total chi2/ndf: 2.27614
+   [Purge] Element: Boron, Fraction: 0.0387178, N_template: 200599, N_purged: 2374.37, Scale: 0.0118364
+   [Purge] Element: Carbon, Fraction: 0.0255932, N_template: 606237, N_purged: 1569.5, Scale: 0.00258892
+Total chi2/ndf: 0.232491
+ [Bin 13] Ek=1.19844 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0955141, N_template: 519014, N_purged: 17832, Scale: 0.0343575
+Total chi2/ndf: 2.45343
+   [Purge] Element: Oxygen, Fraction: 0.0957199, N_template: 519014, N_purged: 17870.4, Scale: 0.0344315
+Total chi2/ndf: 0.0198387
+   [Purge] Element: Nitrogen, Fraction: 0.00915416, N_template: 168901, N_purged: 6306.7, Scale: 0.0373397
+   [Purge] Element: Oxygen, Fraction: 0.00723475, N_template: 519014, N_purged: 4984.34, Scale: 0.00960347
+Total chi2/ndf: 4.47175
+   [Purge] Element: Nitrogen, Fraction: 0.00921747, N_template: 168901, N_purged: 6350.32, Scale: 0.037598
+   [Purge] Element: Oxygen, Fraction: 0.00694208, N_template: 519014, N_purged: 4782.7, Scale: 0.00921498
+Total chi2/ndf: 0.10456
+   [Purge] Element: Carbon, Fraction: 0.0700552, N_template: 677969, N_purged: 16891.4, Scale: 0.0249147
+   [Purge] Element: Nitrogen, Fraction: 0.00560577, N_template: 168901, N_purged: 1351.64, Scale: 0.00800258
+Total chi2/ndf: 12.8138
+   [Purge] Element: Carbon, Fraction: 0.0708486, N_template: 677969, N_purged: 17082.7, Scale: 0.0251969
+   [Purge] Element: Nitrogen, Fraction: 0.00439184, N_template: 168901, N_purged: 1058.94, Scale: 0.00626962
+Total chi2/ndf: 0.192817
+   [Purge] Element: Boron, Fraction: 0.040663, N_template: 223084, N_purged: 2589.66, Scale: 0.0116085
+   [Purge] Element: Carbon, Fraction: 0.0232623, N_template: 677969, N_purged: 1481.48, Scale: 0.00218517
+Total chi2/ndf: 2.7618
+   [Purge] Element: Boron, Fraction: 0.0387274, N_template: 223084, N_purged: 2466.4, Scale: 0.0110559
+   [Purge] Element: Carbon, Fraction: 0.0210518, N_template: 677969, N_purged: 1340.71, Scale: 0.00197753
+Total chi2/ndf: 0.248192
+ [Bin 14] Ek=1.37763 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 15] Ek=1.57583 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 16] Ek=1.79538 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 17] Ek=2.03628 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 18] Ek=2.29851 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 19] Ek=2.58439 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 20] Ek=2.89629 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 21] Ek=3.23418 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 22] Ek=3.60045 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 23] Ek=3.99748 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 24] Ek=4.42526 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 25] Ek=4.8936 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 26] Ek=5.38764 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 27] Ek=5.90734 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 28] Ek=6.47739 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 29] Ek=7.09781 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 30] Ek=7.76859 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 31] Ek=8.48974 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 32] Ek=9.26122 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 33] Ek=10.083 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 34] Ek=10.98 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 35] Ek=11.9523 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 36] Ek=12.9748 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 37] Ek=14.0725 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 38] Ek=15.2454 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 39] Ek=16.4935 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 40] Ek=17.8417 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 41] Ek=19.29 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 42] Ek=20.8385 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 43] Ek=22.4871 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 44] Ek=24.2608 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 45] Ek=26.1595 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 46] Ek=28.1834 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 47] Ek=30.3574 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 48] Ek=32.7064 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 49] Ek=35.2305 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 50] Ek=37.9297 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 51] Ek=40.8289 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 52] Ek=43.9532 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 53] Ek=47.3275 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 54] Ek=51.0769 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 55] Ek=55.0763 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 56] Ek=59.3257 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 57] Ek=64.0752 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 58] Ek=69.5747 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 59] Ek=75.8242 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 60] Ek=82.8237 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 61] Ek=90.8232 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 62] Ek=99.8228 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 63] Ek=110.072 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 64] Ek=122.072 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 65] Ek=136.572 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 66] Ek=154.321 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 67] Ek=176.321 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 68] Ek=204.071 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 69] Ek=240.57 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 70] Ek=295.32 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 71] Ek=384.07 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 72] Ek=544.069 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
+ [Bin 73] Ek=1149.07 GeV/n is OUTSIDE range [0.33, 1.29]. Skipping.
 
 --- Processing Detector: NaF ---
-  [bin 1] Eklow = 0.08225 GeV/n
-  [bin 2] Eklow = 0.16581 GeV/n
-  [bin 3] Eklow = 0.26755 GeV/n
-  [bin 4] Eklow = 0.40614 GeV/n
-  [bin 5] Eklow = 0.58761 GeV/n
-  [bin 6] Eklow = 0.82147 GeV/n
-    Processing energy bin 6 (Ek=0.96725 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 4.07596
-      -> Fit Successful! Chi2/NDF = 4.07596 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 6
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 122462.00000
-N_sig_narrow (in unified range): 66593.00000 +/- 258.05620
-R_total (model integral in narrow range): 0.54696 +/- 0.00142
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.22719 +/- 0.00120
-    R_A (shape factor, from PDF integral): 0.00401 +/- 0.00000
-    P_A (narrow fraction): 0.00167 +/- 0.00001
-    Yield_A: 111.00434 +/- 0.78144
-  Element: Boron
-    F_A (fit fraction): 0.71731 +/- 0.00129
-    R_A (shape factor, from PDF integral): 0.76050 +/- 0.00244
-    P_A (narrow fraction): 0.99736 +/- 0.00449
-    Yield_A: 66417.11605 +/- 394.43045
-  Element: Carbon
-    F_A (fit fraction): 0.05550 +/- 0.00065
-    R_A (shape factor, from PDF integral): 0.00960 +/- 0.00132
-    P_A (narrow fraction): 0.00097 +/- 0.00013
-    Yield_A: 64.87962 +/- 8.94690
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.07596
-  [bin 7] Eklow = 1.11303 GeV/n
-    Processing energy bin 7 (Ek=1.29221 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 4.09284
-      -> Fit Successful! Chi2/NDF = 4.09284 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 7
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 135617.00000
-N_sig_narrow (in unified range): 72975.00000 +/- 270.13885
-R_total (model integral in narrow range): 0.53924 +/- 0.00135
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.23860 +/- 0.00116
-    R_A (shape factor, from PDF integral): 0.00417 +/- 0.00000
-    P_A (narrow fraction): 0.00184 +/- 0.00001
-    Yield_A: 134.61538 +/- 0.88820
-  Element: Boron
-    F_A (fit fraction): 0.71308 +/- 0.00123
-    R_A (shape factor, from PDF integral): 0.75413 +/- 0.00224
-    P_A (narrow fraction): 0.99726 +/- 0.00424
-    Yield_A: 72775.26338 +/- 410.50365
-  Element: Carbon
-    F_A (fit fraction): 0.04832 +/- 0.00058
-    R_A (shape factor, from PDF integral): 0.00996 +/- 0.00120
-    P_A (narrow fraction): 0.00089 +/- 0.00011
-    Yield_A: 65.12124 +/- 7.91755
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.09284
-  [bin 8] Eklow = 1.47140 GeV/n
-    Processing energy bin 8 (Ek=1.69094 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.37796
-      -> Fit Successful! Chi2/NDF = 3.37796 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 8
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 129993.00000
-N_sig_narrow (in unified range): 68955.00000 +/- 262.59284
-R_total (model integral in narrow range): 0.52948 +/- 0.00138
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.25264 +/- 0.00121
-    R_A (shape factor, from PDF integral): 0.00444 +/- 0.00000
-    P_A (narrow fraction): 0.00212 +/- 0.00001
-    Yield_A: 145.95754 +/- 0.96921
-  Element: Boron
-    F_A (fit fraction): 0.70512 +/- 0.00126
-    R_A (shape factor, from PDF integral): 0.74875 +/- 0.00220
-    P_A (narrow fraction): 0.99712 +/- 0.00431
-    Yield_A: 68756.63739 +/- 396.13552
-  Element: Carbon
-    F_A (fit fraction): 0.04224 +/- 0.00056
-    R_A (shape factor, from PDF integral): 0.00953 +/- 0.00117
-    P_A (narrow fraction): 0.00076 +/- 0.00009
-    Yield_A: 52.40507 +/- 6.45277
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.37796
-  [bin 9] Eklow = 1.91049 GeV/n
-    Processing energy bin 9 (Ek=2.17272 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.01253
-      -> Fit Successful! Chi2/NDF = 3.01253 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 9
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 123507.00000
-N_sig_narrow (in unified range): 64846.00000 +/- 254.64878
-R_total (model integral in narrow range): 0.52544 +/- 0.00142
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.25681 +/- 0.00124
-    R_A (shape factor, from PDF integral): 0.00345 +/- 0.00000
-    P_A (narrow fraction): 0.00169 +/- 0.00001
-    Yield_A: 109.29592 +/- 0.74261
-  Element: Boron
-    F_A (fit fraction): 0.70523 +/- 0.00130
-    R_A (shape factor, from PDF integral): 0.74329 +/- 0.00222
-    P_A (narrow fraction): 0.99762 +/- 0.00442
-    Yield_A: 64691.98134 +/- 382.87431
-  Element: Carbon
-    F_A (fit fraction): 0.03796 +/- 0.00054
-    R_A (shape factor, from PDF integral): 0.00955 +/- 0.00114
-    P_A (narrow fraction): 0.00069 +/- 0.00008
-    Yield_A: 44.72274 +/- 5.38518
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.01253
-  [bin 10] Eklow = 2.43494 GeV/n
-    Processing energy bin 10 (Ek=2.74684 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.43232
-      -> Fit Successful! Chi2/NDF = 3.43232 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 10
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 113568.00000
-N_sig_narrow (in unified range): 59387.00000 +/- 243.69448
-R_total (model integral in narrow range): 0.52057 +/- 0.00148
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.26052 +/- 0.00130
-    R_A (shape factor, from PDF integral): 0.00371 +/- 0.00000
-    P_A (narrow fraction): 0.00186 +/- 0.00001
-    Yield_A: 110.22331 +/- 0.77894
-  Element: Boron
-    F_A (fit fraction): 0.70271 +/- 0.00136
-    R_A (shape factor, from PDF integral): 0.73893 +/- 0.00229
-    P_A (narrow fraction): 0.99746 +/- 0.00462
-    Yield_A: 59236.30452 +/- 366.65079
-  Element: Carbon
-    F_A (fit fraction): 0.03677 +/- 0.00056
-    R_A (shape factor, from PDF integral): 0.00965 +/- 0.00114
-    P_A (narrow fraction): 0.00068 +/- 0.00008
-    Yield_A: 40.47218 +/- 4.82656
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.43232
-  [bin 11] Eklow = 3.05875 GeV/n
-    Processing energy bin 11 (Ek=3.42501 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.46039
-      -> Fit Successful! Chi2/NDF = 3.46039 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 11
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 95417.00000
-N_sig_narrow (in unified range): 49832.00000 +/- 223.23082
-R_total (model integral in narrow range): 0.52396 +/- 0.00162
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.26726 +/- 0.00143
-    R_A (shape factor, from PDF integral): 0.00454 +/- 0.00000
-    P_A (narrow fraction): 0.00232 +/- 0.00001
-    Yield_A: 115.38114 +/- 0.88116
-  Element: Boron
-    F_A (fit fraction): 0.69948 +/- 0.00148
-    R_A (shape factor, from PDF integral): 0.74691 +/- 0.00245
-    P_A (narrow fraction): 0.99711 +/- 0.00497
-    Yield_A: 49687.99400 +/- 332.87474
-  Element: Carbon
-    F_A (fit fraction): 0.03326 +/- 0.00058
-    R_A (shape factor, from PDF integral): 0.00905 +/- 0.00121
-    P_A (narrow fraction): 0.00057 +/- 0.00008
-    Yield_A: 28.62486 +/- 3.86722
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.46039
-  [bin 12] Eklow = 3.79127 GeV/n
-    Processing energy bin 12 (Ek=4.21905 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.13087
-      -> Fit Successful! Chi2/NDF = 3.13087 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 12
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 75262.00000
-N_sig_narrow (in unified range): 39800.00000 +/- 199.49937
-R_total (model integral in narrow range): 0.52341 +/- 0.00182
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.26742 +/- 0.00161
-    R_A (shape factor, from PDF integral): 0.00306 +/- 0.00000
-    P_A (narrow fraction): 0.00156 +/- 0.00001
-    Yield_A: 62.14149 +/- 0.53320
-  Element: Boron
-    F_A (fit fraction): 0.70202 +/- 0.00167
-    R_A (shape factor, from PDF integral): 0.74404 +/- 0.00274
-    P_A (narrow fraction): 0.99794 +/- 0.00559
-    Yield_A: 39717.87366 +/- 298.42630
-  Element: Carbon
-    F_A (fit fraction): 0.03056 +/- 0.00063
-    R_A (shape factor, from PDF integral): 0.00860 +/- 0.00132
-    P_A (narrow fraction): 0.00050 +/- 0.00008
-    Yield_A: 19.98485 +/- 3.10009
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.13087
-  [bin 13] Eklow = 4.64682 GeV/n
-  [bin 14] Eklow = 5.63491 GeV/n
-  [bin 15] Eklow = 6.77500 GeV/n
-  [bin 16] Eklow = 8.11658 GeV/n
-  [bin 17] Eklow = 9.65954 GeV/n
-  [bin 18] Eklow = 11.45358 GeV/n
-  [bin 19] Eklow = 13.49860 GeV/n
-  [bin 20] Eklow = 15.84438 GeV/n
-  [bin 21] Eklow = 18.54079 GeV/n
-  [bin 22] Eklow = 21.63773 GeV/n
-  [bin 23] Eklow = 25.18512 GeV/n
-  [bin 24] Eklow = 29.23289 GeV/n
-  [bin 25] Eklow = 33.93095 GeV/n
-  [bin 26] Eklow = 39.32928 GeV/n
-  [bin 27] Eklow = 45.57783 GeV/n
-  [bin 28] Eklow = 53.07653 GeV/n
-  [bin 29] Eklow = 61.57544 GeV/n
-  [bin 30] Eklow = 72.57440 GeV/n
-  [bin 31] Eklow = 86.57346 GeV/n
-  [bin 32] Eklow = 104.57261 GeV/n
-  [bin 33] Eklow = 128.57185 GeV/n
-  [bin 34] Eklow = 164.07113 GeV/n
-  [bin 35] Eklow = 219.57047 GeV/n
-  [bin 36] Eklow = 329.06981 GeV/n
+ [Bin 1] Ek=0.103981 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 2] Ek=0.145761 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 3] Ek=0.189414 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 4] Ek=0.240282 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 5] Ek=0.300226 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 6] Ek=0.369524 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 7] Ek=0.448539 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 8] Ek=0.539271 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 9] Ek=0.641983 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 10] Ek=0.758915 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 11] Ek=0.890201 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 12] Ek=1.03598 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0927478, N_template: 35460, N_purged: 1253.95, Scale: 0.0353624
+Total chi2/ndf: 1.44174
+   [Purge] Element: Oxygen, Fraction: 0.0884414, N_template: 35460, N_purged: 1195.73, Scale: 0.0337205
+Total chi2/ndf: 0.0793902
+   [Purge] Element: Nitrogen, Fraction: 0.0093312, N_template: 12362.9, N_purged: 502.42, Scale: 0.0406393
+   [Purge] Element: Oxygen, Fraction: 0.00574499, N_template: 35460, N_purged: 309.328, Scale: 0.00872328
+Total chi2/ndf: 1.84389
+   [Purge] Element: Nitrogen, Fraction: 0.00851499, N_template: 12362.9, N_purged: 458.473, Scale: 0.0370845
+   [Purge] Element: Oxygen, Fraction: 0.00446074, N_template: 35460, N_purged: 240.18, Scale: 0.00677326
+Total chi2/ndf: 0.200388
+   [Purge] Element: Carbon, Fraction: 0.0723861, N_template: 53196.8, N_purged: 1420.72, Scale: 0.0267069
+   [Purge] Element: Nitrogen, Fraction: 0.00473252, N_template: 12362.9, N_purged: 92.8851, Scale: 0.0075132
+Total chi2/ndf: 1.64042
+   [Purge] Element: Carbon, Fraction: 0.0695587, N_template: 53196.8, N_purged: 1365.23, Scale: 0.0256637
+   [Purge] Element: Nitrogen, Fraction: 0.00256621, N_template: 12362.9, N_purged: 50.367, Scale: 0.00407404
+Total chi2/ndf: 0.148427
+   [Purge] Element: Boron, Fraction: 0.0407848, N_template: 18265.8, N_purged: 231.127, Scale: 0.0126536
+   [Purge] Element: Carbon, Fraction: 0.0213942, N_template: 53196.8, N_purged: 121.241, Scale: 0.0022791
+Total chi2/ndf: 1.96528
+   [Purge] Element: Boron, Fraction: 0.0300766, N_template: 18265.8, N_purged: 170.444, Scale: 0.00933136
+   [Purge] Element: Carbon, Fraction: 0.0152878, N_template: 53196.8, N_purged: 86.6357, Scale: 0.00162859
+Total chi2/ndf: 0.223153
+ [Bin 13] Ek=1.19844 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0835314, N_template: 39576, N_purged: 1259.4, Scale: 0.0318224
+Total chi2/ndf: 1.70127
+   [Purge] Element: Oxygen, Fraction: 0.0786879, N_template: 39576, N_purged: 1186.38, Scale: 0.0299772
+Total chi2/ndf: 0.12448
+   [Purge] Element: Nitrogen, Fraction: 0.00834625, N_template: 13937.2, N_purged: 507.877, Scale: 0.0364405
+   [Purge] Element: Oxygen, Fraction: 0.00558881, N_template: 39576, N_purged: 340.085, Scale: 0.00859321
+Total chi2/ndf: 2.01581
+   [Purge] Element: Nitrogen, Fraction: 0.00786129, N_template: 13937.2, N_purged: 478.367, Scale: 0.0343231
+   [Purge] Element: Oxygen, Fraction: 0.00469318, N_template: 39576, N_purged: 285.585, Scale: 0.00721612
+Total chi2/ndf: 0.14018
+   [Purge] Element: Carbon, Fraction: 0.0738423, N_template: 60128.7, N_purged: 1637.9, Scale: 0.0272398
+   [Purge] Element: Nitrogen, Fraction: 0.00426609, N_template: 13937.2, N_purged: 94.6261, Scale: 0.00678948
+Total chi2/ndf: 1.65398
+   [Purge] Element: Carbon, Fraction: 0.0707103, N_template: 60128.7, N_purged: 1568.43, Scale: 0.0260845
+   [Purge] Element: Nitrogen, Fraction: 0.00273113, N_template: 13937.2, N_purged: 60.5793, Scale: 0.0043466
+Total chi2/ndf: 0.169893
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 14] Ek=1.37763 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0853586, N_template: 41318, N_purged: 1356.18, Scale: 0.0328229
+Total chi2/ndf: 2.05284
+   [Purge] Element: Oxygen, Fraction: 0.0826073, N_template: 41318, N_purged: 1312.46, Scale: 0.031765
+Total chi2/ndf: 0.067529
+   [Purge] Element: Nitrogen, Fraction: 0.0087742, N_template: 14608.7, N_purged: 570.121, Scale: 0.039026
+   [Purge] Element: Oxygen, Fraction: 0.00652552, N_template: 41318, N_purged: 424.009, Scale: 0.0102621
+Total chi2/ndf: 2.31849
+   [Purge] Element: Nitrogen, Fraction: 0.0082547, N_template: 14608.7, N_purged: 536.366, Scale: 0.0367154
+   [Purge] Element: Oxygen, Fraction: 0.00567366, N_template: 41318, N_purged: 368.657, Scale: 0.00892244
+Total chi2/ndf: 0.229561
+   [Purge] Element: Carbon, Fraction: 0.0728592, N_template: 64125.5, N_purged: 1699.95, Scale: 0.0265097
+   [Purge] Element: Nitrogen, Fraction: 0.00432056, N_template: 14608.7, N_purged: 100.807, Scale: 0.00690048
+Total chi2/ndf: 1.76433
+   [Purge] Element: Carbon, Fraction: 0.0683566, N_template: 64125.5, N_purged: 1594.9, Scale: 0.0248715
+   [Purge] Element: Nitrogen, Fraction: 0.00267294, N_template: 14608.7, N_purged: 62.3651, Scale: 0.00426903
+Total chi2/ndf: 0.161774
+   [Purge] Element: Boron, Fraction: 0.0326806, N_template: 21746.2, N_purged: 219.058, Scale: 0.0100734
+   [Purge] Element: Carbon, Fraction: 0.0188762, N_template: 64125.5, N_purged: 126.527, Scale: 0.00197312
+Total chi2/ndf: 2.25242
+   [Purge] Element: Boron, Fraction: 0.0266222, N_template: 21746.2, N_purged: 178.449, Scale: 0.00820598
+   [Purge] Element: Carbon, Fraction: 0.0127544, N_template: 64125.5, N_purged: 85.4926, Scale: 0.00133321
+Total chi2/ndf: 0.103435
+ [Bin 15] Ek=1.57583 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0771559, N_template: 42602, N_purged: 1249.62, Scale: 0.0293324
+Total chi2/ndf: 1.7142
+   [Purge] Element: Oxygen, Fraction: 0.072356, N_template: 42602, N_purged: 1171.88, Scale: 0.0275076
+Total chi2/ndf: 0.16107
+   [Purge] Element: Nitrogen, Fraction: 0.00816366, N_template: 15071.6, N_purged: 538.1, Scale: 0.0357029
+   [Purge] Element: Oxygen, Fraction: 0.00539068, N_template: 42602, N_purged: 355.321, Scale: 0.00834048
+Total chi2/ndf: 2.11217
+   [Purge] Element: Nitrogen, Fraction: 0.00768503, N_template: 15071.6, N_purged: 506.551, Scale: 0.0336097
+   [Purge] Element: Oxygen, Fraction: 0.00445882, N_template: 42602, N_purged: 293.898, Scale: 0.0068987
+Total chi2/ndf: 0.211361
+   [Purge] Element: Carbon, Fraction: 0.0690492, N_template: 65162.9, N_purged: 1634.81, Scale: 0.025088
+   [Purge] Element: Nitrogen, Fraction: 0.0046659, N_template: 15071.6, N_purged: 110.47, Scale: 0.00732968
+Total chi2/ndf: 2.11916
+   [Purge] Element: Carbon, Fraction: 0.0652055, N_template: 65162.9, N_purged: 1543.8, Scale: 0.0236915
+   [Purge] Element: Nitrogen, Fraction: 0.00282282, N_template: 15071.6, N_purged: 66.833, Scale: 0.00443437
+Total chi2/ndf: 0.164414
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 16] Ek=1.79538 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0747641, N_template: 44221, N_purged: 1215.89, Scale: 0.0274957
+Total chi2/ndf: 2.13103
+   [Purge] Element: Oxygen, Fraction: 0.0708142, N_template: 44221, N_purged: 1151.65, Scale: 0.0260431
+Total chi2/ndf: 0.221269
+   [Purge] Element: Nitrogen, Fraction: 0.00822413, N_template: 15158.9, N_purged: 560.03, Scale: 0.0369441
+   [Purge] Element: Oxygen, Fraction: 0.00532413, N_template: 44221, N_purged: 362.552, Scale: 0.00819864
+Total chi2/ndf: 2.39776
+   [Purge] Element: Nitrogen, Fraction: 0.00776764, N_template: 15158.9, N_purged: 528.945, Scale: 0.0348934
+   [Purge] Element: Oxygen, Fraction: 0.00423601, N_template: 44221, N_purged: 288.455, Scale: 0.00652304
+Total chi2/ndf: 0.32526
+   [Purge] Element: Carbon, Fraction: 0.0681537, N_template: 67334.4, N_purged: 1627.85, Scale: 0.0241756
+   [Purge] Element: Nitrogen, Fraction: 0.00383508, N_template: 15158.9, N_purged: 91.6009, Scale: 0.00604273
+Total chi2/ndf: 1.90579
+   [Purge] Element: Carbon, Fraction: 0.06343, N_template: 67334.4, N_purged: 1515.03, Scale: 0.0225
+   [Purge] Element: Nitrogen, Fraction: 0.00205768, N_template: 15158.9, N_purged: 49.1477, Scale: 0.00324217
+Total chi2/ndf: 0.17457
+   [Purge] Element: Boron, Fraction: 0.0265018, N_template: 22393.7, N_purged: 202.818, Scale: 0.00905694
+   [Purge] Element: Carbon, Fraction: 0.0140168, N_template: 67334.4, N_purged: 107.271, Scale: 0.0015931
+Total chi2/ndf: 2.62065
+   [Purge] Element: Boron, Fraction: 0.0198748, N_template: 22393.7, N_purged: 152.102, Scale: 0.00679217
+   [Purge] Element: Carbon, Fraction: 0.00859451, N_template: 67334.4, N_purged: 65.7738, Scale: 0.000976823
+Total chi2/ndf: 0.174525
+ [Bin 17] Ek=2.03628 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0701308, N_template: 46222, N_purged: 1188.72, Scale: 0.0257176
+Total chi2/ndf: 2.50278
+   [Purge] Element: Oxygen, Fraction: 0.0668047, N_template: 46222, N_purged: 1132.34, Scale: 0.0244978
+Total chi2/ndf: 0.123702
+   [Purge] Element: Nitrogen, Fraction: 0.00835831, N_template: 15858.4, N_purged: 589.11, Scale: 0.0371482
+   [Purge] Element: Oxygen, Fraction: 0.00449221, N_template: 46222, N_purged: 316.62, Scale: 0.00684999
+Total chi2/ndf: 1.76487
+   [Purge] Element: Nitrogen, Fraction: 0.0081262, N_template: 15858.4, N_purged: 572.751, Scale: 0.0361166
+   [Purge] Element: Oxygen, Fraction: 0.00379148, N_template: 46222, N_purged: 267.231, Scale: 0.00578147
+Total chi2/ndf: 0.0999787
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+   [Purge] Element: Boron, Fraction: 0.0275743, N_template: 24464, N_purged: 211.633, Scale: 0.00865079
+   [Purge] Element: Carbon, Fraction: 0.0156181, N_template: 69685.9, N_purged: 119.869, Scale: 0.00172013
+Total chi2/ndf: 1.68071
+   [Purge] Element: Boron, Fraction: 0.0244912, N_template: 24464, N_purged: 187.97, Scale: 0.00768353
+   [Purge] Element: Carbon, Fraction: 0.00898152, N_template: 69685.9, N_purged: 68.9332, Scale: 0.000989198
+Total chi2/ndf: 0.108209
+ [Bin 18] Ek=2.29851 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0657277, N_template: 47773, N_purged: 1129.14, Scale: 0.0236355
+Total chi2/ndf: 2.15208
+   [Purge] Element: Oxygen, Fraction: 0.0624469, N_template: 47773, N_purged: 1072.77, Scale: 0.0224557
+Total chi2/ndf: 0.144992
+   [Purge] Element: Nitrogen, Fraction: 0.00824806, N_template: 16145, N_purged: 594.553, Scale: 0.0368258
+   [Purge] Element: Oxygen, Fraction: 0.00521243, N_template: 47773, N_purged: 375.733, Scale: 0.00786496
+Total chi2/ndf: 2.29494
+   [Purge] Element: Nitrogen, Fraction: 0.00775234, N_template: 16145, N_purged: 558.82, Scale: 0.0346125
+   [Purge] Element: Oxygen, Fraction: 0.00419813, N_template: 47773, N_purged: 302.618, Scale: 0.0063345
+Total chi2/ndf: 0.141558
+   [Purge] Element: Carbon, Fraction: 0.0618361, N_template: 71277.1, N_purged: 1496.06, Scale: 0.0209894
+   [Purge] Element: Nitrogen, Fraction: 0.0037572, N_template: 16145, N_purged: 90.9017, Scale: 0.00563033
+Total chi2/ndf: 2.11903
+   [Purge] Element: Carbon, Fraction: 0.0575963, N_template: 71277.1, N_purged: 1393.48, Scale: 0.0195503
+   [Purge] Element: Nitrogen, Fraction: 0.00208985, N_template: 16145, N_purged: 50.5618, Scale: 0.00313173
+Total chi2/ndf: 0.369271
+   [Purge] Element: Boron, Fraction: 0.0275049, N_template: 22823.7, N_purged: 208.707, Scale: 0.0091443
+   [Purge] Element: Carbon, Fraction: 0.0150773, N_template: 71277.1, N_purged: 114.407, Scale: 0.0016051
+Total chi2/ndf: 1.68846
+   [Purge] Element: Boron, Fraction: 0.0219139, N_template: 22823.7, N_purged: 166.282, Scale: 0.00728551
+   [Purge] Element: Carbon, Fraction: 0.00729023, N_template: 71277.1, N_purged: 55.3183, Scale: 0.000776102
+Total chi2/ndf: 0.161546
+ [Bin 19] Ek=2.58439 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0659241, N_template: 49396, N_purged: 1135.35, Scale: 0.0229846
+Total chi2/ndf: 2.61568
+   [Purge] Element: Oxygen, Fraction: 0.0634719, N_template: 49396, N_purged: 1093.11, Scale: 0.0221296
+Total chi2/ndf: 0.0307378
+   [Purge] Element: Nitrogen, Fraction: 0.00755633, N_template: 16158.9, N_purged: 549.066, Scale: 0.0339792
+   [Purge] Element: Oxygen, Fraction: 0.00481716, N_template: 49396, N_purged: 350.029, Scale: 0.00708619
+Total chi2/ndf: 2.431
+   [Purge] Element: Nitrogen, Fraction: 0.00679356, N_template: 16158.9, N_purged: 493.64, Scale: 0.0305492
+   [Purge] Element: Oxygen, Fraction: 0.00399194, N_template: 49396, N_purged: 290.066, Scale: 0.00587226
+Total chi2/ndf: 0.296224
+   [Purge] Element: Carbon, Fraction: 0.0592969, N_template: 71936.5, N_purged: 1405.28, Scale: 0.019535
+   [Purge] Element: Nitrogen, Fraction: 0.00331412, N_template: 16158.9, N_purged: 78.5413, Scale: 0.00486057
+Total chi2/ndf: 1.68561
+   [Purge] Element: Carbon, Fraction: 0.0566696, N_template: 71936.5, N_purged: 1343.01, Scale: 0.0186694
+   [Purge] Element: Nitrogen, Fraction: 0.00179705, N_template: 16158.9, N_purged: 42.5882, Scale: 0.00263559
+Total chi2/ndf: 0.267651
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 20] Ek=2.89629 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.066618, N_template: 47280, N_purged: 1070.55, Scale: 0.0226428
+Total chi2/ndf: 2.17574
+   [Purge] Element: Oxygen, Fraction: 0.0627488, N_template: 47280, N_purged: 1008.37, Scale: 0.0213277
+Total chi2/ndf: 0.175855
+   [Purge] Element: Nitrogen, Fraction: 0.00740963, N_template: 15106.4, N_purged: 513.554, Scale: 0.0339958
+   [Purge] Element: Oxygen, Fraction: 0.0047487, N_template: 47280, N_purged: 329.128, Scale: 0.00696125
+Total chi2/ndf: 1.93753
+   [Purge] Element: Nitrogen, Fraction: 0.00705401, N_template: 15106.4, N_purged: 488.907, Scale: 0.0323642
+   [Purge] Element: Oxygen, Fraction: 0.00395604, N_template: 47280, N_purged: 274.189, Scale: 0.00579926
+Total chi2/ndf: 0.134154
+   [Purge] Element: Carbon, Fraction: 0.0538473, N_template: 68587.4, N_purged: 1194.76, Scale: 0.0174196
+   [Purge] Element: Nitrogen, Fraction: 0.00405038, N_template: 15106.4, N_purged: 89.8699, Scale: 0.00594913
+Total chi2/ndf: 1.75911
+   [Purge] Element: Carbon, Fraction: 0.0521039, N_template: 68587.4, N_purged: 1156.08, Scale: 0.0168556
+   [Purge] Element: Nitrogen, Fraction: 0.00208527, N_template: 15106.4, N_purged: 46.268, Scale: 0.00306281
+Total chi2/ndf: 0.2066
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 21] Ek=3.23418 GeV/n. Analyzing...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+   [Purge] Element: Nitrogen, Fraction: 0.00696071, N_template: 15237, N_purged: 450.393, Scale: 0.0295591
+   [Purge] Element: Oxygen, Fraction: 0.00467405, N_template: 44604, N_purged: 302.434, Scale: 0.00678043
+Total chi2/ndf: 1.95711
+   [Purge] Element: Nitrogen, Fraction: 0.00637383, N_template: 15237, N_purged: 412.419, Scale: 0.0270669
+   [Purge] Element: Oxygen, Fraction: 0.00383878, N_template: 44604, N_purged: 248.388, Scale: 0.00556875
+Total chi2/ndf: 0.251526
+   [Purge] Element: Carbon, Fraction: 0.0547549, N_template: 64085.7, N_purged: 1113.11, Scale: 0.0173691
+   [Purge] Element: Nitrogen, Fraction: 0.00374268, N_template: 15237, N_purged: 76.085, Scale: 0.00499343
+Total chi2/ndf: 1.84637
+   [Purge] Element: Carbon, Fraction: 0.0532867, N_template: 64085.7, N_purged: 1083.27, Scale: 0.0169034
+   [Purge] Element: Nitrogen, Fraction: 0.00150695, N_template: 15237, N_purged: 30.6348, Scale: 0.00201055
+Total chi2/ndf: 0.176597
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 22] Ek=3.60045 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.066224, N_template: 42031, N_purged: 906.408, Scale: 0.0215652
+Total chi2/ndf: 1.77161
+   [Purge] Element: Oxygen, Fraction: 0.0614904, N_template: 42031, N_purged: 841.619, Scale: 0.0200238
+Total chi2/ndf: 0.217111
+   [Purge] Element: Nitrogen, Fraction: 0.00854525, N_template: 12886.7, N_purged: 512.629, Scale: 0.0397796
+   [Purge] Element: Oxygen, Fraction: 0.00494731, N_template: 42031, N_purged: 296.789, Scale: 0.0070612
+Total chi2/ndf: 2.10816
+   [Purge] Element: Nitrogen, Fraction: 0.00815209, N_template: 12886.7, N_purged: 489.044, Scale: 0.0379494
+   [Purge] Element: Oxygen, Fraction: 0.00404174, N_template: 42031, N_purged: 242.464, Scale: 0.00576869
+Total chi2/ndf: 0.306292
+   [Purge] Element: Carbon, Fraction: 0.0495089, N_template: 59303.2, N_purged: 893.735, Scale: 0.0150706
+   [Purge] Element: Nitrogen, Fraction: 0.00368982, N_template: 12886.7, N_purged: 66.6087, Scale: 0.00516877
+Total chi2/ndf: 1.94689
+   [Purge] Element: Carbon, Fraction: 0.0470075, N_template: 59303.2, N_purged: 848.58, Scale: 0.0143092
+   [Purge] Element: Nitrogen, Fraction: 0.00181308, N_template: 12886.7, N_purged: 32.7297, Scale: 0.00253979
+Total chi2/ndf: 0.13843
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 23] Ek=3.99748 GeV/n. Analyzing...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+   [Purge] Element: Nitrogen, Fraction: 0.00754114, N_template: 12491, N_purged: 416.037, Scale: 0.033307
+   [Purge] Element: Oxygen, Fraction: 0.00485699, N_template: 38183, N_purged: 267.955, Scale: 0.00701765
+Total chi2/ndf: 1.81172
+   [Purge] Element: Nitrogen, Fraction: 0.00739934, N_template: 12491, N_purged: 408.214, Scale: 0.0326807
+   [Purge] Element: Oxygen, Fraction: 0.00365969, N_template: 38183, N_purged: 201.901, Scale: 0.00528772
+Total chi2/ndf: 0.105652
+   [Purge] Element: Carbon, Fraction: 0.0460332, N_template: 54596.1, N_purged: 755.911, Scale: 0.0138455
+   [Purge] Element: Nitrogen, Fraction: 0.00347004, N_template: 12491, N_purged: 56.9815, Scale: 0.00456181
+Total chi2/ndf: 1.64066
+   [Purge] Element: Carbon, Fraction: 0.0451394, N_template: 54596.1, N_purged: 741.234, Scale: 0.0135767
+   [Purge] Element: Nitrogen, Fraction: 0.00148648, N_template: 12491, N_purged: 24.4095, Scale: 0.00195416
+Total chi2/ndf: 0.0551477
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 24] Ek=4.42526 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0671841, N_template: 35580, N_purged: 763.682, Scale: 0.0214638
+Total chi2/ndf: 1.83845
+   [Purge] Element: Oxygen, Fraction: 0.0622822, N_template: 35580, N_purged: 707.962, Scale: 0.0198977
+Total chi2/ndf: 0.0994501
+   [Purge] Element: Nitrogen, Fraction: 0.006807, N_template: 10692.6, N_purged: 342.385, Scale: 0.0320208
+   [Purge] Element: Oxygen, Fraction: 0.00589249, N_template: 35580, N_purged: 296.386, Scale: 0.00833014
+Total chi2/ndf: 2.22581
+   [Purge] Element: Nitrogen, Fraction: 0.00626909, N_template: 10692.6, N_purged: 315.329, Scale: 0.0294905
+   [Purge] Element: Oxygen, Fraction: 0.00472375, N_template: 35580, N_purged: 237.6, Scale: 0.0066779
+Total chi2/ndf: 0.218808
+   [Purge] Element: Carbon, Fraction: 0.0450997, N_template: 49789.8, N_purged: 654.577, Scale: 0.0131468
+   [Purge] Element: Nitrogen, Fraction: 0.00375733, N_template: 10692.6, N_purged: 54.5339, Scale: 0.00510016
+Total chi2/ndf: 2.09437
+   [Purge] Element: Carbon, Fraction: 0.0423239, N_template: 49789.8, N_purged: 614.288, Scale: 0.0123376
+   [Purge] Element: Nitrogen, Fraction: 0.00142661, N_template: 10692.6, N_purged: 20.7059, Scale: 0.00193647
+Total chi2/ndf: 0.114237
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 25] Ek=4.8936 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0652345, N_template: 33678, N_purged: 693.508, Scale: 0.0205923
+Total chi2/ndf: 1.93537
+   [Purge] Element: Oxygen, Fraction: 0.0601828, N_template: 33678, N_purged: 639.804, Scale: 0.0189977
+Total chi2/ndf: 0.121671
+   [Purge] Element: Nitrogen, Fraction: 0.00773509, N_template: 10022.9, N_purged: 366.404, Scale: 0.0365566
+   [Purge] Element: Oxygen, Fraction: 0.00476619, N_template: 33678, N_purged: 225.77, Scale: 0.00670378
+Total chi2/ndf: 2.08844
+   [Purge] Element: Nitrogen, Fraction: 0.00699655, N_template: 10022.9, N_purged: 331.42, Scale: 0.0330662
+   [Purge] Element: Oxygen, Fraction: 0.00359179, N_template: 33678, N_purged: 170.14, Scale: 0.00505195
+Total chi2/ndf: 0.149581
+   [Purge] Element: Carbon, Fraction: 0.0468347, N_template: 46908.5, N_purged: 624.401, Scale: 0.013311
+   [Purge] Element: Nitrogen, Fraction: 0.00323712, N_template: 10022.9, N_purged: 43.1573, Scale: 0.00430587
+Total chi2/ndf: 2.31033
+   [Purge] Element: Carbon, Fraction: 0.041711, N_template: 46908.5, N_purged: 556.092, Scale: 0.0118548
+   [Purge] Element: Nitrogen, Fraction: 0.000778682, N_template: 10022.9, N_purged: 10.3814, Scale: 0.00103577
+Total chi2/ndf: 0.153777
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 26] Ek=5.38764 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 27] Ek=5.90734 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 28] Ek=6.47739 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 29] Ek=7.09781 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 30] Ek=7.76859 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 31] Ek=8.48974 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 32] Ek=9.26122 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 33] Ek=10.083 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 34] Ek=10.98 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 35] Ek=11.9523 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 36] Ek=12.9748 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 37] Ek=14.0725 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 38] Ek=15.2454 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 39] Ek=16.4935 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 40] Ek=17.8417 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 41] Ek=19.29 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 42] Ek=20.8385 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 43] Ek=22.4871 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 44] Ek=24.2608 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 45] Ek=26.1595 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 46] Ek=28.1834 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 47] Ek=30.3574 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 48] Ek=32.7064 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 49] Ek=35.2305 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 50] Ek=37.9297 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 51] Ek=40.8289 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 52] Ek=43.9532 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 53] Ek=47.3275 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 54] Ek=51.0769 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 55] Ek=55.0763 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 56] Ek=59.3257 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 57] Ek=64.0752 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 58] Ek=69.5747 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 59] Ek=75.8242 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 60] Ek=82.8237 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 61] Ek=90.8232 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 62] Ek=99.8228 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 63] Ek=110.072 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 64] Ek=122.072 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 65] Ek=136.572 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 66] Ek=154.321 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 67] Ek=176.321 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 68] Ek=204.071 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 69] Ek=240.57 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 70] Ek=295.32 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 71] Ek=384.07 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 72] Ek=544.069 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
+ [Bin 73] Ek=1149.07 GeV/n is OUTSIDE range [0.9, 5.1]. Skipping.
 
 --- Processing Detector: AGL ---
-  [bin 1] Eklow = 0.08225 GeV/n
-  [bin 2] Eklow = 0.16581 GeV/n
-  [bin 3] Eklow = 0.26755 GeV/n
-  [bin 4] Eklow = 0.40614 GeV/n
-  [bin 5] Eklow = 0.58761 GeV/n
-  [bin 6] Eklow = 0.82147 GeV/n
-  [bin 7] Eklow = 1.11303 GeV/n
-  [bin 8] Eklow = 1.47140 GeV/n
-  [bin 9] Eklow = 1.91049 GeV/n
-  [bin 10] Eklow = 2.43494 GeV/n
-  [bin 11] Eklow = 3.05875 GeV/n
-    Processing energy bin 11 (Ek=3.42501 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 4.04325
-      -> Fit Successful! Chi2/NDF = 4.04325 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 11
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 523104.00000
-N_sig_narrow (in unified range): 276174.00000 +/- 525.52260
-R_total (model integral in narrow range): 0.52842 +/- 0.00069
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.26406 +/- 0.00061
-    R_A (shape factor, from PDF integral): 0.00411 +/- 0.00002
-    P_A (narrow fraction): 0.00206 +/- 0.00001
-    Yield_A: 567.63287 +/- 3.35504
-  Element: Boron
-    F_A (fit fraction): 0.69793 +/- 0.00063
-    R_A (shape factor, from PDF integral): 0.75512 +/- 0.00099
-    P_A (narrow fraction): 0.99736 +/- 0.00206
-    Yield_A: 275444.92410 +/- 773.34785
-  Element: Carbon
-    F_A (fit fraction): 0.03801 +/- 0.00026
-    R_A (shape factor, from PDF integral): 0.00813 +/- 0.00049
-    P_A (narrow fraction): 0.00058 +/- 0.00004
-    Yield_A: 161.44303 +/- 9.87336
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.04325
-  [bin 12] Eklow = 3.79127 GeV/n
-    Processing energy bin 12 (Ek=4.21905 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.56602
-      -> Fit Successful! Chi2/NDF = 3.56602 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 12
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 434739.00000
-N_sig_narrow (in unified range): 228622.00000 +/- 478.14433
-R_total (model integral in narrow range): 0.52827 +/- 0.00076
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.26800 +/- 0.00067
-    R_A (shape factor, from PDF integral): 0.00378 +/- 0.00005
-    P_A (narrow fraction): 0.00192 +/- 0.00003
-    Yield_A: 438.70823 +/- 6.05452
-  Element: Boron
-    F_A (fit fraction): 0.69590 +/- 0.00070
-    R_A (shape factor, from PDF integral): 0.75726 +/- 0.00109
-    P_A (narrow fraction): 0.99755 +/- 0.00226
-    Yield_A: 228060.86665 +/- 702.98007
-  Element: Carbon
-    F_A (fit fraction): 0.03611 +/- 0.00028
-    R_A (shape factor, from PDF integral): 0.00783 +/- 0.00053
-    P_A (narrow fraction): 0.00054 +/- 0.00004
-    Yield_A: 122.42511 +/- 8.35131
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.56602
-  [bin 13] Eklow = 4.64682 GeV/n
-    Processing energy bin 13 (Ek=5.14086 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 4.11729
-      -> Fit Successful! Chi2/NDF = 4.11729 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 13
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 350560.00000
-N_sig_narrow (in unified range): 185881.00000 +/- 431.13919
-R_total (model integral in narrow range): 0.53067 +/- 0.00084
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.26916 +/- 0.00075
-    R_A (shape factor, from PDF integral): 0.00435 +/- 0.00004
-    P_A (narrow fraction): 0.00221 +/- 0.00002
-    Yield_A: 409.95175 +/- 4.24480
-  Element: Boron
-    F_A (fit fraction): 0.69643 +/- 0.00078
-    R_A (shape factor, from PDF integral): 0.75993 +/- 0.00121
-    P_A (narrow fraction): 0.99731 +/- 0.00250
-    Yield_A: 185380.31309 +/- 633.03587
-  Element: Carbon
-    F_A (fit fraction): 0.03441 +/- 0.00031
-    R_A (shape factor, from PDF integral): 0.00753 +/- 0.00058
-    P_A (narrow fraction): 0.00049 +/- 0.00004
-    Yield_A: 90.73517 +/- 7.00877
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.11729
-  [bin 14] Eklow = 5.63491 GeV/n
-    Processing energy bin 14 (Ek=6.20495 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.91661
-      -> Fit Successful! Chi2/NDF = 3.91661 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 14
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 288870.00000
-N_sig_narrow (in unified range): 152914.00000 +/- 391.04220
-R_total (model integral in narrow range): 0.53084 +/- 0.00093
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.27352 +/- 0.00083
-    R_A (shape factor, from PDF integral): 0.00388 +/- 0.00000
-    P_A (narrow fraction): 0.00200 +/- 0.00001
-    Yield_A: 306.01012 +/- 1.32660
-  Element: Boron
-    F_A (fit fraction): 0.69293 +/- 0.00086
-    R_A (shape factor, from PDF integral): 0.76418 +/- 0.00132
-    P_A (narrow fraction): 0.99752 +/- 0.00275
-    Yield_A: 152535.32706 +/- 573.29641
-  Element: Carbon
-    F_A (fit fraction): 0.03354 +/- 0.00033
-    R_A (shape factor, from PDF integral): 0.00752 +/- 0.00062
-    P_A (narrow fraction): 0.00048 +/- 0.00004
-    Yield_A: 72.66282 +/- 6.06917
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.91661
-  [bin 15] Eklow = 6.77500 GeV/n
-    Processing energy bin 15 (Ek=7.44579 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 4.38832
-      -> Fit Successful! Chi2/NDF = 4.38832 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 15
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 254655.00000
-N_sig_narrow (in unified range): 135901.00000 +/- 368.64753
-R_total (model integral in narrow range): 0.53546 +/- 0.00099
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.27366 +/- 0.00088
-    R_A (shape factor, from PDF integral): 0.00395 +/- 0.00003
-    P_A (narrow fraction): 0.00202 +/- 0.00002
-    Yield_A: 274.36541 +/- 2.45948
-  Element: Boron
-    F_A (fit fraction): 0.69404 +/- 0.00091
-    R_A (shape factor, from PDF integral): 0.76962 +/- 0.00140
-    P_A (narrow fraction): 0.99754 +/- 0.00290
-    Yield_A: 135566.57558 +/- 538.69467
-  Element: Carbon
-    F_A (fit fraction): 0.03231 +/- 0.00035
-    R_A (shape factor, from PDF integral): 0.00732 +/- 0.00065
-    P_A (narrow fraction): 0.00044 +/- 0.00004
-    Yield_A: 60.05901 +/- 5.36628
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.38832
-  [bin 16] Eklow = 8.11658 GeV/n
-    Processing energy bin 16 (Ek=8.88806 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.56556
-      -> Fit Successful! Chi2/NDF = 3.56556 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 16
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 220011.00000
-N_sig_narrow (in unified range): 117411.00000 +/- 342.65289
-R_total (model integral in narrow range): 0.53489 +/- 0.00106
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.27896 +/- 0.00096
-    R_A (shape factor, from PDF integral): 0.00496 +/- 0.00003
-    P_A (narrow fraction): 0.00259 +/- 0.00002
-    Yield_A: 303.60708 +/- 2.58407
-  Element: Boron
-    F_A (fit fraction): 0.68866 +/- 0.00099
-    R_A (shape factor, from PDF integral): 0.77438 +/- 0.00149
-    P_A (narrow fraction): 0.99699 +/- 0.00311
-    Yield_A: 117058.08384 +/- 500.07177
-  Element: Carbon
-    F_A (fit fraction): 0.03237 +/- 0.00038
-    R_A (shape factor, from PDF integral): 0.00694 +/- 0.00068
-    P_A (narrow fraction): 0.00042 +/- 0.00004
-    Yield_A: 49.30907 +/- 4.89294
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.56556
-  [bin 17] Eklow = 9.65954 GeV/n
-    Processing energy bin 17 (Ek=10.55656 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.88775
-      -> Fit Successful! Chi2/NDF = 3.88775 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 17
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 182805.00000
-N_sig_narrow (in unified range): 97650.00000 +/- 312.49000
-R_total (model integral in narrow range): 0.53644 +/- 0.00117
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.27987 +/- 0.00105
-    R_A (shape factor, from PDF integral): 0.00463 +/- 0.00004
-    P_A (narrow fraction): 0.00242 +/- 0.00002
-    Yield_A: 235.93596 +/- 2.39863
-  Element: Boron
-    F_A (fit fraction): 0.68879 +/- 0.00108
-    R_A (shape factor, from PDF integral): 0.77663 +/- 0.00163
-    P_A (narrow fraction): 0.99719 +/- 0.00340
-    Yield_A: 97375.70675 +/- 455.27632
-  Element: Carbon
-    F_A (fit fraction): 0.03134 +/- 0.00041
-    R_A (shape factor, from PDF integral): 0.00672 +/- 0.00073
-    P_A (narrow fraction): 0.00039 +/- 0.00004
-    Yield_A: 38.35729 +/- 4.18430
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.88775
-  [bin 18] Eklow = 11.45358 GeV/n
-    Processing energy bin 18 (Ek=12.47609 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 4.21787
-      -> Fit Successful! Chi2/NDF = 4.21787 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 18
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 140325.00000
-N_sig_narrow (in unified range): 74766.00000 +/- 273.43372
-R_total (model integral in narrow range): 0.53698 +/- 0.00133
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.28059 +/- 0.00120
-    R_A (shape factor, from PDF integral): 0.00414 +/- 0.00008
-    P_A (narrow fraction): 0.00217 +/- 0.00004
-    Yield_A: 161.93479 +/- 3.40971
-  Element: Boron
-    F_A (fit fraction): 0.68658 +/- 0.00124
-    R_A (shape factor, from PDF integral): 0.78009 +/- 0.00185
-    P_A (narrow fraction): 0.99742 +/- 0.00387
-    Yield_A: 74573.25608 +/- 397.46532
-  Element: Carbon
-    F_A (fit fraction): 0.03283 +/- 0.00048
-    R_A (shape factor, from PDF integral): 0.00674 +/- 0.00081
-    P_A (narrow fraction): 0.00041 +/- 0.00005
-    Yield_A: 30.80913 +/- 3.74493
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.21787
-  [bin 19] Eklow = 13.49860 GeV/n
-    Processing energy bin 19 (Ek=14.67149 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.30712
-      -> Fit Successful! Chi2/NDF = 3.30712 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 19
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 103973.00000
-N_sig_narrow (in unified range): 55212.00000 +/- 234.97234
-R_total (model integral in narrow range): 0.53327 +/- 0.00155
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.28712 +/- 0.00140
-    R_A (shape factor, from PDF integral): 0.00443 +/- 0.00000
-    P_A (narrow fraction): 0.00238 +/- 0.00001
-    Yield_A: 131.66241 +/- 0.93480
-  Element: Boron
-    F_A (fit fraction): 0.67999 +/- 0.00145
-    R_A (shape factor, from PDF integral): 0.78202 +/- 0.00214
-    P_A (narrow fraction): 0.99718 +/- 0.00451
-    Yield_A: 55056.33053 +/- 341.89330
-  Element: Carbon
-    F_A (fit fraction): 0.03289 +/- 0.00055
-    R_A (shape factor, from PDF integral): 0.00705 +/- 0.00092
-    P_A (narrow fraction): 0.00043 +/- 0.00006
-    Yield_A: 24.00706 +/- 3.15240
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.30712
-  [bin 20] Eklow = 15.84438 GeV/n
-    Processing energy bin 20 (Ek=17.19259 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.12891
-      -> Fit Successful! Chi2/NDF = 3.12891 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 20
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 75868.00000
-N_sig_narrow (in unified range): 40408.00000 +/- 201.01741
-R_total (model integral in narrow range): 0.53625 +/- 0.00181
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.28505 +/- 0.00164
-    R_A (shape factor, from PDF integral): 0.00374 +/- 0.00008
-    P_A (narrow fraction): 0.00199 +/- 0.00005
-    Yield_A: 80.39422 +/- 1.90755
-  Element: Boron
-    F_A (fit fraction): 0.67914 +/- 0.00169
-    R_A (shape factor, from PDF integral): 0.78767 +/- 0.00249
-    P_A (narrow fraction): 0.99757 +/- 0.00524
-    Yield_A: 40309.62054 +/- 291.72272
-  Element: Carbon
-    F_A (fit fraction): 0.03581 +/- 0.00067
-    R_A (shape factor, from PDF integral): 0.00667 +/- 0.00104
-    P_A (narrow fraction): 0.00045 +/- 0.00007
-    Yield_A: 17.98523 +/- 2.83915
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.12891
-  [bin 21] Eklow = 18.54079 GeV/n
-    Processing energy bin 21 (Ek=20.08926 GeV/n)
-      -> Attempting fit with range [3.60000, 6.50000]...
-Total chi2/ndf: 3.44015
-      -> Fit Successful! Chi2/NDF = 3.44015 in range [3.60000, 6.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Boron, Fragment: Beryllium, Energy Bin: 21
-Unified Narrow Range: [4.80000, 5.40000]
-N_total_fit (in fit range): 54175.00000
-N_sig_narrow (in unified range): 28879.00000 +/- 169.93822
-R_total (model integral in narrow range): 0.54051 +/- 0.00214
-
---- Calculating values for each component ---
-  Element: Beryllium
-    F_A (fit fraction): 0.28075 +/- 0.00193
-    R_A (shape factor, from PDF integral): 0.00303 +/- 0.00012
-    P_A (narrow fraction): 0.00157 +/- 0.00006
-    Yield_A: 45.44962 +/- 1.80471
-  Element: Boron
-    F_A (fit fraction): 0.68295 +/- 0.00200
-    R_A (shape factor, from PDF integral): 0.78984 +/- 0.00293
-    P_A (narrow fraction): 0.99798 +/- 0.00615
-    Yield_A: 28820.66324 +/- 245.64512
-  Element: Carbon
-    F_A (fit fraction): 0.03631 +/- 0.00080
-    R_A (shape factor, from PDF integral): 0.00664 +/- 0.00119
-    P_A (narrow fraction): 0.00045 +/- 0.00008
-    Yield_A: 12.88714 +/- 2.33019
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.44015
-  [bin 22] Eklow = 21.63773 GeV/n
-  [bin 23] Eklow = 25.18512 GeV/n
-  [bin 24] Eklow = 29.23289 GeV/n
-  [bin 25] Eklow = 33.93095 GeV/n
-  [bin 26] Eklow = 39.32928 GeV/n
-  [bin 27] Eklow = 45.57783 GeV/n
-  [bin 28] Eklow = 53.07653 GeV/n
-  [bin 29] Eklow = 61.57544 GeV/n
-  [bin 30] Eklow = 72.57440 GeV/n
-  [bin 31] Eklow = 86.57346 GeV/n
-  [bin 32] Eklow = 104.57261 GeV/n
-  [bin 33] Eklow = 128.57185 GeV/n
-  [bin 34] Eklow = 164.07113 GeV/n
-  [bin 35] Eklow = 219.57047 GeV/n
-  [bin 36] Eklow = 329.06981 GeV/n
-
-======================================================================
-Starting analysis for: Carbon -> Beryllium (L1Inner)
-======================================================================
-
---- Processing Detector: TOF ---
-  [bin 1] Eklow = 0.08225 GeV/n
-  [bin 2] Eklow = 0.16581 GeV/n
-  [bin 3] Eklow = 0.26755 GeV/n
-  [bin 4] Eklow = 0.40614 GeV/n
-    Processing energy bin 4 (Ek=0.49688 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 9.70093
-      -> Fit Successful! Chi2/NDF = 9.70093 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 4
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 1330407.00000
-N_sig_narrow (in unified range): 755808.00000 +/- 869.37219
-R_total (model integral in narrow range): 0.56078 +/- 0.00043
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.23468 +/- 0.00037
-    R_A (shape factor, from PDF integral): 0.00158 +/- 0.00000
-    P_A (narrow fraction): 0.00066 +/- 0.00000
-    Yield_A: 499.83090 +/- 1.04403
-  Element: Carbon
-    F_A (fit fraction): 0.76163 +/- 0.00037
-    R_A (shape factor, from PDF integral): 0.73577 +/- 0.00009
-    P_A (narrow fraction): 0.99930 +/- 0.00092
-    Yield_A: 755279.16963 +/- 1110.91930
-  Element: Nitrogen
-    F_A (fit fraction): 0.00368 +/- 0.00005
-    R_A (shape factor, from PDF integral): 0.00584 +/- 0.00057
-    P_A (narrow fraction): 0.00004 +/- 0.00000
-    Yield_A: 28.99948 +/- 2.84865
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 9.70093
-  [bin 5] Eklow = 0.58761 GeV/n
-    Processing energy bin 5 (Ek=0.70454 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 10.64803
-      -> Fit Successful! Chi2/NDF = 10.64803 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 5
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 1776480.00000
-N_sig_narrow (in unified range): 1016064.00000 +/- 1008.00000
-R_total (model integral in narrow range): 0.56503 +/- 0.00037
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.23708 +/- 0.00032
-    R_A (shape factor, from PDF integral): 0.00264 +/- 0.00000
-    P_A (narrow fraction): 0.00111 +/- 0.00000
-    Yield_A: 1124.64006 +/- 2.02089
-  Element: Carbon
-    F_A (fit fraction): 0.75980 +/- 0.00032
-    R_A (shape factor, from PDF integral): 0.74281 +/- 0.00008
-    P_A (narrow fraction): 0.99885 +/- 0.00079
-    Yield_A: 1014899.89109 +/- 1286.89426
-  Element: Nitrogen
-    F_A (fit fraction): 0.00311 +/- 0.00004
-    R_A (shape factor, from PDF integral): 0.00705 +/- 0.00050
-    P_A (narrow fraction): 0.00004 +/- 0.00000
-    Yield_A: 39.46886 +/- 2.85384
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 10.64803
-  [bin 6] Eklow = 0.82147 GeV/n
-    Processing energy bin 6 (Ek=0.96725 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 6.48532
-      -> Fit Successful! Chi2/NDF = 6.48532 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 6
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 2118389.00000
-N_sig_narrow (in unified range): 1214551.00000 +/- 1102.06669
-R_total (model integral in narrow range): 0.56503 +/- 0.00034
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.23653 +/- 0.00029
-    R_A (shape factor, from PDF integral): 0.00310 +/- 0.00000
-    P_A (narrow fraction): 0.00130 +/- 0.00000
-    Yield_A: 1574.87491 +/- 2.59278
-  Element: Carbon
-    F_A (fit fraction): 0.76053 +/- 0.00029
-    R_A (shape factor, from PDF integral): 0.74196 +/- 0.00008
-    P_A (narrow fraction): 0.99866 +/- 0.00072
-    Yield_A: 1212928.79282 +/- 1407.16853
-  Element: Nitrogen
-    F_A (fit fraction): 0.00294 +/- 0.00004
-    R_A (shape factor, from PDF integral): 0.00748 +/- 0.00047
-    P_A (narrow fraction): 0.00004 +/- 0.00000
-    Yield_A: 47.33227 +/- 3.00243
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 6.48532
-  [bin 7] Eklow = 1.11303 GeV/n
-  [bin 8] Eklow = 1.47140 GeV/n
-  [bin 9] Eklow = 1.91049 GeV/n
-  [bin 10] Eklow = 2.43494 GeV/n
-  [bin 11] Eklow = 3.05875 GeV/n
-  [bin 12] Eklow = 3.79127 GeV/n
-  [bin 13] Eklow = 4.64682 GeV/n
-  [bin 14] Eklow = 5.63491 GeV/n
-  [bin 15] Eklow = 6.77500 GeV/n
-  [bin 16] Eklow = 8.11658 GeV/n
-  [bin 17] Eklow = 9.65954 GeV/n
-  [bin 18] Eklow = 11.45358 GeV/n
-  [bin 19] Eklow = 13.49860 GeV/n
-  [bin 20] Eklow = 15.84438 GeV/n
-  [bin 21] Eklow = 18.54079 GeV/n
-  [bin 22] Eklow = 21.63773 GeV/n
-  [bin 23] Eklow = 25.18512 GeV/n
-  [bin 24] Eklow = 29.23289 GeV/n
-  [bin 25] Eklow = 33.93095 GeV/n
-  [bin 26] Eklow = 39.32928 GeV/n
-  [bin 27] Eklow = 45.57783 GeV/n
-  [bin 28] Eklow = 53.07653 GeV/n
-  [bin 29] Eklow = 61.57544 GeV/n
-  [bin 30] Eklow = 72.57440 GeV/n
-  [bin 31] Eklow = 86.57346 GeV/n
-  [bin 32] Eklow = 104.57261 GeV/n
-  [bin 33] Eklow = 128.57185 GeV/n
-  [bin 34] Eklow = 164.07113 GeV/n
-  [bin 35] Eklow = 219.57047 GeV/n
-  [bin 36] Eklow = 329.06981 GeV/n
-
---- Processing Detector: NaF ---
-  [bin 1] Eklow = 0.08225 GeV/n
-  [bin 2] Eklow = 0.16581 GeV/n
-  [bin 3] Eklow = 0.26755 GeV/n
-  [bin 4] Eklow = 0.40614 GeV/n
-  [bin 5] Eklow = 0.58761 GeV/n
-  [bin 6] Eklow = 0.82147 GeV/n
-    Processing energy bin 6 (Ek=0.96725 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 4.32521
-      -> Fit Successful! Chi2/NDF = 4.32521 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 6
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 362942.00000
-N_sig_narrow (in unified range): 208166.00000 +/- 456.25212
-R_total (model integral in narrow range): 0.56740 +/- 0.00082
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.23772 +/- 0.00071
-    R_A (shape factor, from PDF integral): 0.00330 +/- 0.00000
-    P_A (narrow fraction): 0.00138 +/- 0.00000
-    Yield_A: 288.00996 +/- 1.14262
-  Element: Carbon
-    F_A (fit fraction): 0.75957 +/- 0.00071
-    R_A (shape factor, from PDF integral): 0.74594 +/- 0.00023
-    P_A (narrow fraction): 0.99859 +/- 0.00175
-    Yield_A: 207871.67332 +/- 583.28470
-  Element: Nitrogen
-    F_A (fit fraction): 0.00270 +/- 0.00009
-    R_A (shape factor, from PDF integral): 0.00637 +/- 0.00155
-    P_A (narrow fraction): 0.00003 +/- 0.00001
-    Yield_A: 6.31672 +/- 1.55283
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 4.32521
-  [bin 7] Eklow = 1.11303 GeV/n
-    Processing energy bin 7 (Ek=1.29221 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 3.55577
-      -> Fit Successful! Chi2/NDF = 3.55577 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 7
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 392470.00000
-N_sig_narrow (in unified range): 222041.00000 +/- 471.21227
-R_total (model integral in narrow range): 0.55825 +/- 0.00079
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.24130 +/- 0.00068
-    R_A (shape factor, from PDF integral): 0.00454 +/- 0.00000
-    P_A (narrow fraction): 0.00196 +/- 0.00001
-    Yield_A: 435.52257 +/- 1.66022
-  Element: Carbon
-    F_A (fit fraction): 0.75619 +/- 0.00069
-    R_A (shape factor, from PDF integral): 0.73676 +/- 0.00021
-    P_A (narrow fraction): 0.99800 +/- 0.00170
-    Yield_A: 221597.88818 +/- 603.69391
-  Element: Nitrogen
-    F_A (fit fraction): 0.00251 +/- 0.00008
-    R_A (shape factor, from PDF integral): 0.00759 +/- 0.00134
-    P_A (narrow fraction): 0.00003 +/- 0.00001
-    Yield_A: 7.58925 +/- 1.35763
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 3.55577
-  [bin 8] Eklow = 1.47140 GeV/n
-    Processing energy bin 8 (Ek=1.69094 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 2.62500
-      -> Fit Successful! Chi2/NDF = 2.62500 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 8
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 374199.00000
-N_sig_narrow (in unified range): 211472.00000 +/- 459.86085
-R_total (model integral in narrow range): 0.55714 +/- 0.00081
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.23925 +/- 0.00070
-    R_A (shape factor, from PDF integral): 0.00451 +/- 0.00000
-    P_A (narrow fraction): 0.00194 +/- 0.00001
-    Yield_A: 409.97384 +/- 1.60627
-  Element: Carbon
-    F_A (fit fraction): 0.75846 +/- 0.00070
-    R_A (shape factor, from PDF integral): 0.73312 +/- 0.00020
-    P_A (narrow fraction): 0.99803 +/- 0.00174
-    Yield_A: 211055.94011 +/- 588.65483
-  Element: Nitrogen
-    F_A (fit fraction): 0.00230 +/- 0.00008
-    R_A (shape factor, from PDF integral): 0.00699 +/- 0.00131
-    P_A (narrow fraction): 0.00003 +/- 0.00001
-    Yield_A: 6.08604 +/- 1.16072
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 2.62500
-  [bin 9] Eklow = 1.91049 GeV/n
-    Processing energy bin 9 (Ek=2.17272 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.98238
-      -> Fit Successful! Chi2/NDF = 1.98238 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 9
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 363226.00000
-N_sig_narrow (in unified range): 206043.00000 +/- 453.91960
-R_total (model integral in narrow range): 0.55882 +/- 0.00082
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.23307 +/- 0.00070
-    R_A (shape factor, from PDF integral): 0.00528 +/- 0.00000
-    P_A (narrow fraction): 0.00220 +/- 0.00001
-    Yield_A: 453.80288 +/- 1.82010
-  Element: Carbon
-    F_A (fit fraction): 0.76471 +/- 0.00070
-    R_A (shape factor, from PDF integral): 0.72913 +/- 0.00020
-    P_A (narrow fraction): 0.99777 +/- 0.00176
-    Yield_A: 205583.65789 +/- 579.59746
-  Element: Nitrogen
-    F_A (fit fraction): 0.00222 +/- 0.00008
-    R_A (shape factor, from PDF integral): 0.00677 +/- 0.00130
-    P_A (narrow fraction): 0.00003 +/- 0.00001
-    Yield_A: 5.53923 +/- 1.08481
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.98238
-  [bin 10] Eklow = 2.43494 GeV/n
-    Processing energy bin 10 (Ek=2.74684 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.69336
-      -> Fit Successful! Chi2/NDF = 1.69336 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 10
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 345931.00000
-N_sig_narrow (in unified range): 199343.00000 +/- 446.47844
-R_total (model integral in narrow range): 0.56768 +/- 0.00084
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.22287 +/- 0.00071
-    R_A (shape factor, from PDF integral): 0.00450 +/- 0.00000
-    P_A (narrow fraction): 0.00177 +/- 0.00001
-    Yield_A: 352.49293 +/- 1.46603
-  Element: Carbon
-    F_A (fit fraction): 0.77507 +/- 0.00071
-    R_A (shape factor, from PDF integral): 0.73112 +/- 0.00020
-    P_A (narrow fraction): 0.99821 +/- 0.00176
-    Yield_A: 198985.78350 +/- 567.32536
-  Element: Nitrogen
-    F_A (fit fraction): 0.00206 +/- 0.00008
-    R_A (shape factor, from PDF integral): 0.00653 +/- 0.00127
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 4.72357 +/- 0.93311
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.69336
-  [bin 11] Eklow = 3.05875 GeV/n
-    Processing energy bin 11 (Ek=3.42501 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.81013
-      -> Fit Successful! Chi2/NDF = 1.81013 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 11
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 298514.00000
-N_sig_narrow (in unified range): 174129.00000 +/- 417.28767
-R_total (model integral in narrow range): 0.57363 +/- 0.00091
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.21703 +/- 0.00075
-    R_A (shape factor, from PDF integral): 0.00587 +/- 0.00000
-    P_A (narrow fraction): 0.00222 +/- 0.00001
-    Yield_A: 386.81829 +/- 1.74362
-  Element: Carbon
-    F_A (fit fraction): 0.78107 +/- 0.00076
-    R_A (shape factor, from PDF integral): 0.73277 +/- 0.00021
-    P_A (narrow fraction): 0.99776 +/- 0.00187
-    Yield_A: 173738.32125 +/- 528.47227
-  Element: Nitrogen
-    F_A (fit fraction): 0.00190 +/- 0.00008
-    R_A (shape factor, from PDF integral): 0.00668 +/- 0.00131
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 3.86046 +/- 0.77558
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.81013
-  [bin 12] Eklow = 3.79127 GeV/n
-    Processing energy bin 12 (Ek=4.21905 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.52477
-      -> Fit Successful! Chi2/NDF = 1.52477 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 12
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 245076.00000
-N_sig_narrow (in unified range): 145305.00000 +/- 381.18893
-R_total (model integral in narrow range): 0.58144 +/- 0.00100
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.20968 +/- 0.00082
-    R_A (shape factor, from PDF integral): 0.00575 +/- 0.00000
-    P_A (narrow fraction): 0.00207 +/- 0.00001
-    Yield_A: 301.19410 +/- 1.51194
-  Element: Carbon
-    F_A (fit fraction): 0.78819 +/- 0.00083
-    R_A (shape factor, from PDF integral): 0.73615 +/- 0.00022
-    P_A (narrow fraction): 0.99791 +/- 0.00203
-    Yield_A: 145000.91693 +/- 481.06193
-  Element: Nitrogen
-    F_A (fit fraction): 0.00213 +/- 0.00009
-    R_A (shape factor, from PDF integral): 0.00544 +/- 0.00151
-    P_A (narrow fraction): 0.00002 +/- 0.00001
-    Yield_A: 2.88897 +/- 0.81426
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.52477
-  [bin 13] Eklow = 4.64682 GeV/n
-  [bin 14] Eklow = 5.63491 GeV/n
-  [bin 15] Eklow = 6.77500 GeV/n
-  [bin 16] Eklow = 8.11658 GeV/n
-  [bin 17] Eklow = 9.65954 GeV/n
-  [bin 18] Eklow = 11.45358 GeV/n
-  [bin 19] Eklow = 13.49860 GeV/n
-  [bin 20] Eklow = 15.84438 GeV/n
-  [bin 21] Eklow = 18.54079 GeV/n
-  [bin 22] Eklow = 21.63773 GeV/n
-  [bin 23] Eklow = 25.18512 GeV/n
-  [bin 24] Eklow = 29.23289 GeV/n
-  [bin 25] Eklow = 33.93095 GeV/n
-  [bin 26] Eklow = 39.32928 GeV/n
-  [bin 27] Eklow = 45.57783 GeV/n
-  [bin 28] Eklow = 53.07653 GeV/n
-  [bin 29] Eklow = 61.57544 GeV/n
-  [bin 30] Eklow = 72.57440 GeV/n
-  [bin 31] Eklow = 86.57346 GeV/n
-  [bin 32] Eklow = 104.57261 GeV/n
-  [bin 33] Eklow = 128.57185 GeV/n
-  [bin 34] Eklow = 164.07113 GeV/n
-  [bin 35] Eklow = 219.57047 GeV/n
-  [bin 36] Eklow = 329.06981 GeV/n
-
---- Processing Detector: AGL ---
-  [bin 1] Eklow = 0.08225 GeV/n
-  [bin 2] Eklow = 0.16581 GeV/n
-  [bin 3] Eklow = 0.26755 GeV/n
-  [bin 4] Eklow = 0.40614 GeV/n
-  [bin 5] Eklow = 0.58761 GeV/n
-  [bin 6] Eklow = 0.82147 GeV/n
-  [bin 7] Eklow = 1.11303 GeV/n
-  [bin 8] Eklow = 1.47140 GeV/n
-  [bin 9] Eklow = 1.91049 GeV/n
-  [bin 10] Eklow = 2.43494 GeV/n
-  [bin 11] Eklow = 3.05875 GeV/n
-    Processing energy bin 11 (Ek=3.42501 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 2.69816
-      -> Fit Successful! Chi2/NDF = 2.69816 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 11
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 1673184.00000
-N_sig_narrow (in unified range): 988941.00000 +/- 994.45513
-R_total (model integral in narrow range): 0.58030 +/- 0.00038
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.21285 +/- 0.00032
-    R_A (shape factor, from PDF integral): 0.00482 +/- 0.00000
-    P_A (narrow fraction): 0.00177 +/- 0.00000
-    Yield_A: 1748.62391 +/- 3.34243
-  Element: Carbon
-    F_A (fit fraction): 0.78534 +/- 0.00032
-    R_A (shape factor, from PDF integral): 0.73760 +/- 0.00008
-    P_A (narrow fraction): 0.99821 +/- 0.00078
-    Yield_A: 987173.61454 +/- 1256.47683
-  Element: Nitrogen
-    F_A (fit fraction): 0.00181 +/- 0.00003
-    R_A (shape factor, from PDF integral): 0.00609 +/- 0.00055
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 18.76155 +/- 1.73360
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 2.69816
-  [bin 12] Eklow = 3.79127 GeV/n
-    Processing energy bin 12 (Ek=4.21905 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 2.07343
-      -> Fit Successful! Chi2/NDF = 2.07343 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 12
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 1428336.00000
-N_sig_narrow (in unified range): 855770.00000 +/- 925.07838
-R_total (model integral in narrow range): 0.58805 +/- 0.00041
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.20632 +/- 0.00034
-    R_A (shape factor, from PDF integral): 0.00436 +/- 0.00000
-    P_A (narrow fraction): 0.00153 +/- 0.00000
-    Yield_A: 1309.89634 +/- 2.73272
-  Element: Carbon
-    F_A (fit fraction): 0.79192 +/- 0.00034
-    R_A (shape factor, from PDF integral): 0.74142 +/- 0.00009
-    P_A (narrow fraction): 0.99845 +/- 0.00083
-    Yield_A: 854443.70231 +/- 1164.53893
-  Element: Nitrogen
-    F_A (fit fraction): 0.00177 +/- 0.00004
-    R_A (shape factor, from PDF integral): 0.00638 +/- 0.00060
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 16.40135 +/- 1.58230
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 2.07343
-  [bin 13] Eklow = 4.64682 GeV/n
-    Processing energy bin 13 (Ek=5.14086 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 2.00156
-      -> Fit Successful! Chi2/NDF = 2.00156 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 13
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 1193234.00000
-N_sig_narrow (in unified range): 723907.00000 +/- 850.82724
-R_total (model integral in narrow range): 0.59515 +/- 0.00045
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.19958 +/- 0.00037
-    R_A (shape factor, from PDF integral): 0.00464 +/- 0.00000
-    P_A (narrow fraction): 0.00156 +/- 0.00000
-    Yield_A: 1126.66614 +/- 2.59683
-  Element: Carbon
-    F_A (fit fraction): 0.79862 +/- 0.00037
-    R_A (shape factor, from PDF integral): 0.74405 +/- 0.00010
-    P_A (narrow fraction): 0.99843 +/- 0.00089
-    Yield_A: 722767.01994 +/- 1067.00057
-  Element: Nitrogen
-    F_A (fit fraction): 0.00180 +/- 0.00004
-    R_A (shape factor, from PDF integral): 0.00608 +/- 0.00067
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 13.31392 +/- 1.49312
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 2.00156
-  [bin 14] Eklow = 5.63491 GeV/n
-    Processing energy bin 14 (Ek=6.20495 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.85069
-      -> Fit Successful! Chi2/NDF = 1.85069 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 14
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 1016173.00000
-N_sig_narrow (in unified range): 624933.00000 +/- 790.52704
-R_total (model integral in narrow range): 0.60366 +/- 0.00049
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.19258 +/- 0.00039
-    R_A (shape factor, from PDF integral): 0.00443 +/- 0.00000
-    P_A (narrow fraction): 0.00141 +/- 0.00000
-    Yield_A: 883.40219 +/- 2.22999
-  Element: Carbon
-    F_A (fit fraction): 0.80561 +/- 0.00039
-    R_A (shape factor, from PDF integral): 0.74825 +/- 0.00010
-    P_A (narrow fraction): 0.99857 +/- 0.00095
-    Yield_A: 624038.58970 +/- 987.19220
-  Element: Nitrogen
-    F_A (fit fraction): 0.00181 +/- 0.00004
-    R_A (shape factor, from PDF integral): 0.00586 +/- 0.00074
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 11.00811 +/- 1.41701
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.85069
-  [bin 15] Eklow = 6.77500 GeV/n
-    Processing energy bin 15 (Ek=7.44579 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 2.14129
-      -> Fit Successful! Chi2/NDF = 2.14129 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 15
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 926949.00000
-N_sig_narrow (in unified range): 577193.00000 +/- 759.73219
-R_total (model integral in narrow range): 0.61130 +/- 0.00051
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.18646 +/- 0.00040
-    R_A (shape factor, from PDF integral): 0.00434 +/- 0.00000
-    P_A (narrow fraction): 0.00133 +/- 0.00000
-    Yield_A: 764.86378 +/- 2.04169
-  Element: Carbon
-    F_A (fit fraction): 0.81170 +/- 0.00041
-    R_A (shape factor, from PDF integral): 0.75209 +/- 0.00011
-    P_A (narrow fraction): 0.99866 +/- 0.00098
-    Yield_A: 576418.38013 +/- 945.09817
-  Element: Nitrogen
-    F_A (fit fraction): 0.00184 +/- 0.00004
-    R_A (shape factor, from PDF integral): 0.00563 +/- 0.00076
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 9.75609 +/- 1.34326
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 2.14129
-  [bin 16] Eklow = 8.11658 GeV/n
-    Processing energy bin 16 (Ek=8.88806 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.59368
-      -> Fit Successful! Chi2/NDF = 1.59368 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 16
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 828427.00000
-N_sig_narrow (in unified range): 523180.00000 +/- 723.31183
-R_total (model integral in narrow range): 0.61985 +/- 0.00053
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.17922 +/- 0.00042
-    R_A (shape factor, from PDF integral): 0.00456 +/- 0.00000
-    P_A (narrow fraction): 0.00132 +/- 0.00000
-    Yield_A: 689.93299 +/- 1.97325
-  Element: Carbon
-    F_A (fit fraction): 0.81895 +/- 0.00042
-    R_A (shape factor, from PDF integral): 0.75588 +/- 0.00011
-    P_A (narrow fraction): 0.99867 +/- 0.00101
-    Yield_A: 522482.44513 +/- 895.75224
-  Element: Nitrogen
-    F_A (fit fraction): 0.00183 +/- 0.00005
-    R_A (shape factor, from PDF integral): 0.00494 +/- 0.00081
-    P_A (narrow fraction): 0.00001 +/- 0.00000
-    Yield_A: 7.62188 +/- 1.27205
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.59368
-  [bin 17] Eklow = 9.65954 GeV/n
-    Processing energy bin 17 (Ek=10.55656 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.75142
-      -> Fit Successful! Chi2/NDF = 1.75142 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 17
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 720312.00000
-N_sig_narrow (in unified range): 460351.00000 +/- 678.49171
-R_total (model integral in narrow range): 0.62738 +/- 0.00057
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.17108 +/- 0.00044
-    R_A (shape factor, from PDF integral): 0.00465 +/- 0.00000
-    P_A (narrow fraction): 0.00127 +/- 0.00000
-    Yield_A: 583.99331 +/- 1.82102
-  Element: Carbon
-    F_A (fit fraction): 0.82704 +/- 0.00045
-    R_A (shape factor, from PDF integral): 0.75761 +/- 0.00012
-    P_A (narrow fraction): 0.99872 +/- 0.00107
-    Yield_A: 459759.87516 +/- 836.51633
-  Element: Nitrogen
-    F_A (fit fraction): 0.00188 +/- 0.00005
-    R_A (shape factor, from PDF integral): 0.00517 +/- 0.00089
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 7.13153 +/- 1.24633
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.75142
-  [bin 18] Eklow = 11.45358 GeV/n
-    Processing energy bin 18 (Ek=12.47609 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 2.14676
-      -> Fit Successful! Chi2/NDF = 2.14676 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 18
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 572157.00000
-N_sig_narrow (in unified range): 368366.00000 +/- 606.93163
-R_total (model integral in narrow range): 0.63155 +/- 0.00064
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.16528 +/- 0.00049
-    R_A (shape factor, from PDF integral): 0.00423 +/- 0.00000
-    P_A (narrow fraction): 0.00111 +/- 0.00000
-    Yield_A: 408.26270 +/- 1.44694
-  Element: Carbon
-    F_A (fit fraction): 0.83256 +/- 0.00049
-    R_A (shape factor, from PDF integral): 0.75771 +/- 0.00013
-    P_A (narrow fraction): 0.99887 +/- 0.00118
-    Yield_A: 367950.40144 +/- 746.29224
-  Element: Nitrogen
-    F_A (fit fraction): 0.00216 +/- 0.00006
-    R_A (shape factor, from PDF integral): 0.00583 +/- 0.00098
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 7.33586 +/- 1.25513
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 2.14676
-  [bin 19] Eklow = 13.49860 GeV/n
-    Processing energy bin 19 (Ek=14.67149 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.62753
-      -> Fit Successful! Chi2/NDF = 1.62753 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 19
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 441791.00000
-N_sig_narrow (in unified range): 287611.00000 +/- 536.29376
-R_total (model integral in narrow range): 0.63839 +/- 0.00072
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.15759 +/- 0.00055
-    R_A (shape factor, from PDF integral): 0.00471 +/- 0.00000
-    P_A (narrow fraction): 0.00116 +/- 0.00000
-    Yield_A: 334.18838 +/- 1.37215
-  Element: Carbon
-    F_A (fit fraction): 0.84016 +/- 0.00055
-    R_A (shape factor, from PDF integral): 0.75895 +/- 0.00014
-    P_A (narrow fraction): 0.99882 +/- 0.00132
-    Yield_A: 287271.40415 +/- 656.58858
-  Element: Nitrogen
-    F_A (fit fraction): 0.00225 +/- 0.00007
-    R_A (shape factor, from PDF integral): 0.00534 +/- 0.00113
-    P_A (narrow fraction): 0.00002 +/- 0.00000
-    Yield_A: 5.40747 +/- 1.16205
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.62753
-  [bin 20] Eklow = 15.84438 GeV/n
-    Processing energy bin 20 (Ek=17.19259 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.49248
-      -> Fit Successful! Chi2/NDF = 1.49248 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 20
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 337562.00000
-N_sig_narrow (in unified range): 222071.00000 +/- 471.24410
-R_total (model integral in narrow range): 0.64512 +/- 0.00082
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.15050 +/- 0.00062
-    R_A (shape factor, from PDF integral): 0.00443 +/- 0.00000
-    P_A (narrow fraction): 0.00103 +/- 0.00000
-    Yield_A: 229.26297 +/- 1.09601
-  Element: Carbon
-    F_A (fit fraction): 0.84724 +/- 0.00062
-    R_A (shape factor, from PDF integral): 0.76064 +/- 0.00016
-    P_A (narrow fraction): 0.99895 +/- 0.00148
-    Yield_A: 221838.86165 +/- 574.63267
-  Element: Nitrogen
-    F_A (fit fraction): 0.00226 +/- 0.00008
-    R_A (shape factor, from PDF integral): 0.00370 +/- 0.00133
-    P_A (narrow fraction): 0.00001 +/- 0.00000
-    Yield_A: 2.87539 +/- 1.04239
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.49248
-  [bin 21] Eklow = 18.54079 GeV/n
-    Processing energy bin 21 (Ek=20.08926 GeV/n)
-      -> Attempting fit with range [4.60000, 7.50000]...
-Total chi2/ndf: 1.96712
-      -> Fit Successful! Chi2/NDF = 1.96712 in range [4.60000, 7.50000]
-
-
-<<<<<<<<<< DEBUGGING YIELD CALCULATION >>>>>>>>>>
-Source: Carbon, Fragment: Beryllium, Energy Bin: 21
-NOTE: Fragment was not included in the fit model. Its yield is set to 0.
-Unified Narrow Range: [5.80000, 6.40000]
-N_total_fit (in fit range): 255487.00000
-N_sig_narrow (in unified range): 169723.00000 +/- 411.97451
-R_total (model integral in narrow range): 0.65170 +/- 0.00094
-
---- Calculating values for each component ---
-  Element: Boron
-    F_A (fit fraction): 0.14240 +/- 0.00069
-    R_A (shape factor, from PDF integral): 0.00562 +/- 0.00000
-    P_A (narrow fraction): 0.00123 +/- 0.00001
-    Yield_A: 208.38258 +/- 1.17058
-  Element: Carbon
-    F_A (fit fraction): 0.85552 +/- 0.00070
-    R_A (shape factor, from PDF integral): 0.76081 +/- 0.00018
-    P_A (narrow fraction): 0.99876 +/- 0.00167
-    Yield_A: 169511.87724 +/- 500.08412
-  Element: Nitrogen
-    F_A (fit fraction): 0.00208 +/- 0.00009
-    R_A (shape factor, from PDF integral): 0.00505 +/- 0.00157
-    P_A (narrow fraction): 0.00002 +/- 0.00001
-    Yield_A: 2.74018 +/- 0.85759
-
-<<<<<<<<<< END OF DEBUGGING >>>>>>>>>>>>
-
-Total chi2/ndf: 1.96712
-  [bin 22] Eklow = 21.63773 GeV/n
-  [bin 23] Eklow = 25.18512 GeV/n
-  [bin 24] Eklow = 29.23289 GeV/n
-  [bin 25] Eklow = 33.93095 GeV/n
-  [bin 26] Eklow = 39.32928 GeV/n
-  [bin 27] Eklow = 45.57783 GeV/n
-  [bin 28] Eklow = 53.07653 GeV/n
-  [bin 29] Eklow = 61.57544 GeV/n
-  [bin 30] Eklow = 72.57440 GeV/n
-  [bin 31] Eklow = 86.57346 GeV/n
-  [bin 32] Eklow = 104.57261 GeV/n
-  [bin 33] Eklow = 128.57185 GeV/n
-  [bin 34] Eklow = 164.07113 GeV/n
-  [bin 35] Eklow = 219.57047 GeV/n
-  [bin 36] Eklow = 329.06981 GeV/n
+ [Bin 1] Ek=0.103981 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 2] Ek=0.145761 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 3] Ek=0.189414 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 4] Ek=0.240282 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 5] Ek=0.300226 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 6] Ek=0.369524 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 7] Ek=0.448539 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 8] Ek=0.539271 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 9] Ek=0.641983 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 10] Ek=0.758915 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 11] Ek=0.890201 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 12] Ek=1.03598 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 13] Ek=1.19844 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 14] Ek=1.37763 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 15] Ek=1.57583 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 16] Ek=1.79538 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 17] Ek=2.03628 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 18] Ek=2.29851 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 19] Ek=2.58439 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 20] Ek=2.89629 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 21] Ek=3.23418 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0772987, N_template: 275087, N_purged: 6982.39, Scale: 0.0253825
+Total chi2/ndf: 2.3535
+   [Purge] Element: Oxygen, Fraction: 0.0763344, N_template: 275087, N_purged: 6895.28, Scale: 0.0250658
+Total chi2/ndf: 0.0786423
+   [Purge] Element: Nitrogen, Fraction: 0.00830828, N_template: 83526.5, N_purged: 3105.2, Scale: 0.0371762
+   [Purge] Element: Oxygen, Fraction: 0.00557033, N_template: 275087, N_purged: 2081.89, Scale: 0.00756813
+Total chi2/ndf: 4.55447
+   [Purge] Element: Nitrogen, Fraction: 0.00811499, N_template: 83526.5, N_purged: 3032.95, Scale: 0.0363113
+   [Purge] Element: Oxygen, Fraction: 0.00518331, N_template: 275087, N_purged: 1937.25, Scale: 0.00704231
+Total chi2/ndf: 0.200526
+   [Purge] Element: Carbon, Fraction: 0.0592599, N_template: 368923, N_purged: 6774.24, Scale: 0.0183622
+   [Purge] Element: Nitrogen, Fraction: 0.00395928, N_template: 83526.5, N_purged: 452.601, Scale: 0.00541866
+Total chi2/ndf: 2.69438
+   [Purge] Element: Carbon, Fraction: 0.0585837, N_template: 368923, N_purged: 6696.94, Scale: 0.0181527
+   [Purge] Element: Nitrogen, Fraction: 0.00289836, N_template: 83526.5, N_purged: 331.324, Scale: 0.00396669
+Total chi2/ndf: 0.22098
+   [Purge] Element: Boron, Fraction: 0.0229481, N_template: 107430, N_purged: 908.195, Scale: 0.00845383
+   [Purge] Element: Carbon, Fraction: 0.0154398, N_template: 368923, N_purged: 611.047, Scale: 0.0016563
+Total chi2/ndf: 1.99827
+   [Purge] Element: Boron, Fraction: 0.0218047, N_template: 107430, N_purged: 862.943, Scale: 0.0080326
+   [Purge] Element: Carbon, Fraction: 0.0128119, N_template: 368923, N_purged: 507.043, Scale: 0.00137439
+Total chi2/ndf: 0.362634
+ [Bin 22] Ek=3.60045 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0732927, N_template: 262782, N_purged: 6218.08, Scale: 0.0236625
+Total chi2/ndf: 2.61092
+   [Purge] Element: Oxygen, Fraction: 0.0727232, N_template: 262782, N_purged: 6169.76, Scale: 0.0234786
+Total chi2/ndf: 0.122768
+   [Purge] Element: Nitrogen, Fraction: 0.00699993, N_template: 78735.7, N_purged: 2474.36, Scale: 0.0314261
+   [Purge] Element: Oxygen, Fraction: 0.00545895, N_template: 262782, N_purged: 1929.65, Scale: 0.00734314
+Total chi2/ndf: 4.24433
+   [Purge] Element: Nitrogen, Fraction: 0.00695138, N_template: 78735.7, N_purged: 2457.2, Scale: 0.0312082
+   [Purge] Element: Oxygen, Fraction: 0.00505324, N_template: 262782, N_purged: 1786.24, Scale: 0.0067974
+Total chi2/ndf: 0.130102
+   [Purge] Element: Carbon, Fraction: 0.0577882, N_template: 349358, N_purged: 6108.74, Scale: 0.0174856
+   [Purge] Element: Nitrogen, Fraction: 0.00405624, N_template: 78735.7, N_purged: 428.781, Scale: 0.00544583
+Total chi2/ndf: 2.53689
+   [Purge] Element: Carbon, Fraction: 0.0571141, N_template: 349358, N_purged: 6037.47, Scale: 0.0172816
+   [Purge] Element: Nitrogen, Fraction: 0.0028861, N_template: 78735.7, N_purged: 305.087, Scale: 0.00387482
+Total chi2/ndf: 0.257442
+   [Purge] Element: Boron, Fraction: 0.0221425, N_template: 99492, N_purged: 822.75, Scale: 0.0082695
+   [Purge] Element: Carbon, Fraction: 0.0144582, N_template: 349358, N_purged: 537.225, Scale: 0.00153775
+Total chi2/ndf: 2.16793
+   [Purge] Element: Boron, Fraction: 0.021062, N_template: 99492, N_purged: 782.599, Scale: 0.00786595
+   [Purge] Element: Carbon, Fraction: 0.0122627, N_template: 349358, N_purged: 455.645, Scale: 0.00130423
+Total chi2/ndf: 0.316143
+ [Bin 23] Ek=3.99748 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0719004, N_template: 245351, N_purged: 5541.36, Scale: 0.0225855
+Total chi2/ndf: 1.62514
+   [Purge] Element: Oxygen, Fraction: 0.0715796, N_template: 245351, N_purged: 5516.64, Scale: 0.0224847
+Total chi2/ndf: 0.094719
+   [Purge] Element: Nitrogen, Fraction: 0.00711498, N_template: 71605.9, N_purged: 2338.79, Scale: 0.032662
+   [Purge] Element: Oxygen, Fraction: 0.00546503, N_template: 245351, N_purged: 1796.43, Scale: 0.00732189
+Total chi2/ndf: 3.74622
+   [Purge] Element: Nitrogen, Fraction: 0.00691854, N_template: 71605.9, N_purged: 2274.22, Scale: 0.0317603
+   [Purge] Element: Oxygen, Fraction: 0.00500584, N_template: 245351, N_purged: 1645.49, Scale: 0.00670668
+Total chi2/ndf: 0.234509
+   [Purge] Element: Carbon, Fraction: 0.0578874, N_template: 324934, N_purged: 5519.68, Scale: 0.0169871
+   [Purge] Element: Nitrogen, Fraction: 0.00404364, N_template: 71605.9, N_purged: 385.569, Scale: 0.0053846
+Total chi2/ndf: 2.21446
+   [Purge] Element: Carbon, Fraction: 0.0577156, N_template: 324934, N_purged: 5503.3, Scale: 0.0169366
+   [Purge] Element: Nitrogen, Fraction: 0.00288333, N_template: 71605.9, N_purged: 274.931, Scale: 0.0038395
+Total chi2/ndf: 0.236916
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 24] Ek=4.42526 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0722362, N_template: 225779, N_purged: 5086.36, Scale: 0.0225281
+Total chi2/ndf: 2.30136
+   [Purge] Element: Oxygen, Fraction: 0.0703884, N_template: 225779, N_purged: 4956.26, Scale: 0.0219518
+Total chi2/ndf: 0.175157
+   [Purge] Element: Nitrogen, Fraction: 0.00628182, N_template: 65559.1, N_purged: 1896.51, Scale: 0.0289282
+   [Purge] Element: Oxygen, Fraction: 0.00532599, N_template: 225779, N_purged: 1607.94, Scale: 0.00712173
+Total chi2/ndf: 3.693
+   [Purge] Element: Nitrogen, Fraction: 0.00631736, N_template: 65559.1, N_purged: 1907.24, Scale: 0.0290919
+   [Purge] Element: Oxygen, Fraction: 0.00493812, N_template: 225779, N_purged: 1490.84, Scale: 0.00660309
+Total chi2/ndf: 0.172074
+   [Purge] Element: Carbon, Fraction: 0.0564153, N_template: 298592, N_purged: 4852.34, Scale: 0.0162507
+   [Purge] Element: Nitrogen, Fraction: 0.00412928, N_template: 65559.1, N_purged: 355.164, Scale: 0.00541746
+Total chi2/ndf: 2.4143
+   [Purge] Element: Carbon, Fraction: 0.055181, N_template: 298592, N_purged: 4746.17, Scale: 0.0158951
+   [Purge] Element: Nitrogen, Fraction: 0.00284861, N_template: 65559.1, N_purged: 245.012, Scale: 0.00373727
+Total chi2/ndf: 0.375521
+   [Purge] Element: Boron, Fraction: 0.0179437, N_template: 81152.1, N_purged: 555.43, Scale: 0.00684431
+   [Purge] Element: Carbon, Fraction: 0.0137004, N_template: 298592, N_purged: 424.083, Scale: 0.00142027
+Total chi2/ndf: 1.59955
+   [Purge] Element: Boron, Fraction: 0.0166025, N_template: 81152.1, N_purged: 513.915, Scale: 0.00633274
+   [Purge] Element: Carbon, Fraction: 0.0116693, N_template: 298592, N_purged: 361.21, Scale: 0.00120971
+Total chi2/ndf: 0.123842
+ [Bin 25] Ek=4.8936 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0761226, N_template: 214930, N_purged: 5067.55, Scale: 0.0235777
+Total chi2/ndf: 2.37157
+   [Purge] Element: Oxygen, Fraction: 0.0733231, N_template: 214930, N_purged: 4881.19, Scale: 0.0227106
+Total chi2/ndf: 0.24769
+   [Purge] Element: Nitrogen, Fraction: 0.0059428, N_template: 61818.7, N_purged: 1695.39, Scale: 0.0274252
+   [Purge] Element: Oxygen, Fraction: 0.005331, N_template: 214930, N_purged: 1520.85, Scale: 0.00707604
+Total chi2/ndf: 3.85555
+   [Purge] Element: Nitrogen, Fraction: 0.00594268, N_template: 61818.7, N_purged: 1695.36, Scale: 0.0274247
+   [Purge] Element: Oxygen, Fraction: 0.0048389, N_template: 214930, N_purged: 1380.47, Scale: 0.00642286
+Total chi2/ndf: 0.224082
+   [Purge] Element: Carbon, Fraction: 0.0545827, N_template: 282304, N_purged: 4320.6, Scale: 0.0153048
+   [Purge] Element: Nitrogen, Fraction: 0.00389946, N_template: 61818.7, N_purged: 308.669, Scale: 0.00499314
+Total chi2/ndf: 2.26303
+   [Purge] Element: Carbon, Fraction: 0.0537782, N_template: 282304, N_purged: 4256.92, Scale: 0.0150792
+   [Purge] Element: Nitrogen, Fraction: 0.00259413, N_template: 61818.7, N_purged: 205.343, Scale: 0.0033217
+Total chi2/ndf: 0.156258
+   [Purge] Element: Boron, Fraction: 0.0178583, N_template: 74782.6, N_purged: 510.068, Scale: 0.00682067
+   [Purge] Element: Carbon, Fraction: 0.0127128, N_template: 282304, N_purged: 363.104, Scale: 0.00128622
+Total chi2/ndf: 1.78137
+   [Purge] Element: Boron, Fraction: 0.0168133, N_template: 74782.6, N_purged: 480.221, Scale: 0.00642157
+   [Purge] Element: Carbon, Fraction: 0.00995394, N_template: 282304, N_purged: 284.305, Scale: 0.00100709
+Total chi2/ndf: 0.176663
+ [Bin 26] Ek=5.38764 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0767592, N_template: 186675, N_purged: 4351.25, Scale: 0.0233092
+Total chi2/ndf: 2.74306
+   [Purge] Element: Oxygen, Fraction: 0.0735974, N_template: 186675, N_purged: 4172.01, Scale: 0.0223491
+Total chi2/ndf: 0.177406
+   [Purge] Element: Nitrogen, Fraction: 0.0055225, N_template: 52628.7, N_purged: 1360.95, Scale: 0.0258596
+   [Purge] Element: Oxygen, Fraction: 0.00542602, N_template: 186675, N_purged: 1337.18, Scale: 0.00716314
+Total chi2/ndf: 3.59357
+   [Purge] Element: Nitrogen, Fraction: 0.00553977, N_template: 52628.7, N_purged: 1365.21, Scale: 0.0259404
+   [Purge] Element: Oxygen, Fraction: 0.00495351, N_template: 186675, N_purged: 1220.73, Scale: 0.00653935
+Total chi2/ndf: 0.225172
+   [Purge] Element: Carbon, Fraction: 0.0522146, N_template: 243932, N_purged: 3505.43, Scale: 0.0143705
+   [Purge] Element: Nitrogen, Fraction: 0.00395062, N_template: 52628.7, N_purged: 265.225, Scale: 0.00503955
+Total chi2/ndf: 2.14401
+   [Purge] Element: Carbon, Fraction: 0.0511955, N_template: 243932, N_purged: 3437.01, Scale: 0.01409
+   [Purge] Element: Nitrogen, Fraction: 0.00274542, N_template: 52628.7, N_purged: 184.314, Scale: 0.00350216
+Total chi2/ndf: 0.217616
+   [Purge] Element: Boron, Fraction: 0.0172231, N_template: 63601.9, N_purged: 412.821, Scale: 0.0064907
+   [Purge] Element: Carbon, Fraction: 0.0139127, N_template: 243932, N_purged: 333.474, Scale: 0.00136708
+Total chi2/ndf: 1.93667
+   [Purge] Element: Boron, Fraction: 0.0155499, N_template: 63601.9, N_purged: 372.715, Scale: 0.00586012
+   [Purge] Element: Carbon, Fraction: 0.0115293, N_template: 243932, N_purged: 276.345, Scale: 0.00113288
+Total chi2/ndf: 0.305419
+ [Bin 27] Ek=5.90734 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0721084, N_template: 178810, N_purged: 3814.68, Scale: 0.0213337
+Total chi2/ndf: 2.17568
+   [Purge] Element: Oxygen, Fraction: 0.0686676, N_template: 178810, N_purged: 3632.65, Scale: 0.0203157
+Total chi2/ndf: 0.212032
+   [Purge] Element: Nitrogen, Fraction: 0.00510439, N_template: 49383.6, N_purged: 1199.34, Scale: 0.0242862
+   [Purge] Element: Oxygen, Fraction: 0.00556279, N_template: 178810, N_purged: 1307.05, Scale: 0.00730972
+Total chi2/ndf: 3.21231
+   [Purge] Element: Nitrogen, Fraction: 0.00514457, N_template: 49383.6, N_purged: 1208.78, Scale: 0.0244774
+   [Purge] Element: Oxygen, Fraction: 0.00513284, N_template: 178810, N_purged: 1206.03, Scale: 0.00674474
+Total chi2/ndf: 0.123237
+   [Purge] Element: Carbon, Fraction: 0.0536201, N_template: 232621, N_purged: 3361.87, Scale: 0.0144522
+   [Purge] Element: Nitrogen, Fraction: 0.0034777, N_template: 49383.6, N_purged: 218.045, Scale: 0.00441533
+Total chi2/ndf: 2.1321
+   [Purge] Element: Carbon, Fraction: 0.0528659, N_template: 232621, N_purged: 3314.59, Scale: 0.0142489
+   [Purge] Element: Nitrogen, Fraction: 0.00225269, N_template: 49383.6, N_purged: 141.239, Scale: 0.00286004
+Total chi2/ndf: 0.231123
+   [Purge] Element: Boron, Fraction: 0.0193395, N_template: 59321, N_purged: 433.07, Scale: 0.00730045
+   [Purge] Element: Carbon, Fraction: 0.0132449, N_template: 232621, N_purged: 296.593, Scale: 0.00127501
+Total chi2/ndf: 2.03607
+   [Purge] Element: Boron, Fraction: 0.0173757, N_template: 59321, N_purged: 389.093, Scale: 0.00655911
+   [Purge] Element: Carbon, Fraction: 0.0108899, N_template: 232621, N_purged: 243.857, Scale: 0.0010483
+Total chi2/ndf: 0.188287
+ [Bin 28] Ek=6.47739 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0664491, N_template: 170500, N_purged: 3346.11, Scale: 0.0196253
+Total chi2/ndf: 2.22238
+   [Purge] Element: Oxygen, Fraction: 0.0656869, N_template: 170500, N_purged: 3307.73, Scale: 0.0194002
+Total chi2/ndf: 0.112078
+   [Purge] Element: Nitrogen, Fraction: 0.00515374, N_template: 47095.5, N_purged: 1146.7, Scale: 0.0243484
+   [Purge] Element: Oxygen, Fraction: 0.00588802, N_template: 170500, N_purged: 1310.08, Scale: 0.00768375
+Total chi2/ndf: 3.69889
+   [Purge] Element: Nitrogen, Fraction: 0.00511689, N_template: 47095.5, N_purged: 1138.5, Scale: 0.0241744
+   [Purge] Element: Oxygen, Fraction: 0.00517145, N_template: 170500, N_purged: 1150.64, Scale: 0.00674864
+Total chi2/ndf: 0.231791
+   [Purge] Element: Carbon, Fraction: 0.053058, N_template: 220306, N_purged: 3069.67, Scale: 0.0139337
+   [Purge] Element: Nitrogen, Fraction: 0.00395245, N_template: 47095.5, N_purged: 228.669, Scale: 0.00485544
+Total chi2/ndf: 1.82763
+   [Purge] Element: Carbon, Fraction: 0.051897, N_template: 220306, N_purged: 3002.5, Scale: 0.0136288
+   [Purge] Element: Nitrogen, Fraction: 0.00235129, N_template: 47095.5, N_purged: 136.034, Scale: 0.00288848
+Total chi2/ndf: 0.148302
+   [Purge] Element: Boron, Fraction: 0.0155998, N_template: 54794.9, N_purged: 323.586, Scale: 0.00590541
+   [Purge] Element: Carbon, Fraction: 0.013161, N_template: 220306, N_purged: 272.999, Scale: 0.00123918
+Total chi2/ndf: 1.89423
+   [Purge] Element: Boron, Fraction: 0.0136318, N_template: 54794.9, N_purged: 282.765, Scale: 0.00516043
+   [Purge] Element: Carbon, Fraction: 0.010524, N_template: 220306, N_purged: 218.3, Scale: 0.000990895
+Total chi2/ndf: 0.300131
+ [Bin 29] Ek=7.09781 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0611146, N_template: 164527, N_purged: 2927.21, Scale: 0.0177917
+Total chi2/ndf: 3.95439
+   [Purge] Element: Oxygen, Fraction: 0.0610025, N_template: 164527, N_purged: 2921.83, Scale: 0.017759
+Total chi2/ndf: 0.0417482
+   [Purge] Element: Nitrogen, Fraction: 0.00526053, N_template: 44995.4, N_purged: 1132.71, Scale: 0.0251738
+   [Purge] Element: Oxygen, Fraction: 0.00565256, N_template: 164527, N_purged: 1217.12, Scale: 0.00739769
+Total chi2/ndf: 3.13296
+   [Purge] Element: Nitrogen, Fraction: 0.0052375, N_template: 44995.4, N_purged: 1127.75, Scale: 0.0250636
+   [Purge] Element: Oxygen, Fraction: 0.00517374, N_template: 164527, N_purged: 1114.02, Scale: 0.00677104
+Total chi2/ndf: 0.273718
+   [Purge] Element: Carbon, Fraction: 0.0507929, N_template: 213160, N_purged: 2774.87, Scale: 0.0130178
+   [Purge] Element: Nitrogen, Fraction: 0.0043399, N_template: 44995.4, N_purged: 237.093, Scale: 0.00526927
+Total chi2/ndf: 2.24327
+   [Purge] Element: Carbon, Fraction: 0.0493128, N_template: 213160, N_purged: 2694.01, Scale: 0.0126384
+   [Purge] Element: Nitrogen, Fraction: 0.00300333, N_template: 44995.4, N_purged: 164.075, Scale: 0.00364649
+Total chi2/ndf: 0.317542
+   [Purge] Element: Boron, Fraction: 0.0164883, N_template: 51865.6, N_purged: 309.056, Scale: 0.00595878
+   [Purge] Element: Carbon, Fraction: 0.0121629, N_template: 213160, N_purged: 227.982, Scale: 0.00106953
+Total chi2/ndf: 2.07541
+   [Purge] Element: Boron, Fraction: 0.0138182, N_template: 51865.6, N_purged: 259.008, Scale: 0.00499382
+   [Purge] Element: Carbon, Fraction: 0.009136, N_template: 213160, N_purged: 171.245, Scale: 0.000803365
+Total chi2/ndf: 0.515761
+ [Bin 30] Ek=7.76859 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0580848, N_template: 159368, N_purged: 2642.8, Scale: 0.016583
+Total chi2/ndf: 5.94085
+   [Purge] Element: Oxygen, Fraction: 0.0581703, N_template: 159368, N_purged: 2646.69, Scale: 0.0166074
+Total chi2/ndf: 0.0116909
+   [Purge] Element: Nitrogen, Fraction: 0.00515, N_template: 42866, N_purged: 1066.83, Scale: 0.0248877
+   [Purge] Element: Oxygen, Fraction: 0.00579289, N_template: 159368, N_purged: 1200.01, Scale: 0.0075298
+Total chi2/ndf: 2.80391
+   [Purge] Element: Nitrogen, Fraction: 0.0051327, N_template: 42866, N_purged: 1063.25, Scale: 0.0248041
+   [Purge] Element: Oxygen, Fraction: 0.00530104, N_template: 159368, N_purged: 1098.12, Scale: 0.00689048
+Total chi2/ndf: 0.150431
+   [Purge] Element: Carbon, Fraction: 0.0483188, N_template: 205053, N_purged: 2481.8, Scale: 0.0121032
+   [Purge] Element: Nitrogen, Fraction: 0.00334393, N_template: 42866, N_purged: 171.754, Scale: 0.00400678
+Total chi2/ndf: 2.15434
+   [Purge] Element: Carbon, Fraction: 0.0475379, N_template: 205053, N_purged: 2441.69, Scale: 0.0119076
+   [Purge] Element: Nitrogen, Fraction: 0.00181212, N_template: 42866, N_purged: 93.076, Scale: 0.00217133
+Total chi2/ndf: 0.219341
+   [Purge] Element: Boron, Fraction: 0.0168545, N_template: 48893.1, N_purged: 289.257, Scale: 0.00591612
+   [Purge] Element: Carbon, Fraction: 0.0141343, N_template: 205053, N_purged: 242.573, Scale: 0.00118298
+Total chi2/ndf: 1.61832
+   [Purge] Element: Boron, Fraction: 0.0150277, N_template: 48893.1, N_purged: 257.906, Scale: 0.00527489
+   [Purge] Element: Carbon, Fraction: 0.0107669, N_template: 205053, N_purged: 184.782, Scale: 0.000901142
+Total chi2/ndf: 0.190363
+ [Bin 31] Ek=8.48974 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0646532, N_template: 151706, N_purged: 2757.2, Scale: 0.0181746
+Total chi2/ndf: 2.26887
+   [Purge] Element: Oxygen, Fraction: 0.0635112, N_template: 151706, N_purged: 2708.5, Scale: 0.0178536
+Total chi2/ndf: 0.198277
+   [Purge] Element: Nitrogen, Fraction: 0.00541989, N_template: 39982.7, N_purged: 1066.72, Scale: 0.0266794
+   [Purge] Element: Oxygen, Fraction: 0.00620682, N_template: 151706, N_purged: 1221.6, Scale: 0.00805238
+Total chi2/ndf: 3.14856
+   [Purge] Element: Nitrogen, Fraction: 0.00544037, N_template: 39982.7, N_purged: 1070.75, Scale: 0.0267802
+   [Purge] Element: Oxygen, Fraction: 0.00565347, N_template: 151706, N_purged: 1112.69, Scale: 0.00733451
+Total chi2/ndf: 0.226274
+   [Purge] Element: Carbon, Fraction: 0.0516896, N_template: 194700, N_purged: 2474.74, Scale: 0.0127105
+   [Purge] Element: Nitrogen, Fraction: 0.00418236, N_template: 39982.7, N_purged: 200.239, Scale: 0.00500814
+Total chi2/ndf: 2.03101
+   [Purge] Element: Carbon, Fraction: 0.0506554, N_template: 194700, N_purged: 2425.23, Scale: 0.0124562
+   [Purge] Element: Nitrogen, Fraction: 0.00271756, N_template: 39982.7, N_purged: 130.108, Scale: 0.00325411
+Total chi2/ndf: 0.158594
+   [Purge] Element: Boron, Fraction: 0.0116598, N_template: 45394.5, N_purged: 189.157, Scale: 0.00416696
+   [Purge] Element: Carbon, Fraction: 0.0141805, N_template: 194700, N_purged: 230.05, Scale: 0.00118156
+Total chi2/ndf: 1.78188
+   [Purge] Element: Boron, Fraction: 0.0104932, N_template: 45394.5, N_purged: 170.231, Scale: 0.00375004
+   [Purge] Element: Carbon, Fraction: 0.0107727, N_template: 194700, N_purged: 174.765, Scale: 0.000897611
+Total chi2/ndf: 0.110533
+ [Bin 32] Ek=9.26122 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0764204, N_template: 143721, N_purged: 3041.61, Scale: 0.0211633
+Total chi2/ndf: 2.70659
+   [Purge] Element: Oxygen, Fraction: 0.0711384, N_template: 143721, N_purged: 2831.38, Scale: 0.0197005
+Total chi2/ndf: 0.369652
+   [Purge] Element: Nitrogen, Fraction: 0.00500605, N_template: 37081.4, N_purged: 933.874, Scale: 0.0251844
+   [Purge] Element: Oxygen, Fraction: 0.0065628, N_template: 143721, N_purged: 1224.28, Scale: 0.00851848
+Total chi2/ndf: 3.46314
+   [Purge] Element: Nitrogen, Fraction: 0.00502516, N_template: 37081.4, N_purged: 937.439, Scale: 0.0252805
+   [Purge] Element: Oxygen, Fraction: 0.00599341, N_template: 143721, N_purged: 1118.06, Scale: 0.00777941
+Total chi2/ndf: 0.193934
+   [Purge] Element: Carbon, Fraction: 0.0521015, N_template: 184563, N_purged: 2297.42, Scale: 0.0124479
+   [Purge] Element: Nitrogen, Fraction: 0.00507178, N_template: 37081.4, N_purged: 223.64, Scale: 0.00603106
+Total chi2/ndf: 1.93216
+   [Purge] Element: Carbon, Fraction: 0.0508566, N_template: 184563, N_purged: 2242.52, Scale: 0.0121504
+   [Purge] Element: Nitrogen, Fraction: 0.00328247, N_template: 37081.4, N_purged: 144.741, Scale: 0.00390332
+Total chi2/ndf: 0.187691
+   [Purge] Element: Boron, Fraction: 0.0133105, N_template: 41779.8, N_purged: 201.787, Scale: 0.00482976
+   [Purge] Element: Carbon, Fraction: 0.0128185, N_template: 184563, N_purged: 194.328, Scale: 0.00105291
+Total chi2/ndf: 2.29231
+   [Purge] Element: Boron, Fraction: 0.0120662, N_template: 41779.8, N_purged: 182.924, Scale: 0.00437829
+   [Purge] Element: Carbon, Fraction: 0.00949422, N_template: 184563, N_purged: 143.932, Scale: 0.000779855
+Total chi2/ndf: 0.214509
+ [Bin 33] Ek=10.083 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0836564, N_template: 134803, N_purged: 3055.8, Scale: 0.0226687
+Total chi2/ndf: 4.63049
+   [Purge] Element: Oxygen, Fraction: 0.0749884, N_template: 134803, N_purged: 2739.18, Scale: 0.0203198
+Total chi2/ndf: 0.349516
+   [Purge] Element: Nitrogen, Fraction: 0.00527583, N_template: 33922.8, N_purged: 914.053, Scale: 0.0269451
+   [Purge] Element: Oxygen, Fraction: 0.00648473, N_template: 134803, N_purged: 1123.5, Scale: 0.00833437
+Total chi2/ndf: 2.39318
+   [Purge] Element: Nitrogen, Fraction: 0.00516001, N_template: 33922.8, N_purged: 893.988, Scale: 0.0263536
+   [Purge] Element: Oxygen, Fraction: 0.00580584, N_template: 134803, N_purged: 1005.88, Scale: 0.00746185
+Total chi2/ndf: 0.149965
+   [Purge] Element: Carbon, Fraction: 0.0477119, N_template: 171425, N_purged: 1886.53, Scale: 0.011005
+   [Purge] Element: Nitrogen, Fraction: 0.0044628, N_template: 33922.8, N_purged: 176.459, Scale: 0.00520178
+Total chi2/ndf: 2.17241
+   [Purge] Element: Carbon, Fraction: 0.0459909, N_template: 171425, N_purged: 1818.48, Scale: 0.010608
+   [Purge] Element: Nitrogen, Fraction: 0.00288882, N_template: 33922.8, N_purged: 114.224, Scale: 0.00336717
+Total chi2/ndf: 0.256942
+   [Purge] Element: Boron, Fraction: 0.0128114, N_template: 37683.6, N_purged: 179.782, Scale: 0.00477084
+   [Purge] Element: Carbon, Fraction: 0.0131302, N_template: 171425, N_purged: 184.256, Scale: 0.00107485
+Total chi2/ndf: 1.6302
+   [Purge] Element: Boron, Fraction: 0.0102498, N_template: 37683.6, N_purged: 143.835, Scale: 0.00381691
+   [Purge] Element: Carbon, Fraction: 0.00943304, N_template: 171425, N_purged: 132.374, Scale: 0.000772196
+Total chi2/ndf: 0.160808
+ [Bin 34] Ek=10.98 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0881055, N_template: 127572, N_purged: 3019.46, Scale: 0.0236687
+Total chi2/ndf: 4.42008
+   [Purge] Element: Oxygen, Fraction: 0.0793075, N_template: 127572, N_purged: 2717.95, Scale: 0.0213052
+Total chi2/ndf: 0.441724
+   [Purge] Element: Nitrogen, Fraction: 0.00459888, N_template: 31675, N_purged: 755.532, Scale: 0.0238526
+   [Purge] Element: Oxygen, Fraction: 0.00713453, N_template: 127572, N_purged: 1172.1, Scale: 0.00918778
+Total chi2/ndf: 2.86611
+   [Purge] Element: Nitrogen, Fraction: 0.00452041, N_template: 31675, N_purged: 742.639, Scale: 0.0234456
+   [Purge] Element: Oxygen, Fraction: 0.00629757, N_template: 127572, N_purged: 1034.6, Scale: 0.00810995
+Total chi2/ndf: 0.286625
+   [Purge] Element: Carbon, Fraction: 0.0519812, N_template: 162590, N_purged: 1919.87, Scale: 0.011808
+   [Purge] Element: Nitrogen, Fraction: 0.0041178, N_template: 31675, N_purged: 152.087, Scale: 0.00480147
+Total chi2/ndf: 2.32906
+   [Purge] Element: Carbon, Fraction: 0.0486731, N_template: 162590, N_purged: 1797.69, Scale: 0.0110566
+   [Purge] Element: Nitrogen, Fraction: 0.00220383, N_template: 31675, N_purged: 81.3963, Scale: 0.00256973
+Total chi2/ndf: 0.3582
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 35] Ek=11.9523 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0846503, N_template: 113072, N_purged: 2534.01, Scale: 0.0224106
+Total chi2/ndf: 3.63825
+   [Purge] Element: Oxygen, Fraction: 0.0757583, N_template: 113072, N_purged: 2267.82, Scale: 0.0200565
+Total chi2/ndf: 0.379713
+   [Purge] Element: Nitrogen, Fraction: 0.00459759, N_template: 27782, N_purged: 664.2, Scale: 0.0239076
+   [Purge] Element: Oxygen, Fraction: 0.0075322, N_template: 113072, N_purged: 1088.15, Scale: 0.00962355
+Total chi2/ndf: 2.58903
+   [Purge] Element: Nitrogen, Fraction: 0.00437928, N_template: 27782, N_purged: 632.661, Scale: 0.0227723
+   [Purge] Element: Oxygen, Fraction: 0.00669478, N_template: 113072, N_purged: 967.175, Scale: 0.00855362
+Total chi2/ndf: 0.246357
+   [Purge] Element: Carbon, Fraction: 0.0513009, N_template: 142953, N_purged: 1623.98, Scale: 0.0113602
+   [Purge] Element: Nitrogen, Fraction: 0.00488708, N_template: 27782, N_purged: 154.705, Scale: 0.00556855
+Total chi2/ndf: 1.86371
+   [Purge] Element: Carbon, Fraction: 0.0486587, N_template: 142953, N_purged: 1540.34, Scale: 0.0107752
+   [Purge] Element: Nitrogen, Fraction: 0.00306493, N_template: 27782, N_purged: 97.0235, Scale: 0.00349231
+Total chi2/ndf: 0.185864
+   [Purge] Element: Boron, Fraction: 0.0113931, N_template: 30088.8, N_purged: 136.581, Scale: 0.00453926
+   [Purge] Element: Carbon, Fraction: 0.0148673, N_template: 142953, N_purged: 178.229, Scale: 0.00124677
+Total chi2/ndf: 1.79481
+   [Purge] Element: Boron, Fraction: 0.00987665, N_template: 30088.8, N_purged: 118.401, Scale: 0.00393507
+   [Purge] Element: Carbon, Fraction: 0.0110138, N_template: 142953, N_purged: 132.034, Scale: 0.000923616
+Total chi2/ndf: 0.116786
+ [Bin 36] Ek=12.9748 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0837402, N_template: 99659, N_purged: 2155.14, Scale: 0.0216251
+Total chi2/ndf: 2.45817
+   [Purge] Element: Oxygen, Fraction: 0.0750982, N_template: 99659, N_purged: 1932.73, Scale: 0.0193934
+Total chi2/ndf: 0.25555
+   [Purge] Element: Nitrogen, Fraction: 0.00535563, N_template: 23894.8, N_purged: 678.457, Scale: 0.0283935
+   [Purge] Element: Oxygen, Fraction: 0.00733133, N_template: 99659, N_purged: 928.74, Scale: 0.00931917
+Total chi2/ndf: 2.57197
+   [Purge] Element: Nitrogen, Fraction: 0.00523038, N_template: 23894.8, N_purged: 662.59, Scale: 0.0277295
+   [Purge] Element: Oxygen, Fraction: 0.00654327, N_template: 99659, N_purged: 828.908, Scale: 0.00831745
+Total chi2/ndf: 0.202546
+   [Purge] Element: Carbon, Fraction: 0.0538547, N_template: 125258, N_purged: 1465.01, Scale: 0.0116959
+   [Purge] Element: Nitrogen, Fraction: 0.00566517, N_template: 23894.8, N_purged: 154.11, Scale: 0.00644951
+Total chi2/ndf: 2.11881
+   [Purge] Element: Carbon, Fraction: 0.0518883, N_template: 125258, N_purged: 1411.52, Scale: 0.0112689
+   [Purge] Element: Nitrogen, Fraction: 0.00362258, N_template: 23894.8, N_purged: 98.5451, Scale: 0.00412412
+Total chi2/ndf: 0.19326
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 37] Ek=14.0725 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0751507, N_template: 90019, N_purged: 1722.15, Scale: 0.019131
+Total chi2/ndf: 1.31547
+   [Purge] Element: Oxygen, Fraction: 0.0714104, N_template: 90019, N_purged: 1636.44, Scale: 0.0181788
+Total chi2/ndf: 0.172478
+   [Purge] Element: Nitrogen, Fraction: 0.0047936, N_template: 21335.6, N_purged: 549.926, Scale: 0.025775
+   [Purge] Element: Oxygen, Fraction: 0.00750941, N_template: 90019, N_purged: 861.487, Scale: 0.00957006
+Total chi2/ndf: 2.54706
+   [Purge] Element: Nitrogen, Fraction: 0.00470972, N_template: 21335.6, N_purged: 540.304, Scale: 0.025324
+   [Purge] Element: Oxygen, Fraction: 0.00653301, N_template: 90019, N_purged: 749.473, Scale: 0.00832572
+Total chi2/ndf: 0.271647
+   [Purge] Element: Carbon, Fraction: 0.0534336, N_template: 113498, N_purged: 1251.9, Scale: 0.0110301
+   [Purge] Element: Nitrogen, Fraction: 0.00612852, N_template: 21335.6, N_purged: 143.585, Scale: 0.00672982
+Total chi2/ndf: 2.3381
+   [Purge] Element: Carbon, Fraction: 0.0491654, N_template: 113498, N_purged: 1151.9, Scale: 0.010149
+   [Purge] Element: Nitrogen, Fraction: 0.00349092, N_template: 21335.6, N_purged: 81.7887, Scale: 0.00383343
+Total chi2/ndf: 0.247982
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 38] Ek=15.2454 GeV/n. Analyzing...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+   [Purge] Element: Nitrogen, Fraction: 0.00504407, N_template: 19668, N_purged: 495.338, Scale: 0.025185
+   [Purge] Element: Oxygen, Fraction: 0.0073731, N_template: 77985, N_purged: 724.053, Scale: 0.00928452
+Total chi2/ndf: 2.1973
+   [Purge] Element: Nitrogen, Fraction: 0.0049785, N_template: 19668, N_purged: 488.899, Scale: 0.0248576
+   [Purge] Element: Oxygen, Fraction: 0.00643341, N_template: 77985, N_purged: 631.773, Scale: 0.00810122
+Total chi2/ndf: 0.131522
+   [Purge] Element: Carbon, Fraction: 0.0533865, N_template: 97133.4, N_purged: 1055.88, Scale: 0.0108704
+   [Purge] Element: Nitrogen, Fraction: 0.00562796, N_template: 19668, N_purged: 111.31, Scale: 0.00565944
+Total chi2/ndf: 2.24776
+   [Purge] Element: Carbon, Fraction: 0.0483071, N_template: 97133.4, N_purged: 955.417, Scale: 0.00983613
+   [Purge] Element: Nitrogen, Fraction: 0.00270844, N_template: 19668, N_purged: 53.5675, Scale: 0.00272359
+Total chi2/ndf: 0.383347
+   [Purge] Element: Boron, Fraction: 0.0109006, N_template: 18836, N_purged: 88.7309, Scale: 0.0047107
+   [Purge] Element: Carbon, Fraction: 0.0149809, N_template: 97133.4, N_purged: 121.944, Scale: 0.00125543
+Total chi2/ndf: 1.64174
+   [Purge] Element: Boron, Fraction: 0.00808506, N_template: 18836, N_purged: 65.8124, Scale: 0.00349396
+   [Purge] Element: Carbon, Fraction: 0.00969022, N_template: 97133.4, N_purged: 78.8784, Scale: 0.000812062
+Total chi2/ndf: 0.0924714
+ [Bin 39] Ek=16.4935 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0799196, N_template: 69876, N_purged: 1351.36, Scale: 0.0193394
+Total chi2/ndf: 2.39048
+   [Purge] Element: Oxygen, Fraction: 0.0757621, N_template: 69876, N_purged: 1281.06, Scale: 0.0183333
+Total chi2/ndf: 0.183485
+   [Purge] Element: Nitrogen, Fraction: 0.00471422, N_template: 15672.1, N_purged: 412.268, Scale: 0.0263059
+   [Purge] Element: Oxygen, Fraction: 0.00794864, N_template: 69876, N_purged: 695.124, Scale: 0.00994797
+Total chi2/ndf: 2.19347
+   [Purge] Element: Nitrogen, Fraction: 0.00452287, N_template: 15672.1, N_purged: 395.534, Scale: 0.0252382
+   [Purge] Element: Oxygen, Fraction: 0.00659662, N_template: 69876, N_purged: 576.888, Scale: 0.00825588
+Total chi2/ndf: 0.223207
+   [Purge] Element: Carbon, Fraction: 0.0555225, N_template: 86537.5, N_purged: 943.216, Scale: 0.0108995
+   [Purge] Element: Nitrogen, Fraction: 0.00531039, N_template: 15672.1, N_purged: 90.2129, Scale: 0.00575629
+Total chi2/ndf: 2.30175
+   [Purge] Element: Carbon, Fraction: 0.0488629, N_template: 86537.5, N_purged: 830.083, Scale: 0.00959218
+   [Purge] Element: Nitrogen, Fraction: 0.00249325, N_template: 15672.1, N_purged: 42.3554, Scale: 0.00270261
+Total chi2/ndf: 0.333764
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 40] Ek=17.8417 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0936822, N_template: 61229, N_purged: 1380.41, Scale: 0.022545
+Total chi2/ndf: 2.51877
+   [Purge] Element: Oxygen, Fraction: 0.0834984, N_template: 61229, N_purged: 1230.35, Scale: 0.0200942
+Total chi2/ndf: 0.288937
+   [Purge] Element: Nitrogen, Fraction: 0.00517875, N_template: 13570.4, N_purged: 401.431, Scale: 0.0295814
+   [Purge] Element: Oxygen, Fraction: 0.00838613, N_template: 61229, N_purged: 650.051, Scale: 0.0106167
+Total chi2/ndf: 2.70699
+   [Purge] Element: Nitrogen, Fraction: 0.00508739, N_template: 13570.4, N_purged: 394.349, Scale: 0.0290596
+   [Purge] Element: Oxygen, Fraction: 0.00701844, N_template: 61229, N_purged: 544.035, Scale: 0.00888525
+Total chi2/ndf: 0.218363
+   [Purge] Element: Carbon, Fraction: 0.0575169, N_template: 76635.5, N_purged: 848.834, Scale: 0.0110763
+   [Purge] Element: Nitrogen, Fraction: 0.00651445, N_template: 13570.4, N_purged: 96.1403, Scale: 0.00708458
+Total chi2/ndf: 1.68851
+   [Purge] Element: Carbon, Fraction: 0.0539766, N_template: 76635.5, N_purged: 796.587, Scale: 0.0103945
+   [Purge] Element: Nitrogen, Fraction: 0.0031359, N_template: 13570.4, N_purged: 46.2796, Scale: 0.00341035
+Total chi2/ndf: 0.302068
+   [Purge] Element: Boron, Fraction: 0.0155399, N_template: 13965.1, N_purged: 92.3689, Scale: 0.00661426
+   [Purge] Element: Carbon, Fraction: 0.0179828, N_template: 76635.5, N_purged: 106.89, Scale: 0.00139478
+Total chi2/ndf: 2.15281
+   [Purge] Element: Boron, Fraction: 0.0116228, N_template: 13965.1, N_purged: 69.0862, Scale: 0.00494705
+   [Purge] Element: Carbon, Fraction: 0.0132652, N_template: 76635.5, N_purged: 78.8482, Scale: 0.00102887
+Total chi2/ndf: 0.0814076
+ [Bin 41] Ek=19.29 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.101931, N_template: 54114, N_purged: 1337.34, Scale: 0.0247133
+Total chi2/ndf: 2.95077
+   [Purge] Element: Oxygen, Fraction: 0.087475, N_template: 54114, N_purged: 1147.67, Scale: 0.0212084
+Total chi2/ndf: 0.356899
+   [Purge] Element: Nitrogen, Fraction: 0.0054128, N_template: 12047.4, N_purged: 365.846, Scale: 0.0303673
+   [Purge] Element: Oxygen, Fraction: 0.00863883, N_template: 54114, N_purged: 583.89, Scale: 0.01079
+Total chi2/ndf: 2.50792
+   [Purge] Element: Nitrogen, Fraction: 0.00485296, N_template: 12047.4, N_purged: 328.007, Scale: 0.0272264
+   [Purge] Element: Oxygen, Fraction: 0.00734303, N_template: 54114, N_purged: 496.308, Scale: 0.00917152
+Total chi2/ndf: 0.326202
+   [Purge] Element: Carbon, Fraction: 0.0550107, N_template: 66822.7, N_purged: 679.823, Scale: 0.0101735
+   [Purge] Element: Nitrogen, Fraction: 0.00639788, N_template: 12047.4, N_purged: 79.0649, Scale: 0.00656283
+Total chi2/ndf: 1.64488
+   [Purge] Element: Carbon, Fraction: 0.051527, N_template: 66822.7, N_purged: 636.771, Scale: 0.00952926
+   [Purge] Element: Nitrogen, Fraction: 0.0029871, N_template: 12047.4, N_purged: 36.9146, Scale: 0.00306412
+Total chi2/ndf: 0.103739
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer::calculateHessErrors() Error when calculating Hessian
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+ [Bin 42] Ek=20.8385 GeV/n. Analyzing...
+   [Purge] Element: Oxygen, Fraction: 0.0978358, N_template: 48090, N_purged: 1107.6, Scale: 0.0230318
+Total chi2/ndf: 2.6633
+   [Purge] Element: Oxygen, Fraction: 0.0841805, N_template: 48090, N_purged: 953.008, Scale: 0.0198172
+Total chi2/ndf: 0.571169
+   [Purge] Element: Nitrogen, Fraction: 0.00464709, N_template: 10434, N_purged: 273.04, Scale: 0.0261682
+   [Purge] Element: Oxygen, Fraction: 0.00890292, N_template: 48090, N_purged: 523.091, Scale: 0.0108773
+Total chi2/ndf: 2.239
+   [Purge] Element: Nitrogen, Fraction: 0.00439876, N_template: 10434, N_purged: 258.449, Scale: 0.0247698
+   [Purge] Element: Oxygen, Fraction: 0.00759112, N_template: 48090, N_purged: 446.016, Scale: 0.00927462
+Total chi2/ndf: 0.203343
+   [Purge] Element: Carbon, Fraction: 0.0587577, N_template: 58097.6, N_purged: 619.012, Scale: 0.0106547
+   [Purge] Element: Nitrogen, Fraction: 0.00615901, N_template: 10434, N_purged: 64.8851, Scale: 0.0062186
+Total chi2/ndf: 1.58235
+   [Purge] Element: Carbon, Fraction: 0.0539011, N_template: 58097.6, N_purged: 567.849, Scale: 0.00977405
+   [Purge] Element: Nitrogen, Fraction: 0.00226457, N_template: 10434, N_purged: 23.8572, Scale: 0.00228648
+Total chi2/ndf: 0.0943906
+   [Purge] Element: Boron, Fraction: 0.0140367, N_template: 9983.66, N_purged: 60.6668, Scale: 0.00607661
+   [Purge] Element: Carbon, Fraction: 0.0225351, N_template: 58097.6, N_purged: 97.3966, Scale: 0.00167643
+Total chi2/ndf: 1.97975
+   [Purge] Element: Boron, Fraction: 0.0073737, N_template: 9983.66, N_purged: 31.8691, Scale: 0.00319213
+   [Purge] Element: Carbon, Fraction: 0.0137864, N_template: 58097.6, N_purged: 59.5846, Scale: 0.0010256
+Total chi2/ndf: 0.0840303
+ [Bin 43] Ek=22.4871 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 44] Ek=24.2608 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 45] Ek=26.1595 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 46] Ek=28.1834 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 47] Ek=30.3574 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 48] Ek=32.7064 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 49] Ek=35.2305 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 50] Ek=37.9297 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 51] Ek=40.8289 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 52] Ek=43.9532 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 53] Ek=47.3275 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 54] Ek=51.0769 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 55] Ek=55.0763 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 56] Ek=59.3257 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 57] Ek=64.0752 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 58] Ek=69.5747 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 59] Ek=75.8242 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 60] Ek=82.8237 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 61] Ek=90.8232 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 62] Ek=99.8228 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 63] Ek=110.072 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 64] Ek=122.072 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 65] Ek=136.572 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 66] Ek=154.321 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 67] Ek=176.321 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 68] Ek=204.071 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 69] Ek=240.57 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 70] Ek=295.32 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 71] Ek=384.07 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 72] Ek=544.069 GeV/n is OUTSIDE range [2.9, 21]. Skipping.
+ [Bin 73] Ek=1149.07 GeV/n is OUTSIDE range [2.9, 21]. Skipping.

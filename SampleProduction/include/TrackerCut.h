@@ -63,7 +63,7 @@ public:
     CutResult<5> cutL1Unbiased(int charge, bool isISS = true,
                         bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
     CutResult<5> cutL1Norm(int charge, bool isISS = true, float coe = 1.) const;
-    CutResult<1> cutUTOFQ(int charge, bool isISS = true,
+    CutResult<3> cutUTOFQ(int charge, bool isISS = true,
                          bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
     CutResult<3> cutInnerQ(int charge, bool isISS = true,
                           bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
@@ -76,13 +76,12 @@ public:
     CutResult<10> cutTracker(int charge, bool isISS = true) const;
     CutResult<2> cutUnphysical(int charge, bool isISS = true) const;
     CutResult<2> getDenominatorL1PickUp(int charge, bool isISS) const;
-    CutResult<6> chargeTempFitCut(int charge, bool isISS, bool isNormalL1 = false) const;
-    CutResult<6> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const;
+    CutResult<6> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground = false) const;
 
-    bool TrackerCut::AccUndepCut(int charge, bool isISS, bool forBackground) const ;
-    bool TrackerCut::QandL1IndependCut(int charge, bool isISS, bool forBackground) const ;
-    CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS, bool forBackground)  const;
-    std::array<bool,2> TrackerCut::BkgSourceOrFragCut(int charge, bool isISS, int fragZ, bool isL2Frag, bool forBackground) const;
+    bool TrackerCut::AccUndepCut(int charge, bool isISS, bool forBackground = false) const ;
+    bool TrackerCut::Q_L1_BkgIndependCut(int charge, bool isISS) const ;
+    CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS, bool forBackground = false)  const;
+    std::array<bool,2> TrackerCut::BkgSourceOrFragCut(int charge, bool isISS, int fragZ, bool isL2Frag, bool forBackground = false) const;
 
     // 辅助函数
     double getRadius(bool isUnphysical, int layer) const;

@@ -11,7 +11,7 @@
 #pragma link C++ class GAMModel+;
 #pragma link C++ class std::vector<double>+;
 #pragma link C++ class std::vector<std::vector<float> >+;
-#pragma link C++ class ModelManager+;
+//#pragma link C++ class ModelManager+;
 
 // Enums
 #pragma link C++ enum Rad;

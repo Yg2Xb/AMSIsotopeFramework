@@ -1,0 +1,1582 @@
+
+Processing ../rootlogon.C...
+Processing ChargeTempFit.cpp...
+
+======================================================================
+Starting analysis for: Boron -> Beryllium (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.32711
+      -> Fit Successful! Chi2/NDF = 3.32711 in range [3.6, 6.5]
+Total chi2/ndf: 3.32711
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.76558
+      -> Fit Successful! Chi2/NDF = 3.76558 in range [3.6, 6.5]
+Total chi2/ndf: 3.76558
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 4.25774
+      -> Fit Successful! Chi2/NDF = 4.25774 in range [3.6, 6.5]
+Total chi2/ndf: 4.25774
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 4.89113
+      -> Fit Successful! Chi2/NDF = 4.89113 in range [3.6, 6.5]
+Total chi2/ndf: 4.89113
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 4.14514
+      -> Fit Successful! Chi2/NDF = 4.14514 in range [3.6, 6.5]
+Total chi2/ndf: 4.14514
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.74566
+      -> Fit Successful! Chi2/NDF = 3.74566 in range [3.6, 6.5]
+Total chi2/ndf: 3.74566
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.32288
+      -> Fit Successful! Chi2/NDF = 3.32288 in range [3.6, 6.5]
+Total chi2/ndf: 3.32288
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.29252
+      -> Fit Successful! Chi2/NDF = 3.29252 in range [3.6, 6.5]
+Total chi2/ndf: 3.29252
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.98532
+      -> Fit Successful! Chi2/NDF = 3.98532 in range [3.6, 6.5]
+Total chi2/ndf: 3.98532
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.92643
+      -> Fit Successful! Chi2/NDF = 3.92643 in range [3.6, 6.5]
+Total chi2/ndf: 3.92643
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.25492
+      -> Fit Successful! Chi2/NDF = 3.25492 in range [3.6, 6.5]
+Total chi2/ndf: 3.25492
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.42189
+      -> Fit Successful! Chi2/NDF = 3.42189 in range [3.6, 6.5]
+Total chi2/ndf: 3.42189
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 4.19954
+      -> Fit Successful! Chi2/NDF = 4.19954 in range [3.6, 6.5]
+Total chi2/ndf: 4.19954
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.73163
+      -> Fit Successful! Chi2/NDF = 3.73163 in range [3.6, 6.5]
+Total chi2/ndf: 3.73163
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.64889
+      -> Fit Successful! Chi2/NDF = 3.64889 in range [3.6, 6.5]
+Total chi2/ndf: 3.64889
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.01822
+      -> Fit Successful! Chi2/NDF = 3.01822 in range [3.6, 6.5]
+Total chi2/ndf: 3.01822
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 2.74505
+      -> Fit Successful! Chi2/NDF = 2.74505 in range [3.6, 6.5]
+Total chi2/ndf: 2.74505
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.08665
+      -> Fit Successful! Chi2/NDF = 3.08665 in range [3.6, 6.5]
+Total chi2/ndf: 3.08665
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.30958
+      -> Fit Successful! Chi2/NDF = 3.30958 in range [3.6, 6.5]
+Total chi2/ndf: 3.30958
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 3.80031
+      -> Fit Successful! Chi2/NDF = 3.80031 in range [3.6, 6.5]
+Total chi2/ndf: 3.80031
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [3.6, 6.5]...
+Total chi2/ndf: 4.98966
+      -> Fit Successful! Chi2/NDF = 4.98966 in range [3.6, 6.5]
+Total chi2/ndf: 4.98966
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+======================================================================
+Starting analysis for: Carbon -> Beryllium (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 4.13048
+      -> Fit Successful! Chi2/NDF = 4.13048 in range [4.6, 7.5]
+Total chi2/ndf: 4.13048
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 6.23346
+      -> Fit Successful! Chi2/NDF = 6.23346 in range [4.6, 7.5]
+Total chi2/ndf: 6.23346
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 6.13745
+      -> Fit Successful! Chi2/NDF = 6.13745 in range [4.6, 7.5]
+Total chi2/ndf: 6.13745
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 5.1805
+      -> Fit Successful! Chi2/NDF = 5.1805 in range [4.6, 7.5]
+Total chi2/ndf: 5.1805
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 4.43656
+      -> Fit Successful! Chi2/NDF = 4.43656 in range [4.6, 7.5]
+Total chi2/ndf: 4.43656
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 3.54899
+      -> Fit Successful! Chi2/NDF = 3.54899 in range [4.6, 7.5]
+Total chi2/ndf: 3.54899
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.84805
+      -> Fit Successful! Chi2/NDF = 2.84805 in range [4.6, 7.5]
+Total chi2/ndf: 2.84805
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.26014
+      -> Fit Successful! Chi2/NDF = 2.26014 in range [4.6, 7.5]
+Total chi2/ndf: 2.26014
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.73358
+      -> Fit Successful! Chi2/NDF = 2.73358 in range [4.6, 7.5]
+Total chi2/ndf: 2.73358
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.2642
+      -> Fit Successful! Chi2/NDF = 2.2642 in range [4.6, 7.5]
+Total chi2/ndf: 2.2642
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 3.65169
+      -> Fit Successful! Chi2/NDF = 3.65169 in range [4.6, 7.5]
+Total chi2/ndf: 3.65169
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 3.56015
+      -> Fit Successful! Chi2/NDF = 3.56015 in range [4.6, 7.5]
+Total chi2/ndf: 3.56015
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 3.4058
+      -> Fit Successful! Chi2/NDF = 3.4058 in range [4.6, 7.5]
+Total chi2/ndf: 3.4058
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.59432
+      -> Fit Successful! Chi2/NDF = 2.59432 in range [4.6, 7.5]
+Total chi2/ndf: 2.59432
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.47653
+      -> Fit Successful! Chi2/NDF = 2.47653 in range [4.6, 7.5]
+Total chi2/ndf: 2.47653
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.23692
+      -> Fit Successful! Chi2/NDF = 2.23692 in range [4.6, 7.5]
+Total chi2/ndf: 2.23692
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.11974
+      -> Fit Successful! Chi2/NDF = 2.11974 in range [4.6, 7.5]
+Total chi2/ndf: 2.11974
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.17836
+      -> Fit Successful! Chi2/NDF = 2.17836 in range [4.6, 7.5]
+Total chi2/ndf: 2.17836
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.12161
+      -> Fit Successful! Chi2/NDF = 2.12161 in range [4.6, 7.5]
+Total chi2/ndf: 2.12161
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.02381
+      -> Fit Successful! Chi2/NDF = 2.02381 in range [4.6, 7.5]
+Total chi2/ndf: 2.02381
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.72805
+      -> Fit Successful! Chi2/NDF = 2.72805 in range [4.6, 7.5]
+Total chi2/ndf: 2.72805
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+======================================================================
+Starting analysis for: Nitrogen -> Beryllium (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.2489
+      -> Fit Successful! Chi2/NDF = 7.2489 in range [5.6, 8.5]
+Total chi2/ndf: 7.2489
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 8.80854
+      -> Fit Successful! Chi2/NDF = 8.80854 in range [5.6, 8.5]
+Total chi2/ndf: 8.80854
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.16706
+      -> Fit Successful! Chi2/NDF = 7.16706 in range [5.6, 8.5]
+Total chi2/ndf: 7.16706
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.38778
+      -> Fit Successful! Chi2/NDF = 6.38778 in range [5.6, 8.5]
+Total chi2/ndf: 6.38778
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.91869
+      -> Fit Successful! Chi2/NDF = 5.91869 in range [5.6, 8.5]
+Total chi2/ndf: 5.91869
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.14211
+      -> Fit Successful! Chi2/NDF = 4.14211 in range [5.6, 8.5]
+Total chi2/ndf: 4.14211
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.66624
+      -> Fit Successful! Chi2/NDF = 4.66624 in range [5.6, 8.5]
+Total chi2/ndf: 4.66624
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.2716
+      -> Fit Successful! Chi2/NDF = 4.2716 in range [5.6, 8.5]
+Total chi2/ndf: 4.2716
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.63845
+      -> Fit Successful! Chi2/NDF = 3.63845 in range [5.6, 8.5]
+Total chi2/ndf: 3.63845
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.12939
+      -> Fit Successful! Chi2/NDF = 4.12939 in range [5.6, 8.5]
+Total chi2/ndf: 4.12939
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.87707
+      -> Fit Successful! Chi2/NDF = 5.87707 in range [5.6, 8.5]
+Total chi2/ndf: 5.87707
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.0831
+      -> Fit Successful! Chi2/NDF = 6.0831 in range [5.6, 8.5]
+Total chi2/ndf: 6.0831
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.19649
+      -> Fit Successful! Chi2/NDF = 6.19649 in range [5.6, 8.5]
+Total chi2/ndf: 6.19649
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.93655
+      -> Fit Successful! Chi2/NDF = 4.93655 in range [5.6, 8.5]
+Total chi2/ndf: 4.93655
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.06788
+      -> Fit Successful! Chi2/NDF = 4.06788 in range [5.6, 8.5]
+Total chi2/ndf: 4.06788
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.95241
+      -> Fit Successful! Chi2/NDF = 3.95241 in range [5.6, 8.5]
+Total chi2/ndf: 3.95241
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.66782
+      -> Fit Successful! Chi2/NDF = 3.66782 in range [5.6, 8.5]
+Total chi2/ndf: 3.66782
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.86155
+      -> Fit Successful! Chi2/NDF = 3.86155 in range [5.6, 8.5]
+Total chi2/ndf: 3.86155
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.85814
+      -> Fit Successful! Chi2/NDF = 3.85814 in range [5.6, 8.5]
+Total chi2/ndf: 3.85814
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.20537
+      -> Fit Successful! Chi2/NDF = 3.20537 in range [5.6, 8.5]
+Total chi2/ndf: 3.20537
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.41631
+      -> Fit Successful! Chi2/NDF = 3.41631 in range [5.6, 8.5]
+Total chi2/ndf: 3.41631
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+======================================================================
+Starting analysis for: Oxygen -> Beryllium (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.3771
+      -> Fit Successful! Chi2/NDF = 7.3771 in range [5.6, 8.5]
+Total chi2/ndf: 7.3771
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 11.076
+      -> Fit Successful! Chi2/NDF = 11.076 in range [5.6, 8.5]
+Total chi2/ndf: 11.076
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 9.63718
+      -> Fit Successful! Chi2/NDF = 9.63718 in range [5.6, 8.5]
+Total chi2/ndf: 9.63718
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.34886
+      -> Fit Successful! Chi2/NDF = 7.34886 in range [5.6, 8.5]
+Total chi2/ndf: 7.34886
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.46729
+      -> Fit Successful! Chi2/NDF = 6.46729 in range [5.6, 8.5]
+Total chi2/ndf: 6.46729
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.737
+      -> Fit Successful! Chi2/NDF = 4.737 in range [5.6, 8.5]
+Total chi2/ndf: 4.737
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.87306
+      -> Fit Successful! Chi2/NDF = 4.87306 in range [5.6, 8.5]
+Total chi2/ndf: 4.87306
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.20223
+      -> Fit Successful! Chi2/NDF = 4.20223 in range [5.6, 8.5]
+Total chi2/ndf: 4.20223
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.58021
+      -> Fit Successful! Chi2/NDF = 3.58021 in range [5.6, 8.5]
+Total chi2/ndf: 3.58021
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.03971
+      -> Fit Successful! Chi2/NDF = 4.03971 in range [5.6, 8.5]
+Total chi2/ndf: 4.03971
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.75369
+      -> Fit Successful! Chi2/NDF = 5.75369 in range [5.6, 8.5]
+Total chi2/ndf: 5.75369
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.84361
+      -> Fit Successful! Chi2/NDF = 5.84361 in range [5.6, 8.5]
+Total chi2/ndf: 5.84361
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.67305
+      -> Fit Successful! Chi2/NDF = 5.67305 in range [5.6, 8.5]
+Total chi2/ndf: 5.67305
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 4.43342
+      -> Fit Successful! Chi2/NDF = 4.43342 in range [5.6, 8.5]
+Total chi2/ndf: 4.43342
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.8118
+      -> Fit Successful! Chi2/NDF = 3.8118 in range [5.6, 8.5]
+Total chi2/ndf: 3.8118
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.39462
+      -> Fit Successful! Chi2/NDF = 3.39462 in range [5.6, 8.5]
+Total chi2/ndf: 3.39462
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.09679
+      -> Fit Successful! Chi2/NDF = 3.09679 in range [5.6, 8.5]
+Total chi2/ndf: 3.09679
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.44173
+      -> Fit Successful! Chi2/NDF = 3.44173 in range [5.6, 8.5]
+Total chi2/ndf: 3.44173
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.23625
+      -> Fit Successful! Chi2/NDF = 3.23625 in range [5.6, 8.5]
+Total chi2/ndf: 3.23625
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 2.7268
+      -> Fit Successful! Chi2/NDF = 2.7268 in range [5.6, 8.5]
+Total chi2/ndf: 2.7268
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 3.00727
+      -> Fit Successful! Chi2/NDF = 3.00727 in range [5.6, 8.5]
+Total chi2/ndf: 3.00727
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+======================================================================
+Starting analysis for: Carbon -> Boron (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.86961
+      -> Fit Successful! Chi2/NDF = 1.86961 in range [4.6, 7.5]
+Total chi2/ndf: 1.86961
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.08865
+      -> Fit Successful! Chi2/NDF = 2.08865 in range [4.6, 7.5]
+Total chi2/ndf: 2.08865
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.11315
+      -> Fit Successful! Chi2/NDF = 2.11315 in range [4.6, 7.5]
+Total chi2/ndf: 2.11315
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 6.86758
+      -> Fit Successful! Chi2/NDF = 6.86758 in range [4.6, 7.5]
+Total chi2/ndf: 6.86758
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 5.10774
+      -> Fit Successful! Chi2/NDF = 5.10774 in range [4.6, 7.5]
+Total chi2/ndf: 5.10774
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 3.43344
+      -> Fit Successful! Chi2/NDF = 3.43344 in range [4.6, 7.5]
+Total chi2/ndf: 3.43344
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.52386
+      -> Fit Successful! Chi2/NDF = 2.52386 in range [4.6, 7.5]
+Total chi2/ndf: 2.52386
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.1123
+      -> Fit Successful! Chi2/NDF = 2.1123 in range [4.6, 7.5]
+Total chi2/ndf: 2.1123
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.43706
+      -> Fit Successful! Chi2/NDF = 2.43706 in range [4.6, 7.5]
+Total chi2/ndf: 2.43706
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.2296
+      -> Fit Successful! Chi2/NDF = 2.2296 in range [4.6, 7.5]
+Total chi2/ndf: 2.2296
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.25854
+      -> Fit Successful! Chi2/NDF = 2.25854 in range [4.6, 7.5]
+Total chi2/ndf: 2.25854
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.13035
+      -> Fit Successful! Chi2/NDF = 2.13035 in range [4.6, 7.5]
+Total chi2/ndf: 2.13035
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.08947
+      -> Fit Successful! Chi2/NDF = 2.08947 in range [4.6, 7.5]
+Total chi2/ndf: 2.08947
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.32725
+      -> Fit Successful! Chi2/NDF = 1.32725 in range [4.6, 7.5]
+Total chi2/ndf: 1.32725
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.76454
+      -> Fit Successful! Chi2/NDF = 1.76454 in range [4.6, 7.5]
+Total chi2/ndf: 1.76454
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.59381
+      -> Fit Successful! Chi2/NDF = 1.59381 in range [4.6, 7.5]
+Total chi2/ndf: 1.59381
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.43519
+      -> Fit Successful! Chi2/NDF = 1.43519 in range [4.6, 7.5]
+Total chi2/ndf: 1.43519
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.81361
+      -> Fit Successful! Chi2/NDF = 1.81361 in range [4.6, 7.5]
+Total chi2/ndf: 1.81361
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.6716
+      -> Fit Successful! Chi2/NDF = 1.6716 in range [4.6, 7.5]
+Total chi2/ndf: 1.6716
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 1.96184
+      -> Fit Successful! Chi2/NDF = 1.96184 in range [4.6, 7.5]
+Total chi2/ndf: 1.96184
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [4.6, 7.5]...
+Total chi2/ndf: 2.96111
+      -> Fit Successful! Chi2/NDF = 2.96111 in range [4.6, 7.5]
+Total chi2/ndf: 2.96111
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+======================================================================
+Starting analysis for: Nitrogen -> Boron (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.2349
+      -> Fit Successful! Chi2/NDF = 12.2349 in range [5.6, 8.5]
+Total chi2/ndf: 12.2349
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.14419
+      -> Fit Successful! Chi2/NDF = 7.14419 in range [5.6, 8.5]
+Total chi2/ndf: 7.14419
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.65978
+      -> Fit Successful! Chi2/NDF = 6.65978 in range [5.6, 8.5]
+Total chi2/ndf: 6.65978
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 10.8757
+      -> Fit Successful! Chi2/NDF = 10.8757 in range [5.6, 8.5]
+Total chi2/ndf: 10.8757
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 11.1862
+      -> Fit Successful! Chi2/NDF = 11.1862 in range [5.6, 8.5]
+Total chi2/ndf: 11.1862
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+      -> Fit failed to converge. Shrinking range.
+      -> Attempting fit with range [5.6, 8.4]...
+Total chi2/ndf: 8.55579
+      -> Fit Successful! Chi2/NDF = 8.55579 in range [5.6, 8.4]
+Total chi2/ndf: 8.55579
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.6562
+      -> Fit Successful! Chi2/NDF = 7.6562 in range [5.6, 8.5]
+Total chi2/ndf: 7.6562
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.42447
+      -> Fit Successful! Chi2/NDF = 6.42447 in range [5.6, 8.5]
+Total chi2/ndf: 6.42447
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+      -> Fit failed to converge. Shrinking range.
+      -> Attempting fit with range [5.6, 8.4]...
+Total chi2/ndf: 7.14952
+      -> Fit Successful! Chi2/NDF = 7.14952 in range [5.6, 8.4]
+Total chi2/ndf: 7.14952
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+      -> Fit failed to converge. Shrinking range.
+      -> Attempting fit with range [5.6, 8.4]...
+Total chi2/ndf: 11.2282
+      -> Fit Successful! Chi2/NDF = 11.2282 in range [5.6, 8.4]
+Total chi2/ndf: 11.2282
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 8.21753
+      -> Fit Successful! Chi2/NDF = 8.21753 in range [5.6, 8.5]
+Total chi2/ndf: 8.21753
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.58715
+      -> Fit Successful! Chi2/NDF = 6.58715 in range [5.6, 8.5]
+Total chi2/ndf: 6.58715
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.16631
+      -> Fit Successful! Chi2/NDF = 7.16631 in range [5.6, 8.5]
+Total chi2/ndf: 7.16631
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.52945
+      -> Fit Successful! Chi2/NDF = 6.52945 in range [5.6, 8.5]
+Total chi2/ndf: 6.52945
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.06385
+      -> Fit Successful! Chi2/NDF = 5.06385 in range [5.6, 8.5]
+Total chi2/ndf: 5.06385
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.6048
+      -> Fit Successful! Chi2/NDF = 6.6048 in range [5.6, 8.5]
+Total chi2/ndf: 6.6048
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.9042
+      -> Fit Successful! Chi2/NDF = 5.9042 in range [5.6, 8.5]
+Total chi2/ndf: 5.9042
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.7828
+      -> Fit Successful! Chi2/NDF = 5.7828 in range [5.6, 8.5]
+Total chi2/ndf: 5.7828
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.82914
+      -> Fit Successful! Chi2/NDF = 5.82914 in range [5.6, 8.5]
+Total chi2/ndf: 5.82914
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 6.21702
+      -> Fit Successful! Chi2/NDF = 6.21702 in range [5.6, 8.5]
+Total chi2/ndf: 6.21702
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 5.45139
+      -> Fit Successful! Chi2/NDF = 5.45139 in range [5.6, 8.5]
+Total chi2/ndf: 5.45139
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+======================================================================
+Starting analysis for: Oxygen -> Boron (L1Inner)
+======================================================================
+
+--- Processing Detector: TOF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+    Processing energy bin 4 (Ek=0.496877 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.1993
+      -> Fit Successful! Chi2/NDF = 12.1993 in range [5.6, 8.5]
+Total chi2/ndf: 12.1993
+  [bin 5] Eklow = 0.587609 GeV/n
+    Processing energy bin 5 (Ek=0.704541 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.66467
+      -> Fit Successful! Chi2/NDF = 7.66467 in range [5.6, 8.5]
+Total chi2/ndf: 7.66467
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 7.87174
+      -> Fit Successful! Chi2/NDF = 7.87174 in range [5.6, 8.5]
+Total chi2/ndf: 7.87174
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+  [bin 12] Eklow = 3.79127 GeV/n
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: NaF ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+    Processing energy bin 6 (Ek=0.967251 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 15.9372
+      -> Fit Successful! Chi2/NDF = 15.9372 in range [5.6, 8.5]
+Total chi2/ndf: 15.9372
+  [bin 7] Eklow = 1.11303 GeV/n
+    Processing energy bin 7 (Ek=1.29221 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 16.2048
+      -> Fit Successful! Chi2/NDF = 16.2048 in range [5.6, 8.5]
+Total chi2/ndf: 16.2048
+  [bin 8] Eklow = 1.4714 GeV/n
+    Processing energy bin 8 (Ek=1.69094 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+      -> Fit failed to converge. Shrinking range.
+      -> All fit attempts failed after shrinking range to its limit.
+    Fit failed. Skipping bin.
+  [bin 9] Eklow = 1.91049 GeV/n
+    Processing energy bin 9 (Ek=2.17272 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.4262
+      -> Fit Successful! Chi2/NDF = 12.4262 in range [5.6, 8.5]
+Total chi2/ndf: 12.4262
+  [bin 10] Eklow = 2.43494 GeV/n
+    Processing energy bin 10 (Ek=2.74684 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 10.374
+      -> Fit Successful! Chi2/NDF = 10.374 in range [5.6, 8.5]
+Total chi2/ndf: 10.374
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+      -> Fit failed to converge. Shrinking range.
+      -> All fit attempts failed after shrinking range to its limit.
+    Fit failed. Skipping bin.
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+[#0] ERROR:Minimization -- RooMinimizer: all function calls during minimization gave invalid NLL values!
+      -> Fit failed to converge. Shrinking range.
+      -> All fit attempts failed after shrinking range to its limit.
+    Fit failed. Skipping bin.
+  [bin 13] Eklow = 4.64682 GeV/n
+  [bin 14] Eklow = 5.63491 GeV/n
+  [bin 15] Eklow = 6.775 GeV/n
+  [bin 16] Eklow = 8.11658 GeV/n
+  [bin 17] Eklow = 9.65954 GeV/n
+  [bin 18] Eklow = 11.4536 GeV/n
+  [bin 19] Eklow = 13.4986 GeV/n
+  [bin 20] Eklow = 15.8444 GeV/n
+  [bin 21] Eklow = 18.5408 GeV/n
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n
+
+--- Processing Detector: AGL ---
+  [bin 1] Eklow = 0.0822516 GeV/n
+  [bin 2] Eklow = 0.165811 GeV/n
+  [bin 3] Eklow = 0.267548 GeV/n
+  [bin 4] Eklow = 0.406144 GeV/n
+  [bin 5] Eklow = 0.587609 GeV/n
+  [bin 6] Eklow = 0.821474 GeV/n
+  [bin 7] Eklow = 1.11303 GeV/n
+  [bin 8] Eklow = 1.4714 GeV/n
+  [bin 9] Eklow = 1.91049 GeV/n
+  [bin 10] Eklow = 2.43494 GeV/n
+  [bin 11] Eklow = 3.05875 GeV/n
+    Processing energy bin 11 (Ek=3.42501 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 15.9479
+      -> Fit Successful! Chi2/NDF = 15.9479 in range [5.6, 8.5]
+Total chi2/ndf: 15.9479
+  [bin 12] Eklow = 3.79127 GeV/n
+    Processing energy bin 12 (Ek=4.21905 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.901
+      -> Fit Successful! Chi2/NDF = 12.901 in range [5.6, 8.5]
+Total chi2/ndf: 12.901
+  [bin 13] Eklow = 4.64682 GeV/n
+    Processing energy bin 13 (Ek=5.14086 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.4236
+      -> Fit Successful! Chi2/NDF = 12.4236 in range [5.6, 8.5]
+Total chi2/ndf: 12.4236
+  [bin 14] Eklow = 5.63491 GeV/n
+    Processing energy bin 14 (Ek=6.20495 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.0119
+      -> Fit Successful! Chi2/NDF = 12.0119 in range [5.6, 8.5]
+Total chi2/ndf: 12.0119
+  [bin 15] Eklow = 6.775 GeV/n
+    Processing energy bin 15 (Ek=7.44579 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 11.3304
+      -> Fit Successful! Chi2/NDF = 11.3304 in range [5.6, 8.5]
+Total chi2/ndf: 11.3304
+  [bin 16] Eklow = 8.11658 GeV/n
+    Processing energy bin 16 (Ek=8.88806 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 11.5724
+      -> Fit Successful! Chi2/NDF = 11.5724 in range [5.6, 8.5]
+Total chi2/ndf: 11.5724
+  [bin 17] Eklow = 9.65954 GeV/n
+    Processing energy bin 17 (Ek=10.5566 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 12.8449
+      -> Fit Successful! Chi2/NDF = 12.8449 in range [5.6, 8.5]
+Total chi2/ndf: 12.8449
+  [bin 18] Eklow = 11.4536 GeV/n
+    Processing energy bin 18 (Ek=12.4761 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 10.976
+      -> Fit Successful! Chi2/NDF = 10.976 in range [5.6, 8.5]
+Total chi2/ndf: 10.976
+  [bin 19] Eklow = 13.4986 GeV/n
+    Processing energy bin 19 (Ek=14.6715 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 11.7618
+      -> Fit Successful! Chi2/NDF = 11.7618 in range [5.6, 8.5]
+Total chi2/ndf: 11.7618
+  [bin 20] Eklow = 15.8444 GeV/n
+    Processing energy bin 20 (Ek=17.1926 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 10.9576
+      -> Fit Successful! Chi2/NDF = 10.9576 in range [5.6, 8.5]
+Total chi2/ndf: 10.9576
+  [bin 21] Eklow = 18.5408 GeV/n
+    Processing energy bin 21 (Ek=20.0893 GeV/n)
+      -> Attempting fit with range [5.6, 8.5]...
+Total chi2/ndf: 11.8219
+      -> Fit Successful! Chi2/NDF = 11.8219 in range [5.6, 8.5]
+Total chi2/ndf: 11.8219
+  [bin 22] Eklow = 21.6377 GeV/n
+  [bin 23] Eklow = 25.1851 GeV/n
+  [bin 24] Eklow = 29.2329 GeV/n
+  [bin 25] Eklow = 33.9309 GeV/n
+  [bin 26] Eklow = 39.3293 GeV/n
+  [bin 27] Eklow = 45.5778 GeV/n
+  [bin 28] Eklow = 53.0765 GeV/n
+  [bin 29] Eklow = 61.5754 GeV/n
+  [bin 30] Eklow = 72.5744 GeV/n
+  [bin 31] Eklow = 86.5735 GeV/n
+  [bin 32] Eklow = 104.573 GeV/n
+  [bin 33] Eklow = 128.572 GeV/n
+  [bin 34] Eklow = 164.071 GeV/n
+  [bin 35] Eklow = 219.57 GeV/n
+  [bin 36] Eklow = 329.07 GeV/n

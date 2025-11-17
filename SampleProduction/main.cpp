@@ -37,9 +37,10 @@ int main(int argc, char* argv[]) {
         std::string charge  = argv[4];
         int useMass = (argc > 5) ? atoi(argv[5]) : 0;
         bool noBkgCut = (argc > 6) ? (atoi(argv[6]) != 0) : false;
+        int FragmentZ = (argc > 7) ? atoi(argv[7]) : 0;
 
         // 配置与初始化（内部会根据 inData 自动 readDataFrom）
-        analyzer.setConfig(outDir, outName, inData, charge, useMass, noBkgCut);
+        analyzer.setConfig(outDir, outName, inData, charge, useMass, noBkgCut, FragmentZ);
         analyzer.initialize();
 
         // 获取数据链并处理
