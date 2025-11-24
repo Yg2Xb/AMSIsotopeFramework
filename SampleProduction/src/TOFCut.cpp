@@ -122,13 +122,13 @@ CutResult<2> TOFCut::cutTOF(int charge, bool isISS) const {
 CutResult<4> TOFCut::cutTOFforBkg(int charge, bool isISS) const {
     auto geo_cut = yanzx_dst ? event_->tof_goodgeo[0] == 1 : cutTrapezoidEdges().total;
     
-    auto beta_q_cut = cutBetaQuality(charge);
+    auto beta_rec_cut = cutBetaQuality(charge);
     
     std::array<bool, 4> cuts{
-        beta_q_cut.total && geo_cut,       // chi2 cut       
+        beta_rec_cut.total && geo_cut,       // chi2 cut       
         geo_cut,                           // no chi2 cut           
-        beta_q_cut.details[0] && geo_cut,  // only coordinate chi2 cut            
-        beta_q_cut.details[1] && geo_cut   // only time chi2 cut                
+        beta_rec_cut.details[0] && geo_cut,  // only coordinate chi2 cut            
+        beta_rec_cut.details[1] && geo_cut   // only time chi2 cut                
     };
     
     return CutResult<4>(cuts, false); 

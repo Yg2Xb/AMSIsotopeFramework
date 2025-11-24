@@ -5,33 +5,49 @@
 #include <TROOT.h>
 #include <TString.h>
 #include <TAxis.h>
+#include <TLine.h>
+#include <TLegend.h> // 需要 TLedgend
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
-#include <algorithm> // For std::sort and std::unique
+#include <algorithm>
+#include <memory>
 
 // --- 辅助函数 ---
 
-// 通用画布设置函数
+// 通用画布设置函数 (LogY)
 void setupCanvas(TCanvas* canvas) {
-    canvas->SetLeftMargin(0.12); // 稍微加宽以容纳Y轴标签
-    canvas->SetRightMargin(0.03);
+    canvas->SetLeftMargin(0.15);
+    canvas->SetRightMargin(0.1);
     canvas->SetTopMargin(0.1);
     canvas->SetBottomMargin(0.15);
+    canvas->SetLogy(); // *** 启用 Log Y 轴 ***
 }
-    auto setupHistogram = [](TH1D* hist) {
-        // 去掉X和Y轴标题
+
+// 通用直方图样式和轴设置函数
+void setupHistogramForYield(TH1D* hist, const std::string& element, bool isFirst) {
+    // 调大标签大小
+    hist->GetXaxis()->SetLabelSize(0.045);
+    hist->GetYaxis()->SetLabelSize(0.045);
+    
+    // 设置 X, Y 轴标题
+    if (isFirst) {
+        hist->GetXaxis()->SetTitle("Measured Ek/n(GeV/n)");
+        hist->GetYaxis()->SetTitle("Events in L1Q 4.8-5.4");
+    } else {
+        // 非第一个绘制的直方图，不显示标题，避免重复
         hist->GetXaxis()->SetTitle("");
         hist->GetYaxis()->SetTitle("");
-        
-        // 调大标签大小
-        hist->GetXaxis()->SetLabelSize(0.1);
-        hist->GetYaxis()->SetLabelSize(0.1);
-        
-        // 设置Y轴刻度分隔为505
-        hist->GetYaxis()->SetNdivisions(505);
-    };
+    }
+    
+    // 设置 Y 轴范围 (基于 Yield 的对数刻度)
+    // 假设最大 Yield 接近 1e6，最小 Yield 接近 10
+    hist->GetYaxis()->SetRangeUser(1, 2e6); 
+    
+    // 设置刻度分隔
+    hist->GetYaxis()->SetNdivisions(505);
+}
 
 
 // 数据拷贝辅助函数：将源直方图在指定刚度范围内的数据拷贝到目标直方图
@@ -41,171 +57,188 @@ void copyData(TH1D* target, TH1D* source, double minR, double maxR) {
         double rigidity = source->GetBinCenter(i);
         if (rigidity >= minR && rigidity < maxR) {
             int targetBin = target->FindBin(rigidity);
-            target->SetBinContent(targetBin, source->GetBinContent(i));
-            target->SetBinError(targetBin, source->GetBinError(i));
+            if (targetBin > 0 && targetBin <= target->GetNbinsX()) {
+                target->SetBinContent(targetBin, source->GetBinContent(i));
+                target->SetBinError(targetBin, source->GetBinError(i));
+            }
         }
     }
 }
 
 
-// --- 主绘图函数 ---
+// --- 主绘图函数 (合并 Yield) ---
 
 void DrawFrac() {
     // --- 1. 参数设置 ---
-    const std::string sourceElement = "Carbon";
-    const std::string fragElement   = "Boron";
-    const std::string trackerLayer  = "L1Inner";
-    const std::string outputPath = "/eos/user/z/zixuan/Isotope/ChargeTemp/";
-
+    const std::string windowElement = "Boron";
+    const std::string trackerLayer  = "UnbiasedL1Inner";
+    const std::string outputPath    = "/eos/user/z/zixuan/Isotope/ChargeTemp/";
+    const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
+    const std::vector<std::string> elementsToPlot = {"Boron", "Beryllium", "Carbon"}; // 绘制顺序: 主成分优先
+    
     // 设置全局ROOT样式
     gStyle->SetOptStat(0);
     gStyle->SetOptTitle(0);
-
-    // --- 2. 元素和样式定义 ---
-    // 根据源元素确定左右邻居
-    std::string elementCenter = sourceElement;
-    std::string elementLeft, elementRight;
-    std::map<std::string, int> chargeMap;
-
-    if (sourceElement == "Boron") {
-        elementLeft = "Beryllium";
-        elementRight = "Carbon";
-        chargeMap[elementLeft] = 4;
-        chargeMap[elementCenter] = 5;
-        chargeMap[elementRight] = 6;
-    } else if (sourceElement == "Beryllium") {
-        elementLeft = "Lithium";
-        elementRight = "Boron";
-        chargeMap[elementLeft] = 3;
-        chargeMap[elementCenter] = 4;
-        chargeMap[elementRight] = 5;
-    } else if (sourceElement == "Carbon") {
-        elementLeft = "Boron";
-        elementRight = "Nitrogen";
-        chargeMap[elementLeft] = 5;
-        chargeMap[elementCenter] = 6;
-        chargeMap[elementRight] = 7;
-    } else {
-        std::cerr << "Error: Unknown source element '" << sourceElement << "'. Please add it to the logic." << std::endl;
-        return;
-    }
     
-    const std::vector<std::string> elementsToPlot = {elementLeft, elementCenter, elementRight};
+    // --- 2. 元素和样式定义 ---
+    std::map<std::string, int> colorMap = {
+        {"Beryllium", kBlue},
+        {"Boron",     kOrange - 3},
+        {"Carbon",    kGreen+2}
+    };
+    std::map<std::string, std::string> labelMap = {
+        {"Beryllium", "Be"},
+        {"Boron",     "B"},
+        {"Carbon",    "C"}
+    };
+    
+    // 用于存储拼接后的直方图
+    std::vector<std::unique_ptr<TH1D>> combinedHists;
 
     // --- 3. 打开输入文件 ---
     TString inputFilePath = TString::Format(
-        "root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/ChargeTemp/QFit_%s_to_%s_%s.root",
-        sourceElement.c_str(),
-        fragElement.c_str(),
+        "root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/ChargeTemp/PureL1TempFit_AllL1Q%s.root",
         trackerLayer.c_str()
     );
-    
     std::cout << "Processing file: " << inputFilePath << std::endl;
-    
-    TFile* file = TFile::Open(inputFilePath, "READ");
+    std::unique_ptr<TFile> file(TFile::Open(inputFilePath, "READ"));
     if (!file || file->IsZombie()) {
         std::cerr << "Error opening file: " << inputFilePath << std::endl;
         return;
     }
 
-    // --- 4. 循环处理每个元素，生成拼接图 ---
+    // --- 4. 循环处理每个元素，生成拼接的 Yield 直方图 ---
+    std::vector<double> all_bin_edges;
     for (const auto& element : elementsToPlot) {
         
-        std::cout << "\nProcessing element: " << element << std::endl;
+        std::cout << "\nProcessing element (Yield): " << element << std::endl;
 
-        // --- 4.1 获取三个探测器的原始直方图 ---
-        TH1D *h_tof = nullptr, *h_naf = nullptr, *h_agl = nullptr;
-        file->GetObject(TString::Format("h_narrowfrac_%s_TOF", element.c_str()), h_tof);
-        file->GetObject(TString::Format("h_narrowfrac_%s_NaF", element.c_str()), h_naf);
-        file->GetObject(TString::Format("h_narrowfrac_%s_AGL", element.c_str()), h_agl);
+        // 4.1 获取并收集 Bin 边界 (只收集一次所有存在的边界)
+        std::map<std::string, TH1D*> hists;
+        bool found_any_hist = false;
+        
+        for (const auto& det : detectors) {
+            // *** 修改为 h_yield_in_... ***
+            TString histName = TString::Format("h_yield_in_%s_from_%s_%s", windowElement.c_str(), element.c_str(), det.c_str());
+            TH1D* h = nullptr;
+            file->GetObject(histName, h); 
+            hists[det] = h;
+            
+            if (h) {
+                found_any_hist = true;
+                TAxis* axis = h->GetXaxis();
+                for (int i = 1; i <= axis->GetNbins(); ++i) {
+                    all_bin_edges.push_back(axis->GetBinLowEdge(i));
+                }
+                all_bin_edges.push_back(axis->GetBinUpEdge(axis->GetNbins()));
+            } else {
+                 std::cerr << "Warning: Missing yield hist '" << histName << "'. Skipping this detector range." << std::endl;
+            }
+        }
 
-        if (!h_tof || !h_naf || !h_agl) {
-            std::cerr << "Warning: Missing one or more detector histograms for element '" << element << "'. Skipping." << std::endl;
+        if (!found_any_hist) {
+            std::cerr << "Error: No yield histograms found for element " << element << ". Skipping." << std::endl;
             continue;
         }
 
-        // --- 4.2 创建一个新的、包含所有bins的组合直方图 ---
-        // 收集所有原始直方图的bin边界
-        std::vector<double> bin_edges;
-        TAxis* axes[] = {h_tof->GetXaxis(), h_naf->GetXaxis(), h_agl->GetXaxis()};
-        for (TAxis* axis : axes) {
-            for (int i = 1; i <= axis->GetNbins(); ++i) {
-                bin_edges.push_back(axis->GetBinLowEdge(i));
-            }
-            bin_edges.push_back(axis->GetBinUpEdge(axis->GetNbins()));
-        }
-        // 排序并移除重复的bin边界
-        std::sort(bin_edges.begin(), bin_edges.end());
-        bin_edges.erase(std::unique(bin_edges.begin(), bin_edges.end()), bin_edges.end());
+        // --- 4.2 创建组合直方图（只需为每个元素创建一次） ---
+        // 这一步在 4.3 之前执行，用于创建直方图的容器，但 binning 在循环结束后统一确定。
+        // 为了简化，我们先跳过这个创建，将所有数据统一到 Boron 的 binning 上，或者使用一个统一的 binning
+    }
+    
+    // 确保 bin 边界唯一且排序
+    std::sort(all_bin_edges.begin(), all_bin_edges.end());
+    all_bin_edges.erase(std::unique(all_bin_edges.begin(), all_bin_edges.end()), all_bin_edges.end());
+    
+    if (all_bin_edges.size() < 2) {
+        std::cerr << "Error: Not enough bin boundaries found for combined plot." << std::endl;
+        return;
+    }
 
-        // 创建组合直方图
-        TString combinedHistName = TString::Format("h_combined_narrowfrac_%s", element.c_str());
-        TH1D* h_combined = new TH1D(combinedHistName, "", bin_edges.size() - 1, &bin_edges[0]);
 
-        // --- 4.3 根据刚度范围，从原始直方图填充组合直方图 ---
-        // TOF: R < 1.28 (包含1.11之前的所有部分)
-        copyData(h_combined, h_tof, 0.0, 1.28);
-        // NaF: 1.28 <= R < 3.06
-        copyData(h_combined, h_naf, 1.28, 3.06);
-        // AGL: R >= 3.06
-        copyData(h_combined, h_agl, 3.06, 1e9); // 使用一个很大的数作为上限
-
-        // --- 4.4 设置样式和Y轴范围 ---
-        // 颜色规则: 电荷从小到大 -> 绿, 蓝, 品红
-        int color = kBlack; // 默认颜色
-        int charge = chargeMap.count(element) ? chargeMap[element] : 0;
-        if (charge == chargeMap[elementLeft]) color = kGreen + 2;
-        else if (charge == chargeMap[elementCenter]) color = kBlue;
-        else if (charge == chargeMap[elementRight]) color = kMagenta;
+    // --- 5. 再次循环，创建组合图并填充数据 ---
+    for (const auto& element : elementsToPlot) {
         
+        // 5.1 重新获取数据 (这里可以优化，但为清晰保持结构)
+        std::map<std::string, TH1D*> hists;
+        bool found_any_hist = false;
+        for (const auto& det : detectors) {
+            TString histName = TString::Format("h_yield_in_%s_from_%s_%s", windowElement.c_str(), element.c_str(), det.c_str());
+            TH1D* h = nullptr;
+            file->GetObject(histName, h); 
+            hists[det] = h;
+            if (h) found_any_hist = true;
+        }
+        if (!found_any_hist) continue;
+
+        // 5.2 创建新的组合直方图 (使用统一的 binning)
+        TString combinedHistName = TString::Format("h_combined_yield_in_%s_from_%s", windowElement.c_str(), element.c_str());
+        auto h_combined = std::make_unique<TH1D>(combinedHistName, "", 
+                                                 all_bin_edges.size() - 1, &all_bin_edges[0]);
+
+        // 5.3 填充数据
+        copyData(h_combined.get(), hists["TOF"], 0.0, 1.1);
+        copyData(h_combined.get(), hists["NaF"], 1.1, 3.06);
+        copyData(h_combined.get(), hists["AGL"], 3.06, 1e9); 
+
+        // 5.4 设置样式
+        int color = colorMap.count(element) ? colorMap[element] : kBlack;
         h_combined->SetLineColor(color);
         h_combined->SetMarkerColor(color);
         h_combined->SetMarkerStyle(20);
         h_combined->SetMarkerSize(1.2);
-
-        h_combined->GetXaxis()->SetRangeUser(0.41, 21);
-        // Y轴范围规则
-        if (element == sourceElement) {
-            h_combined->GetYaxis()->SetRangeUser(0.985, 1.005);
-        } else if (element == "Beryllium") {
-            h_combined->GetYaxis()->SetRangeUser(0, 0.006);
-        } else if (element == "Carbon" || element == "Nitrogen") {
-            h_combined->GetYaxis()->SetRangeUser(0, 0.0005);
-        } else {
-            // 为其他可能的元素设置一个默认范围
-            h_combined->GetYaxis()->SetRangeUser(0, 0.01);
-        }
-
-        // --- 4.5 创建画布并绘制 ---
-        TString canvasName = TString::Format("canvas_combined_%s", element.c_str());
-        TCanvas* canvas = new TCanvas(canvasName, "", 900, 300); 
-        setupCanvas(canvas);
         
-        // 应用通用样式，并传入元素名以设置坐标轴标题
-        setupHistogram(h_combined);
-        
-        h_combined->Draw("p0");
-
-        // --- 4.6 保存图像 ---
-        TString outputFileName = TString::Format(
-            "%s/Combined_Frac_%s_to_%s_%s.png",
-            outputPath.c_str(),
-            sourceElement.c_str(),
-            fragElement.c_str(),
-            element.c_str()
-        );
-        
-        canvas->SaveAs(outputFileName);
-        std::cout << "  -> Saved combined plot: " << outputFileName << std::endl;
-
-        // 清理内存
-        delete canvas;
-        delete h_combined;
+        // 5.5 存储以供绘制
+        combinedHists.push_back(std::move(h_combined));
     }
 
-    // --- 5. 清理 ---
-    file->Close();
-    delete file;
 
-    std::cout << "\nAll combined fraction plots saved successfully." << std::endl;
+    // --- 6. 创建画布并绘制所有组合图 ---
+    TString canvasName = TString::Format("canvas_combined_yield_in_%s", windowElement.c_str());
+    std::unique_ptr<TCanvas> canvas(new TCanvas(canvasName, "", 800, 600)); // 调高画布
+    setupCanvas(canvas.get());
+    
+    // 创建图例
+    std::unique_ptr<TLegend> legend(new TLegend(0.8, 0.7, 0.95, 0.88));
+    legend->SetBorderSize(0);
+    legend->SetFillStyle(0);
+    
+    bool isFirst = true;
+    for (const auto& h_ptr : combinedHists) {
+        std::string element = h_ptr->GetName(); // 从名称中提取元素名
+        // 提取元素名 (从 "h_combined_yield_in_Boron_from_ELEMENT" 中)
+        element = element.substr(element.rfind('_') + 1); 
+
+        // 6.1 设置轴和样式
+        setupHistogramForYield(h_ptr.get(), element, isFirst);
+        h_ptr->GetXaxis()->SetRangeUser(0.41, 21);
+        h_ptr->GetYaxis()->SetRangeUser(10, 1000000);
+        
+        // 6.2 绘制
+        if (isFirst) {
+            h_ptr->Draw("p0");
+            isFirst = false;
+        } else {
+            h_ptr->Draw("p0 same"); // 叠加绘制
+        }
+        
+        // 6.3 添加图例
+        legend->AddEntry(h_ptr.get(), labelMap.at(element).c_str(), "p");
+    }
+    
+    if (!combinedHists.empty()) {
+        legend->Draw();
+    }
+    
+    // --- 7. 保存图像 ---
+    TString outputFileName = TString::Format(
+        "%s/Combined_Yield_in_%s_%s.png",
+        outputPath.c_str(),
+        windowElement.c_str(),
+        trackerLayer.c_str()
+    );
+    
+    canvas->SaveAs(outputFileName);
+    std::cout << "\n-> Saved combined yield plot: " << outputFileName << std::endl;
+    std::cout << "\nAll combined yield plots saved successfully." << std::endl;
 }

@@ -25,7 +25,7 @@ using namespace AMS_Iso;
 
 void buildCDFLookupTables(const std::string& nucleusName = "Beryllium");
 
-const double qmin_global = 2.5, qmax_global = 9.5;
+const double qmin_global = 1.5, qmax_global = 8.5;
 
 const std::vector<std::pair<std::string, int>> LG_PARAM_LIST = {
     {"Width", 0}, {"MPV", 1}, {"Area", 2}, {"Sigma", 3}
@@ -34,12 +34,12 @@ const std::vector<std::pair<std::string, int>> EGE_PARAM_LIST = {
     {"Peak", 0}, {"SigmaL", 1}, {"AlphaL", 2},
     {"SigmaR", 3}, {"AlphaR", 4}, {"Norm", 5}, {"xmin", 6}, {"xmax", 7}
 };
-const std::map<std::string, int> ELEMENTS = {{"Beryllium", 4}, {"Boron", 5}, {"Carbon", 6}, {"Nitrogen", 7}, {"Oxygen", 8}};
+const std::map<std::string, int> ELEMENTS = {{"Lithium", 3},{"Beryllium", 4}, {"Boron", 5}, {"Carbon", 6}, {"Nitrogen", 7}, {"Oxygen", 8}};
 const std::vector<std::string> DETECTORS = {"TOF", "NaF", "AGL"};
 const std::vector<std::string> CHAINS = {"L1Inner", "UnbiasedL1Inner"};
 const std::vector<std::string> TEMPLATES = {"L1QTemplate", "L2QTemplate"};
 const std::map<std::string, std::pair<double, double>> DETECTOR_RANGES = {
-    {"TOF", {0.4, 1.28}}, {"NaF", {0.71, 5.1}}, {"AGL", {2.8, 20.0}}
+    {"TOF", {0.35, 1.28}}, {"NaF", {0.71, 5.1}}, {"AGL", {2.8, 20.0}}
 };
 
 const std::map<std::string, std::pair<double, double>> PARAM_LIMITS = {
@@ -56,7 +56,7 @@ struct LookupTable {
     std::vector<double> cdf_l1;
     std::vector<double> cdf_l2;
     
-    void build(TF1& f_l1, TF1& f_l2, double qmin, double qmax, const std::string& context, int npts = 3500) {
+    void build(TF1& f_l1, TF1& f_l2, double qmin, double qmax, const std::string& context, int npts = 1400) {
         if (npts <= 0) { std::cerr << "Error: npts must be positive." << std::endl; return; }
         q_values.resize(npts + 1); cdf_l1.resize(npts + 1); cdf_l2.resize(npts + 1);
         f_l1.SetRange(qmin, qmax); f_l2.SetRange(qmin, qmax);
@@ -201,10 +201,10 @@ void buildCDFLookupTables(const std::string& nucleusName) {
     const time_t start_time = time(nullptr);
     std::cout << "Starting performance monitoring..." << std::endl;
 
-    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.6_iter2.root";
+    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_0.8_iter2.root";
     const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline_" + nucleusName + ".root";
     
-    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_iter2.root";
+    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter2.root";
     const std::string binningHistName = "UnbiasedL1Inner_Beryllium_AGL_L1QTemplate_EGE_Peak";
     std::vector<double> energyBins;
     auto finBinning = std::unique_ptr<TFile>(TFile::Open(binningFileName.c_str()));

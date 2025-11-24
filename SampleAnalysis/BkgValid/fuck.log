@@ -1,0 +1,102 @@
+
+Processing ../rootlogon.C...
+Processing CalFrag.cpp...
+
+===================================================================
+Starting Analysis: Boron -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: Yes)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Boron_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Boron -> Beryllium ---
+Nuc: Boron#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: -0.00181895 +/- 0.00010896, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00102173 +/- 0.00019443, 68% Uncertainty Band: +/- 0.001
+Nuc: Boron#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00244252 +/- 3.17243e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Boron#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00499286 +/- 5.80248e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Boron#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00339603 +/- 0.000163449, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00660621 +/- 0.000332579, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0143508 +/- 8.33007e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0138509 +/- 0.000119505, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0111875 +/- 0.000173442, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00999855 +/- 0.00035456, 68% Uncertainty Band: +/- 0.003
+Nuc: Boron#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.014992 +/- 9.10071e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0143756 +/- 0.000134853, 68% Uncertainty Band: +/- 0.002
+Nuc: Boron#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0128183 +/- 0.000262439, 68% Uncertainty Band: +/- 0.003
+Nuc: Boron#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0176422 +/- 0.000526153, 68% Uncertainty Band: +/- 0.003
+Nuc: Boron#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0317891 +/- 0.000128396, 68% Uncertainty Band: +/- 0.003
+Nuc: Boron#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0335071 +/- 0.000195581, 68% Uncertainty Band: +/- 0.003
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Boron_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+===================================================================
+Starting Analysis: Carbon -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: Yes)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Carbon_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Carbon -> Beryllium ---
+[INFO] Zeroing MC Be9 point 8 (bin 11, E=3.42501 GeV)
+[INFO] Zeroing MC Be9 point 18 (bin 21, E=20.0893 GeV)
+Nuc: Carbon#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00998579 +/- 4.7249e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00827022 +/- 7.12559e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0165775 +/- 0.000109777, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0106817 +/- 0.000121981, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0049719 +/- 7.04286e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00498436 +/- 0.000117849, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00484575 +/- 6.22252e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Carbon#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00414563 +/- 7.44719e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Carbon#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00477956 +/- 7.82354e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00334725 +/- 0.000128881, 68% Uncertainty Band: +/- 0.001
+Nuc: Carbon#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00360271 +/- 5.0885e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Carbon#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00485501 +/- 7.4919e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Carbon#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0196447 +/- 0.000115756, 68% Uncertainty Band: +/- 0.003
+Nuc: Carbon#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0167318 +/- 0.000189826, 68% Uncertainty Band: +/- 0.004
+Nuc: Carbon#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0250787 +/- 0.000135615, 68% Uncertainty Band: +/- 0.002
+Nuc: Carbon#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0196754 +/- 0.000161439, 68% Uncertainty Band: +/- 0.003
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Carbon_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+===================================================================
+Starting Analysis: Nitrogen -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: Yes)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Nitrogen_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Nitrogen -> Beryllium ---
+Nuc: Nitrogen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00961299 +/- 8.84541e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00766692 +/- 0.000139956, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0087978 +/- 5.74965e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00625264 +/- 7.16405e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00500014 +/- 0.00013641, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.000434406 +/- 9.40345e-05, 68% Uncertainty Band: +/- 0.004
+Nuc: Nitrogen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00615984 +/- 4.76998e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Nitrogen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00466365 +/- 6.18148e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Nitrogen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00555051 +/- 0.000151969, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00355615 +/- 0.00023445, 68% Uncertainty Band: +/- 0.001
+Nuc: Nitrogen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00606772 +/- 4.6964e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Nitrogen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00598467 +/- 7.01132e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Nitrogen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0200643 +/- 0.000223458, 68% Uncertainty Band: +/- 0.004
+Nuc: Nitrogen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0148859 +/- 0.000348714, 68% Uncertainty Band: +/- 0.004
+Nuc: Nitrogen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0210463 +/- 8.88951e-05, 68% Uncertainty Band: +/- 0.004
+Nuc: Nitrogen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0174135 +/- 0.000123493, 68% Uncertainty Band: +/- 0.004
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Nitrogen_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+===================================================================
+Starting Analysis: Oxygen -> Beryllium for chain: UnbiasedL1Inner (InIsoLevel Z: Yes)
+===================================================================
+[INFO] Opened file: /eos/user/z/zixuan/Isotope/BkgValid/Oxygen_to_Beryllium_UnbiasedL1Inner_Validation.root
+
+--- Calculating MC Ratios for Oxygen -> Beryllium ---
+[INFO] Zeroing MC Total point 7 (bin 10, E=2.74684 GeV)
+Nuc: Oxygen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00996958 +/- 4.92513e-05, 68% Uncertainty Band: +/- 0.003
+Nuc: Oxygen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00696423 +/- 6.49809e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Oxygen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0110232 +/- 0.000100684, 68% Uncertainty Band: +/- 0.002
+Nuc: Oxygen#rightarrow^{7}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00578778 +/- 9.84736e-05, 68% Uncertainty Band: +/- 0.003
+Nuc: Oxygen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00417796 +/- 6.94816e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Oxygen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.000845518 +/- 5.91855e-05, 68% Uncertainty Band: +/- 0.003
+Nuc: Oxygen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00502738 +/- 6.79956e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Oxygen#rightarrow^{9}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00323387 +/- 7.27707e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Oxygen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0035099 +/- 7.79336e-05, 68% Uncertainty Band: +/- 0.002
+Nuc: Oxygen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00218775 +/- 0.000101588, 68% Uncertainty Band: +/- 0.001
+Nuc: Oxygen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.00438824 +/- 6.33853e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Oxygen#rightarrow^{10}Beryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.00336825 +/- 7.1965e-05, 68% Uncertainty Band: +/- 0.001
+Nuc: Oxygen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0174897 +/- 0.000115851, 68% Uncertainty Band: +/- 0.005
+Nuc: Oxygen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.0114732 +/- 0.000152299, 68% Uncertainty Band: +/- 0.003
+Nuc: Oxygen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 0.4-6.1, Fit Value: 0.0203971 +/- 0.000139071, 68% Uncertainty Band: +/- 0.003
+Nuc: Oxygen#rightarrowBeryllium (UnbiasedL1Inner), Fit Range: 6.1-21.5, Fit Value: 0.012617 +/- 0.000147412, 68% Uncertainty Band: +/- 0.004
+Analysis complete. Results saved to root://eoshome-z.cern.ch//eos/user/z/zixuan/Isotope/BkgValid/Oxygen_to_Beryllium_UnbiasedL1Inner_Validation.root

@@ -71,7 +71,6 @@ const std::map<std::string, std::string> particleNameToAbbr = {
     {"Beryllium", "Be"}, {"Boron", "B"}, {"Carbon", "C"}, {"Nitrogen", "N"}, {"Oxygen", "O"}
 };
 
-// --- Helper: File and Histogram Operations ---
 std::unique_ptr<TFile> openFile(const TString& filename, const char* option = "READ") {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.Data(), option));
     if (!file || file->IsZombie()) {
@@ -83,7 +82,9 @@ std::unique_ptr<TFile> openFile(const TString& filename, const char* option = "R
     return file;
 }
 
-template<typename HistType>
+// ADAPTIVE CHANGE: Template remains, but generally we will use TH1* or TH1D*
+// This allows reading TH1F or TH1D transparently.
+template<typename HistType = TH1>
 HistType* getHistFromFile(TFile* file, const TString& histName) {
     if (!file) {
          throw std::runtime_error("Input TFile pointer is null when trying to get histogram: " + std::string(histName.Data()));
@@ -136,7 +137,7 @@ double calculate68PercentUncertainty_Linear(TH1* hist, TF1* fit_func, double fit
     if (total_points == 0) return 0.0;
     
     double delta = 0.0;
-    double step = 0.01;
+    double step = 0.001;
     int target_points = static_cast<int>(std::ceil(0.68 * total_points));
     
     while (delta < 10.0) {
@@ -162,7 +163,7 @@ double calculate68PercentUncertainty_Linear(TH1* hist, TF1* fit_func, double fit
     return delta;
 }
 
-// --- Plotting Helper (Modified to create two separate plots) ---
+// --- Plotting Helper (Modified to create two separate plots and add fits to comparison) ---
 void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title, 
                           const std::string& y_axis_title, const std::string& output_path) {
     if (!h_iss) {
@@ -170,14 +171,18 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
         return;
     }
 
-    const double x_min = 0.40;
+    // Renamed ranges to match the ratio plot's usage of 1.27-6.1 and 6.1-21.5
+    const double x_min = 0.4;
     const double x_max = 21.0;
-    const double fit_linear_min = 1.28;
-    const double fit_linear_max = 6.8;
-    const double fit_second_min = 6.8;
-    const double fit_second_max = 21.5;
+    // USER REQUESTED CHANGE 1: Low E fit range starts at 0.4 instead of 1.27
+    const double fit_linear_min_low = 0.4; 
+    const double fit_linear_max_low = 6.1;  
+    const double fit_linear_min_high = 6.1; 
+    const double fit_linear_max_high = 21.5; 
     
-    // ========== PLOT 1: ISS vs MC Comparison ==========
+    // =================================================================================
+    // ========== PLOT 1: ISS vs MC Comparison (New: Fits for both ISS and MC) ==========
+    // =================================================================================
     TCanvas* c1 = new TCanvas("c1", title.c_str(), 800, 600);
     c1->SetBottomMargin(0.15);
     c1->SetTopMargin(0.12);
@@ -185,6 +190,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     c1->SetRightMargin(0.03);
     c1->SetGrid();
     
+    // --- 1. Draw ISS Data ---
     h_iss->SetMarkerStyle(20);
     h_iss->SetMarkerColor(kBlack);
     h_iss->SetLineColor(kBlack);
@@ -211,6 +217,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     h_iss->GetYaxis()->SetTitleOffset(1.7);
     h_iss->Draw("PZ");
     
+    // --- Legend for Data/MC (Top Right) ---
     TLegend* legend1 = new TLegend(0.6, 0.70, 0.9, 0.88);
     legend1->SetBorderSize(1);
     legend1->SetFillStyle(0);
@@ -225,10 +232,106 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     }
     legend1->Draw();
     
+    // --- Legend for Fits (Bottom Left) ---
+    TLegend* legend_fits = new TLegend(0.3, 0.15, 0.8, 0.3); // Adjusted to bottom left
+    legend_fits->SetBorderSize(1);
+    legend_fits->SetFillStyle(0);
+    legend_fits->SetTextSize(0.025);
+
+    // Lambda to perform the fit and add to the legend
+    auto perform_and_draw_fit = [&](TH1* hist, const char* name_prefix, double min_e, double max_e, 
+                                    Color_t color, const char* label_prefix) {
+        if (!hist) return (TF1*)nullptr;
+
+        // Check for data in range
+        bool hasData = false;
+        for (int bin = hist->GetXaxis()->FindBin(min_e); 
+             bin <= hist->GetXaxis()->FindBin(max_e); ++bin) {
+            if (hist->GetBinContent(bin) != 0) {
+                hasData = true;
+                break;
+            }
+        }
+        
+        if (!hasData) return (TF1*)nullptr;
+        
+        TString fit_name = TString::Format("%s_%s_%.1f_%.1f", name_prefix, hist->GetName(), min_e, max_e);
+        TF1* fit_func = new TF1(fit_name, "pol0", min_e, max_e);
+        fit_func->SetLineColor(color);
+        fit_func->SetLineWidth(2);
+        
+        // Use R option for range, Q for quiet, S for store fit results
+        TFitResultPtr r = hist->Fit(fit_func, "SRQ+"); 
+        
+        if (r->IsValid() && r->Status() == 0) {
+            double p0 = fit_func->GetParameter(0);
+            
+            // USER REQUESTED CHANGE 2: Display standard fit error (GetParError(0)) 
+            // and use %.3f for precision.
+            double fit_err = fit_func->GetParError(0); 
+            // Calculate 68% uncertainty for the visual band width (as originally intended)
+            double delta_for_band = calculate68PercentUncertainty_Linear(hist, fit_func, min_e, max_e); 
+            delta_for_band = delta_for_band;
+            
+            // Draw uncertainty band
+            const int n_points = 100;
+            double x_arr[n_points * 2];
+            double y_arr[n_points * 2];
+            
+            for (int i = 0; i < n_points; ++i) {
+                double x = min_e + i * (max_e - min_e) / (n_points - 1);
+                double y_center = fit_func->Eval(x);
+                // Use the 68% uncertainty for the band width
+                x_arr[i] = x;
+                y_arr[i] = y_center + delta_for_band; 
+                x_arr[2 * n_points - 1 - i] = x;
+                y_arr[2 * n_points - 1 - i] = y_center - delta_for_band;
+            }
+            
+            TGraph* uncertainty_band = new TGraph(2 * n_points, x_arr, y_arr);
+            uncertainty_band->SetFillColorAlpha(color, 0.15);
+            uncertainty_band->SetFillStyle(1001);
+            uncertainty_band->SetLineColor(color);
+            uncertainty_band->SetLineWidth(1);
+            uncertainty_band->Draw("F SAME");
+            fit_func->Draw("SAME");
+            
+            // Update label format to use fit_err and 3 decimal places
+            TString fit_label = TString::Format("%s (%.1f-%.1f GeV): %.4f #pm %.4f", 
+                                               label_prefix, min_e, max_e, p0, delta_for_band);
+            cout<<"Nuc: "<<title<<", Fit Range: "<<min_e<<"-"<<max_e<<", Fit Value: "<<p0<<" +/- "<<fit_err<<", 68% Uncertainty Band: +/- "<<delta_for_band<<endl;
+            legend_fits->AddEntry(uncertainty_band, fit_label, "lf");
+            
+            return fit_func;
+        }
+        delete fit_func;
+        return (TF1*)nullptr;
+    };
+
+
+    // --- 2. ISS Fits ---
+    perform_and_draw_fit(h_iss, "iss_low", fit_linear_min_low, fit_linear_max_low, kBlack, "ISS Data");
+    perform_and_draw_fit(h_iss, "iss_high", fit_linear_min_high, fit_linear_max_high, kGray+2, "ISS Data");
+
+    // --- 3. MC Fits ---
+    if (h_mc) {
+        perform_and_draw_fit(h_mc, "mc_low", fit_linear_min_low, fit_linear_max_low, kRed, "MC Sim.");
+        perform_and_draw_fit(h_mc, "mc_high", fit_linear_min_high, fit_linear_max_high, kOrange+7, "MC Sim.");
+    }
+    
+    // Redraw data points to be on top of the bands
+    h_iss->Draw("PZ SAME");
+    if (h_mc) h_mc->Draw("PZ SAME");
+    
+    legend_fits->Draw();
+    
     c1->SaveAs((output_path + "_comparison.png").c_str());
     delete c1;
     
-    // ========== PLOT 2: ISS/MC Ratio with Fits (plotR style) ==========
+    // =================================================================================
+    // ========== PLOT 2: ISS/MC Ratio with Fits (The original ratio plot) ==========
+    // =================================================================================
+    // 保持 Ratio Plot 的拟合范围不变 (1.27-6.1)
     if (!h_mc) {
         std::cout << "[INFO] No MC histogram, skipping ratio plot for: " << title << std::endl;
         return;
@@ -238,7 +341,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     c2->SetTopMargin(0.05);
     c2->SetGrid();
     
-    TH1F* h_ratio = (TH1F*)h_iss->Clone("h_ratio");
+    TH1* h_ratio = (TH1*)h_iss->Clone("h_ratio");
     h_ratio->Divide(h_mc);
     h_ratio->SetTitle("");
     h_ratio->SetMarkerStyle(20);
@@ -254,12 +357,15 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     legend2->SetFillStyle(0);
     legend2->SetBorderSize(1);
     legend2->SetTextSize(0.028);
-    legend2->AddEntry(h_ratio, title+TString(" ISS/MC"), "pe");
+    legend2->AddEntry(h_ratio, (title+" ISS/MC").c_str(), "pe");
     
-    // First linear fit (0.4 - 5.5 GeV)
+    // First linear fit (1.27 - 6.1 GeV)
+    const double fit_linear_min_ratio_orig = 1.27; 
+    const double fit_linear_max_ratio_orig = 6.1;
+    
     bool hasDataLinear1 = false;
-    for (int bin = h_ratio->GetXaxis()->FindBin(fit_linear_min); 
-         bin <= h_ratio->GetXaxis()->FindBin(fit_linear_max); ++bin) {
+    for (int bin = h_ratio->GetXaxis()->FindBin(fit_linear_min_ratio_orig); 
+         bin <= h_ratio->GetXaxis()->FindBin(fit_linear_max_ratio_orig); ++bin) {
         if (h_ratio->GetBinContent(bin) != 0) {
             hasDataLinear1 = true;
             break;
@@ -270,7 +376,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     TGraph* uncertainty_band1 = nullptr;
     
     if (hasDataLinear1) {
-        fit_linear1 = new TF1("fit_linear1", "pol0", fit_linear_min, fit_linear_max);
+        fit_linear1 = new TF1("fit_linear1", "pol0", fit_linear_min_ratio_orig, fit_linear_max_ratio_orig); 
         fit_linear1->SetLineColor(kMagenta);
         fit_linear1->SetLineWidth(2);
         
@@ -278,20 +384,18 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
         
         if (r_linear1->IsValid() && r_linear1->Status() == 0) {
             double p0 = fit_linear1->GetParameter(0);
-            //double p1 = fit_linear1->GetParameter(1);
             double chi2 = r_linear1->Chi2();
             int ndf = r_linear1->Ndf();
             
             double delta_linear1 = calculate68PercentUncertainty_Linear(h_ratio, fit_linear1, 
-                                                                        fit_linear_min, fit_linear_max);
+                                                                        fit_linear_min_ratio_orig, fit_linear_max_ratio_orig); 
             
-            // Draw uncertainty band
             const int n_points = 100;
             double x_arr[n_points * 2];
             double y_arr[n_points * 2];
             
             for (int i = 0; i < n_points; ++i) {
-                double x = fit_linear_min + i * (fit_linear_max - fit_linear_min) / (n_points - 1);
+                double x = fit_linear_min_ratio_orig + i * (fit_linear_max_ratio_orig - fit_linear_min_ratio_orig) / (n_points - 1); 
                 double y_center = fit_linear1->Eval(x);
                 x_arr[i] = x;
                 y_arr[i] = y_center + delta_linear1;
@@ -305,7 +409,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
             uncertainty_band1->SetLineColor(kMagenta - 7);
             uncertainty_band1->SetLineWidth(1);
             
-            TString fit_label = TString::Format("constant fit (1.28-7 GeV): %.2f #pm %.2f", 
+            TString fit_label = TString::Format("constant fit (1.27-6.1 GeV): %.2f #pm %.2f", 
                                                p0, delta_linear1);
             legend2->AddEntry(uncertainty_band1, fit_label, "lf");
             
@@ -317,10 +421,13 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
         }
     }
     
-    // Second linear fit (5.5 - 21.5 GeV)
+    // Second linear fit (6.1 - 21.5 GeV)
+    const double fit_second_min_ratio_orig = 6.1;
+    const double fit_second_max_ratio_orig = 21.5;
+    
     bool hasDataLinear2 = false;
-    for (int bin = h_ratio->GetXaxis()->FindBin(fit_second_min); 
-         bin <= h_ratio->GetXaxis()->FindBin(fit_second_max); ++bin) {
+    for (int bin = h_ratio->GetXaxis()->FindBin(fit_second_min_ratio_orig); 
+         bin <= h_ratio->GetXaxis()->FindBin(fit_second_max_ratio_orig); ++bin) { 
         if (h_ratio->GetBinContent(bin) != 0) {
             hasDataLinear2 = true;
             break;
@@ -332,7 +439,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
     double min_y_second_fit = 1e9;
     
     if (hasDataLinear2) {
-        fit_linear2 = new TF1("fit_linear2", "pol0", fit_second_min, fit_second_max);
+        fit_linear2 = new TF1("fit_linear2", "pol0", fit_second_min_ratio_orig, fit_second_max_ratio_orig); 
         fit_linear2->SetLineColor(kOrange + 1);
         fit_linear2->SetLineWidth(2);
         
@@ -340,27 +447,24 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
         
         if (r_linear2->IsValid() && r_linear2->Status() == 0) {
             double p0 = fit_linear2->GetParameter(0);
-            //double p1 = fit_linear2->GetParameter(1);
             double chi2 = r_linear2->Chi2();
             int ndf = r_linear2->Ndf();
             
             double delta_linear2 = calculate68PercentUncertainty_Linear(h_ratio, fit_linear2,
-                                                                        fit_second_min, fit_second_max);
+                                                                        fit_second_min_ratio_orig, fit_second_max_ratio_orig); 
             
-            // Find minimum value in the fit range
             const int n_points = 100;
             for (int i = 0; i < n_points; ++i) {
-                double x = fit_second_min + i * (fit_second_max - fit_second_min) / (n_points - 1);
+                double x = fit_second_min_ratio_orig + i * (fit_second_max_ratio_orig - fit_second_min_ratio_orig) / (n_points - 1); 
                 double y_center = fit_linear2->Eval(x);
                 min_y_second_fit = std::min(min_y_second_fit, y_center - delta_linear2);
             }
             
-            // Draw uncertainty band
             double x_arr[n_points * 2];
             double y_arr[n_points * 2];
             
             for (int i = 0; i < n_points; ++i) {
-                double x = fit_second_min + i * (fit_second_max - fit_second_min) / (n_points - 1);
+                double x = fit_second_min_ratio_orig + i * (fit_second_max_ratio_orig - fit_second_min_ratio_orig) / (n_points - 1); 
                 double y_center = fit_linear2->Eval(x);
                 x_arr[i] = x;
                 y_arr[i] = y_center + delta_linear2;
@@ -374,7 +478,7 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
             uncertainty_band2->SetLineColor(kOrange - 6);
             uncertainty_band2->SetLineWidth(1);
             
-            TString fit_label = TString::Format("constant fit (7-21.5 GeV): %.2f #pm %.2f",
+            TString fit_label = TString::Format("constant fit (6.1-21.5 GeV): %.2f #pm %.2f",
                                                p0, delta_linear2);
             legend2->AddEntry(uncertainty_band2, fit_label, "lf");
             
@@ -386,7 +490,6 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
         }
     }
     
-    // Find y-range with new logic
     double min_r = 1e9, max_r = -1e9;
     for (int i = 1; i <= h_ratio->GetNbinsX(); ++i) {
         double x = h_ratio->GetBinCenter(i);
@@ -398,7 +501,6 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
         }
     }
     
-    // Apply new minimum constraint
     if (min_y_second_fit < 1e9) {
         min_r = std::min(min_r, min_y_second_fit * 0.8);
     }
@@ -425,8 +527,13 @@ void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title,
 }
 
 // --- MC Calculation Helpers ---
-TH1F* stitchHistograms(const std::map<std::string, TH1*>& hists, TH1* refHist) {
-    auto combined = (TH1F*)refHist->Clone(TString::Format("%s_stitched", refHist->GetName()));
+// ADAPTIVE CHANGE: Accept map of TH1* (generic), return TH1D* (Double precision)
+TH1D* stitchHistograms(const std::map<std::string, TH1*>& hists, TH1* refHist) {
+    // Create histogram using refHist bins, but ensure it is TH1D
+    auto combined = new TH1D(TString::Format("%s_stitched", refHist->GetName()), 
+                             refHist->GetTitle(), 
+                             refHist->GetNbinsX(), 
+                             refHist->GetXaxis()->GetXbins()->GetArray());
     combined->Reset();
     const double boundary1 = 1.28, boundary2 = 3.06;
     for (int i = 1; i <= combined->GetNbinsX(); ++i) {
@@ -435,6 +542,7 @@ TH1F* stitchHistograms(const std::map<std::string, TH1*>& hists, TH1* refHist) {
         if (hists.count(det) && hists.at(det) != nullptr) {
             TH1* h = hists.at(det);
             int source_bin = h->FindBin(binCenter);
+            // GetBinContent works for both TH1F and TH1D, returns double
             combined->SetBinContent(i, h->GetBinContent(source_bin));
             combined->SetBinError(i, h->GetBinError(source_bin));
         }
@@ -442,31 +550,31 @@ TH1F* stitchHistograms(const std::map<std::string, TH1*>& hists, TH1* refHist) {
     return combined;
 }
 
-std::map<std::string, TH1F*> calculateMCRatios(const AnalysisConfig& config, const std::string& chain, 
+// ADAPTIVE CHANGE: Use TH1D for internal calculation logic
+std::map<std::string, TH1D*> calculateMCRatios(const AnalysisConfig& config, const std::string& chain, 
                                                 TH1* refHist, bool is_debug_target) {
     std::cout << "\n--- Calculating MC Ratios for " << config.sourceParticle << " -> " 
               << config.fragmentParticle << " ---\n";
-    std::map<std::string, TH1F*> mc_ratios;
+    std::map<std::string, TH1D*> mc_ratios;
     const std::string mcBaseDir = "/eos/user/z/zixuan/Isotope/Add/";
     const std::array<std::string, 3> detectors = {"TOF", "NaF", "AGL"};
     const int nBins = refHist->GetNbinsX();
 
-    TH1F* h_mc_total_source = (TH1F*)refHist->Clone("h_mc_total_source_stitched");
-    h_mc_total_source->Reset();
-    TH1F* h_mc_total_frag = (TH1F*)refHist->Clone("h_mc_total_frag_stitched");
-    h_mc_total_frag->Reset();
+    // Use TH1D for accumulation
+    TH1D* h_mc_total_source = new TH1D("h_mc_total_source_stitched", "", nBins, refHist->GetXaxis()->GetXbins()->GetArray());
+    TH1D* h_mc_total_frag = new TH1D("h_mc_total_frag_stitched", "", nBins, refHist->GetXaxis()->GetXbins()->GetArray());
     
-    std::map<std::string, TH1F*> h_mc_frag_isos;
+    std::map<std::string, TH1D*> h_mc_frag_isos;
     for (const auto& frag_iso : config.fragmentIsotopes) {
-        h_mc_frag_isos[frag_iso] = (TH1F*)refHist->Clone(TString::Format("h_mc_%s_stitched", frag_iso.c_str()));
-        h_mc_frag_isos[frag_iso]->Reset();
+        h_mc_frag_isos[frag_iso] = new TH1D(TString::Format("h_mc_%s_stitched", frag_iso.c_str()), "", nBins, refHist->GetXaxis()->GetXbins()->GetArray());
     }
 
-    std::map<std::string, std::unique_ptr<TH1D>> h_gen_map;
+    std::map<std::string, std::unique_ptr<TH1>> h_gen_map;
     for (const auto& pair : config.mcSourceFiles) {
         const std::string& source_iso = pair.first;
         auto mc_file = openFile(mcBaseDir + pair.second);
-        h_gen_map[source_iso].reset(getHistFromFile<TH1D>(mc_file.get(), config.mcSourceGenHist.c_str()));
+        // Use generic TH1 GetObject
+        h_gen_map[source_iso].reset(getHistFromFile<TH1>(mc_file.get(), config.mcSourceGenHist.c_str()));
         if(h_gen_map[source_iso]) h_gen_map[source_iso]->Rebin(2);
     }
 
@@ -480,9 +588,9 @@ std::map<std::string, TH1F*> calculateMCRatios(const AnalysisConfig& config, con
                 TString::Format("%s_MC_BKG_H1_%s", chain.c_str(), det.c_str()));
             if(source_hists_per_det[det]) source_hists_per_det[det]->Rebin(2);
         }
-        std::unique_ptr<TH1F> stitched_source(stitchHistograms(source_hists_per_det, refHist));
+        std::unique_ptr<TH1D> stitched_source(stitchHistograms(source_hists_per_det, refHist));
 
-        std::map<std::string, std::unique_ptr<TH1F>> stitched_frags;
+        std::map<std::string, std::unique_ptr<TH1D>> stitched_frags;
         for (const auto& frag_iso : config.fragmentIsotopes) {
             std::map<std::string, TH1*> frag_hists_per_det;
             int frag_Z = (config.fragmentParticle == "Beryllium") ? 4 : 5;
@@ -538,13 +646,13 @@ std::map<std::string, TH1F*> calculateMCRatios(const AnalysisConfig& config, con
 
     if (config.InIsoLevel) {
         for (const auto& frag_iso : config.fragmentIsotopes) {
-            TH1F* ratio = (TH1F*)h_mc_frag_isos[frag_iso]->Clone(TString::Format("h_mc_ratio_%s", frag_iso.c_str()));
+            TH1D* ratio = (TH1D*)h_mc_frag_isos[frag_iso]->Clone(TString::Format("h_mc_ratio_%s", frag_iso.c_str()));
             ratio->Divide(h_mc_total_source);
             mc_ratios[frag_iso] = ratio;
         }
     }
     
-    TH1F* total_ratio_hist = (TH1F*)h_mc_total_frag->Clone("h_mc_ratio_total");
+    TH1D* total_ratio_hist = (TH1D*)h_mc_total_frag->Clone("h_mc_ratio_total");
     total_ratio_hist->Divide(h_mc_total_source);
     mc_ratios["Total"] = total_ratio_hist;
 
@@ -592,17 +700,20 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
     std::cout << "===================================================================\n";
 
     const std::array<std::string, 3> detectors = {"TOF", "NaF", "AGL"};
-    TString ratioFilePath = TString::Format("/eos/user/z/zixuan/Isotope/ChargeTemp/QFit_%s_to_%s_%s.root", 
-        config.sourceParticle.c_str(), config.fragmentParticle.c_str(), chain.c_str());
+    
+    // ADAPTIVE CHANGE 2: Direct L1 Yield Path and Counts Path
+    // Removed QFit path.
+    TString l1YieldFilePath = "/eos/user/z/zixuan/Isotope/ChargeTemp/PureL1TempFit_AllL1QUnbiasedL1Inner.root";
     TString countsFilePath = TString::Format("/eos/user/z/zixuan/Isotope/Add/%s.root", config.fragFileID.c_str());
     TString outputFilePath = TString::Format("/eos/user/z/zixuan/Isotope/BkgValid/%s_to_%s_%s_Validation.root", 
         config.sourceParticle.c_str(), config.fragmentParticle.c_str(), chain.c_str());
 
-    auto ratioFile = openFile(ratioFilePath);
+    auto l1YieldFile = openFile(l1YieldFilePath);
     auto countsFile = openFile(countsFilePath);
     auto outputFile = openFile(outputFilePath, "RECREATE");
 
-    TH1D* refHist = getHistFromFile<TH1D>(countsFile.get(), 
+    // Use TH1D for calculation precision, regardless of file content type
+    TH1F* refHist = getHistFromFile<TH1F>(countsFile.get(), 
         TString::Format("%s_ISS_BKG_H1_%s_TOF", chain.c_str(), config.sourceParticle.c_str()));
     if (!refHist) {
         throw std::runtime_error("Reference histogram for binning not found!");
@@ -612,20 +723,29 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
     const int nBins = xAxis->GetNbins();
     const Double_t* binEdges = xAxis->GetXbins()->GetArray();
 
-    std::map<std::string, TH1D*> l1SampleCountsHists, rawFragCountsHists, sourceRatioHists, contamRatioHists;
+    // ADAPTIVE CHANGE: Use TH1* to hold whatever is read, allows for F or D
+    std::map<std::string, TH1*> rawFragCountsHists;
+    std::map<std::string, TH1*> l1SignalYieldHists; // Source from Source
+    std::map<std::string, TH1*> l1ContamYieldHists; // Source from Fragment
+
     for (const auto& det : detectors) {
-        l1SampleCountsHists[det] = getHistFromFile<TH1D>(countsFile.get(), 
-            TString::Format("%s_ISS_BKG_H1_%s_%s", chain.c_str(), config.sourceParticle.c_str(), det.c_str()));
-        if(l1SampleCountsHists[det]) l1SampleCountsHists[det]->Rebin(2);
-        
-        rawFragCountsHists[det] = getHistFromFile<TH1D>(countsFile.get(), 
+        // 1. Raw L2 Counts (Fragment candidates in L2)
+        rawFragCountsHists[det] = getHistFromFile<TH1>(countsFile.get(), 
             TString::Format("%s_ISS_BKG_H3_%s_%s", chain.c_str(), config.sourceParticle.c_str(), det.c_str()));
         if(rawFragCountsHists[det]) rawFragCountsHists[det]->Rebin(2);
         
-        sourceRatioHists[det] = getHistFromFile<TH1D>(ratioFile.get(), 
-            TString::Format("h_narrowfrac_%s_%s", config.sourceParticle.c_str(), det.c_str()));
-        contamRatioHists[det] = getHistFromFile<TH1D>(ratioFile.get(), 
-            TString::Format("h_narrowfrac_%s_%s", config.fragmentParticle.c_str(), det.c_str()));
+        // 2. Direct L1 Yields (Requirement 2)
+        // Format: h_yield_in_{Source}_from_{Source}_{Det}
+        TString sigName = TString::Format("h_yield_in_%s_from_%s_%s", 
+                                          config.sourceParticle.c_str(), config.sourceParticle.c_str(), det.c_str());
+        l1SignalYieldHists[det] = getHistFromFile<TH1>(l1YieldFile.get(), sigName);
+        l1SignalYieldHists[det]->Rebin(2);
+
+        // Format: h_yield_in_{Source}_from_{Fragment}_{Det}
+        TString contamName = TString::Format("h_yield_in_%s_from_%s_%s", 
+                                             config.fragmentParticle.c_str(), config.sourceParticle.c_str(), det.c_str());
+        l1ContamYieldHists[det] = getHistFromFile<TH1>(l1YieldFile.get(), contamName);
+        l1ContamYieldHists[det]->Rebin(2);
     }
     
     std::unique_ptr<TFile> fragmentFitFile, normalFitFile;
@@ -637,13 +757,14 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
         normalFitFile   = openFile(normalFitFilePath);
     }
 
+    // ADAPTIVE CHANGE: Always create TH1D for output calculations to maintain precision
     auto createHist = [&](const char* name, const char* title) {
-        auto hist = new TH1F(name, title, nBins, binEdges);
+        auto hist = new TH1D(name, title, nBins, binEdges);
         hist->SetStats(0);
         return hist;
     };
     
-    std::map<std::string, TH1F*> h_iss_ratios;
+    std::map<std::string, TH1D*> h_iss_ratios;
     if (config.InIsoLevel) {
         for (const auto& iso : config.fragmentIsotopes) {
             h_iss_ratios[iso] = createHist(TString::Format("h_iss_ratio_%s", iso.c_str()), "");
@@ -651,31 +772,32 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
     }
     h_iss_ratios["Total"] = createHist("h_iss_ratio_total", "");
 
-    std::map<std::string, TH1F*> h_mc_ratios = calculateMCRatios(config, chain, refHist, is_debug_target);
+    // Get MC Ratios (returns TH1D* now)
+    std::map<std::string, TH1D*> h_mc_ratios = calculateMCRatios(config, chain, refHist, is_debug_target);
 
     int bin_count_in_range = 0;
     
     for (int i_bin = 1; i_bin <= nBins; ++i_bin) {
         double binCenter = xAxis->GetBinCenter(i_bin);
-        if (binCenter > 21.5 || binCenter < 0.3) continue;
+        if (binCenter > 21.5 || binCenter < 0.2) continue;
         
         bin_count_in_range++;
         
         std::string det = (binCenter < 1.28) ? "TOF" : (binCenter < 3.06) ? "NaF" : "AGL";
 
-        ValueWithError l1SampleCounts_vw(0,0), rawFragCounts_vw(0,0), sourceRatio_vw(0,0), contamRatio_vw(0,0);
-        if (l1SampleCountsHists.count(det) && l1SampleCountsHists[det]) 
-            l1SampleCounts_vw = {l1SampleCountsHists[det]->GetBinContent(i_bin), l1SampleCountsHists[det]->GetBinError(i_bin)};
+        ValueWithError rawFragCounts_vw(0,0), final_source_yield_vw(0,0), final_contam_yield_vw(0,0);
+
+        // Safe extraction from TH1* (supports F and D via GetBinContent)
         if (rawFragCountsHists.count(det) && rawFragCountsHists[det]) 
             rawFragCounts_vw = {rawFragCountsHists[det]->GetBinContent(i_bin), rawFragCountsHists[det]->GetBinError(i_bin)};
-        if (sourceRatioHists.count(det) && sourceRatioHists[det]) 
-            sourceRatio_vw = {sourceRatioHists[det]->GetBinContent(i_bin), sourceRatioHists[det]->GetBinError(i_bin)};
-        if (contamRatioHists.count(det) && contamRatioHists[det]) 
-            contamRatio_vw = {contamRatioHists[det]->GetBinContent(i_bin), contamRatioHists[det]->GetBinError(i_bin)};
+        
+        if (l1SignalYieldHists.count(det) && l1SignalYieldHists[det])
+            final_source_yield_vw = {l1SignalYieldHists[det]->GetBinContent(i_bin), l1SignalYieldHists[det]->GetBinError(i_bin)};
+            
+        if (l1ContamYieldHists.count(det) && l1ContamYieldHists[det])
+            final_contam_yield_vw = {l1ContamYieldHists[det]->GetBinContent(i_bin), l1ContamYieldHists[det]->GetBinError(i_bin)};
 
-        ValueWithError final_source_yield_vw = l1SampleCounts_vw * sourceRatio_vw;
-        ValueWithError final_contam_yield_vw = l1SampleCounts_vw * contamRatio_vw;
-
+        // Logic change: Denominator is simply the signal yield obtained from file
         if (final_source_yield_vw.val <= 0) continue;
 
         if (is_debug_target) {
@@ -685,7 +807,7 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
             std::cout << "--- ISS CALCULATION ---\n";
             std::cout << "Final Source (Denominator): " << final_source_yield_vw.val 
                      << " +/- " << final_source_yield_vw.err << "\n";
-            std::cout << "Final Contamination: " << final_contam_yield_vw.val 
+            std::cout << "Final Contamination (L1): " << final_contam_yield_vw.val 
                      << " +/- " << final_contam_yield_vw.err << "\n\n";
         }
 
@@ -697,7 +819,8 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
             auto get_fractions = [&](TFile* file, const std::vector<std::string>& isotopes, 
                                     std::map<std::string, ValueWithError>& vw_map, ValueWithError& sum_vw) {
                 for (const auto& iso : isotopes) {
-                    auto h = getHistFromFile<TH1F>(file, TString::Format("h_best_%s_frac_%s", iso.c_str(), det.c_str()));
+                    // Use TH1 for generic read
+                    auto h = getHistFromFile<TH1>(file, TString::Format("h_best_%s_frac_%s", iso.c_str(), det.c_str()));
                     if(h) {
                         vw_map[iso] = {h->GetBinContent(i_bin), h->GetBinError(i_bin)};
                         sum_vw = sum_vw + vw_map[iso];
@@ -712,6 +835,7 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
             get_fractions(normalFitFile.get(), config.primaryFitIsotopes, norm_fracs_vw, norm_frac_sum);
             
             for (const auto& iso : config.fragmentIsotopes) {
+                // Calculation: (Raw_L2 * Frac) - (L1_Contam * Norm_Frac) -> All normalized by L1_Signal
                 ValueWithError raw_iso_counts_vw = rawFragCounts_vw * frag_fracs_vw[iso];
                 ValueWithError contamination_term_for_iso = final_contam_yield_vw * norm_fracs_vw[iso];
                 ValueWithError pure_iso_counts_vw = raw_iso_counts_vw - contamination_term_for_iso;
@@ -720,6 +844,7 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
                 pure_total_frag_bin = pure_total_frag_bin + pure_iso_counts_vw;
             }
         } else {
+            // If not doing isotopic analysis, Total Fragment - L1 Contamination
             pure_total_frag_bin = rawFragCounts_vw - final_contam_yield_vw;
         }
 
@@ -732,15 +857,13 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
     gStyle->SetOptStat(0);
     std::string plot_dir = "/eos/user/z/zixuan/Isotope/BkgValid/Plots/";
     
-    // CHANGED: Zero out specific MC points for specific isotopes (only affects MC, not ISS)
     int bin_count = 0;
     for (int i_bin = 1; i_bin <= nBins; ++i_bin) {
         double binCenter = xAxis->GetBinCenter(i_bin);
-        if (binCenter > 21.5 || binCenter < 0.3) continue;
+        if (binCenter > 21.5 || binCenter < 0.4) continue;
         
         bin_count++;
         
-        // Check and zero for each isotope
         if (config.InIsoLevel) {
             for (const auto& iso : config.fragmentIsotopes) {
                 if (shouldZeroPoint(config, bin_count, iso)) {
@@ -754,7 +877,6 @@ void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
             }
         }
         
-        // Check and zero for Total
         if (shouldZeroPoint(config, bin_count, "Total")) {
             if (h_mc_ratios.count("Total") && h_mc_ratios["Total"]) {
                 h_mc_ratios["Total"]->SetBinContent(i_bin, 0);
@@ -825,7 +947,9 @@ void CalFrag() {
     AnalysisConfig config_N_to_Be;
     config_N_to_Be.sourceParticle = "Nitrogen";
     config_N_to_Be.fragmentParticle = "Beryllium";
-    config_N_to_Be.InIsoLevel = false;
+    config_N_to_Be.InIsoLevel = true;
+    config_N_to_Be.primaryFitIsotopes = {"Be7", "Be9"};
+    config_N_to_Be.useMass = 7;
     config_N_to_Be.fragFileID = "Be_frag4";
     config_N_to_Be.sourceIsotopeFractions = {{"N14", 0.5}, {"N15", 0.5}};
     config_N_to_Be.fragmentIsotopes = {"Be7", "Be9", "Be10"};
@@ -835,7 +959,9 @@ void CalFrag() {
     AnalysisConfig config_O_to_Be;
     config_O_to_Be.sourceParticle = "Oxygen";
     config_O_to_Be.fragmentParticle = "Beryllium";
-    config_O_to_Be.InIsoLevel = false;
+    config_O_to_Be.InIsoLevel = true;
+    config_O_to_Be.primaryFitIsotopes = {"Be7", "Be9"};
+    config_O_to_Be.useMass = 7;
     config_O_to_Be.fragFileID = "Be_frag4";
     config_O_to_Be.sourceIsotopeFractions = {{"O16", 1.0}};
     config_O_to_Be.fragmentIsotopes = {"Be7", "Be9", "Be10"};
@@ -882,9 +1008,7 @@ void CalFrag() {
         const std::vector<std::string> chains = {"UnbiasedL1Inner"};
         const std::vector<AnalysisConfig> all_configs = {
             config_B_to_Be, config_C_to_Be,
-           // config_C_to_B,
-            config_N_to_Be, config_O_to_Be,
-            //config_N_to_B, config_O_to_B
+            config_N_to_Be, config_O_to_Be
         };
         
         for (const auto& chain : chains) {

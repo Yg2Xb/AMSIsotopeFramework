@@ -80,7 +80,7 @@ void IsotopeAnalyzer::initialize() {
     std::cout << "IsotopeAnalyzer initialized with " << dataChain->GetEntries() << " entries." << std::endl;
 
     // ===== 新增：准备筛选后的树 =====
-    if (true && m_histManager && dataChain) {
+    if (isISS_ && m_histManager && dataChain) {
         m_histManager->PrepareFilteredTree(dataChain.get());
     }
 }
@@ -120,7 +120,7 @@ void IsotopeAnalyzer::write() {
     std::cout << "Saving all results to file..." << std::endl;
     
     // 调用 Save()，默认会保存直方图和 TTree
-    m_histManager->Save(1); // true = 保存 TTree
+    m_histManager->Save(isISS_ ? 1 : 0); // true = 保存 TTree
 }
 
 void IsotopeAnalyzer::cleanup() {

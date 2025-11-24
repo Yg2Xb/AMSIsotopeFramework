@@ -527,7 +527,7 @@ namespace {
 
     // OPTIMIZATION: Define name-to-index mappings for fast string-to-int conversion.
     const std::vector<std::string> CHAIN_NAMES = {"UnbiasedL1Inner", "L1Inner"};
-    const std::vector<std::string> NUCLEUS_NAMES = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+    const std::vector<std::string> NUCLEUS_NAMES = {"Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
     const std::vector<std::string> DETECTOR_NAMES = {"TOF", "NaF", "AGL"};
     
     // Reverse maps for fast lookup, filled during initialization.
@@ -659,7 +659,7 @@ double tuneL2Charge(
     const LookupTable& pdata = it->second;
     double cdf_l2 = pdata.getCDF_L2(q_l2);
     if (cdf_l2 < 0.0) {
-         std::cerr << "[DBG] L2Q Fail: q_l2 out of range. q_l2=" << q_l2 << std::endl;
+        //std::cerr << "[DBG] L2Q Fail: q_l2 out of range. q_l2=" << q_l2 << std::endl;
         return q_l2; // q_l2 is out of the table's range.
     }
     

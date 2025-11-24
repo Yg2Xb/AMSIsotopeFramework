@@ -317,7 +317,7 @@ static TF1* doFit(TH1D* h, TF1* (*builder)(double,double),
                   FitParameterManager& pm, const string& fitType,
                   const string& chain, const string& elem, const string& det, const string& type,
                   double ekCen, double chargeZ, double histMax,
-                  double& fitLow, double& fitHigh, int maxIter = 4, const char* fitOpt = "RQ0")
+                  double& fitLow, double& fitHigh, int maxIter = 10, const char* fitOpt = "RQ0")
 {
     TF1* f = nullptr;
     bool fitSucceeded = false; // NEW: Flag to track success
@@ -399,17 +399,18 @@ static TF1* doFit(TH1D* h, TF1* (*builder)(double,double),
 }
 
 void chargeHistFit(
-    const string& histFile = "/eos/user/z/zixuan/Isotope/Add/Be_frag4.root",
-    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_BeToOxy_0.6_test.pdf",
-    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_test.root",
+    //const string& histFile = "/eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part9.root",
+    const string& histFile = "/eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part6.root",
+    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_BeToOxy_0.8_iter0.pdf",
+    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter0.root",
     int rebin = 2,
     bool firstFit = true,
     bool listKeysOnce = false // kept for compatibility, unused to stay simple
 ) {
-    const vector<string> chains = {"UnbiasedL1Inner"};
+    const vector<string> chains = {"UnbiasedL1Inner","L1Inner"};
     //const vector<string> nuclei = {"Beryllium","Boron","Carbon","Nitrogen","Oxygen"};
-    const vector<string> nuclei = {"Nitrogen"};
-    const map<string,double> chargeZ = {{"Beryllium",4.0}, {"Boron",5.0}, {"Carbon",6.0}, {"Nitrogen",7.0}, {"Oxygen",8.0}};
+    const vector<string> nuclei = {"Lithium"};
+    const map<string,double> chargeZ = {{"Helium",2.0},{"Lithium",3.0},{"Beryllium",4.0}, {"Boron",5.0}, {"Carbon",6.0}, {"Nitrogen",7.0}, {"Oxygen",8.0}};
     const vector<string> types = {"L1QTemplate", "L2QTemplate"};
     const vector<string> dets = {"TOF","NaF","AGL"};
     const map<string,int> detColor = {{"TOF", kRed}, {"NaF", kBlue}, {"AGL", kGreen+2}};

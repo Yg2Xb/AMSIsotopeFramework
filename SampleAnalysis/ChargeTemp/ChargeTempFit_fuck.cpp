@@ -38,8 +38,6 @@ using namespace AMS_Iso;
 using namespace RooFit;
 using namespace std;
 
-// --- 全局常量和结构体保持不变 ---
-
 const std::string outputDir = "/eos/user/z/zixuan/Isotope/ChargeTemp/";
 const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
 
@@ -51,11 +49,20 @@ const std::map<std::string, std::pair<double, double>> detector_ek_ranges = {
 
 struct ElementInfo { int Z; std::string name; };
 const std::map<int, ElementInfo> element_db_by_z = {
-    {4, {4, "Beryllium"}}, {5, {5, "Boron"}}, {6, {6, "Carbon"}},
-    {7, {7, "Nitrogen"}}, {8, {8, "Oxygen"}}
+    {3, {3, "Lithium"}},
+    {4, {4, "Beryllium"}}, 
+    {5, {5, "Boron"}}, 
+    {6, {6, "Carbon"}},
+    {7, {7, "Nitrogen"}}, 
+    {8, {8, "Oxygen"}}
 };
 const std::map<std::string, int> element_db_by_name = {
-    {"Beryllium", 4}, {"Boron", 5}, {"Carbon", 6}, {"Nitrogen", 7}, {"Oxygen", 8}
+    {"Lithium", 3},
+    {"Beryllium", 4}, 
+    {"Boron", 5}, 
+    {"Carbon", 6}, 
+    {"Nitrogen", 7}, 
+    {"Oxygen", 8}
 };
 
 struct UnifiedFitResult {
@@ -77,8 +84,6 @@ struct UnifiedFitResult {
     std::map<std::string, std::map<std::string, double>> fractions_in_window;
     std::map<std::string, std::map<std::string, double>> fractions_in_window_err;
 };
-
-// --- UnifiedChargeFitter 类保持不变 (除非您需要修改 extendHistogram 或 calculateChi2 的具体实现) ---
 
 class UnifiedChargeFitter {
 public:
@@ -103,7 +108,8 @@ private:
     const std::map<std::string, TH2F*>& templates_rebinned_;
     
     std::vector<std::string> templateElements_;
-    double fitMin_ = 4, fitMax_ = 8.5;
+    double fitMin_ = 4; 
+    double fitMax_ = 8.4;
 
     std::unique_ptr<RooRealVar> charge_;
     std::unique_ptr<TH1D> h_signal_extended_;
@@ -119,8 +125,6 @@ private:
     void configureFit();
     std::unique_ptr<TH1D> projectSlice(TH2F* h2d, const char* name);
 };
-
-// --- UnifiedChargeFitter 的实现保持不变 ---
 
 UnifiedChargeFitter::UnifiedChargeFitter(
     const std::string& chain, const std::string& detector, int ekpernuc_bin, 
@@ -145,8 +149,7 @@ bool UnifiedChargeFitter::initializeAndProject() {
     auto h_signal_slice = projectSlice(h_signal_rebinned_, Form("h_signal_slice_bin%d", energyBin_));
     double N_signal_total = h_signal_slice ? h_signal_slice->GetEntries() : 0;
     
-    // --- 调试检查 1: 信号统计量 ---
-    if (!h_signal_slice || N_signal_total < 50) { // 提高统计量要求
+    if (!h_signal_slice || N_signal_total < 50) { 
         std::cerr << "       -> CRITICAL: Signal count is too low (" << N_signal_total << "). Minimum 50 required." << std::endl;
         return false;
     }
@@ -163,16 +166,8 @@ bool UnifiedChargeFitter::initializeAndProject() {
         h_templates_slices[el] = projectSlice(it->second, Form("h_template_%s_slice_bin%d", el.c_str(), energyBin_));
         double N_template = h_templates_slices[el] ? h_templates_slices[el]->GetEntries() : 0;
         
-        // --- 对每个模板的 1D 切片执行 Smooth(1) ---
-        if (h_templates_slices[el]) {
-             //h_templates_slices[el]->Smooth(1);
-        }
-        // ------------------------------------------
-
-        // --- 调试检查 2: 模板统计量 ---
-        if (!h_templates_slices[el] || N_template < 10) { // 提高统计量要求
+        if (!h_templates_slices[el] || N_template < 10) { 
             std::cerr << "       -> CRITICAL: Template count for " << el << " is too low (" << N_template << "). Minimum 10 required." << std::endl;
-            // return false; // 暂时注释掉，让它尝试拟合，但会警告
         }
         N_templates_total_sum += N_template;
     }
@@ -185,38 +180,32 @@ bool UnifiedChargeFitter::initializeAndProject() {
     charge_ = std::make_unique<RooRealVar>("charge", "Charge", fitMin_, fitMax_);
     data_hist_ = std::make_unique<RooDataHist>("data_hist", "Data", *charge_, h_signal_extended_.get());
     for (const auto& el : templateElements_) {
-        // Clone for RooDataHist ownership
         auto hist_clone = (TH1D*)h_templates_extended_.at(el)->Clone(Form("%s_clone_for_rdh", h_templates_extended_.at(el)->GetName()));
         template_data_hists_[el] = std::make_unique<RooDataHist>(Form("dhist_%s", el.c_str()), "", *charge_, hist_clone);
-        template_pdfs_[el] = std::make_unique<RooHistPdf>(Form("pdf_%s", el.c_str()), "", *charge_, *template_data_hists_[el]);
+        template_pdfs_[el] = std::make_unique<RooHistPdf>(Form("pdf_%s", el.c_str()), "", *charge_, *template_data_hists_.at(el));
     }
 
-    // 设置拟合参数：Be, B, C, N为自由参数，O为约束参数。拟合比例（非扩展）
     std::vector<std::string> free_params_elements = {"Beryllium", "Boron", "Carbon", "Nitrogen"};
     std::string constrained_element = "Oxygen";
     
     std::map<std::string, RooAbsReal*> frac_map;
     
-    // --- 调试改进 3: 估算初始参数值 ---
     for (const auto& el : free_params_elements) {
         double N_template_i = h_templates_slices.at(el)->GetEntries();
         double initial_guess = (N_templates_total_sum > 0) ? N_template_i / N_templates_total_sum : 0.2;
         initial_guess = std::max(0.001, std::min(0.999, initial_guess));
         
-        // 保持开放的范围 [0, 1]
         auto fracVar = std::make_unique<RooRealVar>(Form("frac_%s", el.c_str()), "", initial_guess, 0.0, 1.0);
         frac_map[el] = fracVar.get();
         fractionParams_.push_back(std::move(fracVar));
     }
 
-    // 约束 O
     std::string formula = "1.0";
     RooArgList formulaArgs;
     for (const auto& param : fractionParams_) {
         formula += " - @" + std::to_string(formulaArgs.getSize());
         formulaArgs.add(*param);
     }
-    // 确保约束项始终为正数
     lastFraction_ = std::make_unique<RooFormulaVar>(Form("frac_%s", constrained_element.c_str()), "", formula.c_str(), formulaArgs);
     frac_map[constrained_element] = lastFraction_.get();
 
@@ -225,20 +214,17 @@ bool UnifiedChargeFitter::initializeAndProject() {
         pdfList.add(*template_pdfs_.at(el));
         fracList.add(*frac_map.at(el));
     }
-    // 注意：Non-extended fit by setting extended=false
     total_pdf_ = std::make_unique<RooAddPdf>("total_pdf", "Total PDF", pdfList, fracList, false); 
     return true;
 }
 
 bool UnifiedChargeFitter::runFit() {
-    // --- 调试改进 4: 暂时取消消息屏蔽以查看 Minuit 错误 ---
     RooMsgService::instance().setGlobalKillBelow(RooFit::INFO);    
     cout << "       -> Attempting fit with fixed range [" << fitMin_ << ", " << fitMax_ << "]..." << endl;
     charge_->setRange("fit_range", fitMin_, fitMax_);
     fitResult_ = std::unique_ptr<RooFitResult>(
         total_pdf_->fitTo(*data_hist_, Save(true), PrintLevel(3), Range("fit_range"), Strategy(2), Minimizer("Minuit2", "migrad"))
     );
-    // 拟合结束后，恢复消息屏蔽
     RooMsgService::instance().setGlobalKillBelow(RooFit::ERROR);    
 
     if (fitResult_ && fitResult_->status() == 0) {
@@ -264,7 +250,6 @@ UnifiedFitResult UnifiedChargeFitter::calculateAllYields() {
         RooAbsReal* frac_param = (RooAbsReal*)fitResult_->floatParsFinal().find(Form("frac_%s", el.c_str()));
         if (!frac_param) {      
             if (lastFraction_ && lastFraction_->GetName() == std::string("frac_" + el)) {
-                // 对于约束参数，需要从原始的 RooFormulaVar 获取
                 frac_param = lastFraction_.get();
             }
         }
@@ -277,7 +262,6 @@ UnifiedFitResult UnifiedChargeFitter::calculateAllYields() {
         if (frac_param->IsA()->InheritsFrom(RooRealVar::Class())) {
             err_F_A = ((RooRealVar*)frac_param)->getError();
         } else if (lastFraction_ && lastFraction_.get() == frac_param) {
-            // 对约束参数，这里为简化暂设为0，实际应用中需用 RooMultiVarGaussian
             err_F_A = 0.0;      
         }
         res.fit_fractions_err[el] = err_F_A;
@@ -286,11 +270,9 @@ UnifiedFitResult UnifiedChargeFitter::calculateAllYields() {
     for (const auto& window_el_pair : element_db_by_z) {
         const std::string& window_element_name = window_el_pair.second.name;
         int Z_window = window_el_pair.first;
-        // 窄窗口定义
         double narrowMin = Z_window - 0.2;
         double narrowMax = Z_window + 0.4;
         
-        // 确保窄窗口在拟合范围内
         if (narrowMax < fitMin_ || narrowMin > fitMax_) continue;
 
         std::string range_name = "narrow_range_" + window_element_name;
@@ -298,34 +280,28 @@ UnifiedFitResult UnifiedChargeFitter::calculateAllYields() {
 
         int bin_low = h_signal_extended_->GetXaxis()->FindBin(narrowMin);
         int bin_high = h_signal_extended_->GetXaxis()->FindBin(narrowMax);
-        // 注意：这里使用 Integral() 而不是 GetEntries()，因为它只在 fitMin_ 到 fitMax_ 范围内
         double N_sig_window = h_signal_extended_->Integral(bin_low, bin_high);
         double err_N_sig_window = (N_sig_window > 0) ? sqrt(N_sig_window) : 0.0;
 
         auto integral_R_total_obj = std::unique_ptr<RooAbsReal>(total_pdf_->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
         double R_total_window = integral_R_total_obj->getVal();
-        // 简单的统计误差估算，但RooFit应该能提供更精确的
-        double err_R_total_window = 0.0; // 暂时忽略模型积分的误差
+        double err_R_total_window = 0.0;
 
         if (R_total_window <= 1e-9) continue;
 
         for (const auto& component_el : templateElements_) {
-            // 从拟合结果获取的比例 F_A
             double F_A = res.fit_fractions.at(component_el);
             double err_F_A = res.fit_fractions_err.at(component_el);
 
-            // 获取模板 A 在窗口内的比例 R_A (RooFit 归一化)
             auto integral_R_A_obj = std::unique_ptr<RooAbsReal>(template_pdfs_.at(component_el)->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
             double R_A = integral_R_A_obj->getVal();
             
-            // 形状误差（作为参考）
             const auto& h_template = h_templates_extended_.at(component_el);
             double N_template_total = h_template->Integral();
             double k_template_narrow = h_template->Integral(h_template->GetXaxis()->FindBin(narrowMin), h_template->GetXaxis()->FindBin(narrowMax));
             double R_A_for_err = (N_template_total > 0) ? k_template_narrow / N_template_total : 0.0;
             double err_R_A = (N_template_total > 0) ? sqrt(std::max(0.0, R_A_for_err * (1.0 - R_A_for_err) / N_template_total)) : 0.0;
 
-            // 组分 A 在窗口内的比例 P_A_window = F_A * R_A / R_total_window
             double P_A_window = F_A * R_A / R_total_window;
             double rel_err_sq_P_A = 0.0;
             if (F_A > 0) rel_err_sq_P_A += pow(err_F_A / F_A, 2);
@@ -336,7 +312,6 @@ UnifiedFitResult UnifiedChargeFitter::calculateAllYields() {
             res.fractions_in_window[window_element_name][component_el] = P_A_window;
             res.fractions_in_window_err[window_element_name][component_el] = err_P_A_window;
 
-            // 产额 Yield_A = N_sig_window * P_A_window
             double Yield_A = N_sig_window * P_A_window;
             double rel_err_sq_Yield_A = 0.0;
             if (N_sig_window > 0) rel_err_sq_Yield_A += pow(err_N_sig_window / N_sig_window, 2);
@@ -361,11 +336,11 @@ std::unique_ptr<RooPlot> UnifiedChargeFitter::generatePlotAndCalcChi2(UnifiedFit
     }
 
     data_hist_->plotOn(frame.get(), Name("data_hist"), MarkerStyle(20), MarkerSize(0.8));
-    total_pdf_->plotOn(frame.get(), Name("total_pdf"), LineColor(kRed), LineWidth(2));
+    total_pdf_->plotOn(frame.get(), Name("total_pdf"), LineColor(kRed), LineWidth(3));
     
-    std::vector<int> colors = {kAzure + 7, kOrange - 3, kGreen + 2, kMagenta - 3, kCyan + 2};
+    std::vector<int> colors = {kAzure + 7, kOrange - 3, kGreen + 2, kMagenta - 3, kCyan + 2}; 
     for (size_t i = 0; i < templateElements_.size(); ++i) {
-        total_pdf_->plotOn(frame.get(), Components(*template_pdfs_.at(templateElements_[i])), Name(Form("comp_%s", templateElements_[i].c_str())), LineColor(colors[i % colors.size()]), LineWidth(2));
+        total_pdf_->plotOn(frame.get(), Components(*template_pdfs_.at(templateElements_[i])), Name(Form("comp_%s", templateElements_[i].c_str())), LineColor(colors[i % colors.size()]), LineWidth(3), LineStyle(1));
     }
     
     int nFreeParams = fitResult_->floatParsFinal().getSize();
@@ -380,31 +355,27 @@ std::unique_ptr<RooPlot> UnifiedChargeFitter::generatePlotAndCalcChi2(UnifiedFit
     return frame;
 }
 
-// --- runUnifiedChargeAnalysis 函数修改：修改模板文件和直方图名称 ---
-
 void runUnifiedChargeAnalysis(const std::string& chain) {
     cout << "\n======================================================================\n";
     cout << "Starting Unified Charge Analysis for chain: " << chain << endl;
     cout << "======================================================================\n";
     
-    // --- 信号数据文件 (保持不变) ---
-    std::string signalInputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4.root";
-    auto signalFile = std::unique_ptr<TFile>(TFile::Open(signalInputFileName.c_str()));    
-    if (!signalFile || signalFile->IsZombie()) {    
-        cerr << "CRITICAL: Could not open signal input file: " << signalInputFileName << endl;    
-        return;    
+    std::string signalInputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_No3.root";
+    auto signalFile = std::unique_ptr<TFile>(TFile::Open(signalInputFileName.c_str())); 
+    if (!signalFile || signalFile->IsZombie()) {  
+        cerr << "CRITICAL: Could not open signal input file: " << signalInputFileName << endl;  
+        return;  
     }
     
-    // --- 模板数据文件 (新路径) ---
     std::string templateInputFileName = "/eos/user/z/zixuan/Isotope/PureChargeTemp/PureChargeTemplates_UnbiasedL1Inner.root";
-    auto templateFile = std::unique_ptr<TFile>(TFile::Open(templateInputFileName.c_str()));    
-    if (!templateFile || templateFile->IsZombie()) {    
-        cerr << "CRITICAL: Could not open template input file: " << templateInputFileName << endl;    
-        return;    
+    auto templateFile = std::unique_ptr<TFile>(TFile::Open(templateInputFileName.c_str()));  
+    if (!templateFile || templateFile->IsZombie()) {  
+        cerr << "CRITICAL: Could not open template input file: " << templateInputFileName << endl;  
+        return;  
     }
 
-    std::string pdf_filename = outputDir + "UnifiedQFit_" + chain + ".pdf";
-    std::string root_filename = outputDir + "UnifiedQFit_" + chain + ".root";
+    std::string pdf_filename = outputDir + "PureL1TempFit_AllL1Q" + chain + ".pdf";
+    std::string root_filename = outputDir + "PureL1TempFit_AllL1Q" + chain + ".root";
     auto c_pdf = std::make_unique<TCanvas>("c_pdf", "PDF Canvas", 800, 600);
     c_pdf->Print((pdf_filename + "[").c_str());
     auto outputFile = std::make_unique<TFile>(root_filename.c_str(), "RECREATE");
@@ -414,32 +385,39 @@ void runUnifiedChargeAnalysis(const std::string& chain) {
         
         const std::vector<std::string> required_elements = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
 
-        // --- 信号直方图 (从 signalFile 获取) ---
         std::string signalHistName = chain + "_ISS_BKG_H2_Beryllium_L1QSignal_" + detector;
         TH2F* h_signal_raw = (TH2F*)signalFile->Get(signalHistName.c_str());
         if (!h_signal_raw) {    
             cout << "Signal histogram not found: " << signalHistName << ". Skipping detector." << endl;    
-            continue;    
+            continue;   
         }
         auto h_signal_rebinned = std::unique_ptr<TH2F>((TH2F*)h_signal_raw->Clone(Form("%s_rebinned", signalHistName.c_str())));
         h_signal_rebinned->RebinX(2);
-        //h_signal_rebinned->RebinY(2);
 
-        // --- 模板直方图 (从 templateFile 获取，使用新名称模式) ---
         std::map<std::string, std::unique_ptr<TH2F>> templates_rebinned;
         bool all_templates_found = true;
         for (const auto& el : required_elements) {
-            // 新模板名称模式: h2d_PureQTemp_[Element]_[Detector]
-            std::string templateHistName = Form("h2d_PureQTemp_%s_%s", el.c_str(), detector.c_str());
-            TH2F* h_template_raw = (TH2F*)templateFile->Get(templateHistName.c_str());
-            if (!h_template_raw) {    
+            std::string templateHistName;
+            TH2F* h_template_raw = nullptr;
+            TFile* currentFile = nullptr;
+
+            if (false) {
+                templateHistName = chain + "_ISS_BKG_H2_Beryllium_L2QTemplate_" + detector;
+                currentFile = signalFile.get();
+            } else {
+                templateHistName = Form("h2d_PureQTemp_%s_%s", el.c_str(), detector.c_str());
+                currentFile = templateFile.get();
+            }
+
+            h_template_raw = (TH2F*)currentFile->Get(templateHistName.c_str());
+            
+            if (!h_template_raw) {  
                 cerr << "CRITICAL: Could not find required template: " << templateHistName << endl;
                 all_templates_found = false;    
-                break;    
+                break;  
             }
             templates_rebinned[el] = std::unique_ptr<TH2F>((TH2F*)h_template_raw->Clone(Form("%s_rebinned", templateHistName.c_str())));
-            templates_rebinned[el]->RebinX(1); // <-- 针对 Charge 轴 Rebin(2)
-            //templates_rebinned[el]->RebinY(2);
+            templates_rebinned[el]->RebinX(1);
         }
         if (!all_templates_found) { cout << "Missing templates. Skipping detector." << endl; continue; }
 
@@ -460,7 +438,6 @@ void runUnifiedChargeAnalysis(const std::string& chain) {
             }
         }
         
-        // 调试用：保存切片直方图的目录
         outputFile->mkdir(Form("Debug_Slices_%s", detector.c_str()));
         
         for (int y_bin = 1; y_bin <= n_bins_y; ++y_bin) {
@@ -475,12 +452,11 @@ void runUnifiedChargeAnalysis(const std::string& chain) {
             for(auto const& [key, val] : templates_rebinned) templates_raw_ptr[key] = val.get();
             
             UnifiedChargeFitter fitter(chain, detector, y_bin, h_signal_rebinned.get(), templates_raw_ptr);
-            if (!fitter.initializeAndProject()) {    
+            if (!fitter.initializeAndProject()) {   
                 cout << "    Initialization failed. Skipping bin." << endl;    
-                continue;    
+                continue;   
             }
             
-            // --- 调试改进 5: 写入切片直方图进行目视检查 ---
             outputFile->cd(Form("Debug_Slices_%s", detector.c_str()));
             fitter.getSignalHist()->Write(Form("h_signal_E%d", y_bin));
             for(auto const& [name, hist] : fitter.getTemplateHists()) {
@@ -488,26 +464,25 @@ void runUnifiedChargeAnalysis(const std::string& chain) {
             }
             outputFile->cd();
             
-            if (!fitter.runFit()) {    
+            if (!fitter.runFit()) {   
                 cout << "    Fit failed. Skipping bin." << endl;    
-                // 绘制失败的图
                 UnifiedFitResult failed_result;
                 failed_result.ekpernuc_low = ek_low; failed_result.ekpernuc_up = y_axis->GetBinUpEdge(y_bin);
                 auto frame = fitter.generatePlotAndCalcChi2(failed_result);
                 c_pdf->Clear();
                 auto text = std::make_unique<TPaveText>(0.1, 0.1, 0.9, 0.9);
-                text->AddText(Form("Unified Fit (%s, E_{k}=%.2f-%.2f GeV/n)", detector.c_str(), failed_result.ekpernuc_low, failed_result.ekpernuc_up));
+                text->AddText(Form("%s, E_{k}=%.2f-%.2f GeV/n", detector.c_str(), failed_result.ekpernuc_low, failed_result.ekpernuc_up));
                 text->AddText("FIT FAILED TO CONVERGE - SEE ROOT OUTPUT FOR DETAILS");
                 frame->Draw();
                 text->Draw("SAME");
                 c_pdf->SetLogy();
                 c_pdf->Print(pdf_filename.c_str());
-                continue;    
+                continue;   
             }
             
             UnifiedFitResult result = fitter.calculateAllYields();
             result.ekpernuc_center = ek_center;
-            result.ekpernuc_low = ek_low;    
+            result.ekpernuc_low = ek_low;     
             result.ekpernuc_up = y_axis->GetBinUpEdge(y_bin);
             result.ekpernuc_width = y_axis->GetBinWidth(y_bin);
             auto frame = fitter.generatePlotAndCalcChi2(result);
@@ -525,66 +500,56 @@ void runUnifiedChargeAnalysis(const std::string& chain) {
             }
             
             c_pdf->Clear();
-            c_pdf->Divide(1, 2);
-            TPad* pad1 = (TPad*)c_pdf->cd(1);
-            pad1->SetPad(0, 0.3, 1, 1); 
-            pad1->SetLogy(); // <-- LogY 
-            pad1->SetBottomMargin(0.02);
+            c_pdf->SetLogy();
             
-            frame->SetTitle(Form("Unified Fit (%s, E_{k}=%.2f-%.2f GeV/n)", detector.c_str(), result.ekpernuc_low, result.ekpernuc_up));
-            frame->GetYaxis()->SetTitle("Events"); frame->GetXaxis()->SetLabelSize(0);
-            frame->SetMinimum(9);
+            frame->SetTitle(Form("%s, E_{k}=%.2f-%.2f GeV/n", detector.c_str(), result.ekpernuc_low, result.ekpernuc_up));
+            frame->GetYaxis()->SetTitle("Events"); 
+            frame->GetXaxis()->SetTitle("L1Charge"); 
+            frame->GetXaxis()->SetLabelSize(0.04);
+            frame->SetMinimum(20);
             auto hmax = h_signal_rebinned.get()->ProjectionX(Form("hmax%d", y_bin), y_bin, y_bin);
-            frame->SetMaximum(5 * hmax->GetMaximum());
+            frame->SetMaximum(40000);
             frame->Draw();
 
-            auto legend = std::make_unique<TLegend>(0.7, 0.55, 0.88, 0.88); // <-- Legend
+            auto legend = std::make_unique<TLegend>(0.7, 0.6, 0.88, 0.88); 
             legend->SetFillStyle(0); legend->SetBorderSize(0); legend->SetTextSize(0.03);
             legend->AddEntry("data_hist", "Data", "pe");
             legend->AddEntry("total_pdf", "Total Fit", "l");
             for (const auto& el : fitter.getTemplateElements()) {
                 legend->AddEntry(Form("comp_%s", el.c_str()), el.c_str(), "l");
             }
-            legend->Draw(); // <-- Draw Legend
+            legend->Draw(); 
 
-            auto info = std::make_unique<TPaveText>(0.15, 0.65, 0.65, 0.88, "NDC");
+            auto info = std::make_unique<TPaveText>(0.15, 0.66, 0.6, 0.86, "NDC");
             info->SetFillStyle(0); info->SetBorderSize(0); info->SetTextAlign(12);
             info->SetTextSize(0.03);
             info->AddText(Form("#chi^{2}/NDF = %.2f", result.chi2ndf));
-            string fracs_line = "";
-            for(const auto& pair : result.fit_fractions) {
-                const std::string& el = pair.first;
-                fracs_line += Form("F_{%s}=%.3f; ", el.c_str(), pair.second);
+            
+            std::string window_el = "Boron";
+            if (result.yields_in_window.count(window_el)) {
+                info->AddText("L1Q in [4.8, 5.4]:");
+                for (const auto& comp_el : required_elements) {
+                    if(comp_el == "Nitrogen" || comp_el == "Oxygen") continue;
+                    double yield = result.yields_in_window.at(window_el).at(comp_el);
+                    double err = result.yields_in_window_err.at(window_el).at(comp_el);
+                    info->AddText(Form("N_{%s}=%.1f#pm%.1f", comp_el.c_str(), yield, err));
+                }
+            } else {
+                info->AddText(Form("%s window out of range", window_el.c_str()));
             }
-            info->AddText(fracs_line.c_str());
-            double yield_Be_in_Be = result.yields_in_window["Beryllium"]["Beryllium"];
-            double err_Be_in_Be = result.yields_in_window_err["Beryllium"]["Beryllium"];
-            double yield_B_in_Be = result.yields_in_window["Beryllium"]["Boron"];
-            double err_B_in_Be = result.yields_in_window_err["Beryllium"]["Boron"];
-            // 警告行已清理
-            info->AddText(Form("In Be window: N_{Be}=%.1f#pm%.1f, N_{B}=%.1f#pm%.1f", yield_Be_in_Be, err_Be_in_Be, yield_B_in_Be, err_B_in_Be));
             info->Draw();
             
-            TPad* pad2 = (TPad*)c_pdf->cd(2);
-            pad2->SetPad(0, 0, 1, 0.3); pad2->SetTopMargin(0.02); pad2->SetBottomMargin(0.3); pad2->SetGridy();
-            auto pullGraph = std::make_unique<TGraphErrors>();
-            calculatePull(frame.get(), pullGraph.get(), frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
-            setupPullPlot(pullGraph.get(), frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
-            pullGraph->Draw("AP");
-            TLine zeroLine(frame->GetXaxis()->GetXmin(), 0, frame->GetXaxis()->GetXmax(), 0);
-            zeroLine.SetLineStyle(2); zeroLine.SetLineColor(kGray + 1);
-            zeroLine.Draw("SAME");
             c_pdf->Print(pdf_filename.c_str());
         }
         
         outputFile->cd();
-        outputFile->mkdir(detector.c_str())->cd();
-        h_chi2ndf->Write();
+        
+        h_chi2ndf->Write(Form("h_chi2ndf_%s", detector.c_str()));
         for (const auto& el : required_elements) {
-            h_fitfracs.at(el)->Write();
+            h_fitfracs.at(el)->Write(Form("h_fitfrac_%s_%s", el.c_str(), detector.c_str()));
             for (const auto& window_el : required_elements) {
-                h_yields.at(window_el).at(el)->Write();
-                h_fracs_in_window.at(window_el).at(el)->Write();
+                h_yields.at(window_el).at(el)->Write(Form("h_yield_in_%s_from_%s_%s", window_el.c_str(), el.c_str(), detector.c_str()));
+                h_fracs_in_window.at(window_el).at(el)->Write(Form("h_frac_in_%s_from_%s_%s", window_el.c_str(), el.c_str(), detector.c_str()));
             }
         }
     }

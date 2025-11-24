@@ -18,7 +18,21 @@
 #include <ctime>
 #include <sys/resource.h>
 #include <TF1.h>  // 为了使用 TF1
+#include "TH1.h"
+#include "RooGlobalFunc.h"
+#include "RooRealVar.h"
+#include "RooDataHist.h"
+#include "RooGaussian.h"
+#include "RooBifurGauss.h"
+#include "RooFormulaVar.h"
+#include "RooAddPdf.h"
+#include "RooFitResult.h"
+#include <TCanvas.h>
+#include <RooPlot.h>
 #include "./basic_var.h"
+
+using namespace RooFit;
+using namespace std;
 
 
 namespace AMS_Iso {
@@ -406,7 +420,6 @@ double calculateChi2(RooPlot* frame, const char *DataName, const char* ModelName
         double x_val, y_data;
         for (int i = 0; i < dataHist_frame->GetN(); ++i) {
             dataHist_frame->GetPoint(i, x_val, y_data);
-            
             if (x_val >= fitRangeLow && x_val <= fitRangeUp) {
                 if(y_data <= 0) continue;
                 ndf++;
@@ -415,20 +428,21 @@ double calculateChi2(RooPlot* frame, const char *DataName, const char* ModelName
                 double dataError = sqrt(y_data);
                 
                 double pull = (y_data - y_model) / dataError;
-                chi2 += pull * pull;
-                /* 
+                chi2 += (pull * pull);
+                /*
                 cout << "x: " << x_val 
                      << " data: " << y_data 
                      << " model: " << y_model 
                      << " error: " << dataError 
                      << " pull: " << pull 
-                     << " chi2: " << pull * pull << endl
+                     << " chi2: " << chi2 << endl
                      << " ndf: " << ndf << endl;
-                     */
+                */
             }
         }
     }
     ndf -= 2;
+    cout << "xmin max: " << fitRangeLow << " "<< fitRangeUp << endl;
     cout << "Total chi2/ndf: " << chi2/ndf << endl;
     return chi2;
 }
@@ -705,6 +719,127 @@ std::unique_ptr<TLegend> createLegend() {
     legend->SetBorderSize(0);
     legend->SetTextSize(0.036);
     return legend;
+}
+
+vector<vector<double>> DoGausPlusAsymGausFit(TH1* hist, double xmin, double xmax, TCanvas* c, bool use_asym_gaus) {
+    vector<vector<double>> results(2, vector<double>(5, 0.0));
+    if (!hist || hist->GetEntries() < 10 || xmax <= xmin) return results;
+    
+    double mean_init = hist->GetMean();
+    double sigma_init = hist->GetRMS();
+    if (sigma_init <= 0) sigma_init = (xmax - xmin) / 10.0;
+    
+    RooRealVar x("x", hist->GetXaxis()->GetTitle(), xmin, xmax);
+    RooDataHist data("data", "data", x, Import(*hist), Range(xmin, xmax));
+    
+    RooRealVar mean("mean", "#mu_{core}", mean_init, mean_init - 0.1, mean_init + 0.1);
+    RooRealVar sigma_core("sigma_core", "#sigma_{core}", sigma_init, sigma_init * 0.01, sigma_init * 3.0);
+    RooRealVar LR("LR", "LR", 1.5, 1.2, 3.2);
+    RooRealVar RR("RR", "RR", 1.5, 1.2, 3.2);
+
+    RooAbsPdf* model_ptr = nullptr;
+    RooAbsPdf* component_core = nullptr;
+    RooRealVar* frac_ptr = nullptr;
+    int n_free_params = 2;
+
+    RooAbsPdf* core_ptr = nullptr;
+    RooAbsPdf* asy_gaus_ptr = nullptr;
+    RooFormulaVar* sigma_L_ptr = nullptr;
+    RooFormulaVar* sigma_R_ptr = nullptr;
+
+    if (use_asym_gaus) {
+        core_ptr = new RooGaussian("core", "core", x, mean, sigma_core);
+        
+        sigma_L_ptr = new RooFormulaVar("sigma_L", "@0*@1", RooArgList(LR, sigma_core));
+        sigma_R_ptr = new RooFormulaVar("sigma_R", "@0*@1", RooArgList(RR, sigma_core));
+        
+        asy_gaus_ptr = new RooBifurGauss("asy_gaus", "asy_gaus", x, mean, *sigma_L_ptr, *sigma_R_ptr);
+        
+        frac_ptr = new RooRealVar("frac", "Core Frac", 0.8);
+        frac_ptr->setConstant(kTRUE);
+        
+        model_ptr = new RooAddPdf("model", "model", RooArgList(*core_ptr, *asy_gaus_ptr), *frac_ptr);
+        component_core = static_cast<RooAbsPdf*>(core_ptr->clone("core_comp"));
+        n_free_params = 4;
+    } else {
+        model_ptr = new RooGaussian("model", "model", x, mean, sigma_core);
+        n_free_params = 2;
+    }
+
+    RooAbsPdf& model = *model_ptr;
+    RooFitResult *fitResult = model.fitTo(data, Save(), Range(xmin, xmax), SumW2Error(kTRUE), PrintLevel(-1), Verbose(kFALSE));
+
+    if (fitResult && fitResult->status() == 0) {
+        cout<<"Fit converged successfully." << endl;
+        
+        RooPlot *frame = x.frame(Title(hist->GetTitle()), Range(2*xmin, 2*xmax));
+        hist->SetMarkerStyle(20);
+        hist->SetMarkerSize(1.0);
+        hist->Draw("E");
+        data.plotOn(frame, XErrorSize(0), Name("data"), MarkerStyle(20), MarkerSize(.8));
+        model.plotOn(frame, LineColor(kRed), Name("model"));
+        
+        if (use_asym_gaus) {
+            model.plotOn(frame, LineColor(kBlue), LineStyle(kDashed), Components(*component_core));
+            model.plotOn(frame, LineColor(kGreen+2), LineStyle(kDashed), Components("asy_gaus"));
+        }
+
+        double chi2 = calculateChi2(frame, "data", "model", xmin, xmax);
+        int bin_start = hist->GetXaxis()->FindFixBin(xmin);
+        int bin_end = hist->GetXaxis()->FindFixBin(xmax - 1e-6);
+        int n_bins_in_range = bin_end - bin_start + 1;
+        double ndf = n_bins_in_range - n_free_params;
+        double chi2_ndf_val = chi2/ndf;
+
+        cout<< "Fit successful: Chi2/ndf = " << chi2_ndf_val << " (Chi2 = " << chi2 << ", ndf = " << ndf << ")" << endl;
+        
+        results[0][0] = mean.getVal(); results[1][0] = mean.getError();
+        results[0][1] = sigma_core.getVal(); results[1][1] = sigma_core.getError();
+        results[0][4] = chi2; results[1][4] = ndf;
+
+        if (use_asym_gaus) {
+            results[0][2] = LR.getVal(); results[1][2] = LR.getError();
+            results[0][3] = RR.getVal(); results[1][3] = RR.getError();
+        } else {
+            results[0][2] = 0.0; results[1][2] = 0.0;
+            results[0][3] = 0.0; results[1][3] = 0.0;
+        }
+
+        if (c) {
+            c->cd();
+            frame->SetTitle(hist->GetTitle());
+            frame->GetYaxis()->SetTitle("Events");
+            frame->Draw("same");
+            
+            TPaveText *pt = new TPaveText(0.62, 0.55, .97, 0.88, "NDC");
+            pt->SetTextColor(kBlack); pt->SetBorderSize(0); pt->SetFillStyle(0);
+            pt->SetFillColor(0); pt->SetTextAlign(12); pt->SetTextFont(42); pt->SetTextSize(0.03);
+            
+            pt->AddText(Form("#mu_{core} = %.7f#pm%.7f", results[0][0], results[1][0]));
+            pt->AddText(Form("#sigma_{core} = %.7f#pm%.7f", results[0][1], results[1][1]));
+            
+            if (use_asym_gaus) {
+                pt->AddText(Form("LR = %.4f#pm%.4f", results[0][2], results[1][2]));
+                pt->AddText(Form("RR = %.4f#pm%.4f", results[0][3], results[1][3]));
+                pt->AddText("Core Frac = 0.8 (Fixed)");
+            }
+            pt->AddText(Form("#chi^{2}/NDF: %.2f/%.0f=%.2f", chi2,ndf, chi2_ndf_val));
+            pt->Draw("same");
+        }
+        if (component_core) delete component_core;
+    }
+
+    if (frac_ptr) delete frac_ptr;
+    
+    if (use_asym_gaus) {
+        if (core_ptr) delete core_ptr;
+        if (asy_gaus_ptr) delete asy_gaus_ptr;
+        if (sigma_L_ptr) delete sigma_L_ptr;
+        if (sigma_R_ptr) delete sigma_R_ptr;
+    }
+    
+    if (model_ptr) delete model_ptr;
+    return results;
 }
 
 

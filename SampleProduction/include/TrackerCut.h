@@ -1,10 +1,11 @@
 /***********************************************************
- *  File: TrackerCut.h
+ * File: TrackerCut.h
  *
- *  Modern C++ header file for AMS Tracker detector cuts.
+ * Modern C++ header file for AMS Tracker detector cuts.
  *
- *  History:
- *    20241029 - created by ZX.Yan
+ * History:
+ * 20241029 - created by ZX.Yan
+ * 20241123 - Modified for optimization and caching
  ***********************************************************/
 
 #pragma once
@@ -15,29 +16,49 @@
 #include "tracker_var.h"
 #include "Tool.h"
 
-// 前向声明
+// Forward declaration
 class selectdata;
 
 namespace AMS_Iso {
 
-// Tracker状态信息
+// Tracker Status Cache
 struct TrackerStatus {
-    std::array<bool, Tracker::LAYER_COUNT> hasHit;     // 是否有击中
-    std::array<bool, Tracker::LAYER_COUNT> hasXHit;    // 是否有X方向击中
-    std::array<bool, Tracker::LAYER_COUNT> hasYHit;    // 是否有X方向击中
-    std::array<bool, Tracker::LAYER_COUNT> hasXYHit;    // 是否有X方向击中
-    int innerLayerHits;                                // 内层击中数
-    double rigidity;                                   // 刚度值
+    // Hit Maps
+    std::array<bool, Tracker::LAYER_COUNT> hasXYHit;    // Layer-wise XY hit
+    std::array<bool, Tracker::LAYER_COUNT> hasYHit;     // Layer-wise Y hit
+    int innerLayerHits;                                 // Count of inner hits
+    
+    // Secondary Hits (Cached for cutBackground)
+    int secondaryHitCountX;
+    int secondaryHitCountY;
+    
+    // L2 Status (Cached for Templates)
+    bool hasL2XY;
+    bool hasL2QStatusGood;
+
+    // Charge Values (Cached)
+    double innerQ;
+    double innerQRMS;
     double L38InnerAveQ;
+    double L1Q_Unbiased;
+    double L1Q_Normal;
+    double L2Q;
+    
+    // Charge Quality Status (Cached)
+    int L1QStatus_Unbiased;
+    int L1QStatus_Normal;
+
+    // Rigidity
+    double rigidity;
 
     TrackerStatus() 
-        : hasHit{}
-        , hasXHit{}
-        , hasYHit{}
-        , hasXYHit{}
-        , innerLayerHits(0)
+        : hasXYHit{}, hasYHit{}, innerLayerHits(0)
+        , secondaryHitCountX(0), secondaryHitCountY(0)
+        , hasL2XY(false), hasL2QStatusGood(false)
+        , innerQ(0.0), innerQRMS(0.0), L38InnerAveQ(0.0)
+        , L1Q_Unbiased(0.0), L1Q_Normal(0.0)
+        , L1QStatus_Unbiased(-1), L1QStatus_Normal(-1)
         , rigidity(0.0) 
-        , L38InnerAveQ(0.0) 
     {}
 };
 
@@ -46,60 +67,78 @@ public:
     explicit TrackerCut(selectdata* event = nullptr);
     ~TrackerCut() = default;
 
-    // 禁止拷贝和赋值
+    // Disable copy/assign
     TrackerCut(const TrackerCut&) = delete;
     TrackerCut& operator=(const TrackerCut&) = delete;
 
-    // 基本属性访问
+    // --- Accessors for Cached Variables (Optimization) ---
+    double getInnerQ() const { return status_.innerQ; }
+    double getInnerQRMS() const { return status_.innerQRMS; }
+    double getL1Q_Unbiased() const { return status_.L1Q_Unbiased; }
+    double getL1Q_Normal() const { return status_.L1Q_Normal; }
+    double getL2Q() const { return status_.L2Q; }
+    double getL38InnerAveQ() const { return status_.L38InnerAveQ; }
+    // Basic property access (Legacy, if needed)
     double getRigidity(int algorithm = Tracker::Algorithm::DEFAULT,
-                      int alignment = Tracker::Alignment::DEFAULT,
-                      int span = Tracker::Span::DEFAULT) const;
+                       int alignment = Tracker::Alignment::DEFAULT,
+                       int span = Tracker::Span::DEFAULT) const;
 
-    // 基本切割
+    // --- Basic Cuts ---
     CutResult<4> cutBasicAndFiducial(bool isISS) const;
     CutResult<1> cutPhysTrigger(bool isISS) const;
 
-    // 电荷相关切割
+    // --- Charge Cuts ---
     CutResult<5> cutL1Unbiased(int charge, bool isISS = true,
-                        bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
+                         bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
     CutResult<5> cutL1Norm(int charge, bool isISS = true, float coe = 1.) const;
     CutResult<3> cutUTOFQ(int charge, bool isISS = true,
-                         bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
-    CutResult<3> cutInnerQ(int charge, bool isISS = true,
                           bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
+    CutResult<3> cutInnerQ(int charge, bool isISS = true,
+                           bool forEfficiency = false, bool forBackground = false, float coe = 1.) const;
     CutResult<4> cutInnerTracker(int charge = 0, bool isISS = true,
                                 bool forEfficiency = false, bool forBackground = false) const;
     CutResult<3> cutBackground(int charge = 0, bool isISS = true,
                              bool forEfficiency = false, bool forBackground = false) const;
 
-    // 综合切割
+    // --- Complex Cuts ---
     CutResult<10> cutTracker(int charge, bool isISS = true) const;
     CutResult<2> cutUnphysical(int charge, bool isISS = true) const;
+    CutResult<2> TwoAccTrackerCut(int charge, bool isISS, bool forBackground = false) const;
     CutResult<2> getDenominatorL1PickUp(int charge, bool isISS) const;
-    CutResult<6> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground = false) const;
+    
+    // [0,1] L1Sig_Any (N/U), [2,3] L1Sig_Pass, [4,5] L1Sig_Frag
+    // [6,7] L1Template, [8,9] L2Template
+    // [10,11] InnerSig, [12,13] InnerTemp
+    CutResult<14> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const;
 
-    bool TrackerCut::AccUndepCut(int charge, bool isISS, bool forBackground = false) const ;
-    bool TrackerCut::Q_L1_BkgIndependCut(int charge, bool isISS) const ;
-    CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS, bool forBackground = false)  const;
-    std::array<bool,2> TrackerCut::BkgSourceOrFragCut(int charge, bool isISS, int fragZ, bool isL2Frag, bool forBackground = false) const;
+    bool AccUndepCut(int charge, bool isISS, bool forBackground = false) const;
+    bool Q_L1_BkgIndependCut(int charge, bool isISS) const;
+    // Selector for Fragmentation Analysis (Equ1, 2, 3)
+    // selector: 
+    //   0 = Numerator (X -> Y)
+    //   1 = Equ1 Denom (X -> Any)
+    //   2 = Equ2 Denom (X -> X)
+    //   3 = Equ3 Denom (X -> Frag)
+    // Returns: {Unbiased_Result, Normal_Result}
+    std::array<bool, 2> FragSampleSel(int charge, int fragZ, int selector, bool isISS, bool forBackground) const;
 
-    // 辅助函数
+    // Helpers
     double getRadius(bool isUnphysical, int layer) const;
     bool isInFiducial(bool isUnphysical, int layer) const;
-    int getSecondaryHitCount(int direction) const;  // 0: XY hit, 1: Y hit
+    int getSecondaryHitCount(int direction) const;  // 0: XY hit, 1: Y hit (Now returns cached value)
 
 private:
-    selectdata* event_;        // 数据指针（不负责内存管理）
-    TrackerStatus status_;     // Tracker状态信息
-    bool isISS_;              // 是否ISS数据
+    selectdata* event_;       
+    TrackerStatus status_;     
+    bool isISS_;               
 
-    // 内部辅助函数
+    // Internal Helpers
     void initializeStatus();
     bool validateLayer(int layer) const;
     std::array<double, 2> getLayerPosition(bool isUnphysical, int layer) const;
     bool checkFiducialCut(int layer, 
-                         const std::array<double, 2>& position,
-                         double radius) const;
+                          const std::array<double, 2>& position,
+                          double radius) const;
 };
 
 } // namespace AMS_Iso

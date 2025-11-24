@@ -5,7 +5,7 @@
 * ROOTSYS=/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt
 * Compiler: icpx
 * CXXFLAGS: -pthread -std=c++17 -m64 -pthread -std=c++17 -m64 -I/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt/include -O3 -D_GLIBCXX_USE_CXX11_ABI=0
-* Red Hat Enterprise Linux release 9.7 (Plow)
+* Red Hat Enterprise Linux release 9.6 (Plow)
 ***************************************************
 Intel(R) oneAPI DPC++/C++ Compiler 2023.2.0 (2023.2.0.20230721)
 Target: x86_64-unknown-linux-gnu
@@ -14,33 +14,43 @@ InstalledDir: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/
 Configuration file: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin-llvm/../bin/icpx.cfg
 ROOT version: 6.32.06
 LD_LIBRARY_PATH: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/latest/linux/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib/x64:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib/oclfpga/host/linux64/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/compiler/lib/intel64_lin:/cvmfs/sft.cern.ch/lcg/releases/gcc/11.3.0-de683/x86_64-el9/lib:/cvmfs/sft.cern.ch/lcg/releases/gcc/11.3.0-de683/x86_64-el9/lib64:/cvmfs/sft.cern.ch/lcg/releases/binutils/2.40-acaab/x86_64-el9/lib:/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt/lib:.:/cvmfs/ams.cern.ch/opt/xrootd-4.8.2.el9/lib64:/cvmfs/ams.cern.ch/opt/castor.cc7/lib:/cvmfs/ams.cern.ch/opt/lib64_EL9
-Arguments after sourcing scripts: /eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part14.root
+Arguments after sourcing scripts: /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part14.root
 Number of arguments: 1
-[INFO] Using list: /eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part14.root
-[INFO] Output file: /eos/user/z/zixuan/Isotope/ISS/Be/basic_L1Q4to8_part14.root
+[INFO] Using list: /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part14.root
+[INFO] Output file: /eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part14.root
 Analyzer configured for: Beryllium (ISS Data), Z=4, A=7, isNoBkgCut=0, FragmentZ=4
 BinningManager: Pre-calculating bins for all isotopes (Z=1 to 8)...
 BinningManager initialized with 67 general/isotope-specific bins and 0 total isotope-specific beta binnings.
-HistManager: Output file '/eos/user/z/zixuan/Isotope/ISS/Be/basic_L1Q4to8_part14.root' opened.
+HistManager: Output file '/eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part14.root' opened.
 DEBUG: Niso=3 charge=4
-DEBUG: iso ptr=0x7feb1df5f990
+DEBUG: iso ptr=0x7fd8b7421950
 DEBUG: ID Hists
 DEBUG: BKG Hists
 DEBUG: Flux Hists
 DEBUG Finish Hist Defination
-IsotopeAnalyzer initialized with 11777415 entries.
+IsotopeAnalyzer initialized with Warning in <TNetXNGFile::Init>: no StreamerInfo found in root://eosams.cern.ch//eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part14.root therefore preventing schema evolution when reading this file. The file was produced with ROOT version 6.36.04, while the current version is 6.32.06
+Error in <TBufferFile::ReadClassBuffer>: Could not find the StreamerInfo for version 3 of the class TAttMarker, object skipped at offset 148
+Error in <TBufferFile::CheckByteCount>: object of class TAttMarker read too few bytes: 2 instead of 10
+19085228 entries.
 Error in <TChain::SetBranchAddress>: unknown branch -> livetime
+Error in <TChain::SetBranchAddress>: unknown branch -> irti
+Error in <TChain::SetBranchAddress>: unknown branch -> issaa
+Error in <TChain::SetBranchAddress>: unknown branch -> rtilf
+Error in <TChain::SetBranchAddress>: unknown branch -> rtinev
+Error in <TChain::SetBranchAddress>: unknown branch -> rtinerr
+Error in <TChain::SetBranchAddress>: unknown branch -> rtintrig
+Error in <TChain::SetBranchAddress>: unknown branch -> rtinpar
+Error in <TChain::SetBranchAddress>: unknown branch -> rtigood
+Error in <TChain::SetBranchAddress>: unknown branch -> rtinexl
 Error in <TChain::SetBranchAddress>: unknown branch -> rticdif
 Error in <TChain::SetBranchAddress>: unknown branch -> nparticle
 Error in <TChain::SetBranchAddress>: unknown branch -> nbetah
 Error in <TChain::SetBranchAddress>: unknown branch -> nbeta
 Error in <TChain::SetBranchAddress>: unknown branch -> btstat_pR
 Error in <TChain::SetBranchAddress>: unknown branch -> btstat_new
-Error in <TChain::SetBranchAddress>: unknown branch -> ibetah
 Error in <TChain::SetBranchAddress>: unknown branch -> charge_pR
 Error in <TChain::SetBranchAddress>: unknown branch -> iparindex
 Error in <TChain::SetBranchAddress>: unknown branch -> cutoffp
-Error in <TChain::SetBranchAddress>: unknown branch -> cutoffpi
 Error in <TChain::SetBranchAddress>: unknown branch -> betah2p
 Error in <TChain::SetBranchAddress>: unknown branch -> betah2q
 Error in <TChain::SetBranchAddress>: unknown branch -> betah2ch
@@ -80,78 +90,253 @@ Error in <TChain::SetBranchAddress>: unknown branch -> mmom
 Error in <TChain::SetBranchAddress>: unknown branch -> mch
 Error in <TChain::SetBranchAddress>: unknown branch -> mtrmom
 Error in <TChain::SetBranchAddress>: unknown branch -> mtrpar
-Total entries: 11777415 | isISS=1 | Z=4 | A=7
+Total entries: 19085228 | isISS=1 | Z=4 | A=7
 [INFO] Initializing Charge Tuning System (EGE model, optimized)...
 [INFO] Charge Tuning System initialized. Loaded 530 valid EGE lookup tables using integer keys.
-Processing entry 0/11777415
+Processing entry 0/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.71294
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.71294
 [DBG] L2Q Fail: q_l2 out of range. q_l2=23.5354
 [DBG] L2Q Fail: q_l2 out of range. q_l2=23.5354
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.86552
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.86552
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.75294
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.75294
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52908
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52908
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.57965
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.57965
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.83373
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.83373
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52251
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52251
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3909
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3909
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.156
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.156
+Processing entry 1000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=0.998903
 [DBG] L2Q Fail: InvCDF failed. cdf_l2=1
 [DBG] L2Q Fail: InvCDF failed. cdf_l2=1
 [DBG] L2Q Fail: q_l2 out of range. q_l2=19.3129
-Processing entry 1000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62776
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62776
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.4289
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.4289
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.63672
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.63672
+Processing entry 2000000/19085228
 [DBG] L2Q Fail: q_l2 out of range. q_l2=21.2137
 [DBG] L2Q Fail: q_l2 out of range. q_l2=0.70287
 [DBG] L2Q Fail: q_l2 out of range. q_l2=0.70287
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.56028
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.56028
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4524
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4524
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.98517
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.98517
 [DBG] L2Q Fail: q_l2 out of range. q_l2=15.1389
 [DBG] L2Q Fail: q_l2 out of range. q_l2=15.1389
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.4462
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.4462
 [DBG] L2Q Fail: q_l2 out of range. q_l2=12.9002
-Processing entry 2000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.87081
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.87081
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.8953
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.8953
+Processing entry 3000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3682
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3682
 [DBG] L2Q Fail: q_l2 out of range. q_l2=10.2438
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.618
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.618
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.66786
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.66786
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.79993
+Processing entry 4000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4174
 [DBG] L2Q Fail: q_l2 out of range. q_l2=16.3611
 [DBG] L2Q Fail: q_l2 out of range. q_l2=16.3611
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.7196
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.59693
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.59693
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.95111
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.249
-Processing entry 3000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.81757
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.81757
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.5659
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.5659
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.77158
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.77158
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54284
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54284
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.3736
+Processing entry 5000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.3051
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3572
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.95592
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.95592
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.73733
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.73733
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.5262
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.5262
 [DBG] L2Q Fail: q_l2 out of range. q_l2=21.691
 [DBG] L2Q Fail: q_l2 out of range. q_l2=21.691
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.3195
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.3195
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.5562
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.5562
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3704
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.79674
+Processing entry 6000000/19085228
 [DBG] L2Q Fail: q_l2 out of range. q_l2=10.0397
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.8827
-Processing entry 4000000/11777415
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.60256
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.60256
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62194
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62194
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54233
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54233
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.50775
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.50775
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.98166
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.98166
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.65137
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.65137
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.68929
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.68929
+Processing entry 7000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.85798
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.85798
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52812
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52812
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62154
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.1321
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.1321
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.5152
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.5152
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.5394
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.5394
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.65343
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.65343
 [DBG] L2Q Fail: q_l2 out of range. q_l2=12.9576
 [DBG] L2Q Fail: q_l2 out of range. q_l2=12.9576
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-Processing entry 5000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.6207
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.5299
+Processing entry 8000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.59865
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.59865
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.0567
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.0567
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.076
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.076
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.6323
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.6323
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.0474
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.0474
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.367
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.367
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.74331
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.74331
-Processing entry 6000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.527
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53609
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53609
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53609
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53609
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.1863
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.1863
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60165
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60165
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.6268
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.6268
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60209
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60209
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.90354
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.90354
+Processing entry 9000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.89915
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.89915
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.3264
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.64845
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.64845
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.1578
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.1578
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.51848
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.51848
+Processing entry 10000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.9515
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.9515
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52795
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52795
+[DBG] L2Q Fail: q_l2 out of range. q_l2=2.47407
+[DBG] L2Q Fail: q_l2 out of range. q_l2=2.47407
 [DBG] L2Q Fail: q_l2 out of range. q_l2=10.0268
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55242
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55242
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.83388
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.83388
+Processing entry 11000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.84829
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.84829
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.56544
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.56544
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.8688
-Processing entry 7000000/11777415
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60266
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60266
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.75513
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.75513
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52905
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52905
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62259
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.62259
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55026
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55026
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.2026
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.2026
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.1971
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.1971
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.78214
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.78214
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.78214
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.78214
 [DBG] L2Q Fail: q_l2 out of range. q_l2=18.1674
 [DBG] L2Q Fail: q_l2 out of range. q_l2=18.1674
-[DBG] L2Q Fail: q_l2 out of range. q_l2=9.31951
-[DBG] L2Q Fail: q_l2 out of range. q_l2=9.31951
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.2547
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.2547
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.78546
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.50372
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60087
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.60087
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53611
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53611
+Processing entry 12000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55844
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55844
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.89908
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.89908
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.94647
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.94647
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3757
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3757
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.72568
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.72568
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.87869
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.32711
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.7284
 [DBG] L2Q Fail: q_l2 out of range. q_l2=10.7439
 [DBG] L2Q Fail: q_l2 out of range. q_l2=10.7439
-Processing entry 8000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.0247
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.0247
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.50309
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.50309
+Processing entry 13000000/19085228
 [DBG] L2Q Fail: q_l2 out of range. q_l2=12.7841
+[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.6788
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.6788
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.3082
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53683
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.53683
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.81041
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.64737
+[DBG] L2Q Fail: q_l2 out of range. q_l2=2.47769
+[DBG] L2Q Fail: q_l2 out of range. q_l2=2.47769
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.90519
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.90519
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.6421
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.6421
+Processing entry 14000000/19085228
 [DBG] L2Q Fail: q_l2 out of range. q_l2=16.351
 [DBG] L2Q Fail: q_l2 out of range. q_l2=16.351
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.6603
@@ -160,51 +345,123 @@ Processing entry 8000000/11777415
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.755
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.729
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.729
-Processing entry 9000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.4707
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.4707
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.61483
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.61483
+[DBG] L2Q Fail: q_l2 out of range. q_l2=2.49675
+[DBG] L2Q Fail: q_l2 out of range. q_l2=2.49675
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.98005
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.98005
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55821
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55821
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.9025
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.9025
+Processing entry 15000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3998
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3998
 [DBG] L2Q Fail: q_l2 out of range. q_l2=18.6685
 [DBG] L2Q Fail: q_l2 out of range. q_l2=10.4051
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4768
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4768
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.6931
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.6931
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3997
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.66263
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.66263
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.77308
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.77308
 [DBG] L2Q Fail: q_l2 out of range. q_l2=2.46587
-Processing entry 10000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3425
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3425
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.251
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.251
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.81613
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.81613
+[DBG] L2Q Fail: q_l2 out of range. q_l2=11.345
+Processing entry 16000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.7457
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.7457
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.59409
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.59409
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.5847
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.5847
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.8179
 [DBG] L2Q Fail: q_l2 out of range. q_l2=13.8179
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.76101
+[DBG] L2Q Fail: q_l2 out of range. q_l2=1.76101
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.58507
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.58507
 [DBG] L2Q Fail: q_l2 out of range. q_l2=12.8535
 [DBG] L2Q Fail: q_l2 out of range. q_l2=17.1095
 [DBG] L2Q Fail: q_l2 out of range. q_l2=17.1095
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.6183
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.6183
+Processing entry 17000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.83082
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.83082
 [DBG] L2Q Fail: q_l2 out of range. q_l2=12.8233
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.69255
 [DBG] L2Q Fail: q_l2 out of range. q_l2=22.5181
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3822
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.63398
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.63398
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54497
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54497
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.0157
 [DBG] L2Q Fail: q_l2 out of range. q_l2=14.0157
-Processing entry 11000000/11777415
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52835
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.52835
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.68625
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.68625
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54346
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54346
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.2131
+[DBG] L2Q Fail: q_l2 out of range. q_l2=12.2131
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.61479
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.61479
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.51311
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.51311
+Processing entry 18000000/19085228
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.8008
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.562
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.90207
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.90207
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55567
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.55567
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54398
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.54398
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.51768
+[DBG] L2Q Fail: q_l2 out of range. q_l2=9.51768
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.3906
 [DBG] L2Q Fail: q_l2 out of range. q_l2=11.4793
 [DBG] L2Q Fail: q_l2 out of range. q_l2=2.49554
 [DBG] L2Q Fail: q_l2 out of range. q_l2=2.49554
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.0126
+[DBG] L2Q Fail: q_l2 out of range. q_l2=10.0126
+Processing entry 19000000/19085228
 Event processing completed
 Saving all results to file...
 Analysis finished.
 Analysis completed successfully
-[INFO] Finished: /eos/user/z/zixuan/Isotope/ISS/Be/basic_L1Q4to8_part14.root
-	Command being timed: "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh /eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part14.root"
-	User time (seconds): 194.27
-	System time (seconds): 9.71
-	Percent of CPU this job got: 73%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:37.14
+[INFO] Finished: /eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part14.root
+	Command being timed: "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part14.root"
+	User time (seconds): 295.43
+	System time (seconds): 56.92
+	Percent of CPU this job got: 19%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 30:51.50
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 554456
+	Maximum resident set size (kbytes): 1659132
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 143861
-	Voluntary context switches: 65278
-	Involuntary context switches: 96764
+	Major (requiring I/O) page faults: 4283
+	Minor (reclaiming a frame) page faults: 934131
+	Voluntary context switches: 521373
+	Involuntary context switches: 265427
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 66424
 	File system outputs: 32
 	Socket messages sent: 0
 	Socket messages received: 0

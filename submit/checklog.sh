@@ -84,7 +84,7 @@ for BATCH_NAME in $BATCH_NAMES; do
     echo "--- 完整性检查报告 ---"
     
     if [ -z "$MISSING_FILES" ]; then
-        echo "文件完整性: 成功。从 0 到 2950 (共 $EXPECTED_COUNT 个文件) 全部存在且连续。"
+        echo "文件完整性: 成功。从 0 到 2676 (共 $EXPECTED_COUNT 个文件) 全部存在且连续。"
     else
         echo "文件完整性: 失败。缺少以下 ID 的文件: $MISSING_FILES"
     fi

@@ -5,12 +5,12 @@
 # =========================
 
 # 根目录模板（不含 partX）
-INPUT_PREFIX="/eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part"
+INPUT_PREFIX="/eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part"
 INPUT_SUFFIX=".root"
 
 # part 的范围 [START, END]
-START=0
-END=14
+START=7
+END=9
 
 # 你的 ISSBer.sh 绝对路径
 ISSBER="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh"

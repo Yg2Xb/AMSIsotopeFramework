@@ -33,11 +33,11 @@ struct FitResult {
 struct Config {
     string file_v05 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.5_iter2.root";
     string file_v06 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.6_iter2.root";
-    string file_v08 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter2.root";
-    string main_analysis_file_path = file_v06; 
+    string file_v08 = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_BeToOxy_0.8_iter0.root";
+    string main_analysis_file_path = file_v08; 
     string output_dir = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/";
-    vector<string> elements = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
-    //vector<string> elements = {"Boron"};
+    //vector<string> elements = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+    vector<string> elements = {"Lithium"};
     vector<string> detectors = {"TOF", "NaF", "AGL"};
     vector<string> chains = {"UnbiasedL1Inner","L1Inner"};
     vector<string> templates = {"L1QTemplate", "L2QTemplate"};
@@ -439,7 +439,7 @@ void compareFitResults() {
 
     TCanvas* c = new TCanvas("c", "c", 800, 400); c->SetGrid();
     
-    string main_version_tag = (gConfig.main_analysis_file_path == gConfig.file_v05) ? "0.5" : "0.6";
+    string main_version_tag = (gConfig.main_analysis_file_path == gConfig.file_v08) ? "0.8" : "0.6";
 
     // --- START OF MODIFICATION 5: Open the output file at the beginning ---
     string splineOutFile = gConfig.output_dir + "allFitHistSplineSmooth_" + main_version_tag + "_iter2.root";

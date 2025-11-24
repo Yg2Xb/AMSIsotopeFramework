@@ -339,9 +339,5 @@ void HistTempFit_hist() {
     HistTempFit("Be", 7, true, true, 2, 2, true, "Carbon");
     HistTempFit("Be", 7, true, true, 2, 2, true, "Nitrogen");
     HistTempFit("Be", 7, true, true, 2, 2, true, "Oxygen");
-    
-    HistTempFit("B", 10, true, true, 1, 2);
-    HistTempFit("B", 10, true, true, 2, 2, true, "Carbon");
-    HistTempFit("B", 10, true, true, 2, 2, true, "Nitrogen");
-    HistTempFit("B", 10, true, true, 2, 2, true, "Oxygen");
+
 }

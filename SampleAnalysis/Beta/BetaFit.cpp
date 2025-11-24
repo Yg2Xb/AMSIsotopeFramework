@@ -12,156 +12,129 @@
 #include <TF1.h>
 #include <TROOT.h>
 #include <TSystem.h>
-#include <TRegexp.h>
-#include <TLegend.h> 
-#include <TLatex.h>   // 新增
-#include <iomanip>   // 新增
-#include <sstream>   // 新增
+#include <TLegend.h>
+#include <TLatex.h>
+#include <iomanip>
+#include <sstream>
+#include <TStyle.h>
+#include <TLine.h>
+#include "../Tool.h" // 确保 DoGausPlusAsymGausFit 函数在此头文件中
 
 using namespace std;
+using namespace AMS_Iso;
 
-// --- 辅助结构和函数定义 (保持不变) ---
-
-void findFitRange(TH1* hist, double coverage, double& x_min, double& x_max) {
-    if (!hist || hist->GetEntries() == 0) return;
-    
-    int max_bin = hist->GetMaximumBin();
-    double total_integral = hist->Integral();
-    if (total_integral <= 0) return;
-
-    double required_integral = total_integral * coverage;
-    double current_integral = hist->GetBinContent(max_bin);
-    
-    x_min = hist->GetXaxis()->GetBinLowEdge(max_bin);
-    x_max = hist->GetXaxis()->GetBinUpEdge(max_bin);
-
-    int low_bin = max_bin - 1;
-    int high_bin = max_bin + 1;
-    
-    while (current_integral < required_integral) {
-        bool extended = false;
-        double content_low = (low_bin >= 1) ? hist->GetBinContent(low_bin) : 0;
-        double content_high = (high_bin <= hist->GetNbinsX()) ? hist->GetBinContent(high_bin) : 0;
-
-        if (content_low >= content_high && low_bin >= 1 && current_integral + content_low <= total_integral) {
-            current_integral += content_low;
-            x_min = hist->GetXaxis()->GetBinLowEdge(low_bin);
-            low_bin--;
-            extended = true;
-        } else if (content_high > content_low && high_bin <= hist->GetNbinsX() && current_integral + content_high <= total_integral) {
-            current_integral += content_high;
-            x_max = hist->GetXaxis()->GetBinUpEdge(high_bin);
-            high_bin++;
-            extended = true;
-        } else if (low_bin >= 1 && current_integral + content_low <= total_integral) {
-            current_integral += content_low;
-            x_min = hist->GetXaxis()->GetBinLowEdge(low_bin);
-            low_bin--;
-            extended = true;
-        } else if (high_bin <= hist->GetNbinsX() && current_integral + content_high <= total_integral) {
-            current_integral += content_high;
-            x_max = hist->GetXaxis()->GetBinUpEdge(high_bin);
-            high_bin++;
-            extended = true;
-        }
-
-        if (!extended) break;
-    }
-}
-
+// --- 结构体定义 (更新：为 LR 和 RR 增加误差字段) ---
 struct HistInfo {
     string y_axis_label;
     string output_suffix;
     string title_description;
 };
 
-struct PlotConfig {
-    HistInfo info;
-    int skip_points;
-    double x_min_plot;
-    double x_max_plot;
+struct FitResult {
+    // 核心高斯的参数 (用于最终存储和绘图)
+    double mean;
+    double mean_err;
+    double sigma;
+    double sigma_err;
+    // 附加的拟合信息 (用于PDF绘图/调试)
+    double chi2;
+    double ndf;
+    double LR; 
+    double LR_err; // 新增 LR 误差
+    double RR; 
+    double RR_err; // 新增 RR 误差
 };
 
-HistInfo getHistInfo(const string& suffix) {
-    HistInfo info;
-    
-    if (suffix == "ID_H5a") { info = {"Rigidity [GV]", "Rigidity", "NaF-Tracker #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H5b") { info = {"Rigidity [GV]", "Rigidity", "AGL-Tracker #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H5a2") { info = {"gene Rigidity [GV]", "geneRigidity", "NaF-Tracker #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H5b2") { info = {"gene Rigidity [GV]", "geneRigidity", "AGL-Tracker #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H5a3") { info = {"gene Rigidity [GV]", "geneRigidity", "NaF-true #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H5b3") { info = {"gene Rigidity [GV]", "geneRigidity", "AGL-True #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H6a") { info = {"NaF E_{k}/n [GeV/n]", "EkPerN", "TOF-NaF #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H6b") { info = {"AGL E_{k}/n [GeV/n]", "EkPerN", "TOF-AGL #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H7a") { info = {"NaF #beta Rig[GV]", "BetaRig", "TOF-NaF #Delta(1/#beta)"}; } 
-    else if (suffix == "ID_H7b") { info = {"AGL #beta Rig[GV]", "BetaRig", "TOF-AGL #Delta(1/#beta)"}; } 
-    else { info = {"Y Variable", "YVariable", "Unknown Delta Beta"}; }
-    
-    if (info.y_axis_label.rfind("NaF ", 0) == 0) { info.y_axis_label = info.y_axis_label.substr(4); } 
-    else if (info.y_axis_label.rfind("AGL ", 0) == 0) { info.y_axis_label = info.y_axis_label.substr(4); }
-    
-    return info;
-}
+using H4ResultsMap = map<string, FitResult>;
 
-PlotConfig getPlotConfig(const string& suffix) {
-    PlotConfig config;
-    config.info = getHistInfo(suffix);
-    config.x_min_plot = 0.1; 
-    config.x_max_plot = 1000.0; 
-    config.skip_points = 0;   
+// --- 常量定义 ---
+const vector<double> H5_RIG_BINS_EDGES = {30.0, 50.0, 80.0, 120.0, 160.0, 240.0};
+const vector<string> H5_RIG_LABELS = {"30-50 GV", "50-80 GV", "80-120 GV", "120-160 GV", "160-240 GV"};
+const int N_RIG_BINS = H5_RIG_BINS_EDGES.size() - 1;
 
-    // 1. 设置跳过点数 (保持注释，使用用户提供的版本)
-    //if (suffix.find('a') != string::npos) { config.skip_points = 2; } 
-    //else if (suffix.find('b') != string::npos) { config.skip_points = 6; } 
+const vector<string> H5_CHARGE_LABELS = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+const vector<double> H5_CHARGE_BINS_EDGES = {1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5};
+const int N_CHARGE_BINS = H5_CHARGE_BINS_EDGES.size() - 1;
 
-    // 2. 设置 X 轴范围 (Rigidity/Ek/n) (保持用户提供的版本)
-    if (suffix == "ID_H7a") {
-        config.x_min_plot = 2.0; config.x_max_plot = 20.0;
-    } else if (suffix == "ID_H7b") {
-        config.x_min_plot = 4.0; config.x_max_plot = 20.0;
-    } else if (suffix == "ID_H6a") {
-        config.x_min_plot = 0.8; config.x_max_plot = 20.0;
-    } else if (suffix == "ID_H6b") {
-        config.x_min_plot = 2.0; config.x_max_plot = 30.0;
-    } else if (suffix.find("ID_H5a") != string::npos) {
-        config.x_min_plot = 20.; config.x_max_plot = 150.0;
-    } else if (suffix.find("ID_H5b") != string::npos) {
-        config.x_min_plot = 20; config.x_max_plot = 200.0;
+// --- 函数实现：查找拟合范围 ---
+void findFitRange(TH1* hist, double coverage, double center_x, double& x_min, double& x_max) {
+    if (!hist || hist->GetEntries() == 0) return;
+    double total_integral = hist->Integral();
+    if (total_integral <= 0) return;
+    
+    // 优先使用用户提供的中心点，否则使用最大 bin
+    int center_bin = hist->GetXaxis()->FindFixBin(center_x);
+    if (center_bin < 1 || center_bin > hist->GetNbinsX()) {
+        center_bin = hist->GetMaximumBin(); 
+        center_x = hist->GetXaxis()->GetBinCenter(center_bin);
     }
     
-    return config;
+    double required_integral = total_integral * coverage;
+    double current_integral = hist->GetBinContent(center_bin);
+    int low_bin = center_bin - 1;
+    int high_bin = center_bin + 1;
+    x_min = hist->GetXaxis()->GetBinLowEdge(center_bin);
+    x_max = hist->GetXaxis()->GetBinUpEdge(center_bin);
+
+    // 从中心 bin 向两侧扩展，直到覆盖所需积分比例
+    while (current_integral < required_integral) {
+        bool extended = false;
+        double content_low = (low_bin >= 1) ? hist->GetBinContent(low_bin) : 0;
+        double content_high = (high_bin <= hist->GetNbinsX()) ? hist->GetBinContent(high_bin) : 0;
+
+        if (low_bin >= 1 && high_bin <= hist->GetNbinsX()) {
+            current_integral += content_low + content_high;
+            x_min = hist->GetXaxis()->GetBinLowEdge(low_bin);
+            x_max = hist->GetXaxis()->GetBinUpEdge(high_bin);
+            low_bin--;
+            high_bin++;
+            extended = true;
+        } else if (low_bin >= 1) {
+            current_integral += content_low;
+            x_min = hist->GetXaxis()->GetBinLowEdge(low_bin);
+            low_bin--;
+            extended = true;
+        } else if (high_bin <= hist->GetNbinsX()) {
+            current_integral += content_high;
+            x_max = hist->GetXaxis()->GetBinUpEdge(high_bin);
+            high_bin++;
+            extended = true;
+        }
+        if (!extended) break;
+    }
+    
+    // 确保拟合范围关于最终确定的中心点对称
+    double final_center = (x_min + x_max) / 2.0; // 使用当前找到的范围的中心作为新的中心点
+    double half_range = max(abs(x_max - final_center), abs(x_min - final_center));
+    x_min = final_center - half_range;
+    x_max = final_center + half_range;
 }
 
-// 计算 TGraph 集合在特定 X 范围内的全局 Y 范围 (保持不变)
+// --- 函数实现：获取全局 Y 轴范围 ---
 void getGlobalYRange(const vector<TGraphErrors*>& graphs, double x_min, double x_max, double& y_min, double& y_max) {
-    y_min = 1e10; 
-    y_max = -1e10; 
+    y_min = 1e10;
+    y_max = -1e10;
     bool found_point = false;
-
     for (const auto& g : graphs) {
         for (int i = 0; i < g->GetN(); ++i) {
             double x, y;
             g->GetPoint(i, x, y);
-
             if (x >= x_min && x <= x_max) {
-                double y_low = y;
-                double y_high = y;
-                
+                double y_low = y - g->GetErrorY(i);
+                double y_high = y + g->GetErrorY(i);
                 y_min = min(y_min, y_low);
                 y_max = max(y_max, y_high);
                 found_point = true;
             }
         }
     }
-
     if (found_point) {
         double range = y_max - y_min;
-        if (range == 0.0) { 
-            range = abs(y_min * 0.1); 
-            if (range == 0) range = 0.01; 
+        if (range == 0.0) {
+            range = abs(y_min * 0.1);
+            if (range == 0) range = 0.01;
         }
-        
-        double buffer = range * 0.10; // 使用用户提供的 10% 扩充
+        double buffer = range * 0.10;
         y_min -= buffer;
         y_max += buffer;
     } else {
@@ -170,75 +143,436 @@ void getGlobalYRange(const vector<TGraphErrors*>& graphs, double x_min, double x
     }
 }
 
-// 图例位置函数 (保持不变)
-void setLegendPosition(const string& suffix, bool is_mean, double& x1, double& y1, double& x2, double& y2) {
-    // 默认图例大小 (相对坐标)
-    const double w = 0.25; // 宽度
-    const double h = 0.20; // 高度
+// --- 函数实现：获取直方图信息 ---
+HistInfo getHistInfo(const string& suffix) {
+    HistInfo info;
+    if (suffix == "ID_H5a") { info = {"Rigidity [GV]", "Rigidity", "NaF-Tracker #Delta(1/#beta)"}; }
+    else if (suffix == "ID_H5b") { info = {"Rigidity [GV]", "Rigidity", "AGL-Tracker #Delta(1/#beta)"}; }
+    else if (suffix == "ID_H4a") { info = {"Rigidity [GV]", "Rigidity", "NaF 1/#beta (Rig > 80GV)"}; }
+    else if (suffix == "ID_H4b") { info = {"Rigidity [GV]", "Rigidity", "AGL 1/#beta (Rig > 150GV)"}; }
+    else { info = {"Y Variable", "YVariable", "Unknown Delta Beta"}; }
+    return info;
+}
 
-    // 默认图例边距
-    const double margin = 0.03;
+// --- 函数实现：绘制和保存图表 (修改1: 移除 logx 选项) ---
+void DrawAndSaveGraphs(vector<TGraphErrors*>& graphs, const vector<string>& legend_labels,
+                         const string& x_axis_title, const string& y_axis_title,
+                         const string& canvas_title_prefix, const string& output_dir,
+                         const string& output_name_base, bool logx, TFile* save_to_root,
+                         const string& graph_name_suffix) {
+    
+    if (graphs.empty()) return;
+    string canvas_name = "c_" + output_name_base + graph_name_suffix;
+    TCanvas* c = new TCanvas(canvas_name.c_str(), (canvas_title_prefix + graph_name_suffix).c_str(), 700, 500);
+    c->SetGrid();
+    // 原始代码: if (logx) c->SetLogx(1); // 移除或忽略logx设置
 
-    if (suffix.find("ID_H5") != string::npos) {
-        // H5 系列 (5a, 5b, 5a2, 5b2, 5a3, 5b3)
-        if (is_mean) { // Mean: 右下
-            x1 = 1.0 - 2*margin - w; y1 = 5*margin;
-            x2 = 1.0 - 2*margin;     y2 = 5*margin + h;
-        } else { // Sigma: 右上
-            x1 = 1.0 - 2*margin - w; y1 = 1.0 - 5*margin - h;
-            x2 = 1.0 - 2*margin;     y2 = 1.0 - 5*margin;
+    // 假设所有图表的 X 轴范围相同，使用第一个图表的范围
+    double x_min = graphs[0]->GetXaxis()->GetXmin();
+    double x_max = graphs[0]->GetXaxis()->GetXmax();
+    double y_min, y_max;
+    getGlobalYRange(graphs, x_min, x_max, y_min, y_max);
+
+    TLegend* leg = new TLegend(0.8, 0.8, 0.99, 0.99);
+    leg->SetFillStyle(0);
+    leg->SetBorderSize(1);
+
+    for (size_t i = 0; i < graphs.size(); ++i) {
+        string draw_opt = (i == 0) ? "APZ" : "PZ same";
+        graphs[i]->Draw(draw_opt.c_str());
+        
+        if (i == 0) {
+            graphs[i]->SetTitle((canvas_title_prefix + " vs " + x_axis_title).c_str());
+            graphs[i]->GetXaxis()->SetTitle(x_axis_title.c_str());
+            graphs[i]->GetYaxis()->SetTitle(y_axis_title.c_str());
+            graphs[i]->GetXaxis()->SetRangeUser(x_min, x_max);
+            graphs[i]->GetYaxis()->SetRangeUser(y_min, y_max);
         }
-    } else if (suffix.find("ID_H6") != string::npos) {
-        // H6 系列 (6a, 6b)
-        if (is_mean) { // Mean: 右下
-            x1 = 1.0 - 2*margin - w; y1 = 5*margin;
-            x2 = 1.0 - 2*margin;     y2 = 5*margin + h;
-        } else { // Sigma: 左上
-            x1 = 5*margin;           y1 = 1.0 - 5*margin - h;
-            x2 = 5*margin + w;       y2 = 1.0 - 5*margin;
+
+        if (i < legend_labels.size()) {
+            leg->AddEntry(graphs[i], legend_labels[i].c_str(), "p");
         }
-    } else if (suffix == "ID_H7a") {
-        // H7a: Mean 右下, Sigma 右上
-        if (is_mean) { // Mean: 右下
-            x1 = 1.0 - 2*margin - w; y1 = 5*margin;
-            x2 = 1.0 - 2*margin;     y2 = 5*margin + h;
-        } else { // Sigma: 右上
-            x1 = 1.0 - 2*margin - w; y1 = 1.0 - 5*margin - h;
-            x2 = 1.0 - 2*margin;     y2 = 1.0 - 5*margin;
+
+        if (save_to_root) {
+            save_to_root->cd();
+            graphs[i]->SetName(("g_" + output_name_base + graph_name_suffix + "_" + to_string(i)).c_str());
+            graphs[i]->Write();
         }
-    } else if (suffix == "ID_H7b") {
-        // H7b: Mean 右下, Sigma 左上
-        if (is_mean) { // Mean: 右下
-            x1 = 1.0 - 2*margin - w; y1 = 5*margin;
-            x2 = 1.0 - 2*margin;     y2 = 5*margin + h;
-        } else { // Sigma: 左上
-            x1 = 5*margin;           y1 = 1.0 - 5*margin - h;
-            x2 = 5*margin + w;       y2 = 1.0 - 5*margin;
+    }
+
+    leg->Draw();
+    c->SaveAs((output_dir + output_name_base + graph_name_suffix + ".png").c_str());
+    delete leg;
+    delete c;
+}
+
+// --- 函数实现：绘制 H4 拟合结果 (图例标签改为 "ISS") ---
+void DrawH4Results(const H4ResultsMap& results, const string& output_dir, const HistInfo& info,
+                    const string& output_name_base, const string& x_axis_label,
+                    const vector<string>& particles, TFile* save_to_root) {
+    
+    TGraphErrors* g_mean_z = new TGraphErrors();
+    TGraphErrors* g_sigma_z = new TGraphErrors();
+    g_mean_z->SetMarkerStyle(20); g_sigma_z->SetMarkerStyle(20);
+    g_mean_z->SetMarkerSize(1.0); g_sigma_z->SetMarkerSize(1.0);
+    g_mean_z->SetLineColor(kBlack); g_sigma_z->SetLineColor(kBlack);
+    g_mean_z->SetMarkerColor(kBlack); g_sigma_z->SetMarkerColor(kBlack);
+    
+    for (size_t p = 0; p < particles.size(); ++p) {
+        const string& particle = particles[p];
+        if (p >= H5_CHARGE_BINS_EDGES.size() - 1) continue;
+        double z_center = (H5_CHARGE_BINS_EDGES[p] + H5_CHARGE_BINS_EDGES[p+1]) / 2.0; 
+
+        if (results.count(particle)) {
+            const auto& res = results.at(particle);
+            // 存储时只使用核心高斯的 mean 和 sigma
+            if (res.mean_err > 0 || res.sigma_err > 0) {
+                int n_mean = g_mean_z->GetN();
+                g_mean_z->SetPoint(n_mean, z_center, res.mean);
+                g_mean_z->SetPointError(n_mean, 0.0, res.mean_err);
+                int n_sigma = g_sigma_z->GetN();
+                g_sigma_z->SetPoint(n_sigma, z_center, res.sigma);
+                g_sigma_z->SetPointError(n_sigma, 0.0, res.sigma_err);
+            }
         }
+    }
+    
+    double min_z = H5_CHARGE_BINS_EDGES.front();
+    double max_z = H5_CHARGE_BINS_EDGES.back();
+    g_mean_z->GetXaxis()->SetRangeUser(min_z, max_z);
+    g_sigma_z->GetXaxis()->SetRangeUser(min_z, max_z);
+
+    // H4图例标签改为 "ISS"
+    vector<string> single_legend = {"ISS"};
+    
+    vector<TGraphErrors*> graphs_mean_z = {g_mean_z};
+    DrawAndSaveGraphs(graphs_mean_z, single_legend, "Charge (Z)", ("#mu_{" + x_axis_label + "}").c_str(), 
+                      info.title_description + " Mean", output_dir, output_name_base, false, 
+                      save_to_root, "_Mean_vs_Charge");
+
+    vector<TGraphErrors*> graphs_sigma_z = {g_sigma_z};
+    DrawAndSaveGraphs(graphs_sigma_z, single_legend, "Charge (Z)", ("#sigma_{" + x_axis_label + "}").c_str(), 
+                      info.title_description + " Sigma", output_dir, output_name_base, false, 
+                      save_to_root, "_Sigma_vs_Charge");
+
+    delete g_mean_z; 
+    delete g_sigma_z;
+}
+
+// --- 函数实现：绘制 H5 拟合结果 ---
+void DrawH5ResultsFromTH2(TH2F* h2_mean, TH2F* h2_sigma, const string& output_dir, const HistInfo& info,
+                          const string& output_name_base, const string& x_axis_label, TFile* save_to_root) {
+    
+    vector<int> colors = {kYellow+2, kMagenta, kBlack, kRed, kBlue, kGreen + 2, kOrange + 1};
+    vector<int> rig_colors = {kBlack, kRed, kBlue, kGreen+2, kMagenta}; 
+
+    vector<double> rig_centers;
+    for (int i = 0; i < N_RIG_BINS; ++i) {
+        rig_centers.push_back((H5_RIG_BINS_EDGES[i] + H5_RIG_BINS_EDGES[i+1]) / 2.0);
+    }
+    double rig_min = H5_RIG_BINS_EDGES.front();
+    double rig_max = H5_RIG_BINS_EDGES.back() * 1.5; // 确保最右侧 bin 有显示空间
+
+    vector<double> charge_centers;
+    for (int i = 0; i < N_CHARGE_BINS; ++i) {
+        charge_centers.push_back((H5_CHARGE_BINS_EDGES[i] + H5_CHARGE_BINS_EDGES[i+1]) / 2.0);
+    }
+    double charge_min = H5_CHARGE_BINS_EDGES.front();
+    double charge_max = H5_CHARGE_BINS_EDGES.back();
+
+    // 绘制 Mean/Sigma vs Rigidity (按 Z 分类)
+    vector<TGraphErrors*> graphs_mean_rig, graphs_sigma_rig;
+    for (int i = 1; i <= N_CHARGE_BINS; ++i) {
+        TGraphErrors* g_mean = new TGraphErrors();
+        TGraphErrors* g_sigma = new TGraphErrors();
+        int color = colors[i-1];
+        g_mean->SetMarkerStyle(20); g_sigma->SetMarkerStyle(20);
+        g_mean->SetMarkerSize(1.0); g_sigma->SetMarkerSize(1.0);
+        g_mean->SetMarkerColor(color); g_sigma->SetMarkerColor(color);
+        g_mean->SetLineColor(color); g_sigma->SetLineColor(color);
+
+        for (int j = 1; j <= N_RIG_BINS; ++j) {
+            double mean = h2_mean->GetBinContent(j, i);
+            double mean_err = h2_mean->GetBinError(j, i);
+            double sigma = h2_sigma->GetBinContent(j, i);
+            double sigma_err = h2_sigma->GetBinError(j, i);
+            
+            // 存储时只使用核心高斯的 mean 和 sigma
+            if (mean_err > 0 || sigma_err > 0) {
+                double rig_center = rig_centers[j-1];
+                g_mean->SetPoint(g_mean->GetN(), rig_center, mean);
+                g_mean->SetPointError(g_mean->GetN()-1, 0.0, mean_err); 
+                g_sigma->SetPoint(g_sigma->GetN(), rig_center, sigma);
+                g_sigma->SetPointError(g_sigma->GetN()-1, 0.0, sigma_err); 
+            }
+        }
+        g_mean->GetXaxis()->SetRangeUser(rig_min, rig_max);
+        g_sigma->GetXaxis()->SetRangeUser(rig_min, rig_max);
+        graphs_mean_rig.push_back(g_mean);
+        graphs_sigma_rig.push_back(g_sigma);
+    }
+
+    // mean vs Rigidity, logx=false
+    DrawAndSaveGraphs(graphs_mean_rig, H5_CHARGE_LABELS, "Rigidity [GV]", ("#mu_{" + x_axis_label + "}").c_str(), 
+                      info.title_description + " Mean", output_dir, output_name_base, false, 
+                      save_to_root, "_Mean_vs_Rigidity");
+
+    // sigma vs Rigidity, logx=false
+    DrawAndSaveGraphs(graphs_sigma_rig, H5_CHARGE_LABELS, "Rigidity [GV]", ("#sigma_{" + x_axis_label + "}").c_str(), 
+                      info.title_description + " Sigma", output_dir, output_name_base, false, 
+                      save_to_root, "_Sigma_vs_Rigidity");
+
+    for (auto g : graphs_mean_rig) delete g;
+    for (auto g : graphs_sigma_rig) delete g;
+
+    // 绘制 Mean/Sigma vs Charge (按 Rigidity 分类)
+    vector<TGraphErrors*> graphs_mean_z, graphs_sigma_z;
+    for (int j = 1; j <= N_RIG_BINS; ++j) {
+        TGraphErrors* g_mean_z = new TGraphErrors();
+        TGraphErrors* g_sigma_z = new TGraphErrors();
+        int color = rig_colors[j-1];
+        g_mean_z->SetMarkerStyle(20); g_sigma_z->SetMarkerStyle(20);
+        g_mean_z->SetMarkerSize(1.0); g_sigma_z->SetMarkerSize(1.0);
+        g_mean_z->SetMarkerColor(color); g_sigma_z->SetMarkerColor(color);
+        g_mean_z->SetLineColor(color); g_sigma_z->SetLineColor(color);
+
+        for (int i = 1; i <= N_CHARGE_BINS; ++i) {
+            double mean = h2_mean->GetBinContent(j, i);
+            double mean_err = h2_mean->GetBinError(j, i);
+            double sigma = h2_sigma->GetBinContent(j, i);
+            double sigma_err = h2_sigma->GetBinError(j, i);
+
+            // 存储时只使用核心高斯的 mean 和 sigma
+            if (mean_err > 0 || sigma_err > 0) {
+                double z_center = charge_centers[i-1];
+                g_mean_z->SetPoint(g_mean_z->GetN(), z_center, mean);
+                g_mean_z->SetPointError(g_mean_z->GetN()-1, 0.0, mean_err);
+                g_sigma_z->SetPoint(g_sigma_z->GetN(), z_center, sigma);
+                g_sigma_z->SetPointError(g_sigma_z->GetN()-1, 0.0, sigma_err);
+            }
+        }
+        g_mean_z->GetXaxis()->SetRangeUser(charge_min, charge_max);
+        g_sigma_z->GetXaxis()->SetRangeUser(charge_min, charge_max);
+        graphs_mean_z.push_back(g_mean_z);
+        graphs_sigma_z.push_back(g_sigma_z);
+    }
+
+    // mean vs Charge, logx=false
+    DrawAndSaveGraphs(graphs_mean_z, H5_RIG_LABELS, "Charge (Z)", ("#mu_{" + x_axis_label + "}").c_str(), 
+                      info.title_description + " Mean", output_dir, output_name_base, false, 
+                      save_to_root, "_Mean_vs_Charge");
+
+    // sigma vs Charge, logx=false
+    DrawAndSaveGraphs(graphs_sigma_z, H5_RIG_LABELS, "Charge (Z)", ("#sigma_{" + x_axis_label + "}").c_str(), 
+                      info.title_description + " Sigma", output_dir, output_name_base, false, 
+                      save_to_root, "_Sigma_vs_Charge");
+
+    for (auto g : graphs_mean_z) delete g;
+    for (auto g : graphs_sigma_z) delete g;
+}
+
+// --- 函数实现：两轮拟合 (更新：存储和显示 LR/RR 误差) ---
+FitResult twoStepGaussianFit(TH1* hist, const string& x_axis_label, TCanvas* c_fit, const string& title_prefix, double default_center_x, const string& rig_label) {
+    // 初始化结果结构体
+    FitResult result = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    if (!hist || hist->GetEntries() < 10) return result;
+
+    // --- 第一轮拟合：使用 80% 积分范围确定初始参数 (普通高斯) ---
+    double x_min_fit1 = 0.0, x_max_fit1 = 0.0;
+    findFitRange(hist, 0.80, default_center_x, x_min_fit1, x_max_fit1); // 80% 覆盖率
+    if (x_max_fit1 <= x_min_fit1) return result;
+
+    TF1* f_gaus1 = new TF1("f_gaus1", "gaus", x_min_fit1, x_max_fit1);
+    f_gaus1->SetParameters(hist->GetMaximum(), hist->GetMean(), hist->GetRMS());
+    int fit_status1 = hist->Fit(f_gaus1, "QRS");
+    
+    if (fit_status1 != 0) {
+        delete f_gaus1;
+        return result; 
+    }
+
+    double mean0 = f_gaus1->GetParameter(1);
+    double sigma0 = f_gaus1->GetParameter(2);
+    delete f_gaus1; // 释放内存
+
+    // --- 第二轮拟合：使用 DoGausPlusAsymGausFit (核心高斯 +/- 3*sigma 范围) ---
+    // 使用第一轮的高斯结果确定拟合范围
+    double x_min_fit2 = mean0 - 4.0 * abs(sigma0);
+    double x_max_fit2 = mean0 + 4.0 * abs(sigma0);
+    //if Beryllium and 30-50GV, using narrower range:2.0
+    if(rig_label == "30-50 GV" && title_prefix.find("Beryllium") != string::npos){
+        x_min_fit2 = mean0 - 2.5 * abs(sigma0);
+        x_max_fit2 = mean0 + 2.5 * abs(sigma0);
+    }
+
+    if (x_max_fit2 <= x_min_fit2) return result;
+    
+    // 调用封装的拟合函数
+    // Row 0: Values [Mean, Sigma_core, LR, RR, Chi2]
+    // Row 1: Errors & NDF [Mean_err, Sigma_core_err, LR_err, RR_err, NDF]
+    hist->SetTitle(title_prefix.c_str());
+    hist->GetYaxis()->SetTitle("Events");
+    //hist->GetXaxis()->SetTitle(x_axis_label.c_str());
+    double buffer = 0.6 * (x_max_fit2 - x_min_fit2);
+    hist->GetXaxis()->SetRangeUser(x_min_fit2 - buffer, x_max_fit2 + buffer);
+    vector<vector<double>> fit_data = DoGausPlusAsymGausFit(hist, x_min_fit2, x_max_fit2, c_fit, true);
+    
+    if (fit_data[1][4] > 0) { // NDF > 0 表示拟合成功
+        // 成功拟合，将结果填充到 FitResult 结构体
+        result.mean = fit_data[0][0];
+        result.mean_err = fit_data[1][0];
+        result.sigma = fit_data[0][1];
+        result.sigma_err = fit_data[1][1];
+        result.LR = fit_data[0][2];
+        result.LR_err = fit_data[1][2]; // 存储 LR 误差
+        result.RR = fit_data[0][3];
+        result.RR_err = fit_data[1][3]; // 存储 RR 误差
+        result.chi2 = fit_data[0][4];
+        result.ndf = fit_data[1][4];
+        c_fit->cd();
+        
+        // 标记拟合范围
+        TLine* l_min = new TLine(x_min_fit2, 0, x_min_fit2, hist->GetMaximum() * 1.);
+        TLine* l_max = new TLine(x_max_fit2, 0, x_max_fit2, hist->GetMaximum() * 1.);
+        l_min->SetLineStyle(2); l_max->SetLineStyle(2);
+        l_min->SetLineColor(kRed); l_max->SetLineColor(kRed);
+        l_min->Draw("same"); l_max->Draw("same");
+
+        c_fit->Update();
     } else {
-        // 默认: 右上 
-        x1 = 0.7; y1 = 0.7;
-        x2 = 0.9; y2 = 0.9;
+        // 拟合失败
+        c_fit->cd();
+        hist->Draw("hist");
+        TLatex latex; latex.SetNDC(); latex.SetTextSize(0.035);
+        latex.DrawLatex(0.6, 0.85, "Fit Failed");
+        if (!rig_label.empty()) {
+            stringstream ss; ss << "Rig: " << rig_label;
+            latex.DrawLatex(0.15, 0.85, ss.str().c_str());
+        }
+        c_fit->Update();
+    }
+    
+    return result;
+}
+
+// --- 函数实现：分析主逻辑 ---
+void Analyze(TFile* file, const string& suffix, const string& output_dir,
+             const vector<string>& particles, const vector<int>& colors, TFile* output_root_file, bool is_h5) {
+
+    cout << "\n--- Analyzing " << (is_h5 ? "H5" : "H4") << " Series: " << suffix << " ---" << endl;
+    gStyle->SetOptFit(0);
+    
+    const string prefix = "UnbiasedL1Inner_";
+    const string x_axis_label = is_h5 ? "#Delta(1/#beta)" : "1/#beta";
+    HistInfo info = getHistInfo(suffix);
+    string output_name_base = info.output_suffix + suffix.substr(3);
+    string fit_pdf_path = output_dir + "FitResults_" + output_name_base + ".pdf";
+    TCanvas* c_fit = new TCanvas("c_fit", "Gaussian Fit Results", 800, 600);
+    c_fit->SetLogy(0);
+    c_fit->Print((fit_pdf_path + "[").c_str(), "pdf");
+
+    H4ResultsMap h4_results;
+    TH2F* h2_mean = nullptr;
+    TH2F* h2_sigma = nullptr;
+    if (is_h5) {
+        h2_mean = new TH2F(("h2_mean_" + suffix).c_str(), (info.title_description + " Mean;Rigidity [GV];Charge (Z)").c_str(), N_RIG_BINS, &H5_RIG_BINS_EDGES[0], N_CHARGE_BINS, &H5_CHARGE_BINS_EDGES[0]);
+        h2_sigma = new TH2F(("h2_sigma_" + suffix).c_str(), (info.title_description + " Sigma;Rigidity [GV];Charge (Z)").c_str(), N_RIG_BINS, &H5_RIG_BINS_EDGES[0], N_CHARGE_BINS, &H5_CHARGE_BINS_EDGES[0]);
+    }
+
+    for (size_t p = 0; p < particles.size(); ++p) {
+        const string& particle = particles[p];
+        string full_name = prefix + particle + "_" + suffix;
+        
+        TObject* obj = file->Get(full_name.c_str());
+        if (!obj) continue;
+
+        if (is_h5) {
+            TH2F* h2 = dynamic_cast<TH2F*>(obj);
+            if (!h2) continue;
+
+            for (size_t i = 0; i < N_RIG_BINS; ++i) {
+                double rig_min = H5_RIG_BINS_EDGES[i];
+                double rig_max = H5_RIG_BINS_EDGES[i+1];
+                int rig_bin_index = i + 1;
+                string rig_label = H5_RIG_LABELS[i];
+
+                // 2D 上的 Y 轴是 Rigidity，X 轴是要拟合的量 (Delta 1/beta)
+                int bin_y_min = h2->GetYaxis()->FindFixBin(rig_min);
+                // 确保最后一个 bin 包含最后一个边界
+                int bin_y_max = (i == N_RIG_BINS - 1) ? h2->GetNbinsY() : h2->GetYaxis()->FindFixBin(rig_max - 1e-6);
+
+                TH1D* h1_proj = h2->ProjectionX(("proj_" + full_name + "_" + to_string(i)).c_str(), bin_y_min, bin_y_max);
+                if (h1_proj->GetEntries() == 0) { delete h1_proj; continue; }
+                
+                // 尝试 Rebin 直到最大值大于60
+                for(int r=1 ; r<=10; ++r) { if (h1_proj->GetMaximum() >= 80 && h1_proj->GetBinWidth(1)>0.000001) break; h1_proj->Rebin(2); }
+                
+                string title = particle + " - " + info.output_suffix + " [" + rig_label + "]";
+
+                FitResult fit_res = twoStepGaussianFit(h1_proj, x_axis_label, c_fit, title, 0.0, rig_label);
+
+                // 存储的时候只用存核心高斯的 mean 和 sigma
+                if (fit_res.mean_err > 0 || fit_res.sigma_err > 0) {
+                    h2_mean->SetBinContent(rig_bin_index, p + 1, fit_res.mean);
+                    h2_mean->SetBinError(rig_bin_index, p + 1, fit_res.mean_err);
+                    h2_sigma->SetBinContent(rig_bin_index, p + 1, fit_res.sigma);
+                    h2_sigma->SetBinError(rig_bin_index, p + 1, fit_res.sigma_err);
+                    c_fit->Print(fit_pdf_path.c_str(), "pdf");
+                }
+                
+                delete h1_proj;
+            }
+        } else {
+            TH1F* h1 = dynamic_cast<TH1F*>(obj);
+            if (!h1) continue;
+            TH1F* h1_clone = (TH1F*)h1->Clone(("clone_" + full_name).c_str());
+            h1_clone->SetMarkerStyle(20);
+            h1_clone->SetMarkerSize(1.2);
+
+            // 尝试 Rebin 直到最大值大于60
+            for(int r=1 ; r<=10; ++r) { if (h1_clone->GetMaximum() >= 80 && h1_clone->GetBinWidth(1)>0.000001) break; h1_clone->Rebin(2); }
+            
+            string title = particle + " - " + info.title_description;
+            // 默认中心点 1.0 用于 H4 拟合
+            FitResult fit_res = twoStepGaussianFit(h1_clone, x_axis_label, c_fit, title, 1.0, ""); 
+
+            if (fit_res.mean_err > 0 || fit_res.sigma_err > 0) {
+                h4_results[particle] = fit_res;
+                c_fit->Print(fit_pdf_path.c_str(), "pdf");
+            }
+
+            delete h1_clone;
+        }
+    }
+    
+    c_fit->Print((fit_pdf_path + "]").c_str(), "pdf");
+    delete c_fit;
+
+    if (is_h5) {
+        output_root_file->cd();
+        h2_mean->Write();
+        h2_sigma->Write();
+        DrawH5ResultsFromTH2(h2_mean, h2_sigma, output_dir, info, output_name_base, x_axis_label, output_root_file);
+        delete h2_mean;
+        delete h2_sigma;
+    } else {
+        // H4 Results with "ISS" legend
+        DrawH4Results(h4_results, output_dir, info, output_name_base, x_axis_label, particles, output_root_file);
     }
 }
 
 
-// --- 主分析函数 ---
+// --- ROOT 宏主函数 ---
 void BetaFit() {
-    gROOT->SetBatch(kTRUE); 
-    
+    gROOT->SetBatch(kTRUE);
+    gStyle->SetErrorX(0); 
+
     const string input_file_path = "/eos/user/z/zixuan/Isotope/Add/Be_frag4.root";
-    const string output_dir = "/eos/user/z/zixuan/Isotope/Beta/";
-    const string prefix = "L1Inner_";
-    const string x_axis_label = "#Delta(1/#beta)"; 
+    const string output_dir = "/eos/user/z/zixuan/Isotope/Beta/ISS/";
+    const string output_root_path = output_dir + "ISS_RICHBetaStudy.root";
     
-    vector<string> particles = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"}; 
-    vector<int> colors = {kBlack, kRed, kBlue, kGreen + 2, kOrange + 1}; 
-    vector<string> id_suffixes = {
-        "ID_H5a", "ID_H5b", "ID_H5a2", "ID_H5b2", "ID_H5a3", "ID_H5b3",
-        "ID_H6a", "ID_H6b",
-        "ID_H7a", "ID_H7b"
-    };
+    vector<string> particles = {"Helium","Lithium","Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+    vector<int> colors = {kYellow+2, kMagenta, kBlack, kRed, kBlue, kGreen + 2, kOrange + 1}; 
 
     if (gSystem->AccessPathName(output_dir.c_str())) {
         cout << "Creating output directory: " << output_dir << endl;
@@ -251,239 +585,31 @@ void BetaFit() {
         return;
     }
 
-    // **开始循环处理**
-    for (const string& suffix : id_suffixes) {
-        
-        PlotConfig config = getPlotConfig(suffix);
-        const HistInfo& info = config.info;
-        string output_name_base = info.output_suffix + suffix.substr(3); 
-        
-        // **新增: 拟合结果输出 PDF 文件名**
-        string fit_pdf_path = output_dir + "FitResults_" + output_name_base + ".pdf";
-        TCanvas* c_fit = new TCanvas("c_fit", "Gaussian Fit Results", 800, 600);
-        
-        // **PDF 文件开启写入 (使用 [.c_str() 结束方括号)]**
-        c_fit->Print((fit_pdf_path + "[").c_str(), "pdf"); 
+    TFile* output_root_file = TFile::Open(output_root_path.c_str(), "RECREATE");
+    if (!output_root_file || output_root_file->IsZombie()) {
+        cerr << "ERROR: Cannot create output ROOT file: " << output_root_path << endl;
+        file->Close();
+        delete file;
+        return;
+    }
+    
+    // H5 系列分析 (is_h5 = true)
+    vector<string> h5_suffixes = {"ID_H5a", "ID_H5b"};
+    for (const string& suffix : h5_suffixes) {
+        Analyze(file, suffix, output_dir, particles, colors, output_root_file, true);
+    }
 
-        TCanvas* c_mean = new TCanvas(("c_mean_" + output_name_base).c_str(), "Mean Plot", 800, 600);
-        TCanvas* c_sigma = new TCanvas(("c_sigma_" + output_name_base).c_str(), "Sigma Plot", 800, 600);
-        
-        // 动态创建和定位图例 (保持不变)
-        double mean_x1, mean_y1, mean_x2, mean_y2;
-        setLegendPosition(suffix, true, mean_x1, mean_y1, mean_x2, mean_y2);
-        TLegend* leg_mean = new TLegend(mean_x1, mean_y1, mean_x2, mean_y2);
-        leg_mean->SetFillStyle(0); leg_mean->SetBorderSize(0); 
+    // H4 系列分析 (is_h5 = false)
+    vector<string> h4_suffixes = {"ID_H4a", "ID_H4b"};
+    for (const string& suffix : h4_suffixes) {
+        Analyze(file, suffix, output_dir, particles, colors, output_root_file, false);
+    }
 
-        double sigma_x1, sigma_y1, sigma_x2, sigma_y2;
-        setLegendPosition(suffix, false, sigma_x1, sigma_y1, sigma_x2, sigma_y2);
-        TLegend* leg_sigma = new TLegend(sigma_x1, sigma_y1, sigma_x2, sigma_y2);
-        leg_sigma->SetFillStyle(0); leg_sigma->SetBorderSize(0);
-
-        c_mean->SetGrid(); c_sigma->SetGrid();
-        c_mean->SetLogx(1); c_sigma->SetLogx(1);
-
-        vector<TGraphErrors*> graphs_mean;
-        vector<TGraphErrors*> graphs_sigma;
-
-        // --- 提取数据并拟合 ---
-        for (size_t p = 0; p < particles.size(); ++p) {
-            const string& particle = particles[p];
-            int color = colors[p];
-            string full_name = prefix + particle + "_" + suffix;
-            
-            TH2D* h2 = dynamic_cast<TH2D*>(file->Get(full_name.c_str()));
-            
-            if (!h2) continue;
-
-            TH2D* h2_rebin = (TH2D*)h2->Clone((full_name + "_rebin").c_str());
-            h2_rebin->RebinY(2);
-            int new_bins_y = h2_rebin->GetNbinsY(); 
-            
-            if (new_bins_y <= config.skip_points) {
-                 delete h2_rebin;
-                 continue;
-            }
-
-            TGraphErrors* g_mean = new TGraphErrors(new_bins_y);
-            TGraphErrors* g_sigma = new TGraphErrors(new_bins_y);
-
-            g_mean->SetMarkerStyle(20); g_sigma->SetMarkerStyle(20);
-            g_mean->SetMarkerSize(1.0); g_sigma->SetMarkerSize(1.0);
-            g_mean->SetMarkerColor(color); g_sigma->SetMarkerColor(color);
-            g_mean->SetLineColor(color); g_sigma->SetLineColor(color);
-            
-            for (int i = 1; i <= new_bins_y; ++i) {
-                
-                if (i <= config.skip_points) { continue; }
-
-                double y_center = h2_rebin->GetYaxis()->GetBinCenter(i);
-                TH1D* h1_proj = h2_rebin->ProjectionX(("proj_" + full_name + "_" + to_string(i)).c_str(), i, i);
-
-                // 检查 Y 轴范围是否在用户设定的 X 轴绘图范围内（只拟合要绘制的点）
-                if (y_center < config.x_min_plot || y_center > config.x_max_plot) {
-                    delete h1_proj; 
-                    continue;
-                }
-
-                if (h1_proj->GetEntries() < 50 || h1_proj->GetMaximum() <= 0) { 
-                    delete h1_proj; continue;
-                }
-
-                double x_min_fit = 0.0, x_max_fit = 0.0;
-                findFitRange(h1_proj, 0.95, x_min_fit, x_max_fit);
-
-                if (x_max_fit <= x_min_fit) { delete h1_proj; continue; }
-
-                TF1* f_gaus = new TF1("f_gaus", "gaus", x_min_fit, x_max_fit);
-                f_gaus->SetParameters(h1_proj->GetMaximum(), h1_proj->GetMean(), h1_proj->GetRMS());
-                f_gaus->SetLineColor(kRed);
-
-                int fit_status = h1_proj->Fit(f_gaus, "QRS"); // "S" 选项获取拟合结果
-
-                if (fit_status == 0) { 
-                    double mean = f_gaus->GetParameter(1);
-                    double mean_err = f_gaus->GetParError(1);
-                    double sigma = f_gaus->GetParameter(2);
-                    double sigma_err = f_gaus->GetParError(2);
-                    double chi2 = f_gaus->GetChisquare();
-                    int ndf = f_gaus->GetNDF();
-                    double chi2_ndf = (ndf > 0) ? chi2 / ndf : 0.0;
-                    
-                    // 1. 记录数据点 (保持不变)
-                    int point_index = g_mean->GetN();
-                    g_mean->SetPoint(point_index, y_center, mean);
-                    g_mean->SetPointError(point_index, 0.0, mean_err); 
-                    g_sigma->SetPoint(point_index, y_center, sigma);
-                    g_sigma->SetPointError(point_index, 0.0, sigma_err); 
-
-                    // 2. **新增: 绘制拟合结果到 PDF**
-                    c_fit->cd();
-                    
-                    // **修正：删除了 SetTitle 外部多余的括号**
-                    // 设置直方图标题，包括 Rigidity/Ek/n 范围
-                    h1_proj->SetTitle((particle + " - " + info.output_suffix + " [" + to_string(static_cast<int>(y_center)) + "]").c_str());
-                    h1_proj->GetXaxis()->SetRangeUser(mean - 10*sigma, mean + 10*sigma);
-                    h1_proj->SetMarkerSize(1.0);
-                    h1_proj->SetMarkerStyle(20);
-                    h1_proj->Draw("PZ"); 
-                    f_gaus->Draw("SAME");
-                    
-                    // **显示参数**
-                    TLatex latex;
-                    latex.SetNDC();
-                    latex.SetTextSize(0.035);
-
-                    stringstream ss;
-                    ss << fixed << setprecision(5);
-                    
-                    // Mean
-                    ss.str(""); ss << "#mu = " << mean << " #pm " << mean_err;
-                    latex.DrawLatex(0.6, 0.85, ss.str().c_str());
-                    
-                    // Sigma
-                    ss.str(""); ss << "#sigma = " << sigma << " #pm " << sigma_err;
-                    latex.DrawLatex(0.6, 0.80, ss.str().c_str());
-
-                    // Chi2/NDF
-                    ss.str(""); 
-                    ss << fixed << setprecision(2) << "#chi^{2}/NDF = " << chi2_ndf;
-                    latex.DrawLatex(0.6, 0.75, ss.str().c_str());
-
-                    // Y Center (Rigidity/Ek/n)
-                    ss.str(""); 
-                    ss << info.y_axis_label << ": " << y_center;
-                    latex.DrawLatex(0.15, 0.85, ss.str().c_str());
-
-                    c_fit->Update();
-                    c_fit->Print(fit_pdf_path.c_str(), "pdf"); // 输出当前页
-
-                }
-                
-                delete f_gaus;
-                delete h1_proj;
-            } 
-
-            if (g_mean->GetN() > 0) {
-                 graphs_mean.push_back(g_mean);
-                 graphs_sigma.push_back(g_sigma);
-                 leg_mean->AddEntry(g_mean, particle.c_str(), "p"); 
-                 leg_sigma->AddEntry(g_sigma, particle.c_str(), "p");
-            } else {
-                 delete g_mean; delete g_sigma;
-            }
-
-            delete h2_rebin; 
-        } 
-        
-        // **PDF 文件结束写入**
-        c_fit->Print((fit_pdf_path + "]").c_str(), "pdf"); 
-        delete c_fit;
-
-        // 5. **绘图输出 (Mean/Sigma) (保持不变)**
-        double plot_x_min = config.x_min_plot;
-        double plot_x_max = config.x_max_plot; 
-        double mean_y_min, mean_y_max;
-        double sigma_y_min, sigma_y_max;
-        
-        getGlobalYRange(graphs_mean, plot_x_min, plot_x_max, mean_y_min, mean_y_max);
-        getGlobalYRange(graphs_sigma, plot_x_min, plot_x_max, sigma_y_min, sigma_y_max);
-
-
-        // Mean 绘图
-        c_mean->cd();
-        for (size_t i = 0; i < graphs_mean.size(); ++i) {
-            string draw_opt = (i == 0) ? "A P" : "P SAME"; 
-            graphs_mean[i]->Draw(draw_opt.c_str());
-            
-            if (i == 0) {
-                string full_title = info.title_description + " Mean vs " + info.y_axis_label;
-                graphs_mean[i]->SetTitle(full_title.c_str());
-                graphs_mean[i]->GetXaxis()->SetTitle(info.y_axis_label.c_str());
-                graphs_mean[i]->GetYaxis()->SetTitle(("#mu_{" + x_axis_label + "}").c_str());
-                
-                graphs_mean[i]->GetXaxis()->SetRangeUser(plot_x_min, plot_x_max); 
-                graphs_mean[i]->GetYaxis()->SetRangeUser(mean_y_min, mean_y_max);
-                c_mean->Update(); 
-            }
-        }
-        if (graphs_mean.size() > 0) {
-            leg_mean->Draw();
-            string mean_output_path = output_dir + output_name_base + "_Mean.png";
-            c_mean->SaveAs(mean_output_path.c_str());
-        }
-
-        // Sigma 绘图
-        c_sigma->cd();
-        for (size_t i = 0; i < graphs_sigma.size(); ++i) {
-            string draw_opt = (i == 0) ? "A P" : "P SAME";
-            graphs_sigma[i]->Draw(draw_opt.c_str());
-            
-            if (i == 0) {
-                string full_title = info.title_description + " Sigma vs " + info.y_axis_label;
-                graphs_sigma[i]->SetTitle(full_title.c_str());
-                graphs_sigma[i]->GetXaxis()->SetTitle(info.y_axis_label.c_str());
-                graphs_sigma[i]->GetYaxis()->SetTitle(("#sigma_{" + x_axis_label + "}").c_str());
-                
-                graphs_sigma[i]->GetXaxis()->SetRangeUser(plot_x_min, plot_x_max); 
-                graphs_sigma[i]->GetYaxis()->SetRangeUser(sigma_y_min, sigma_y_max);
-                c_sigma->Update(); 
-            }
-        }
-        if (graphs_sigma.size() > 0) {
-            leg_sigma->Draw();
-            string sigma_output_path = output_dir + output_name_base + "_Sigma.png";
-            c_sigma->SaveAs(sigma_output_path.c_str());
-        }
-        
-        // 清理 (Mean/Sigma)
-        for (auto g : graphs_mean) delete g;
-        for (auto g : graphs_sigma) delete g;
-        delete c_mean; delete c_sigma;
-        delete leg_mean; delete leg_sigma;
-
-    } // End of suffix loop
-
+    output_root_file->Close();
     file->Close();
+    delete output_root_file;
     delete file;
+
     gROOT->SetBatch(kFALSE);
+    cout << "\nAnalysis finished. Results saved to: " << output_dir << endl;
 }

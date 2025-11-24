@@ -14,215 +14,60 @@ InstalledDir: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/
 Configuration file: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin-llvm/../bin/icpx.cfg
 ROOT version: 6.32.06
 LD_LIBRARY_PATH: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/latest/linux/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib/x64:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib/oclfpga/host/linux64/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/compiler/lib/intel64_lin:/cvmfs/sft.cern.ch/lcg/releases/gcc/11.3.0-de683/x86_64-el9/lib:/cvmfs/sft.cern.ch/lcg/releases/gcc/11.3.0-de683/x86_64-el9/lib64:/cvmfs/sft.cern.ch/lcg/releases/binutils/2.40-acaab/x86_64-el9/lib:/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt/lib:.:/cvmfs/ams.cern.ch/opt/xrootd-4.8.2.el9/lib64:/cvmfs/ams.cern.ch/opt/castor.cc7/lib:/cvmfs/ams.cern.ch/opt/lib64_EL9
-Arguments after sourcing scripts: /eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part1.root
+Arguments after sourcing scripts: /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part1.root
 Number of arguments: 1
-[INFO] Using list: /eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part1.root
-[INFO] Output file: /eos/user/z/zixuan/Isotope/ISS/Be/basic_L1Q4to8_part1.root
+[INFO] Using list: /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part1.root
+[INFO] Output file: /eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part1.root
 Analyzer configured for: Beryllium (ISS Data), Z=4, A=7, isNoBkgCut=0, FragmentZ=4
 BinningManager: Pre-calculating bins for all isotopes (Z=1 to 8)...
 BinningManager initialized with 67 general/isotope-specific bins and 0 total isotope-specific beta binnings.
-HistManager: Output file '/eos/user/z/zixuan/Isotope/ISS/Be/basic_L1Q4to8_part1.root' opened.
+HistManager: Output file '/eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part1.root' opened.
 DEBUG: Niso=3 charge=4
-DEBUG: iso ptr=0x7fc1774cf990
+DEBUG: iso ptr=0x7f6f2a249950
 DEBUG: ID Hists
 DEBUG: BKG Hists
 DEBUG: Flux Hists
 DEBUG Finish Hist Defination
-IsotopeAnalyzer initialized with 12517093 entries.
-Error in <TChain::SetBranchAddress>: unknown branch -> livetime
-Error in <TChain::SetBranchAddress>: unknown branch -> rticdif
-Error in <TChain::SetBranchAddress>: unknown branch -> nparticle
-Error in <TChain::SetBranchAddress>: unknown branch -> nbetah
-Error in <TChain::SetBranchAddress>: unknown branch -> nbeta
-Error in <TChain::SetBranchAddress>: unknown branch -> btstat_pR
-Error in <TChain::SetBranchAddress>: unknown branch -> btstat_new
-Error in <TChain::SetBranchAddress>: unknown branch -> ibetah
-Error in <TChain::SetBranchAddress>: unknown branch -> charge_pR
-Error in <TChain::SetBranchAddress>: unknown branch -> iparindex
-Error in <TChain::SetBranchAddress>: unknown branch -> cutoffp
-Error in <TChain::SetBranchAddress>: unknown branch -> cutoffpi
-Error in <TChain::SetBranchAddress>: unknown branch -> betah2p
-Error in <TChain::SetBranchAddress>: unknown branch -> betah2q
-Error in <TChain::SetBranchAddress>: unknown branch -> betah2ch
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_qrms
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_ql
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_qlsn
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_iso
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_exql
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_exdis
-Error in <TChain::SetBranchAddress>: unknown branch -> tk_dir0
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_bpatt
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_beta
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_betah_oldtune
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_trapezoidedge
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_edge
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_goodgeo
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_z
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_pz
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_q
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_qrms
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_ql1
-Error in <TChain::SetBranchAddress>: unknown branch -> tof_qs
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_itrtrack
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_udis
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_used
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_stat
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_width
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_pmt1
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_PMTChargeConsistency
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_BetaConsistency
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_pos_tkItr
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_goodgeo
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_theta_tkItr
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_phi_tkItr
-Error in <TChain::SetBranchAddress>: unknown branch -> rich_n
-Error in <TChain::SetBranchAddress>: unknown branch -> mmom
-Error in <TChain::SetBranchAddress>: unknown branch -> mch
-Error in <TChain::SetBranchAddress>: unknown branch -> mtrmom
-Error in <TChain::SetBranchAddress>: unknown branch -> mtrpar
-Total entries: 12517093 | isISS=1 | Z=4 | A=7
+IsotopeAnalyzer initialized with 33130426 entries.
+Total entries: 33130426 | isISS=1 | Z=4 | A=7
 [INFO] Initializing Charge Tuning System (EGE model, optimized)...
-[INFO] Charge Tuning System initialized. Loaded 530 valid EGE lookup tables using integer keys.
-Processing entry 0/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.3413
-[DBG] L2Q Fail: q_l2 out of range. q_l2=10.5536
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.574
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-Processing entry 1000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.0608
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.0608
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-Processing entry 2000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.8737
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.027
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4799
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.9426
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.9426
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.3478
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.3478
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.9354
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.9354
-Processing entry 3000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.3753
-[DBG] L2Q Fail: q_l2 out of range. q_l2=18.5064
-[DBG] L2Q Fail: q_l2 out of range. q_l2=18.5064
-[DBG] L2Q Fail: q_l2 out of range. q_l2=17.9292
-[DBG] L2Q Fail: q_l2 out of range. q_l2=13.2852
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.5312
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.5312
-Processing entry 4000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.0033
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.0033
-[DBG] L2Q Fail: q_l2 out of range. q_l2=13.7433
-[DBG] L2Q Fail: q_l2 out of range. q_l2=13.7433
-Processing entry 5000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.4432
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.4432
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.1836
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.7552
-[DBG] L2Q Fail: q_l2 out of range. q_l2=1.10981
-[DBG] L2Q Fail: q_l2 out of range. q_l2=1.10981
-Processing entry 6000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.3439
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.3439
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.42935
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.42935
-[DBG] L2Q Fail: q_l2 out of range. q_l2=13.2062
-[DBG] L2Q Fail: q_l2 out of range. q_l2=13.6621
-[DBG] L2Q Fail: q_l2 out of range. q_l2=13.6621
-Processing entry 7000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.749
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.749
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.3493
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.3493
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.5503
-Processing entry 8000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4123
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.4123
-[DBG] L2Q Fail: q_l2 out of range. q_l2=22.5611
-[DBG] L2Q Fail: q_l2 out of range. q_l2=22.5611
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.8492
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.8492
-[DBG] L2Q Fail: q_l2 out of range. q_l2=18.1412
-[DBG] L2Q Fail: q_l2 out of range. q_l2=18.1412
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.9889
-[DBG] L2Q Fail: q_l2 out of range. q_l2=2.9889
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.015
-[DBG] L2Q Fail: q_l2 out of range. q_l2=22.02
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.0792
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.0792
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.0792
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.0792
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-Processing entry 9000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=18.1152
-[DBG] L2Q Fail: q_l2 out of range. q_l2=18.1152
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.1607
-[DBG] L2Q Fail: q_l2 out of range. q_l2=16.1607
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.5665
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.5665
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: q_l2 out of range. q_l2=26.6977
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.8622
-Processing entry 10000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.1507
-[DBG] L2Q Fail: q_l2 out of range. q_l2=14.1507
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.624
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.191
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.191
-[DBG] L2Q Fail: q_l2 out of range. q_l2=1.72552
-[DBG] L2Q Fail: q_l2 out of range. q_l2=1.72552
-[DBG] L2Q Fail: InvCDF failed. cdf_l2=1
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.3811
-Processing entry 11000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=20.597
-[DBG] L2Q Fail: q_l2 out of range. q_l2=23.495
-[DBG] L2Q Fail: q_l2 out of range. q_l2=23.495
-[DBG] L2Q Fail: q_l2 out of range. q_l2=11.8403
-Processing entry 12000000/12517093
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.0276
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.0276
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.0623
-[DBG] L2Q Fail: q_l2 out of range. q_l2=15.0623
-[DBG] L2Q Fail: q_l2 out of range. q_l2=12.9958
+[INFO] Charge Tuning System initialized. Loaded 636 valid EGE lookup tables using integer keys.
+Processing entry 0/33130426
+Processing entry 1000000/33130426
+Processing entry 2000000/33130426
+Processing entry 3000000/33130426
+Processing entry 4000000/33130426
+Processing entry 5000000/33130426
+Processing entry 6000000/33130426
+Processing entry 7000000/33130426
+Processing entry 8000000/33130426
+Processing entry 9000000/33130426
+Processing entry 10000000/33130426
+Processing entry 11000000/33130426
+Processing entry 12000000/33130426
+Processing entry 13000000/33130426
+Processing entry 14000000/33130426
+Processing entry 15000000/33130426
+Processing entry 16000000/33130426
+Processing entry 17000000/33130426
+Processing entry 18000000/33130426
+Processing entry 19000000/33130426
+Processing entry 20000000/33130426
+Processing entry 21000000/33130426
+Processing entry 22000000/33130426
+Processing entry 23000000/33130426
+Processing entry 24000000/33130426
+Processing entry 25000000/33130426
+Processing entry 26000000/33130426
+Processing entry 27000000/33130426
+Processing entry 28000000/33130426
+Processing entry 29000000/33130426
+Processing entry 30000000/33130426
+Processing entry 31000000/33130426
+Processing entry 32000000/33130426
+Processing entry 33000000/33130426
 Event processing completed
 Saving all results to file...
 Analysis finished.
 Analysis completed successfully
-[INFO] Finished: /eos/user/z/zixuan/Isotope/ISS/Be/basic_L1Q4to8_part1.root
-	Command being timed: "/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh /eos/ams/group/ihep/zixuan/filter/basic_L1Q4to8_part1.root"
-	User time (seconds): 213.32
-	System time (seconds): 10.64
-	Percent of CPU this job got: 71%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 5:12.32
-	Average shared text size (kbytes): 0
-	Average unshared data size (kbytes): 0
-	Average stack size (kbytes): 0
-	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 550428
-	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 35
-	Minor (reclaiming a frame) page faults: 185669
-	Voluntary context switches: 74101
-	Involuntary context switches: 88769
-	Swaps: 0
-	File system inputs: 0
-	File system outputs: 32
-	Socket messages sent: 0
-	Socket messages received: 0
-	Signals delivered: 0
-	Page size (bytes): 4096
-	Exit status: 0
+[INFO] Finished: /eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part1.root

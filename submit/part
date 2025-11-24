@@ -1,0 +1,73 @@
+***************************************************
+* Importing amsvar ... 
+***************************************************
+* USLC=9 UCC=icc64 UICC=2023 UGCC=1310 UROOT=6
+* ROOTSYS=/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt
+* Compiler: icpx
+* CXXFLAGS: -pthread -std=c++17 -m64 -pthread -std=c++17 -m64 -I/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt/include -O3 -D_GLIBCXX_USE_CXX11_ABI=0
+* Red Hat Enterprise Linux release 9.7 (Plow)
+***************************************************
+Intel(R) oneAPI DPC++/C++ Compiler 2023.2.0 (2023.2.0.20230721)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin-llvm
+Configuration file: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin-llvm/../bin/icpx.cfg
+ROOT version: 6.32.06
+LD_LIBRARY_PATH: /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/latest/linux/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib/x64:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/lib/oclfpga/host/linux64/lib:/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/compiler/lib/intel64_lin:/cvmfs/sft.cern.ch/lcg/releases/gcc/11.3.0-de683/x86_64-el9/lib:/cvmfs/sft.cern.ch/lcg/releases/gcc/11.3.0-de683/x86_64-el9/lib64:/cvmfs/sft.cern.ch/lcg/releases/binutils/2.40-acaab/x86_64-el9/lib:/cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.32.06/x86_64-almalinux9.4-gcc114-opt/lib:.:/cvmfs/ams.cern.ch/opt/xrootd-4.8.2.el9/lib64:/cvmfs/ams.cern.ch/opt/castor.cc7/lib:/cvmfs/ams.cern.ch/opt/lib64_EL9
+Arguments after sourcing scripts: /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part3.root
+Number of arguments: 1
+[INFO] Using list: /eos/ams/group/ihep/zixuan/filter/newbasic_L1Q2to8_part3.root
+[INFO] Output file: /eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part3.root
+Analyzer configured for: Beryllium (ISS Data), Z=4, A=7, isNoBkgCut=0, FragmentZ=4
+BinningManager: Pre-calculating bins for all isotopes (Z=1 to 8)...
+BinningManager initialized with 67 general/isotope-specific bins and 0 total isotope-specific beta binnings.
+HistManager: Output file '/eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part3.root' opened.
+DEBUG: Niso=3 charge=4
+DEBUG: iso ptr=0x7f118d820950
+DEBUG: ID Hists
+DEBUG: BKG Hists
+DEBUG: Flux Hists
+DEBUG Finish Hist Defination
+IsotopeAnalyzer initialized with 33364278 entries.
+Total entries: 33364278 | isISS=1 | Z=4 | A=7
+[INFO] Initializing Charge Tuning System (EGE model, optimized)...
+[INFO] Charge Tuning System initialized. Loaded 636 valid EGE lookup tables using integer keys.
+Processing entry 0/33364278
+Processing entry 1000000/33364278
+Processing entry 2000000/33364278
+Processing entry 3000000/33364278
+Processing entry 4000000/33364278
+Processing entry 5000000/33364278
+Processing entry 6000000/33364278
+Processing entry 7000000/33364278
+Processing entry 8000000/33364278
+Processing entry 9000000/33364278
+Processing entry 10000000/33364278
+Processing entry 11000000/33364278
+Processing entry 12000000/33364278
+Processing entry 13000000/33364278
+Processing entry 14000000/33364278
+Processing entry 15000000/33364278
+Processing entry 16000000/32231180
+Processing entry 17000000/32231180
+Processing entry 18000000/32231180
+Processing entry 19000000/32231180
+Processing entry 20000000/32231180
+Processing entry 21000000/32231180
+Processing entry 22000000/32231180
+Processing entry 23000000/32231180
+Processing entry 24000000/32231180
+Processing entry 25000000/32231180
+Processing entry 26000000/32231180
+Processing entry 27000000/32231180
+Processing entry 28000000/32231180
+Processing entry 29000000/32231180
+Processing entry 30000000/32231180
+Processing entry 31000000/32231180
+Processing entry 32000000/32231180
+Event processing completed
+Saving all results to file...
+Analysis finished.
+Analysis completed successfully
+[INFO] Finished: /eos/user/z/zixuan/Isotope/ISS/Be/newbasic_L1Q2to8_part2.root
+ISS/Be/newbasic_L1Q2to8_part3.root

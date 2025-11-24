@@ -203,6 +203,7 @@ public :
    Float_t         mch;
    Float_t         mtrmom[9];
    Int_t           mtrpar[9];
+   Int_t           mtrz[9];
 
    // List of branches
    TBranch        *b_run;   //!
@@ -383,6 +384,7 @@ public :
    TBranch        *b_mch;   //!
    TBranch        *b_mtrmom;   //!
    TBranch        *b_mtrpar;   //!
+   TBranch        *b_mtrz;   //!
 
    void SetAnalyzer(AMS_Iso::IsotopeAnalyzer* analyzer);
    selectdata(TTree *tree=0);
@@ -655,6 +657,7 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("mch", &mch, &b_mch);
    fChain->SetBranchAddress("mtrmom", mtrmom, &b_mtrmom);
    fChain->SetBranchAddress("mtrpar", mtrpar, &b_mtrpar);
+   fChain->SetBranchAddress("mtrz", mtrz, &b_mtrz);
    Notify();
 }
 
