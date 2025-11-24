@@ -1,3 +1,18 @@
 build/
 submit/joblist/YanzxDST/*.txt
 submit/joblist/TxTDivide/*.txt
+submit/hadd/**/*.txt
+# 忽略 ROOT 数据文件
+*.root
+
+# 忽略日志文件
+*.log
+
+# 忽略图片 (如果你确定不需要版本控制图片)
+*.png
+
+# 忽略编译中间文件 (虽然你现在没列出来，但建议加上)
+*.o
+*.so
+*.pcm
+*.d
