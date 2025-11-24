@@ -1,18 +1,36 @@
+# --- 编译与构建目录 ---
 build/
+
+# --- 任务列表与临时 TXT ---
 submit/joblist/YanzxDST/*.txt
 submit/joblist/TxTDivide/*.txt
 submit/hadd/**/*.txt
-# 忽略 ROOT 数据文件
+
+# --- 二进制与数据文件 ---
 *.root
-
-# 忽略日志文件
 *.log
-
-# 忽略图片 (如果你确定不需要版本控制图片)
 *.png
-
-# 忽略编译中间文件 (虽然你现在没列出来，但建议加上)
 *.o
 *.so
 *.pcm
 *.d
+
+# --- 具体的备份/废弃代码文件 (已修正路径) ---
+est_frag copy.cpp
+est_frag_indivi_spline.cpp
+CalFrag copy.cpp
+
+# --- 下面这些路径去掉了开头的 AMSIsotopeFramework/ ---
+SampleAnalysis/ChargeFit/compareFitResults copy.cpp
+SampleAnalysis/ChargeFit/chargeHistFit copy.cpp
+SampleProduction/src/HistManager_diffEkbin.cpp
+SampleProduction/src/HistManager_frag5.cpp
+SampleProduction/src/HistManager_nolambda.cpp
+SampleProduction/src/selectdata copy 2.cpp
+SampleProduction/src/selectdata copy.cpp
+SampleProduction/src/selectdata_bp.cpp
+SampleProduction/src/selectdata_frag5.cpp
+
+# --- [可选] 更智能的忽略规则 ---
+# 如果你经常复制文件做备份，加上这一行，以后所有带 "copy" 的cpp都不用手动加了：
+*copy*.cpp
