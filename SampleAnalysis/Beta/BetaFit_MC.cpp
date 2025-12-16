@@ -18,10 +18,12 @@
 #include <sstream>
 #include <TStyle.h>
 #include <TLine.h>
-#include "../Tool.h" 
+#include "../Tool.h"
 
 using namespace std;
 using namespace AMS_Iso;
+
+// --- Data Structures ---
 
 struct HistInfo {
     string y_axis_label;
@@ -30,43 +32,62 @@ struct HistInfo {
 };
 
 struct FitResult {
-    double mean;
-    double mean_err;
-    double sigma;
-    double sigma_err;
-    double chi2;
-    double ndf;
-    double LR; 
-    double LR_err; 
-    double RR; 
-    double RR_err; 
+    double mean, mean_err;
+    double sigma, sigma_err;
+    double chi2, ndf;
+    double LR, LR_err;
+    double RR, RR_err;
 };
 
-using H4ResultsMap = map<string, FitResult>;
-using MCAllH4Results = map<string, FitResult>;
+// Unified configuration for MC files
+struct MCConfig {
+    string filename; // Input filename
+    string nuclide;  // Label (e.g., "B10")
+    string element;  // Element name for hist lookup (e.g., "Boron")
+    double Z;        // Charge for plotting
+};
+
+// --- Constants & Config ---
 
 const vector<double> H5_RIG_BINS_EDGES = {30.0, 50.0, 80.0, 120.0, 160.0, 240.0};
 const vector<string> H5_RIG_LABELS = {"30-50 GV", "50-80 GV", "80-120 GV", "120-160 GV", "160-240 GV"};
 const int N_RIG_BINS = H5_RIG_BINS_EDGES.size() - 1;
 
-const vector<string> H5_CHARGE_LABELS = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
-const vector<double> H5_CHARGE_BINS_EDGES = {1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5};
-const int N_CHARGE_BINS = H5_CHARGE_BINS_EDGES.size() - 1;
+const vector<int> COLORS = {kYellow+2, kMagenta, kBlack, kRed, kBlue, kGreen + 2, kOrange + 1, kViolet, kCyan};
 
-string getNuclideName(const string& filename) {
-    size_t start = filename.find_last_of('/') == string::npos ? 0 : filename.find_last_of('/') + 1;
-    size_t end = filename.find("_rew_frag4.root");
-    if (end == string::npos) {
-        end = filename.find_last_of('.');
+// Master list of MC definitions
+const vector<MCConfig> MC_DEFINITIONS = {
+    {"B10_rew_frag4.root",  "B10",  "Boron",     5.0},
+    {"B11_rew_frag4.root",  "B11",  "Boron",     5.0},
+    {"Be10_rew_frag4.root", "Be10", "Beryllium", 4.0},
+    {"Be7_rew_frag4.root",  "Be7",  "Beryllium", 4.0},
+    {"Be9_rew_frag4.root",  "Be9",  "Beryllium", 4.0},
+    {"C12_rew_frag4.root",  "C12",  "Carbon",    6.0},
+    {"N15_rew_frag4.root",  "N15",  "Nitrogen",  7.0},
+    {"O16_rew_frag4.root",  "O16",  "Oxygen",    8.0}
+};
+
+// --- Helper Functions ---
+
+void SetGraphStyle(TGraphErrors* g, int color, int style_offset = 0) {
+    g->SetMarkerStyle(20 + style_offset); 
+    g->SetMarkerSize(1.0);
+    g->SetLineColor(color); 
+    g->SetMarkerColor(color);
+}
+
+// Custom Rebin logic for MC (different from ISS)
+void AutoRebin(TH1* h) {
+    for(int r = 1; r <= 10; ++r) {
+        if (h->GetMaximum() >= 60 || h->GetNbinsX() < 20) break;
+        h->Rebin(2);
     }
-    if (end == string::npos || end <= start) return "Unknown";
-    return filename.substr(start, end - start);
 }
 
 void findFitRange(TH1* hist, double coverage, double center_x, double& x_min, double& x_max) {
     if (!hist || hist->GetEntries() == 0) return;
-    double total_integral = hist->Integral();
-    if (total_integral <= 0) return;
+    double total = hist->Integral();
+    if (total <= 0) return;
     
     int center_bin = hist->GetXaxis()->FindFixBin(center_x);
     if (center_bin < 1 || center_bin > hist->GetNbinsX()) {
@@ -74,34 +95,30 @@ void findFitRange(TH1* hist, double coverage, double center_x, double& x_min, do
         center_x = hist->GetXaxis()->GetBinCenter(center_bin);
     }
     
-    double required_integral = total_integral * coverage;
-    double current_integral = hist->GetBinContent(center_bin);
-    int low_bin = center_bin - 1;
-    int high_bin = center_bin + 1;
+    double required = total * coverage;
+    double current = hist->GetBinContent(center_bin);
+    int low = center_bin - 1, high = center_bin + 1;
     x_min = hist->GetXaxis()->GetBinLowEdge(center_bin);
     x_max = hist->GetXaxis()->GetBinUpEdge(center_bin);
 
-    while (current_integral < required_integral) {
+    int n_bins = hist->GetNbinsX();
+    while (current < required) {
+        double c_low = (low >= 1) ? hist->GetBinContent(low) : 0;
+        double c_high = (high <= n_bins) ? hist->GetBinContent(high) : 0;
+        
         bool extended = false;
-        double content_low = (low_bin >= 1) ? hist->GetBinContent(low_bin) : 0;
-        double content_high = (high_bin <= hist->GetNbinsX()) ? hist->GetBinContent(high_bin) : 0;
-
-        if (low_bin >= 1 && high_bin <= hist->GetNbinsX()) {
-            current_integral += content_low + content_high;
-            x_min = hist->GetXaxis()->GetBinLowEdge(low_bin);
-            x_max = hist->GetXaxis()->GetBinUpEdge(high_bin);
-            low_bin--;
-            high_bin++;
+        if (low >= 1 && high <= n_bins) {
+            current += c_low + c_high;
+            x_min = hist->GetXaxis()->GetBinLowEdge(low--);
+            x_max = hist->GetXaxis()->GetBinUpEdge(high++);
             extended = true;
-        } else if (low_bin >= 1) {
-            current_integral += content_low;
-            x_min = hist->GetXaxis()->GetBinLowEdge(low_bin);
-            low_bin--;
+        } else if (low >= 1) {
+            current += c_low;
+            x_min = hist->GetXaxis()->GetBinLowEdge(low--);
             extended = true;
-        } else if (high_bin <= hist->GetNbinsX()) {
-            current_integral += content_high;
-            x_max = hist->GetXaxis()->GetBinUpEdge(high_bin);
-            high_bin++;
+        } else if (high <= n_bins) {
+            current += c_high;
+            x_max = hist->GetXaxis()->GetBinUpEdge(high++);
             extended = true;
         }
         if (!extended) break;
@@ -114,504 +131,354 @@ void findFitRange(TH1* hist, double coverage, double center_x, double& x_min, do
 }
 
 void getGlobalYRange(const vector<TGraphErrors*>& graphs, double x_min, double x_max, double& y_min, double& y_max) {
-    y_min = 1e10;
-    y_max = -1e10;
-    bool found_point = false;
+    y_min = 1e10; y_max = -1e10;
+    bool found = false;
     for (const auto& g : graphs) {
         for (int i = 0; i < g->GetN(); ++i) {
             double x, y;
             g->GetPoint(i, x, y);
             if (x >= x_min && x <= x_max) {
-                double y_low = y - g->GetErrorY(i);
-                double y_high = y + g->GetErrorY(i);
-                y_min = min(y_min, y_low);
-                y_max = max(y_max, y_high);
-                found_point = true;
+                y_min = min(y_min, y - g->GetErrorY(i));
+                y_max = max(y_max, y + g->GetErrorY(i));
+                found = true;
             }
         }
     }
-    if (found_point) {
-        double range = y_max - y_min;
-        if (range == 0.0) {
-            range = abs(y_min * 0.1);
-            if (range == 0) range = 0.01;
-        }
-        double buffer = range * 0.10; 
-        y_min -= buffer;
-        y_max += buffer;
+    if (found) {
+        double r = (y_max - y_min == 0) ? (abs(y_min)*0.1 ? abs(y_min)*0.1 : 0.01) : (y_max - y_min);
+        y_min -= r * 0.1;
+        y_max += r * 0.1;
     } else {
-        y_min = -0.01;
-        y_max = 0.01;
+        y_min = -0.01; y_max = 0.01;
     }
 }
 
 HistInfo getHistInfo(const string& suffix) {
-    HistInfo info;
-    if (suffix == "ID_H5a") { info = {"Rigidity [GV]", "Rigidity", "NaF-Tracker #Delta(1/#beta)"}; }
-    else if (suffix == "ID_H5b") { info = {"Rigidity [GV]", "Rigidity", "AGL-Tracker #Delta(1/#beta)"}; }
-    else if (suffix == "ID_H4a") { info = {"Rigidity [GV]", "Rigidity", "NaF 1/#beta (Rig > 80GV)"}; }
-    else if (suffix == "ID_H4b") { info = {"Rigidity [GV]", "Rigidity", "AGL 1/#beta (Rig > 150GV)"}; }
-    else { info = {"Y Variable", "YVariable", "Unknown Delta Beta"}; }
-    return info;
+    if (suffix == "ID_H5a") return {"Rigidity [GV]", "Rigidity", "NaF-Tracker #Delta(1/#beta)"};
+    if (suffix == "ID_H5b") return {"Rigidity [GV]", "Rigidity", "AGL-Tracker #Delta(1/#beta)"};
+    if (suffix == "ID_H4a") return {"Rigidity [GV]", "Rigidity", "NaF 1/#beta (Rig > 80GV)"};
+    if (suffix == "ID_H4b") return {"Rigidity [GV]", "Rigidity", "AGL 1/#beta (Rig > 150GV)"};
+    return {"Y Variable", "YVariable", "Unknown Delta Beta"};
 }
 
-void DrawAndSaveGraphs(vector<TGraphErrors*>& graphs, const vector<string>& legend_labels, 
-                         const string& x_axis_title, const string& y_axis_title, 
-                         const string& canvas_title_prefix, const string& output_dir, 
-                         const string& output_name_base, bool logx, TFile* save_to_root, 
-                         const string& graph_name_suffix) {
-    
+// Core drawing function
+void DrawAndSaveGraphs(vector<TGraphErrors*>& graphs, const vector<string>& legend_labels,
+                       const string& x_title, const string& y_title, const string& title_prefix, 
+                       const string& output_dir, const string& output_base, 
+                       TFile* root_file, const string& suffix) {
     if (graphs.empty()) return;
-    
-    gROOT->cd();
-    string canvas_name = "c_" + output_name_base + graph_name_suffix;
-    TCanvas* c = new TCanvas(canvas_name.c_str(), (canvas_title_prefix + graph_name_suffix).c_str(), 700, 500);
+
+    string canvas_name = "c_" + output_base + suffix;
+    TCanvas* c = new TCanvas(canvas_name.c_str(), (title_prefix + suffix).c_str(), 700, 500);
     c->SetGrid();
 
-    double x_min = H5_RIG_BINS_EDGES.front();
-    double x_max = H5_RIG_BINS_EDGES.back() * 1.5;
-    
-    if (graph_name_suffix.find("Charge") != string::npos) {
-        x_min = 3.5; 
-        x_max = 8.5; 
+    // MC specific X-axis range logic
+    double x_min, x_max;
+    if (suffix.find("Charge") != string::npos) {
+        x_min = 1.5; x_max = 8.5; 
     } else {
-        x_min = graphs[0]->GetXaxis()->GetXmin();
-        x_max = graphs[0]->GetXaxis()->GetXmax();
+        x_min = H5_RIG_BINS_EDGES.front();
+        x_max = H5_RIG_BINS_EDGES.back() * 1.5;
     }
-    
+
     double y_min, y_max;
     getGlobalYRange(graphs, x_min, x_max, y_min, y_max);
 
-    TLegend* leg = new TLegend(0.8, 0.8, 0.99, 0.99); 
-    leg->SetFillStyle(0); 
-    leg->SetBorderSize(1);
+    TLegend* leg = new TLegend(0.8, 0.8, 0.99, 0.99);
+    leg->SetFillStyle(0); leg->SetBorderSize(1);
 
     for (size_t i = 0; i < graphs.size(); ++i) {
-        string draw_opt = (i == 0) ? "APZ" : "PZ same";
-        
-        graphs[i]->Draw(draw_opt.c_str());
-        
+        graphs[i]->Draw(i == 0 ? "APZ" : "PZ same");
         if (i == 0) {
-            graphs[i]->SetTitle((canvas_title_prefix + " vs " + x_axis_title).c_str());
-            graphs[i]->GetXaxis()->SetTitle(x_axis_title.c_str());
-            graphs[i]->GetYaxis()->SetTitle(y_axis_title.c_str());
+            graphs[i]->SetTitle((title_prefix + " vs " + x_title).c_str());
+            graphs[i]->GetXaxis()->SetTitle(x_title.c_str());
+            graphs[i]->GetYaxis()->SetTitle(y_title.c_str());
             graphs[i]->GetXaxis()->SetRangeUser(x_min, x_max);
             graphs[i]->GetYaxis()->SetRangeUser(y_min, y_max);
         }
+        if (i < legend_labels.size()) leg->AddEntry(graphs[i], legend_labels[i].c_str(), "p");
 
-        if (i < legend_labels.size()) {
-            leg->AddEntry(graphs[i], legend_labels[i].c_str(), "p");
-        }
-
-        if (save_to_root) {
-            save_to_root->cd();
-            graphs[i]->SetName(("g_" + output_name_base + graph_name_suffix + "_" + to_string(i)).c_str());
+        if (root_file) {
+            root_file->cd();
+            graphs[i]->SetName(("g_" + output_base + suffix + "_" + to_string(i)).c_str());
             graphs[i]->Write();
         }
     }
-
     leg->Draw();
-    c->SaveAs((output_dir + output_name_base + graph_name_suffix + ".png").c_str());
+    c->SaveAs((output_dir + output_base + suffix + ".png").c_str());
+    delete leg; delete c;
 }
 
-void DrawH4Results_MC(const map<string, FitResult>& all_results, const string& output_dir, const HistInfo& info, 
-                      const string& output_name_base, const string& x_axis_label, 
-                      const vector<string>& all_nuclides, TFile* save_to_root) {
+// Combine H4 results for all nuclides
+void DrawMC_H4_Combined(const map<string, FitResult>& all_results, const string& output_dir, const HistInfo& info, 
+                      const string& output_base, const string& x_label, 
+                      TFile* root_file) {
     
-    gROOT->cd(); 
-    TGraphErrors* g_mean_z = new TGraphErrors();
-    TGraphErrors* g_sigma_z = new TGraphErrors();
-    
-    g_mean_z->SetMarkerStyle(20); g_sigma_z->SetMarkerStyle(20);
-    g_mean_z->SetMarkerSize(1.0); g_sigma_z->SetMarkerSize(1.0);
-    g_mean_z->SetMarkerColor(kRed); g_sigma_z->SetMarkerColor(kBlue);
-    g_mean_z->SetLineColor(kRed); g_sigma_z->SetLineColor(kBlue);
+    TGraphErrors* g_mean = new TGraphErrors();
+    TGraphErrors* g_sigma = new TGraphErrors();
+    SetGraphStyle(g_mean, kRed);
+    SetGraphStyle(g_sigma, kBlue);
 
-    for (size_t p = 0; p < all_nuclides.size(); ++p) {
-        const string& nuclide = all_nuclides[p];
-        
-        double z_center = 0.0;
-        if (nuclide.size() > 0) {
-            char first_char = nuclide[0];
-            if (first_char == 'H') z_center = 2.0;
-            else if (first_char == 'L') z_center = 3.0;
-            else if (first_char == 'B' && nuclide.size() > 1 && (nuclide[1] == 'e' || nuclide[1] == 'E')) z_center = 4.0; 
-            else if (first_char == 'B') z_center = 5.0; 
-            else if (first_char == 'C') z_center = 6.0;
-            else if (first_char == 'N') z_center = 7.0;
-            else if (first_char == 'O') z_center = 8.0;
-            else continue;
-        }
-
+    // Use MC_DEFINITIONS directly to determine Z for each nuclide
+    for (const auto& conf : MC_DEFINITIONS) {
         string suffix = (info.output_suffix == "Rigidity") ? "ID_H4a" : "ID_H4b";
-        string key = nuclide + "_" + suffix;
+        string key = conf.nuclide + "_" + suffix;
 
         if (all_results.count(key)) {
             const auto& res = all_results.at(key);
             if (res.mean_err > 0 || res.sigma_err > 0) {
-                int n_mean = g_mean_z->GetN();
-                g_mean_z->SetPoint(n_mean, z_center, res.mean);
-                g_mean_z->SetPointError(n_mean, 0.0, res.mean_err);
-                int n_sigma = g_sigma_z->GetN();
-                g_sigma_z->SetPoint(n_sigma, z_center, res.sigma);
-                g_sigma_z->SetPointError(n_sigma, 0.0, res.sigma_err);
+                int n = g_mean->GetN();
+                g_mean->SetPoint(n, conf.Z, res.mean);
+                g_mean->SetPointError(n, 0.0, res.mean_err);
+                g_sigma->SetPoint(n, conf.Z, res.sigma);
+                g_sigma->SetPointError(n, 0.0, res.sigma_err);
             }
         }
     }
-    
-    vector<string> single_legend = {"MC"}; 
-    
-    vector<TGraphErrors*> graphs_mean_z = {g_mean_z};
-    DrawAndSaveGraphs(graphs_mean_z, single_legend, "Charge (Z)", ("#mu_{" + x_axis_label + "}").c_str(), 
-                      info.title_description + " Mean", output_dir, output_name_base, false, 
-                      save_to_root, "_Mean_vs_Charge");
 
-    vector<TGraphErrors*> graphs_sigma_z = {g_sigma_z};
-    DrawAndSaveGraphs(graphs_sigma_z, single_legend, "Charge (Z)", ("#sigma_{" + x_axis_label + "}").c_str(), 
-                      info.title_description + " Sigma", output_dir, output_name_base, false, 
-                      save_to_root, "_Sigma_vs_Charge");
+    vector<string> legend = {"MC"};
+    vector<TGraphErrors*> v_mean = {g_mean}, v_sigma = {g_sigma};
+
+    DrawAndSaveGraphs(v_mean, legend, "Charge (Z)", ("#mu_{" + x_label + "}").c_str(), 
+                      info.title_description + " Mean", output_dir, output_base, root_file, "_Mean_vs_Charge");
+    DrawAndSaveGraphs(v_sigma, legend, "Charge (Z)", ("#sigma_{" + x_label + "}").c_str(), 
+                      info.title_description + " Sigma", output_dir, output_base, root_file, "_Sigma_vs_Charge");
+
+    delete g_mean; delete g_sigma;
 }
 
-void DrawH5ResultsFromTH2_MC(const map<string, TH2F*>& h2_mean_map, const map<string, TH2F*>& h2_sigma_map,
-                             const string& output_dir, const HistInfo& info, const string& output_name_base, 
-                             const string& x_axis_label, TFile* save_to_root, const vector<string>& all_nuclides) {
+// Combine H5 results for all nuclides
+void DrawMC_H5_Combined(const map<string, TH2F*>& h2_mean_map, const map<string, TH2F*>& h2_sigma_map,
+                        const string& output_dir, const HistInfo& info, const string& output_base, 
+                        const string& x_label, TFile* root_file) {
     
-    vector<int> colors = {kYellow+2, kMagenta, kBlack, kRed, kBlue, kGreen + 2, kOrange + 1, kViolet, kCyan};
-    
-    vector<TGraphErrors*> graphs_mean_rig, graphs_sigma_rig;
-    vector<string> legend_labels_rig;
-
-    double rig_min = H5_RIG_BINS_EDGES.front();
-    double rig_max = H5_RIG_BINS_EDGES.back() * 1.5;
-
+    vector<TGraphErrors*> gm_rig, gs_rig;
+    vector<string> labels;
     int color_idx = 0;
-    for (const string& nuclide : all_nuclides) {
+
+    for (const auto& conf : MC_DEFINITIONS) {
+        string nuclide = conf.nuclide;
         if (!h2_mean_map.count(nuclide) || !h2_sigma_map.count(nuclide)) continue;
-
-        TH2F* h2_mean = h2_mean_map.at(nuclide);
-        TH2F* h2_sigma = h2_sigma_map.at(nuclide);
-
-        gROOT->cd(); 
-        TGraphErrors* g_mean = new TGraphErrors();
-        TGraphErrors* g_sigma = new TGraphErrors();
-        int color = colors[color_idx % colors.size()];
         
-        g_mean->SetMarkerStyle(20 + color_idx); g_sigma->SetMarkerStyle(20 + color_idx);
-        g_mean->SetMarkerSize(1.0); g_sigma->SetMarkerSize(1.0);
-        g_mean->SetMarkerColor(color); g_sigma->SetMarkerColor(color);
-        g_mean->SetLineColor(color); g_sigma->SetLineColor(color);
+        TH2F* h2_m = h2_mean_map.at(nuclide);
+        TH2F* h2_s = h2_sigma_map.at(nuclide);
 
-        int p_bin = 1; 
+        TGraphErrors* gm = new TGraphErrors();
+        TGraphErrors* gs = new TGraphErrors();
+        int color = COLORS[color_idx % COLORS.size()];
+        SetGraphStyle(gm, color, color_idx); // Use index as marker style offset
+        SetGraphStyle(gs, color, color_idx);
+
+        // H5 MC results stored in 1st column of TH2
         for (int j = 1; j <= N_RIG_BINS; ++j) {
-            double mean = h2_mean->GetBinContent(j, p_bin);
-            double mean_err = h2_mean->GetBinError(j, p_bin);
-            double sigma = h2_sigma->GetBinContent(j, p_bin);
-            double sigma_err = h2_sigma->GetBinError(j, p_bin);
-            
-            if (mean_err > 0 || sigma_err > 0) {
+            double m = h2_m->GetBinContent(j, 1);
+            double me = h2_m->GetBinError(j, 1);
+            double s = h2_s->GetBinContent(j, 1);
+            double se = h2_s->GetBinError(j, 1);
+
+            if (me > 0 || se > 0) {
                 double rig_center = (H5_RIG_BINS_EDGES[j-1] + H5_RIG_BINS_EDGES[j]) / 2.0;
-                g_mean->SetPoint(g_mean->GetN(), rig_center, mean);
-                g_mean->SetPointError(g_mean->GetN()-1, 0.0, mean_err); 
-                g_sigma->SetPoint(g_sigma->GetN(), rig_center, sigma);
-                g_sigma->SetPointError(g_sigma->GetN()-1, 0.0, sigma_err); 
+                int n = gm->GetN();
+                gm->SetPoint(n, rig_center, m);
+                gm->SetPointError(n, 0.0, me);
+                gs->SetPoint(n, rig_center, s);
+                gs->SetPointError(n, 0.0, se);
             }
         }
-        
-        g_mean->GetXaxis()->SetRangeUser(rig_min, rig_max);
-        g_sigma->GetXaxis()->SetRangeUser(rig_min, rig_max);
-        graphs_mean_rig.push_back(g_mean);
-        graphs_sigma_rig.push_back(g_sigma);
-        legend_labels_rig.push_back(nuclide);
+        gm_rig.push_back(gm);
+        gs_rig.push_back(gs);
+        labels.push_back(nuclide);
         color_idx++;
     }
 
-    DrawAndSaveGraphs(graphs_mean_rig, legend_labels_rig, "Rigidity [GV]", ("#mu_{" + x_axis_label + "}").c_str(), 
-                      info.title_description + " Mean", output_dir, output_name_base, false, 
-                      save_to_root, "_Mean_vs_Rigidity");
+    DrawAndSaveGraphs(gm_rig, labels, "Rigidity [GV]", ("#mu_{" + x_label + "}").c_str(), 
+                      info.title_description + " Mean", output_dir, output_base, root_file, "_Mean_vs_Rigidity");
+    DrawAndSaveGraphs(gs_rig, labels, "Rigidity [GV]", ("#sigma_{" + x_label + "}").c_str(), 
+                      info.title_description + " Sigma", output_dir, output_base, root_file, "_Sigma_vs_Rigidity");
 
-    DrawAndSaveGraphs(graphs_sigma_rig, legend_labels_rig, "Rigidity [GV]", ("#sigma_{" + x_axis_label + "}").c_str(), 
-                      info.title_description + " Sigma", output_dir, output_name_base, false, 
-                      save_to_root, "_Sigma_vs_Rigidity");
+    for (auto g : gm_rig) delete g;
+    for (auto g : gs_rig) delete g;
 }
 
-
-FitResult twoStepGaussianFit(TH1* hist, const string& x_axis_label, TCanvas* c_fit, const string& title_prefix, double default_center_x, const string& rig_label) {
-    FitResult result = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+FitResult twoStepGaussianFit(TH1* hist, const string& title_prefix, double default_center_x, const string& rig_label) {
+    FitResult result = {0};
     if (!hist || hist->GetEntries() < 10) return result;
     hist->Sumw2();
 
-    double x_min_fit1 = 0.0, x_max_fit1 = 0.0;
-    findFitRange(hist, 0.80, default_center_x, x_min_fit1, x_max_fit1);
-    if (x_max_fit1 <= x_min_fit1) return result;
+    // Step 1: Rough fit
+    double x1 = 0, x2 = 0;
+    findFitRange(hist, 0.80, default_center_x, x1, x2);
+    if (x2 <= x1) return result;
 
-    gROOT->cd(); 
-    TF1* f_gaus1 = new TF1("f_gaus1", "gaus", x_min_fit1, x_max_fit1);
-    f_gaus1->SetParameters(hist->GetMaximum(), hist->GetMean(), hist->GetRMS());
-    int fit_status1 = hist->Fit(f_gaus1, "QRS");
+    TF1* f1 = new TF1("f1", "gaus", x1, x2);
+    f1->SetParameters(hist->GetMaximum(), hist->GetMean(), hist->GetRMS());
+    if (hist->Fit(f1, "QRS") != 0) { delete f1; return result; }
     
-    if (fit_status1 != 0) {
-        return result; 
+    double mean0 = f1->GetParameter(1);
+    double sigma0 = f1->GetParameter(2);
+    delete f1;
+
+    // Step 2: Fine fit
+    double x_min = mean0 - 4.0 * abs(sigma0);
+    double x_max = mean0 + 4.0 * abs(sigma0);
+    
+    // Special handling for Beryllium in low rigidity
+    if(rig_label == "30-50 GV" && title_prefix.find("Be") != string::npos){
+        x_min = mean0 - 2.5 * abs(sigma0);
+        x_max = mean0 + 2.5 * abs(sigma0);
     }
+    if (x_max <= x_min) return result;
 
-    double mean0 = f_gaus1->GetParameter(1);
-    double sigma0 = f_gaus1->GetParameter(2);
-
-    double x_min_fit2 = mean0 - 4.0 * abs(sigma0);
-    double x_max_fit2 = mean0 + 4.0 * abs(sigma0);
-    
-    if (rig_label == "30-50 GV" && title_prefix.find("Be") != string::npos) {
-        x_min_fit2 = mean0 - 2.5 * abs(sigma0);
-        x_max_fit2 = mean0 + 2.5 * abs(sigma0);
-    }
-    
-    if (x_max_fit2 <= x_min_fit2) return result;
-    
+    TCanvas* c = (TCanvas*)gROOT->FindObject("c_fit"); 
     hist->SetTitle(title_prefix.c_str());
     hist->GetYaxis()->SetTitle("Events");
-    double buffer = 0.6 * (x_max_fit2 - x_min_fit2);
-    hist->GetXaxis()->SetRangeUser(x_min_fit2 - buffer, x_max_fit2 + buffer);
-    
-    vector<vector<double>> fit_data = DoGausPlusAsymGausFit(hist, x_min_fit2, x_max_fit2, c_fit, true);
-    
-    if (fit_data.size() == 2 && fit_data[1][4] > 0) { 
-        result.mean = fit_data[0][0];
-        result.mean_err = fit_data[1][0];
-        result.sigma = fit_data[0][1];
-        result.sigma_err = fit_data[1][1];
-        result.LR = fit_data[0][2];
-        result.LR_err = fit_data[1][2]; 
-        result.RR = fit_data[0][3];
-        result.RR_err = fit_data[1][3]; 
-        result.chi2 = fit_data[0][4];
-        result.ndf = fit_data[1][4];
-        c_fit->cd();
-        
-        TLine* l_min = new TLine(x_min_fit2, 0, x_min_fit2, hist->GetMaximum() * 1.);
-        TLine* l_max = new TLine(x_max_fit2, 0, x_max_fit2, hist->GetMaximum() * 1.);
-        l_min->SetLineStyle(2); l_max->SetLineStyle(2);
-        l_min->SetLineColor(kRed); l_max->SetLineColor(kRed);
-        l_min->Draw("same"); l_max->Draw("same");
+    double buf = 0.6 * (x_max - x_min);
+    hist->GetXaxis()->SetRangeUser(x_min - buf, x_max + buf);
 
-        c_fit->Update();
+    vector<vector<double>> data = DoGausPlusAsymGausFit(hist, x_min, x_max, c, true);
+
+    if (data.size() >= 2 && data[1][4] > 0) { 
+        result = {data[0][0], data[1][0], data[0][1], data[1][1], 
+                  data[0][4], data[1][4], data[0][2], data[1][2], data[0][3], data[1][3]};
+        
+        c->cd();
+        TLine *l1 = new TLine(x_min, 0, x_min, hist->GetMaximum()), *l2 = new TLine(x_max, 0, x_max, hist->GetMaximum());
+        l1->SetLineStyle(2); l1->SetLineColor(kRed); l1->Draw("same");
+        l2->SetLineStyle(2); l2->SetLineColor(kRed); l2->Draw("same");
     } else {
-        c_fit->cd();
-        hist->Draw("hist");
-        TLatex latex; latex.SetNDC(); latex.SetTextSize(0.035);
-        latex.DrawLatex(0.6, 0.85, "Fit Failed");
-        if (!rig_label.empty()) {
-            stringstream ss; ss << "Rig: " << rig_label;
-            latex.DrawLatex(0.15, 0.85, ss.str().c_str());
-        }
-        c_fit->Update();
+        c->cd(); hist->Draw("hist");
+        TLatex lat; lat.SetNDC(); lat.SetTextSize(0.035);
+        lat.DrawLatex(0.6, 0.85, "Fit Failed");
+        if (!rig_label.empty()) lat.DrawLatex(0.15, 0.85, ("Rig: " + rig_label).c_str());
     }
-    
+    c->Update();
     return result;
 }
 
+// --- Main Analysis Logic ---
 void Analyze(TFile* file, const string& suffix, const string& output_dir,
-             const string& nuclide, TFile* output_root_file, bool is_h5,
+             const MCConfig& conf, TFile* out_root, bool is_h5,
              map<string, TH2F*>& all_h2_mean, map<string, TH2F*>& all_h2_sigma,
              map<string, FitResult>& all_h4_results) {
 
-    cout << "\n--- Analyzing " << (is_h5 ? "H5" : "H4") << " Series: " << suffix << " for " << nuclide << " ---" << endl;
-    gStyle->SetOptFit(0);
+    cout << "\n--- Analyzing " << (is_h5 ? "H5" : "H4") << " Series: " << suffix << " for " << conf.nuclide << " ---" << endl;
     
-    const string hist_particle_name = "Helium"; 
-    const string prefix = "UnbiasedL1Inner_";
-    const string x_axis_label = is_h5 ? "#Delta(1/#beta)" : "1/#beta";
     HistInfo info = getHistInfo(suffix);
-    string output_name_base = info.output_suffix + suffix.substr(3) + "_" + nuclide;
-    string fit_pdf_path = output_dir + "FitResults_" + output_name_base + ".pdf";
+    string base_name = info.output_suffix + suffix.substr(3) + "_" + conf.nuclide;
+    string pdf_name = output_dir + "FitResults_" + base_name + ".pdf";
+    string x_label = is_h5 ? "#Delta(1/#beta)" : "1/#beta";
     
-    gROOT->cd(); 
-    TCanvas* c_fit = new TCanvas("c_fit", ("Gaussian Fit Results - " + nuclide).c_str(), 800, 600);
-    c_fit->SetLogy(0);
-    c_fit->Print((fit_pdf_path + "[").c_str(), "pdf");
+    TCanvas* c_fit = new TCanvas("c_fit", "Fits", 800, 600);
+    c_fit->Print((pdf_name + "[").c_str(), "pdf");
 
-    TH2F* h2_mean = nullptr;
-    TH2F* h2_sigma = nullptr;
+    TH2F *h2_m = nullptr, *h2_s = nullptr;
     if (is_h5) {
-        output_root_file->cd();
-        h2_mean = new TH2F(("h2_mean_" + suffix + "_" + nuclide).c_str(), (info.title_description + " Mean;Rigidity [GV];Charge (Z)").c_str(), 
-                             N_RIG_BINS, &H5_RIG_BINS_EDGES[0], 1, 1.5, 2.5);
-        h2_sigma = new TH2F(("h2_sigma_" + suffix + "_" + nuclide).c_str(), (info.title_description + " Sigma;Rigidity [GV];Charge (Z)").c_str(), 
-                              N_RIG_BINS, &H5_RIG_BINS_EDGES[0], 1, 1.5, 2.5);
+        out_root->cd();
+        h2_m = new TH2F(("h2_mean_" + suffix + "_" + conf.nuclide).c_str(), (info.title_description + " Mean").c_str(), 
+                        N_RIG_BINS, &H5_RIG_BINS_EDGES[0], 1, 1.5, 2.5);
+        h2_s = new TH2F(("h2_sigma_" + suffix + "_" + conf.nuclide).c_str(), (info.title_description + " Sigma").c_str(), 
+                        N_RIG_BINS, &H5_RIG_BINS_EDGES[0], 1, 1.5, 2.5);
     }
 
-    string full_name = prefix + hist_particle_name + "_" + suffix;
+    string full_name = "UnbiasedL1Inner_" + conf.element + "_" + suffix;
     TObject* obj = file->Get(full_name.c_str());
 
-    if (!obj) {
-        cerr << "Warning: Histogram " << full_name << " not found in " << file->GetName() << endl;
-        return;
-    }
-
-    if (is_h5) {
-        TH2F* h2 = dynamic_cast<TH2F*>(obj);
-        if (!h2) { return; }
-
-        for (size_t i = 0; i < N_RIG_BINS; ++i) {
-            double rig_min = H5_RIG_BINS_EDGES[i];
-            double rig_max = H5_RIG_BINS_EDGES[i+1];
-            int rig_bin_index = i + 1;
-            string rig_label = H5_RIG_LABELS[i];
-
-            int bin_y_min = h2->GetYaxis()->FindFixBin(rig_min);
-            int bin_y_max = (i == N_RIG_BINS - 1) ? h2->GetNbinsY() : h2->GetYaxis()->FindFixBin(rig_max - 1e-6);
-
-            gROOT->cd(); 
-            TH1D* h1_proj = h2->ProjectionX(("proj_" + full_name + "_" + nuclide + "_" + to_string(i)).c_str(), bin_y_min, bin_y_max);
-            h1_proj->SetDirectory(nullptr); 
-
-            if (h1_proj->GetEntries() == 0) { continue; }
-            
-            for(int r=1 ; r<=10; ++r) { if (h1_proj->GetMaximum() >= 60 || h1_proj->GetNbinsX() < 20) break; h1_proj->Rebin(2); }
-            
-            string title = nuclide + " - " + info.output_suffix + " [" + rig_label + "]";
-            FitResult fit_res = twoStepGaussianFit(h1_proj, x_axis_label, c_fit, title, 0.0, rig_label);
-
-            if (fit_res.mean_err > 0 || fit_res.sigma_err > 0) {
-                h2_mean->SetBinContent(rig_bin_index, 1, fit_res.mean);
-                h2_mean->SetBinError(rig_bin_index, 1, fit_res.mean_err);
-                h2_sigma->SetBinContent(rig_bin_index, 1, fit_res.sigma);
-                h2_sigma->SetBinError(rig_bin_index, 1, fit_res.sigma_err);
-                c_fit->Print(fit_pdf_path.c_str(), "pdf");
+    if (obj) {
+        if (is_h5) {
+            TH2F* h2 = dynamic_cast<TH2F*>(obj);
+            if (h2) {
+                for (int i = 0; i < N_RIG_BINS; ++i) {
+                    int bin_y_max = (i == N_RIG_BINS - 1) ? h2->GetNbinsY() : h2->GetYaxis()->FindFixBin(H5_RIG_BINS_EDGES[i+1] - 1e-6);
+                    TH1D* h1 = h2->ProjectionX(("px_" + full_name + conf.nuclide + to_string(i)).c_str(), h2->GetYaxis()->FindFixBin(H5_RIG_BINS_EDGES[i]), bin_y_max);
+                    h1->SetDirectory(nullptr);
+                    
+                    if (h1->GetEntries() > 0) {
+                        AutoRebin(h1);
+                        string title = conf.nuclide + " - " + info.output_suffix + " [" + H5_RIG_LABELS[i] + "]";
+                        FitResult res = twoStepGaussianFit(h1, title, 0.0, H5_RIG_LABELS[i]);
+                        
+                        if (res.mean_err > 0 || res.sigma_err > 0) {
+                            h2_m->SetBinContent(i+1, 1, res.mean); h2_m->SetBinError(i+1, 1, res.mean_err);
+                            h2_s->SetBinContent(i+1, 1, res.sigma); h2_s->SetBinError(i+1, 1, res.sigma_err);
+                            c_fit->Print(pdf_name.c_str(), "pdf");
+                        }
+                    }
+                    delete h1;
+                }
+                all_h2_mean[conf.nuclide] = h2_m;
+                all_h2_sigma[conf.nuclide] = h2_s;
+            }
+        } else {
+            TH1F* h1 = dynamic_cast<TH1F*>(obj);
+            if (h1) {
+                TH1F* h_clone = (TH1F*)h1->Clone(("cl_" + full_name + conf.nuclide).c_str());
+                h_clone->SetDirectory(nullptr);
+                h_clone->SetMarkerStyle(20); h_clone->SetMarkerSize(1.2);
+                AutoRebin(h_clone);
+                
+                FitResult res = twoStepGaussianFit(h_clone, conf.nuclide + " - " + info.title_description, 1.0, "");
+                if (res.mean_err > 0 || res.sigma_err > 0) {
+                    all_h4_results[conf.nuclide + "_" + suffix] = res;
+                    c_fit->Print(pdf_name.c_str(), "pdf");
+                }
+                delete h_clone;
             }
         }
-        
-        all_h2_mean[nuclide] = h2_mean;
-        all_h2_sigma[nuclide] = h2_sigma;
-
     } else {
-        TH1F* h1 = dynamic_cast<TH1F*>(obj);
-        if (!h1) { return; }
-        
-        gROOT->cd(); 
-        TH1F* h1_clone = (TH1F*)h1->Clone(("clone_" + full_name + "_" + nuclide).c_str());
-        h1_clone->SetDirectory(nullptr);
-        h1_clone->SetMarkerStyle(20);
-        h1_clone->SetMarkerSize(1.2);
-
-        for(int r=1 ; r<=10; ++r) { if (h1_clone->GetMaximum() >= 60 || h1_clone->GetNbinsX() < 20) break; h1_clone->Rebin(2); }
-        
-        string title = nuclide + " - " + info.title_description;
-        FitResult fit_res = twoStepGaussianFit(h1_clone, x_axis_label, c_fit, title, 1.0, "");
-
-        if (fit_res.mean_err > 0 || fit_res.sigma_err > 0) {
-            all_h4_results[nuclide + "_" + suffix] = fit_res;
-            c_fit->Print(fit_pdf_path.c_str(), "pdf");
-        }
+        cerr << "Warning: " << full_name << " not found in " << conf.filename << endl;
     }
-    
-    c_fit->Print((fit_pdf_path + "]").c_str(), "pdf");
+
+    c_fit->Print((pdf_name + "]").c_str(), "pdf");
+    delete c_fit;
 }
 
+// --- Entry Point ---
 void BetaFit_MC() {
     gROOT->SetBatch(kTRUE);
-    gStyle->SetErrorX(0); 
-
-    vector<string> mc_files = {
-        "B10_rew_frag4.root", "B11_rew_frag4.root", "Be10_rew_frag4.root", "Be7_rew_frag4.root",
-        "Be9_rew_frag4.root", "C12_rew_frag4.root", "N15_rew_frag4.root", "O16_rew_frag4.root"
-    };
+    gStyle->SetErrorX(0); gStyle->SetOptFit(0);
     
-    const string input_dir = "/eos/user/z/zixuan/Isotope/Add/";
-    const string output_dir = "/eos/user/z/zixuan/Isotope/Beta/MC/";
-    const string output_root_path = output_dir + "MC_RICHBetaStudy.root";
+    const string in_dir = "/eos/user/z/zixuan/Isotope/Add/";
+    const string out_dir = "/eos/user/z/zixuan/Isotope/Beta/MC/";
+    const string out_root = out_dir + "MC_RICHBetaStudy.root";
     
-    vector<string> all_nuclides;
-    for (const string& filename : mc_files) {
-        all_nuclides.push_back(getNuclideName(filename));
-    }
+    if (gSystem->AccessPathName(out_dir.c_str())) gSystem->mkdir(out_dir.c_str(), kTRUE);
 
-    if (gSystem->AccessPathName(output_dir.c_str())) {
-        cout << "Creating output directory: " << output_dir << endl;
-        gSystem->mkdir(output_dir.c_str(), kTRUE);
-    }
+    TFile* fout = TFile::Open(out_root.c_str(), "RECREATE");
+    if (!fout || fout->IsZombie()) { cerr << "Error creating output: " << out_root << endl; return; }
 
-    TFile* output_root_file = TFile::Open(output_root_path.c_str(), "RECREATE");
-    if (!output_root_file || output_root_file->IsZombie()) {
-        cerr << "ERROR: Cannot create output ROOT file: " << output_root_path << endl;
-        return;
-    }
-    
-    map<string, TH2F*> mc_h5_mean_map;
-    map<string, TH2F*> mc_h5_sigma_map;
-    map<string, FitResult> mc_h4_results;
+    map<string, TH2F*> map_h5_mean, map_h5_sigma;
+    map<string, FitResult> map_h4;
 
-    for (const string& filename : mc_files) {
-        string full_path = input_dir + filename;
-        string nuclide = getNuclideName(filename);
+    // 1. Process all files defined in MC_DEFINITIONS
+    for (const auto& conf : MC_DEFINITIONS) {
+        TFile* fin = TFile::Open((in_dir + conf.filename).c_str(), "READ");
+        if (!fin || fin->IsZombie()) { cerr << "Error input: " << conf.filename << endl; continue; }
         
-        if (nuclide == "Unknown") {
-            cerr << "Warning: Skipping unknown file format: " << filename << endl;
-            continue;
-        }
-
-        TFile* file = TFile::Open(full_path.c_str(), "READ");
-        if (!file || file->IsZombie()) {
-            cerr << "ERROR: Cannot open input file: " << full_path << endl;
-            continue;
-        }
+        for (const auto& s : {"ID_H5a", "ID_H5b"}) Analyze(fin, s, out_dir, conf, fout, true, map_h5_mean, map_h5_sigma, map_h4);
+        for (const auto& s : {"ID_H4a", "ID_H4b"}) Analyze(fin, s, out_dir, conf, fout, false, map_h5_mean, map_h5_sigma, map_h4);
         
-        vector<string> h5_suffixes = {"ID_H5a", "ID_H5b"};
-        for (const string& suffix : h5_suffixes) {
-            Analyze(file, suffix, output_dir, nuclide, output_root_file, true, 
-                    mc_h5_mean_map, mc_h5_sigma_map, mc_h4_results);
-        }
-
-        vector<string> h4_suffixes = {"ID_H4a", "ID_H4b"};
-        for (const string& suffix : h4_suffixes) {
-            Analyze(file, suffix, output_dir, nuclide, output_root_file, false, 
-                    mc_h5_mean_map, mc_h5_sigma_map, mc_h4_results);
-        }
-
-        file->Close();
+        fin->Close(); delete fin;
     }
 
-    output_root_file->cd();
+    // 2. Draw combined results
+    fout->cd();
+    // Save TH2s first
+    for (const auto& pair : map_h5_mean) pair.second->Write();
+    for (const auto& pair : map_h5_sigma) pair.second->Write();
 
-    vector<string> h5_suffixes = {"ID_H5a", "ID_H5b"};
-    for (const string& suffix : h5_suffixes) {
-        HistInfo info = getHistInfo(suffix);
-        string output_name_base = info.output_suffix + suffix.substr(3) + "_MC_Combined";
-        string x_axis_label = "#Delta(1/#beta)";
-        
-        map<string, TH2F*> current_mean_map, current_sigma_map;
-        for (const string& nuclide : all_nuclides) {
-            if (mc_h5_mean_map.count(nuclide)) {
-                current_mean_map[nuclide] = mc_h5_mean_map[nuclide];
-                current_sigma_map[nuclide] = mc_h5_sigma_map[nuclide];
-            }
-        }
-
-        for(const auto& pair : current_mean_map) pair.second->Write();
-        for(const auto& pair : current_sigma_map) pair.second->Write();
-
-        DrawH5ResultsFromTH2_MC(current_mean_map, current_sigma_map, output_dir, info, 
-                                 output_name_base, x_axis_label, output_root_file, all_nuclides);
+    for (const string& s : {"ID_H5a", "ID_H5b"}) {
+        HistInfo info = getHistInfo(s);
+        DrawMC_H5_Combined(map_h5_mean, map_h5_sigma, out_dir, info, 
+                           info.output_suffix + s.substr(3) + "_MC_Combined", "#Delta(1/#beta)", fout);
     }
     
-    vector<string> h4_suffixes = {"ID_H4a", "ID_H4b"};
-    for (const string& suffix : h4_suffixes) {
-        HistInfo info = getHistInfo(suffix);
-        string output_name_base = info.output_suffix + suffix.substr(3) + "_MC_Combined";
-        string x_axis_label = "1/#beta";
-
-        map<string, FitResult> current_h4_results;
-        for (const string& nuclide : all_nuclides) {
-            string key = nuclide + "_" + suffix;
-            if (mc_h4_results.count(key)) {
-                current_h4_results[nuclide] = mc_h4_results[key];
-            }
-        }
-
-        DrawH4Results_MC(current_h4_results, output_dir, info, 
-                          output_name_base, x_axis_label, all_nuclides, output_root_file);
+    for (const string& s : {"ID_H4a", "ID_H4b"}) {
+        HistInfo info = getHistInfo(s);
+        DrawMC_H4_Combined(map_h4, out_dir, info, 
+                           info.output_suffix + s.substr(3) + "_MC_Combined", "1/#beta", fout);
     }
 
-    output_root_file->Close();
-
+    fout->Close(); delete fout;
     gROOT->SetBatch(kFALSE);
-    cout << "\nAnalysis finished. Results saved to: " << output_dir << endl;
+    cout << "\nDone. Results in: " << out_dir << endl;
 }

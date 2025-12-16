@@ -201,8 +201,10 @@ double kineticEnergyToBeta(double kineticEnergy) {
 }
 
 double rigidityToBeta(double rigidity, int charge, double mass, bool isElectron) {
-    if (!isElectron && mass < charge) {
-        throw std::invalid_argument("Invalid charge/mass combination");
+    if (!isElectron && (mass < charge)) {
+        std::cerr << "Invalid charge/mass combination:" <<"charge:"<< charge <<"  mass:"<< mass <<" mass<charge:"<<(mass<charge)<< std::endl; 
+        //throw std::invalid_argument("Invalid charge/mass combination");
+        return -100000.0;
     }
 
     if (isElectron) {
@@ -473,6 +475,32 @@ double GetSmearRichBeta(int iz, double beta, bool isNaF) {
     return newbeta;
 }
 
+double GetSmearRigidity(double Rigidity, bool isISS, int idet) {
+    if (isISS || std::abs(Rigidity) < 1e-9) return Rigidity;
+
+    double sigma_rel = 0.0;
+
+    if (idet == 1) { 
+        sigma_rel = 0.015; 
+    } else if (idet == 0 || idet == 2) { 
+        sigma_rel = 0.02; 
+    } else {
+        return Rigidity; 
+    }
+
+    double invRigidity = 1.0 / Rigidity;
+
+    std::random_device rd;
+    TRandom3 rand(rd());
+
+    double smear = rand.Gaus(0.0, 1.0);
+    double newInvRigidity = invRigidity * (1.0 + sigma_rel * smear);
+
+    if (std::abs(newInvRigidity) < 1e-12) return Rigidity;
+
+    return 1.0 / newInvRigidity;
+}
+
 // Internal helper class to manage a single CDF lookup table.
 class LookupTable {
 public:
@@ -527,7 +555,7 @@ namespace {
 
     // OPTIMIZATION: Define name-to-index mappings for fast string-to-int conversion.
     const std::vector<std::string> CHAIN_NAMES = {"UnbiasedL1Inner", "L1Inner"};
-    const std::vector<std::string> NUCLEUS_NAMES = {"Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+    const std::vector<std::string> NUCLEUS_NAMES = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
     const std::vector<std::string> DETECTOR_NAMES = {"TOF", "NaF", "AGL"};
     
     // Reverse maps for fast lookup, filled during initialization.
@@ -630,7 +658,7 @@ double tuneL2Charge(
     double q_l2
 ) {
     if (ekBin < 0) {
-        // std::cerr << "[DBG] L2Q Fail: Invalid ekBin=" << ekBin << std::endl;
+        //std::cerr << "[DBG] L2Q Fail: Invalid ekBin=" << ekBin << std::endl;
         return q_l2;
     }
 
@@ -641,7 +669,7 @@ double tuneL2Charge(
 
     // If any name is not found, it's an invalid call. Return original value.
     if (it_chain == g_chain_map.end() || it_nuc == g_nucleus_map.end() || it_det == g_detector_map.end()) {
-         std::cerr << "[DBG] L2Q Fail: Invalid name. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << std::endl;
+        //std::cerr << "[DBG] L2Q Fail: Invalid name. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << std::endl;
         return q_l2;
     }
 
@@ -651,7 +679,7 @@ double tuneL2Charge(
     // Perform the fast lookup in the map.
     auto it = g_chargeTuningData_EGE.find(key);
     if (it == g_chargeTuningData_EGE.end()) {
-         //std::cerr << "[DBG] L2Q Fail: Table not found. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << " ekBin=" << ekBin << std::endl;
+        //std::cerr << "[DBG] L2Q Fail: Table not found. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << " ekBin=" << ekBin << std::endl;
         return q_l2; // No table found for this combination.
     }
     
@@ -659,13 +687,13 @@ double tuneL2Charge(
     const LookupTable& pdata = it->second;
     double cdf_l2 = pdata.getCDF_L2(q_l2);
     if (cdf_l2 < 0.0) {
-        //std::cerr << "[DBG] L2Q Fail: q_l2 out of range. q_l2=" << q_l2 << std::endl;
+        //std::cerr << "[DBG] L2Q Fail: q_l2 out of range. chain=" << chain << " nuc=" << nucleusName << " det=" << detectorName << " ekBin=" << ekBin <<  "q_l2=" << q_l2 <<std::endl;
         return q_l2; // q_l2 is out of the table's range.
     }
     
     double q_tuned = pdata.getInvCDF_L1(cdf_l2);
     if (q_tuned < 0) {
-         std::cerr << "[DBG] L2Q Fail: InvCDF failed. cdf_l2=" << cdf_l2 << std::endl;
+        //std::cerr << "[DBG] L2Q Fail: InvCDF failed. cdf_l2=" << cdf_l2 << std::endl;
         return q_l2; // Inverse CDF calculation failed.
     }
     //std::cout<<q_l2<<" tune:"<<q_tuned<<std::endl;

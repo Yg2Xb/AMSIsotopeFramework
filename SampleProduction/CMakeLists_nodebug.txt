@@ -1,18 +1,27 @@
+# Set minimum required CMake version
 cmake_minimum_required(VERSION 3.20.2)
 
-# Project
+# Define project root directory
+set(PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR}/../..)
+
+# 设置编译器
+#set(CMAKE_CXX_COMPILER "/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin/icpx")
+#set(CMAKE_C_COMPILER  "/cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2023/compiler/2023.2.1/linux/bin/icx")
+
+# ⚠️ 建议在开启 ASan 时用 g++/gcc，而不是 Intel 编译器
+# cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc ..
+
+# Declaring the project
 project(SampleProduction LANGUAGES CXX)
 
-# -----------------------------
-# Set C++ standard
-# -----------------------------
+###########################################
+# Basic Settings
+###########################################
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# -----------------------------
-# ROOT configuration
-# -----------------------------
+# ROOT flags
 execute_process(
     COMMAND root-config --cflags
     OUTPUT_VARIABLE ROOT_CFLAGS
@@ -34,6 +43,17 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
+# 基本编译标志
+set(CMAKE_CXX_FLAGS "-O3 ${ROOT_CFLAGS} -std=c++17 -Wall -Wextra")
+
+# 输出目录
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+###########################################
+# Dependencies
+###########################################
 find_package(ROOT REQUIRED COMPONENTS
     Core RIO Net Hist Graf Graf3d Gpad Tree Matrix Physics MathCore Thread
 )
@@ -43,31 +63,19 @@ if(NOT ROOT_FOUND)
 endif()
 include(${ROOT_USE_FILE})
 
-# -----------------------------
-# Compiler flags
-# -----------------------------
-set(CMAKE_CXX_FLAGS "-O3 ${ROOT_CFLAGS} -std=c++17 -Wall -Wextra")
-
-# -----------------------------
-# ASan for Debug build
-# -----------------------------
+###########################################
+# Enable AddressSanitizer in Debug
+###########################################
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(STATUS "Debug build: AddressSanitizer enabled")
+    message(STATUS "Building with AddressSanitizer enabled")
     add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
     add_link_options(-fsanitize=address)
 endif()
 
-# -----------------------------
-# Output directories
-# -----------------------------
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
-# -----------------------------
-# GAMModel library
-# -----------------------------
-ROOT_GENERATE_DICTIONARY(G__GAMModel
+###########################################
+# GAMModel Library
+###########################################
+ROOT_GENERATE_DICTIONARY(G__GAMModel 
     ${CMAKE_SOURCE_DIR}/include/GAMModel.h
     LINKDEF ${CMAKE_SOURCE_DIR}/LinkDef.h
     MODULE GAMModel
@@ -79,8 +87,8 @@ add_library(GAMModel SHARED
     ${CMAKE_CURRENT_BINARY_DIR}/G__GAMModel.cxx
 )
 
-target_include_directories(GAMModel
-    PUBLIC
+target_include_directories(GAMModel 
+    PUBLIC 
         ${CMAKE_SOURCE_DIR}/include
         ${ROOT_INCDIR}
 )
@@ -90,18 +98,16 @@ target_link_libraries(GAMModel
         ${ROOT_LIBS}
 )
 
-set_target_properties(GAMModel PROPERTIES POSITION_INDEPENDENT_CODE ON)
-
-# -----------------------------
-# Analysis library
-# -----------------------------
+###########################################
+# Main Analysis Library
+###########################################
 set(ANALYSIS_SOURCES
     src/basic_var.cpp
     src/IsotopeAnalyzer.cpp
     src/ModelManager.cpp
     src/RICHCut.cpp
     src/RTICut.cpp
-    src/selectdata.cpp
+    src/selectdata.cpp      
     src/TOFCut.cpp
     src/Tool.cpp
     src/TrackerCut.cpp
@@ -123,12 +129,10 @@ target_link_libraries(isotope_analysis
         ${ROOT_LIBS}
 )
 
-set_target_properties(isotope_analysis PROPERTIES POSITION_INDEPENDENT_CODE ON)
-
-# -----------------------------
+###########################################
 # Executable
-# -----------------------------
-add_executable(SampleProduction main.cpp)
+###########################################
+add_executable(SampleProduction main.cpp) 
 
 target_include_directories(SampleProduction
     PRIVATE
@@ -140,26 +144,26 @@ target_link_libraries(SampleProduction
     PRIVATE
         isotope_analysis
         GAMModel
-        ${ROOT_LIBS}  # ROOT libs at the end
+        ${ROOT_LIBS}
 )
 
-# -----------------------------
-# RPATH
-# -----------------------------
+# RPATH settings
 set_target_properties(SampleProduction PROPERTIES
     INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib:${ROOT_LIBDIR}"
     BUILD_WITH_INSTALL_RPATH TRUE
     INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
-# -----------------------------
-# Testing
-# -----------------------------
+# Add PIC
+set_target_properties(GAMModel PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(isotope_analysis PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+# Testing support
 enable_testing()
 
-# -----------------------------
-# Debug info
-# -----------------------------
+###########################################
+# Debug Info
+###########################################
 message(STATUS "Project: ${PROJECT_NAME}")
 message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")

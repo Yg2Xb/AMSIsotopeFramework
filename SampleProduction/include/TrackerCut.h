@@ -68,8 +68,12 @@ public:
     ~TrackerCut() = default;
 
     // Disable copy/assign
-    TrackerCut(const TrackerCut&) = delete;
-    TrackerCut& operator=(const TrackerCut&) = delete;
+TrackerCut(const TrackerCut&) = delete;
+TrackerCut& operator=(const TrackerCut&) = delete;
+
+TrackerCut(TrackerCut&&) = default;
+TrackerCut& operator=(TrackerCut&&) = default;
+
 
     // --- Accessors for Cached Variables (Optimization) ---
     double getInnerQ() const { return status_.innerQ; }
@@ -103,15 +107,12 @@ public:
     // --- Complex Cuts ---
     CutResult<10> cutTracker(int charge, bool isISS = true) const;
     CutResult<2> cutUnphysical(int charge, bool isISS = true) const;
-    CutResult<2> TwoAccTrackerCut(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> TwoAccTrackerCut(int charge, bool isISS, bool forBackground = false, double coe = 1.) const;
     CutResult<2> getDenominatorL1PickUp(int charge, bool isISS) const;
     
-    // [0,1] L1Sig_Any (N/U), [2,3] L1Sig_Pass, [4,5] L1Sig_Frag
-    // [6,7] L1Template, [8,9] L2Template
-    // [10,11] InnerSig, [12,13] InnerTemp
-    CutResult<14> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const;
+    CutResult<10> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const;
 
-    bool AccUndepCut(int charge, bool isISS, bool forBackground = false) const;
+    bool AccUndepCut(int charge, bool isISS, bool forBackground = false, double coe = 1.) const;
     bool Q_L1_BkgIndependCut(int charge, bool isISS) const;
     // Selector for Fragmentation Analysis (Equ1, 2, 3)
     // selector: 

@@ -16,18 +16,18 @@
    tmpStyle->SetLabelOffset(0.005, "x");
    tmpStyle->SetLabelOffset(0.005, "y");
    tmpStyle->SetLabelOffset(0.005, "z");
-   tmpStyle->SetLabelSize(0.065, "x"); /* @@@ */
-   tmpStyle->SetLabelSize(0.065, "y"); /* @@@ */
-   tmpStyle->SetLabelSize(0.065, "z"); /* @@@ */
+   tmpStyle->SetLabelSize(0.05, "x"); /* @@@ */
+   tmpStyle->SetLabelSize(0.05, "y"); /* @@@ */
+   tmpStyle->SetLabelSize(0.05, "z"); /* @@@ */
    tmpStyle->SetTickLength(0.03, "x");
    tmpStyle->SetTickLength(0.03, "y");
    tmpStyle->SetTickLength(0.03, "z");
    tmpStyle->SetTitleOffset(1., "x"); // @@@
-   tmpStyle->SetTitleOffset(1.2, "y"); // @@@
+   tmpStyle->SetTitleOffset(1.35, "y"); // @@@
    tmpStyle->SetTitleOffset(1., "z"); // @@@
-   tmpStyle->SetTitleSize(0.065, "x");
-   tmpStyle->SetTitleSize(0.065, "y");
-   tmpStyle->SetTitleSize(0.065, "z"); // @@@
+   tmpStyle->SetTitleSize(0.05, "x");
+   tmpStyle->SetTitleSize(0.05, "y");
+   tmpStyle->SetTitleSize(0.05, "z"); // @@@
    tmpStyle->SetTitleColor(1, "x");
    tmpStyle->SetTitleColor(1, "y");
    tmpStyle->SetTitleColor(1, "z");

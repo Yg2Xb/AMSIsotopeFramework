@@ -7,6 +7,7 @@
 #include "TFile.h"
 #include "TH1F.h"
 #include "TH2F.h"
+#include "TH3F.h"
 #include "TTree.h"
 #include "TChain.h"
 #include "basic_var.h"
@@ -16,6 +17,7 @@ namespace AMS_Iso {
 
 using H1Ptr = std::unique_ptr<TH1F>;
 using H2Ptr = std::unique_ptr<TH2F>;
+using H3Ptr = std::unique_ptr<TH3F>;
 
 class HistManager {
 public:
@@ -56,11 +58,18 @@ public:
     std::vector<std::vector<H2Ptr>> IDH5a; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH5a2; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH5a3; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH5a4; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH5b; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH5b2; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH5b3; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH5b4; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH5c3; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH5c4; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH5d3; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH5d4; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH6a; // [z][chain]
     std::vector<std::vector<H2Ptr>> IDH6b; // [z][chain]
+    std::vector<std::vector<H2Ptr>> IDH7; // [chain][det]
     //std::vector<std::vector<H2Ptr>> IDH7a; // [z][chain]
     //std::vector<std::vector<H2Ptr>> IDH7b; // [z][chain]
 
@@ -98,6 +107,9 @@ public:
     // Dimensions: [chain][source][det][charge_type]
     std::vector<std::vector<std::vector<std::vector<H2Ptr>>>> BKG_H4;
 
+    // ---- H5 Series: L1-Inner 2D Q Study ----
+    std::vector<std::vector<std::vector<H3Ptr>>> BKG_H5; // [chain][det][type]
+
     // ==========================================
     // ======= FLUX AREA ===========
     // ==========================================
@@ -109,10 +121,13 @@ public:
     // ISS Flux Aux
     std::vector<H1Ptr> ISS_FLUXH2; // rig expoT
     std::vector<std::vector<H1Ptr>> ISS_FLUXH3; // ek expoT [det][iso]
+    //old bt check
+    std::vector<H2Ptr> ISS_FLUXH4; // Generated counts
 
     // MC Flux Aux
-    std::vector<std::vector<std::vector<std::vector<H1Ptr>>>> MC_FLUXH2; // [chain][cut][det][gen/rec]
+    //std::vector<std::vector<std::vector<std::vector<H1Ptr>>>> MC_FLUXH2; // [chain][cut][det][gen/rec]
     std::vector<H1Ptr> MC_FLUXH3; // Generated counts
+
 
 private:
     std::unique_ptr<TFile> m_outputFile;

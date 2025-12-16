@@ -62,6 +62,7 @@ void IsotopeAnalyzer::initialize() {
 
     // 2. 定义分析链
     active_chains_ = {"UnbiasedL1Inner", "L1Inner"};
+    //active_chains_ = {"UnbiasedL1Inner"};
 
     // 3. 创建 HistManager （替代原来的 ProductRegistry）
     TString output_filename = outDir_ + "/" + outName_;
@@ -80,7 +81,7 @@ void IsotopeAnalyzer::initialize() {
     std::cout << "IsotopeAnalyzer initialized with " << dataChain->GetEntries() << " entries." << std::endl;
 
     // ===== 新增：准备筛选后的树 =====
-    if (isISS_ && m_histManager && dataChain) {
+    if (false && m_histManager && dataChain) {
         m_histManager->PrepareFilteredTree(dataChain.get());
     }
 }
@@ -120,7 +121,7 @@ void IsotopeAnalyzer::write() {
     std::cout << "Saving all results to file..." << std::endl;
     
     // 调用 Save()，默认会保存直方图和 TTree
-    m_histManager->Save(isISS_ ? 1 : 0); // true = 保存 TTree
+    m_histManager->Save(false? 1 : 0); // true = 保存 TTree
 }
 
 void IsotopeAnalyzer::cleanup() {

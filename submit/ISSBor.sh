@@ -36,6 +36,6 @@ echo "[INFO] Output file: $OUTDIR/$OUTNAME"
 
 # 一次性运行：将列表文件作为 inData 传入，程序内部 TChain 读取多个 ROOT 并写出一个输出
 /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/SampleProduction/build/bin/SampleProduction \
-  "$OUTDIR" "$OUTNAME" "$LISTFILE" 5 10 0
+  "$OUTDIR" "$OUTNAME" "$LISTFILE" 5 10 0 5
 
 echo "[INFO] Finished: $OUTDIR/$OUTNAME"

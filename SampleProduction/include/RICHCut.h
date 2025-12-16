@@ -34,7 +34,7 @@
      bool isAerogel() const { return richRegion == 0; }
  
      // 主要切割函数
-     CutResult<5> cutBasic() const;          // 5个基本切割
+     CutResult<6> cutBasic() const;          // 5个基本切割 12.13.2025 ->6
      CutResult<3> cutCharge(int charge) const;  // 3个电荷切割
      
      std::array<double, 3> getModifiedPosition(bool interpolate) const;

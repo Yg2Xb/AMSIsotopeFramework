@@ -76,6 +76,12 @@ float ModelManager::corrected_beta(float beta,
                                  float nreflected,
                                  float nhits,
                                  int mc) {
+                                    
+
+    // Avoid overcorrecting outside of charge and time validity values  2025.12.15
+    if(charge>9) charge=9;
+    if(run>1.58013e+09) run=1.58013e+09;
+
     float vx = sin(theta_rad) * cos(phi_rad);
     float vy = sin(theta_rad) * sin(phi_rad);
 

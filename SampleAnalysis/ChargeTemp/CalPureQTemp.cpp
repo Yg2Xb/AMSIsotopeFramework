@@ -11,6 +11,7 @@
 #include <TFile.h>
 #include <TH1D.h>
 #include <TH2F.h>
+#include <TH2D.h> // Added for TH2D
 #include <TCanvas.h>
 #include <TPad.h>
 #include <TLegend.h>
@@ -38,25 +39,25 @@ using namespace AMS_Iso;
 using namespace RooFit;
 using namespace std;
 
-const std::string inputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4.root";
+const std::string inputFileName = "/eos/ams/group/ihep/zixuan/filter/basic_L1Q2p5to8p8.root";
 const std::string outputDir = "/eos/user/z/zixuan/Isotope/PureChargeTemp/";
 const std::string chainName = "UnbiasedL1Inner";
 const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
-const double Q_GLOBAL_MIN = 3.0;
+const double Q_GLOBAL_MIN = 1.0;
 const double Q_GLOBAL_MAX = 9.0;
 
-const std::vector<std::string> requiredElements = {"Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
-const std::map<std::string, int> elementZ = {{"Lithium", 3}, {"Beryllium", 4}, {"Boron", 5}, {"Carbon", 6}, {"Nitrogen", 7}, {"Oxygen", 8}};
+const std::vector<std::string> requiredElements = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+const std::map<std::string, int> elementZ = {{"Helium", 2}, {"Lithium", 3}, {"Beryllium", 4}, {"Boron", 5}, {"Carbon", 6}, {"Nitrogen", 7}, {"Oxygen", 8}};
 
 const std::map<std::string, std::pair<double, double>> detector_ek_ranges = {
-  {"TOF", {0.33, 1.29}},
-  {"NaF", {0.90, 5.10}},
-  {"AGL", {2.90, 21.0}}
+  {"TOF", {0.25, 1.50}},
+  {"NaF", {0.80, 6.10}},
+  {"AGL", {2.50, 22.0}}
 };
 
 std::string getTemplateHistName(const std::string& elName, const std::string& detector, bool isL2) {
-  std::string tag = isL2 ? "L2QTemplate" : "L1QTemplate";
-  return chainName + "_ISS_BKG_H2_" + elName + "_" + tag + "_" + detector;
+  std::string tag = isL2 ? "L2Template" : "L1Template";
+  return chainName + "_BKG_H4_" + elName + "_" + tag + "_" + detector;
 }
 
 struct PurgeResult {
@@ -118,7 +119,7 @@ std::unique_ptr<RooPlot> TemplatePurger::setupPlot(const string& fitName, TH1D* 
   if (fitStatus <= 1) {
     totalPdf.plotOn(frame.get(), Name("total_pdf"), LineColor(kRed), LineWidth(2));
 
-    map<string, int> elementColors = {{"Lithium", kBlue + 2}, {"Beryllium", kAzure + 7}, {"Boron", kOrange - 3}, {"Carbon", kGreen + 2}, {"Nitrogen", kMagenta - 3}, {"Oxygen", kCyan + 2}, {"Temp1", kBlue}};
+    map<string, int> elementColors = {{"Helium", kGray}, {"Lithium", kBlue + 2}, {"Beryllium", kAzure + 7}, {"Boron", kOrange - 3}, {"Carbon", kGreen + 2}, {"Nitrogen", kMagenta - 3}, {"Oxygen", kCyan + 2}, {"Temp1", kBlue}};
     
     string primaryCompName = h_pure_temp_input ? "Temp1" : primaryElement_;
 
@@ -152,7 +153,6 @@ std::unique_ptr<RooPlot> TemplatePurger::setupPlot(const string& fitName, TH1D* 
 
   return frame;
 }
-
 
 PurgeResult TemplatePurger::runFitAndPurge(
   const string& fitName,
@@ -410,7 +410,7 @@ void CalPureQTemp() {
   TCanvas* c_pdf = new TCanvas("c_pdf", "PDF Canvas", 800, 600);
   c_pdf->Print((pdfFileName + "[").c_str());
 
-  const std::vector<std::string> orderedElements = {"Oxygen", "Nitrogen", "Carbon", "Boron", "Beryllium", "Lithium"};
+  const std::vector<std::string> orderedElements = {"Oxygen", "Nitrogen", "Carbon", "Boron", "Beryllium", "Lithium", "Helium"};
 
   const std::map<std::string, std::vector<std::string>> contaminationMap = {
     {"Oxygen", {}},
@@ -418,7 +418,8 @@ void CalPureQTemp() {
     {"Carbon", {"Nitrogen", "Oxygen"}},
     {"Boron", {"Carbon", "Nitrogen", "Oxygen"}},
     {"Beryllium", {"Boron", "Carbon", "Nitrogen", "Oxygen"}},
-    {"Lithium", {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"}}
+    {"Lithium", {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"}},
+    {"Helium", {}}
   };
   
   for (const auto& detector : detectors) {
@@ -465,7 +466,6 @@ void CalPureQTemp() {
       double ek_center = y_axis->GetBinCenter(y_bin);
       
       if (ek_center < ek_min || ek_center > ek_max) {
-        cout << " [Bin " << y_bin << "] Ek=" << ek_center << " GeV/n is OUTSIDE range [" << ek_min << ", " << ek_max << "]. Skipping." << endl;
         continue;
       }
       
@@ -482,9 +482,9 @@ void CalPureQTemp() {
         const auto& contaminants = contaminationMap.at(elPrimary);
         map<string, TH1D*> comps1;
 
-        if (elPrimary == "Oxygen") {
+        if (elPrimary == "Oxygen" || elPrimary == "Helium") {
           auto h_raw = unique_ptr<TH1D>(h2d_raw_L1.at(elPrimary)->ProjectionX(Form("h_slice_L1_%s_%s_E%d", elPrimary.c_str(), detector.c_str(), y_bin), y_bin, y_bin, "e"));
-          h_raw->Smooth(0,"G");
+          h_raw->Smooth(1,"G");
           currentBinPureTemplates[elPrimary] = unique_ptr<TH1D>((TH1D*)h_raw->Clone(Form("L1QTemp_Pure_%s_%s_E%d", elPrimary.c_str(), detector.c_str(), y_bin)));
           finalPureTemplates[elPrimary][y_bin] = unique_ptr<TH1D>((TH1D*)currentBinPureTemplates.at(elPrimary)->Clone());
           continue;
@@ -502,9 +502,9 @@ void CalPureQTemp() {
         if (!allContaminantsReady) continue;
 
         auto h_Primary_raw = unique_ptr<TH1D>(h2d_raw_L1.at(elPrimary)->ProjectionX(Form("h_slice_L1_%s_%s_E%d", elPrimary.c_str(), detector.c_str(), y_bin), y_bin, y_bin, "e"));
-        h_Primary_raw->Smooth(0,"G");
+        h_Primary_raw->Smooth(1,"G");
         auto h_Primary_L2 = unique_ptr<TH1D>(h2d_raw_L2.at(elPrimary)->ProjectionX(Form("h_slice_L2_%s_%s_E%d", elPrimary.c_str(), detector.c_str(), y_bin), y_bin, y_bin, "e"));
-        h_Primary_L2->Smooth(0,"G");
+        h_Primary_L2->Smooth(1,"G");
 
         comps1[elPrimary] = h_Primary_L2.get();
         
@@ -539,15 +539,16 @@ void CalPureQTemp() {
       }
     }
     
+    // Save Pure L1 Templates
     for (const auto& el : requiredElements) {
       outputFile->cd();
       if (!finalPureTemplates.count(el) || !h2d_raw_L1.count(el)) continue;
 
       const auto& h_base_2d = h2d_raw_L1.at(el);
-        std::string pureHistName = Form("h2d_PureQTemp_%s_%s", el.c_str(), detector.c_str());
-        auto h_pure_2d = unique_ptr<TH2F>((TH2F*)h_base_2d->Clone(pureHistName.c_str()));
-              
-        h_pure_2d->Reset();
+      std::string pureHistName = Form("h2d_PureQTemp_%s_%s", el.c_str(), detector.c_str());
+      auto h_pure_2d = unique_ptr<TH2F>((TH2F*)h_base_2d->Clone(pureHistName.c_str()));
+            
+      h_pure_2d->Reset();
 
       for (int y_bin = 1; y_bin <= n_bins_y; ++y_bin) {
         if (finalPureTemplates.at(el).count(y_bin)) {
@@ -558,6 +559,55 @@ void CalPureQTemp() {
         }
       }
       h_pure_2d->Write();
+      cout << "Saved " << pureHistName << endl;
+    }
+
+    // Save Tune L1 Templates (He & Oxy)
+    for (const auto& el : {"Helium", "Oxygen"}) {
+      if (h2d_raw_L1.count(el)) {
+        outputFile->cd();
+        // Retrieve as TH2F
+        const auto& h_base_l1 = h2d_raw_L1.at(el);
+        std::string tuneHistNameL1 = Form("h2d_TuneQTemp_%s_%s", el, detector.c_str());
+        // Convert to TH2D for saving
+        auto h_tune_2d_l1 = std::make_unique<TH2D>(tuneHistNameL1.c_str(), h_base_l1->GetTitle(), 
+                                                   h_base_l1->GetNbinsX(), h_base_l1->GetXaxis()->GetXmin(), h_base_l1->GetXaxis()->GetXmax(),
+                                                   h_base_l1->GetNbinsY(), h_base_l1->GetYaxis()->GetXmin(), h_base_l1->GetYaxis()->GetXmax());
+        h_tune_2d_l1->GetYaxis()->Set(h_base_l1->GetNbinsY(), h_base_l1->GetYaxis()->GetXbins()->GetArray());
+        
+        for(int x=1; x<=h_base_l1->GetNbinsX(); ++x) {
+            for(int y=1; y<=h_base_l1->GetNbinsY(); ++y) {
+                h_tune_2d_l1->SetBinContent(x, y, h_base_l1->GetBinContent(x, y));
+                h_tune_2d_l1->SetBinError(x, y, h_base_l1->GetBinError(x, y));
+            }
+        }
+        h_tune_2d_l1->Write();
+        cout << "Saved " << tuneHistNameL1 << endl;
+      }
+    }
+
+    // Save Tune L2 Templates (Li to Nit)
+    for (const auto& el : {"Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen"}) {
+      if (h2d_raw_L2.count(el)) {
+        outputFile->cd();
+        // Retrieve as TH2F
+        const auto& h_base_l2 = h2d_raw_L2.at(el);
+        std::string tuneHistNameL2 = Form("h2d_TuneQTemp_%s_%s", el, detector.c_str());
+        // Convert to TH2D for saving
+        auto h_tune_2d_l2 = std::make_unique<TH2D>(tuneHistNameL2.c_str(), h_base_l2->GetTitle(), 
+                                                   h_base_l2->GetNbinsX(), h_base_l2->GetXaxis()->GetXmin(), h_base_l2->GetXaxis()->GetXmax(),
+                                                   h_base_l2->GetNbinsY(), h_base_l2->GetYaxis()->GetXmin(), h_base_l2->GetYaxis()->GetXmax());
+        h_tune_2d_l2->GetYaxis()->Set(h_base_l2->GetNbinsY(), h_base_l2->GetYaxis()->GetXbins()->GetArray());
+
+        for(int x=1; x<=h_base_l2->GetNbinsX(); ++x) {
+            for(int y=1; y<=h_base_l2->GetNbinsY(); ++y) {
+                h_tune_2d_l2->SetBinContent(x, y, h_base_l2->GetBinContent(x, y));
+                h_tune_2d_l2->SetBinError(x, y, h_base_l2->GetBinError(x, y));
+            }
+        }
+        h_tune_2d_l2->Write();
+        cout << "Saved " << tuneHistNameL2 << endl;
+      }
     }
   }
 

@@ -27,7 +27,7 @@ fi
 LISTFILE="$1"
 
 # 输出目录与文件名（基于子列表名生成，确保一作业一个输出）
-OUTDIR="/eos/user/z/zixuan/Isotope/ISS/Be_mit"
+OUTDIR="/eos/user/z/zixuan/Isotope/ISS/Be"
 BASENAME="$(basename "${LISTFILE%.*}")"   # 例如 job_list_4
 OUTNAME="${BASENAME}.root"                # 例如 job_list_4.root
 

@@ -5,3 +5,4 @@
 #nohup root -b -l -q ../rootlogon.C 'buildCDFLookupTables.cpp("Nitrogen")' > n.log 2>&1 &
 #nohup root -b -l -q ../rootlogon.C 'buildCDFLookupTables.cpp("Oxygen")' > o.log 2>&1 &
 root -b -l -q ../rootlogon.C 'buildCDFLookupTables.cpp("Lithium")'
+root -b -l -q ../rootlogon.C 'buildCDFLookupTables.cpp("Helium")'

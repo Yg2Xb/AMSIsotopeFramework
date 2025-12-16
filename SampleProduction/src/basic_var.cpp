@@ -45,14 +45,14 @@ BetaExpoT::BetaExpoT(std::string name, double safety_factor,
 namespace {
 // Define isotope data
 const std::array<IsotopeVar, Constants::ELEMENT_COUNT> IsotopeData {{
-    IsotopeVar(1, 2, "Proton",  std::array<int,3>{{1, 2, 0}}, std::array<int,3>{{0, 0, 0}}),
-    IsotopeVar(2, 2, "Helium",  std::array<int,3>{{3, 4, 0}}, std::array<int,3>{{46, 47, 0}}),
+    IsotopeVar(1, 3, "Proton",  std::array<int,3>{{1, 2, 3}}, std::array<int,3>{{14, 45, 46}}),
+    IsotopeVar(2, 2, "Helium",  std::array<int,3>{{3, 4, 0}}, std::array<int,3>{{49, 47, 0}}),
     IsotopeVar(3, 2, "Lithium", std::array<int,3>{{6, 7, 0}}, std::array<int,3>{{61, 62, 0}}),
     IsotopeVar(4, 3, "Beryllium", std::array<int,3>{{7, 9, 10}}, std::array<int,3>{{63, 64, 114}}),
     IsotopeVar(5, 2, "Boron",   std::array<int,3>{{10, 11, 0}}, std::array<int,3>{{65, 66, 0}}),
     IsotopeVar(6, 2, "Carbon",  std::array<int,3>{{12, 13, 0}}, std::array<int,3>{{67, 117, 0}}),
     IsotopeVar(7, 2, "Nitrogen",std::array<int,3>{{14, 15, 0}}, std::array<int,3>{{68, 118, 0}}),
-    IsotopeVar(8, 3, "Oxygen",  std::array<int,3>{{16, 17, 18}}, std::array<int,3>{{69, 0, 0}})
+    IsotopeVar(8, 1, "Oxygen",  std::array<int,3>{{16, 17, 18}}, std::array<int,3>{{69, 0, 0}})
 }};
 } // anonymous namespace
 
@@ -65,18 +65,19 @@ const IsotopeVar& getIsotopeVar(int charge) {
     return IsotopeData[charge - 1];
 }
 
-int findIsotopeIndex(int mass, int charge) {
+int findIsotopeMass(int ID, int charge) {
     if (charge < 1 || charge > Constants::ELEMENT_COUNT) {
         return -1;
     }
     
     const IsotopeVar& isotope = IsotopeData[charge - 1];
     const auto& masses = isotope.getMasses();
+    const auto& IDs = isotope.getParticles();
     
     // 在该元素的质量数组中查找对应的质量
     for (int i = 0; i < isotope.getIsotopeCount(); ++i) {
-        if (masses[i] == mass) {
-            return i;
+        if (IDs[i] == ID) {
+            return masses[i];
         }
     }
     

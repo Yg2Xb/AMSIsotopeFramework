@@ -1,6 +1,8 @@
 # --- 编译与构建目录 ---
 build/
 
+bp/
+
 # --- 任务列表与临时 TXT ---
 submit/joblist/YanzxDST/*.txt
 submit/joblist/TxTDivide/*.txt

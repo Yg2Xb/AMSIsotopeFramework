@@ -3,6 +3,14 @@
 # 定义日志和输出文件所在的目录
 LOG_DIR="/afs/cern.ch/work/z/zixuan/logISS"
 
+# 定义用于存储错误作业列表的输出文件路径 
+ERR_JOB_LIST="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_jobs_err2.txt"
+# 定义 job list 文件的基础路径 (该路径下的文件命名格式应为 job_list_{ProcessID}.txt)
+JOB_LIST_BASE_PATH="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/TxTDivide"
+
+# 初始化错误文件，确保它为空
+> "$ERR_JOB_LIST"
+
 # --- 任务 1: 检查 log_ 文件中是否有 "abort" 关键词 ---
 echo "=========================================================="
 echo "--- 任务 1: 检查 log_* 文件中的 'abort' 关键词 ---"
@@ -35,8 +43,7 @@ echo "=========================================================="
 echo "--- 任务 2: 检查 output_* 文件的完整性和 'successfully' 关键词 (所有批次) ---"
 echo "=========================================================="
 
-# 1. 识别所有独特的批次名 (Batch Name)
-# 查找所有 output_*.id 文件，并使用 sed 提取出批次号部分 (例如 820886)，然后去重和排序
+# 1. 识别所有独特的批次名 (Cluster ID)
 BATCH_NAMES=$(find "$LOG_DIR" -maxdepth 1 -type f -name 'output_*.*' | \
                sed 's|.*/output_\([0-9]*\)\..*|\1|' | sort -u)
 
@@ -47,26 +54,31 @@ if [ -z "$BATCH_NAMES" ]; then
 fi
 
 # 2. 对每一个批次名进行检查
-EXPECTED_COUNT=2676 # 0 到 2950 共有 2951 个文件
+EXPECTED_COUNT=2676 # 0 到 2676 共有 2677 个文件
 
 for BATCH_NAME in $BATCH_NAMES; do
     
     echo ""
     echo "----------------------------------------------------------"
-    echo ">>> 正在检查批次 (Batch Name): $BATCH_NAME"
+    echo ">>> 正在检查批次 (Cluster ID): $BATCH_NAME"
     echo "----------------------------------------------------------"
     
-    MISSING_FILES=""
+    MISSING_IDS="" # 存储缺失的 Process ID
     SUCCESS_COUNT=0
     FAILURE_COUNT=0
+    FAILURE_FILENAMES=""
     
-    # 检查 0 到 2950 的每个文件
+    # 存储所有需要重新提交的 Process ID (无论是缺失还是失败)
+    RESUBMIT_PIDS="" 
+    
+    # 检查 0 到 2676 的每个文件
     for i in $(seq 0 2676); do
         FILE_NAME="$LOG_DIR/output_${BATCH_NAME}.${i}"
         
         # 检查文件是否存在
         if [ ! -f "$FILE_NAME" ]; then
-            MISSING_FILES+="${i} "
+            MISSING_IDS+="${i} "
+            RESUBMIT_PIDS+="${i} " # 缺失的文件 ID 需要重新提交
             continue
         fi
         
@@ -75,7 +87,8 @@ for BATCH_NAME in $BATCH_NAMES; do
             SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
         else
             FAILURE_COUNT=$((FAILURE_COUNT + 1))
-            # 可以在这里打印更详细的警告
+            FAILURE_FILENAMES+="${FILE_NAME}\n"
+            RESUBMIT_PIDS+="${i} " # 失败的文件 ID 需要重新提交
         fi
     done
     
@@ -83,10 +96,10 @@ for BATCH_NAME in $BATCH_NAMES; do
     
     echo "--- 完整性检查报告 ---"
     
-    if [ -z "$MISSING_FILES" ]; then
+    if [ -z "$MISSING_IDS" ]; then
         echo "文件完整性: 成功。从 0 到 2676 (共 $EXPECTED_COUNT 个文件) 全部存在且连续。"
     else
-        echo "文件完整性: 失败。缺少以下 ID 的文件: $MISSING_FILES"
+        echo "文件完整性: 失败。缺少以下 ID 的文件: $MISSING_IDS"
     fi
 
     echo ""
@@ -95,7 +108,30 @@ for BATCH_NAME in $BATCH_NAMES; do
     echo "失败 (缺少 'successfully') 的文件数: $FAILURE_COUNT / $EXPECTED_COUNT"
 
     if [ "$FAILURE_COUNT" -gt 0 ]; then
-        echo "警告: 批次 $BATCH_NAME 中有 $FAILURE_COUNT 个文件没有包含 'successfully'。"
+        echo ""
+        echo "🚨 警告: 批次 $BATCH_NAME 中有 $FAILURE_COUNT 个文件没有包含 'successfully'。"
+        echo "以下是失败的文件列表 (可能需要检查这些文件的内容):"
+        echo -e "$FAILURE_FILENAMES"
+    fi
+    
+    # --- 4. 核心功能: 写入错误作业列表 ---
+    
+    if [ -n "$RESUBMIT_PIDS" ]; then
+        
+        echo ""
+        echo ">>> 正在写入需要重新提交的作业列表..."
+
+        # 遍历所有需要重新提交的 Process ID
+        for pid in $RESUBMIT_PIDS; do
+            # 构造 job list 文件路径: job_list_{ProcessID}.txt
+            ERR_FILE_PATH="${JOB_LIST_BASE_PATH}/job_list_${pid}.txt"
+            
+            # 将路径写入主错误列表
+            echo "$ERR_FILE_PATH" >> "$ERR_JOB_LIST"
+            
+            echo "记录错误 Job List: $ERR_FILE_PATH"
+        done
+        
     fi
     
 done
@@ -103,4 +139,5 @@ done
 echo ""
 echo "=========================================================="
 echo "--- 所有批次检查完成 ---"
+echo "--- 错误 job list 已写入: $ERR_JOB_LIST ---"
 echo "=========================================================="

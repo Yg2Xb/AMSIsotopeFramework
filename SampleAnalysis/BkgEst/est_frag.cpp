@@ -1,5 +1,7 @@
 #include <TFile.h>
 #include <TH1.h>
+#include <TH1D.h>
+#include <TH2F.h>
 #include <TCanvas.h>
 #include <TLatex.h>
 #include <TF1.h>
@@ -7,7 +9,7 @@
 #include <TLegend.h>
 #include <TMath.h>
 #include <TError.h>
-#include <memory>
+#include <TLine.h>
 #include <vector>
 #include <map>
 #include <string>
@@ -15,16 +17,16 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iomanip>
-#include <numeric>
+#include <cmath>
 
-// 假设 SplineFit 函数在此头文件中定义
+// 假设 SplineFit 在此定义
 #include "../Tool.h"
 
 using namespace std;
 using namespace AMS_Iso;
 
 // =================================================================================
-// ValueWithError struct for robust error propagation
+// 简单结构体处理误差传播
 // =================================================================================
 struct ValueWithError {
     double val = 0.0;
@@ -46,7 +48,7 @@ struct ValueWithError {
         return {new_val, std::abs(new_val) * std::sqrt(rel_err_sq)};
     }
     ValueWithError operator/(const ValueWithError& o) const {
-        if (o.val == 0.0) return {0.0, 0.0}; // Or handle as error
+        if (o.val == 0.0) return {0.0, 0.0};
         double new_val = val / o.val;
         if (new_val == 0.0) return {0.0, 0.0};
         double rel_err_sq = (val != 0 ? (err/val)*(err/val) : 0) + (o.val != 0 ? (o.err/o.val)*(o.err/o.val) : 0);
@@ -54,420 +56,562 @@ struct ValueWithError {
     }
 };
 
-// --- 全局配置 ---
+// =================================================================================
+// 全局配置 & 节点定义
+// =================================================================================
+const string CHAIN_NAME = "L1Inner";
 const string FLUX_FILE_PATH = "/eos/user/z/zixuan/Isotope/FluxSmooth/FluxSmooth.root";
 const string ACC_FILE_DIR = "/eos/user/z/zixuan/Isotope/Add/";
 const string OUTPUT_DIR = "/eos/user/z/zixuan/Isotope/BkgEst/";
-std::vector<double> xpoints = {0.33, 0.77, 1.41, 3.16, 5.62, 10.00, 30, 60, 100};
-std::vector<double> xpoints2 = {0.33, 1.41, 5.62, 10.00, 30, 60, 100};
 
-const bool DO_REBIN = true;
+double xpoints2_arr[] = {0.27, 1.41, 5.62, 10.00, 30, 60, 100};
+const int n_xpoints2 = sizeof(xpoints2_arr)/sizeof(double);
 
-const vector<string> ALL_PARTICLES = {"Be7", "Be9", "Be10", "B10", "B11", "C12", "N14", "N15","O16"};
-const vector<string> ALL_SECONDARY_ISOTOPES = {"Be7", "Be9", "Be10"};
+double xpoints_global_arr[] = {0.27, 0.77, 1.41, 3.00, 5.62, 10.00, 30, 60, 100};
+const int n_xpoints_global = sizeof(xpoints_global_arr)/sizeof(double);
 
-const vector<string> DETECTORS = {"TOF", "NaF", "AGL"};
+double xpoints_tof_arr[] = {0.27, 0.77, 1.45};
+const int n_xpoints_tof = sizeof(xpoints_tof_arr)/sizeof(double);
 
-map<string, pair<double, double>> DETECTOR_RANGES = {
-    {"TOF", {0.33, 1.1133}},
+double xpoints_naf_arr[] = {0.90, 2.50, 5.20};
+const int n_xpoints_naf = sizeof(xpoints_naf_arr)/sizeof(double);
+
+double xpoints_agl_arr[] = {2.5, 5.62, 10.00, 30, 60, 100};
+const int n_xpoints_agl = sizeof(xpoints_agl_arr)/sizeof(double);
+
+// 探测器 Overlap 范围
+const map<string, pair<double, double>> DET_OVERLAP_RANGES = {
+    {"TOF", {0.27, 1.40}},
+    {"NaF", {0.90, 5.10}},
+    {"AGL", {2.90, 21.0}}
+};
+
+// Stitching 范围
+const map<string, pair<double, double>> STITCHING_RANGES = {
+    {"TOF", {0.27, 1.1133}},
     {"NaF", {1.1133, 3.05913}},
     {"AGL", {3.05913, 22.0}}
 };
 
-const vector<int> PLOT_COLORS = {kRed, kBlue, kGreen+2, kMagenta, kOrange-3, kCyan+1, kPink+7, kSpring-5};
+const bool DO_REBIN = true;
+const vector<string> ALL_PARTICLES = {"Be7", "Be9", "Be10", "B10", "B11", "C12", "N14", "N15","O16"};
+const vector<string> ALL_SECONDARY_ISOTOPES = {"Be7", "Be9", "Be10"};
+const vector<string> DETECTORS = {"TOF", "NaF", "AGL"};
 
-// --- 工具函数 ---
+// 绘图颜色
+const int COLOR_TOF = kRed;
+const int COLOR_NAF = kBlue;
+const int COLOR_AGL = kGreen+2;
+const int COLOR_COMBINED = kBlack;
+
+// =================================================================================
+// 辅助函数
+// =================================================================================
 
 int getMassNumber(const string& particleName) {
     size_t first_digit = particleName.find_first_of("0123456789");
-    if (first_digit == string::npos) {
-        throw runtime_error("getMassNumber: Could not find mass number in particle name: " + particleName);
-    }
+    if (first_digit == string::npos) return 0;
     return stoi(particleName.substr(first_digit));
 }
 
-TH1* getHistClone(TFile* file, const string& histName) {
-    if (!file || file->IsZombie()) {
-        throw runtime_error("getHistClone: Invalid file provided.");
-    }
-    TH1* h_orig = dynamic_cast<TH1*>(file->Get(histName.c_str()));
-    if (!h_orig) {
-        throw runtime_error("Histogram not found: " + histName + " in file " + file->GetName());
-    }
-    TH1* h_clone = (TH1*)h_orig->Clone((histName + "_clone").c_str());
-    h_clone->SetDirectory(nullptr);
-    
-    if (DO_REBIN) {
-        h_clone->Rebin(2);
-    }
-    h_clone->Sumw2();
-    return h_clone;
+// 恢复正常的 Style 设置
+void setHistStyle(TH1* h, int color, int markerStyle=20) {
+    if(!h) return;
+    h->SetLineColor(color);
+    h->SetMarkerColor(color);
+    h->SetMarkerStyle(markerStyle);
+    h->SetMarkerSize(1.0);
+    h->SetStats(0);
+    h->GetYaxis()->SetTitleOffset(1.1); // 稍微拉开一点距离防止重叠
 }
 
-// =================================================================================
-// Acceptance calculation updated to use Binomial errors.
-// =================================================================================
+// 设置 Legend 样式：透明 + 有边框
+void setLegendStyle(TLegend* leg) {
+    if(!leg) return;
+    leg->SetFillStyle(0); // 透明
+    leg->SetBorderSize(1); // 有边框
+    leg->SetTextSize(0.04); 
+}
+
+// 计算 Acceptance
 map<int, ValueWithError> calculateAcceptance(const string& accFilePath, const string& eventHistName) {
-    unique_ptr<TFile> file(TFile::Open(accFilePath.c_str()));
+    map<int, ValueWithError> acceptance_map;
+
+    TFile* file = TFile::Open(accFilePath.c_str());
     if (!file || file->IsZombie()) {
-        throw runtime_error("Cannot open acceptance file: " + accFilePath);
+        cerr << "Error: Cannot open " << accFilePath << endl;
+        if(file) delete file;
+        return acceptance_map;
     }
-    // 获取原始直方图，不使用Sumw2()，因为我们需要原始计数
-    // FIX: Use dynamic_cast to safely convert TObject* to TH1*
-    unique_ptr<TH1> h_events_raw(dynamic_cast<TH1*>(file->Get(eventHistName.c_str())));
-    unique_ptr<TH1> h_mc_flux_raw(dynamic_cast<TH1*>(file->Get("MC_FLUX_H3")));
+
+    TH1* h_events_raw = (TH1*)file->Get(eventHistName.c_str());
+    TH1* h_mc_flux_raw = (TH1*)file->Get("MC_FLUX_H3");
 
     if (!h_events_raw || !h_mc_flux_raw) {
-        throw runtime_error("Could not get raw histograms from " + accFilePath);
+        cerr << "Error: Hists not found in " << accFilePath << " (" << eventHistName << ")" << endl;
+        file->Close(); delete file;
+        return acceptance_map;
     }
+
+    TH1* h_events = (TH1*)h_events_raw->Clone(); 
+    h_events->SetDirectory(0);
     
-    // 克隆并进行rebin
-    TH1* h_events = (TH1*)h_events_raw->Clone((eventHistName + "_clone_acc").c_str());
-    h_events->SetDirectory(nullptr);
-    TH1* h_mc_flux = (TH1*)h_mc_flux_raw->Clone("mc_flux_clone_acc");
-    h_mc_flux->SetDirectory(nullptr);
+    TH1* h_mc_flux = (TH1*)h_mc_flux_raw->Clone(); 
+    h_mc_flux->SetDirectory(0);
+
+    file->Close(); delete file;
 
     if (DO_REBIN) {
         h_events->Rebin(2);
         h_mc_flux->Rebin(2);
     }
 
-    if (h_events->GetNbinsX() != h_mc_flux->GetNbinsX()) {
-        delete h_events;
-        delete h_mc_flux;
-        throw runtime_error("Bin mismatch in " + accFilePath);
-    }
-
-    map<int, ValueWithError> acceptance_map;
     double scale = TMath::Power(3.9, 2) * TMath::Pi();
 
     for (int i = 1; i <= h_events->GetNbinsX(); ++i) {
-        double k = h_events->GetBinContent(i);   // Number of passed events
-        double N = h_mc_flux->GetBinContent(i);  // Total number of generated events
+        double k = h_events->GetBinContent(i);
+        double N = h_mc_flux->GetBinContent(i);
 
         if (N > 0) {
-            double efficiency = k / N;
-            // Binomial error for the efficiency
-            double efficiency_err = sqrt(efficiency * (1.0 - efficiency) / N);
-            
-            // The final acceptance is efficiency * scale factor
-            double acceptance_val = efficiency * scale;
-            double acceptance_err = efficiency_err * scale; // Error also scales
-            
-            acceptance_map[i] = ValueWithError(acceptance_val, acceptance_err);
+            double eff = k / N;
+            double eff_err = (k > 0 && k < N) ? sqrt(eff * (1.0 - eff) / N) : (k==0 ? 1.0/N : 0.0);
+            acceptance_map[i] = ValueWithError(eff * scale, eff_err * scale);
         } else {
-            // If no events were generated, acceptance is zero with zero error.
             acceptance_map[i] = ValueWithError(0.0, 0.0);
         }
     }
-    
-    // Clean up the cloned histograms
+
     delete h_events;
     delete h_mc_flux;
 
     return acceptance_map;
 }
 
-TF1* smoothRatio(TH1* h_ratio, const string& fitName) {
+// 封装 SplineFit
+TF1* smoothRatio(TH1* h_ratio, const string& fitName, bool isGlobal) {
+    if(!h_ratio) return nullptr;
+    
+    double* knots = xpoints_global_arr;
+    int n_knots = n_xpoints_global;
+
+    if (isGlobal) {
+        knots = xpoints_global_arr;
+        n_knots = n_xpoints_global;
+        if (fitName.find("C12_to_Be7") != string::npos || fitName.find("C12_to_B11") != string::npos || 
+            fitName.find("C12_to_Be10") != string::npos || fitName.find("N15_to_Be7") != string::npos || 
+            fitName.find("O16_to_Be10") != string::npos || fitName.find("O16_to_B11") != string::npos) {
+            knots = xpoints2_arr;
+            n_knots = n_xpoints2;
+        }
+    } else {
+        knots = xpoints_agl_arr;
+        n_knots = n_xpoints_agl;
+        if (fitName.find("TOF") != string::npos) {
+            knots = xpoints_tof_arr;
+            n_knots = n_xpoints_tof;
+        }
+        else if (fitName.find("NaF") != string::npos) {
+            knots = xpoints_naf_arr;
+            n_knots = n_xpoints_naf;
+        }
+    }
+
     TF1* fit = nullptr;
     try {
-        if(fitName == "fit_acc_ratio_combined_C12_to_Be7" || fitName == "fit_acc_ratio_combined_C12_to_B11" || fitName == "fit_acc_ratio_combined_C12_to_Be10" || fitName == "fit_acc_ratio_combined_N15_to_Be7" || fitName == "fit_acc_ratio_combined_O16_to_Be10" || fitName == "fit_acc_ratio_combined_O16_to_B11"){
-            fit = SplineFit(h_ratio, xpoints2.data(), xpoints2.size(), 0x38, "b1e1", fitName.c_str(), 0.3, 20.5);
-        }
-        else{
-            fit = SplineFit(h_ratio, xpoints.data(), xpoints.size(), 0x38, "b1e1", fitName.c_str(), 0.3, 20.5);
-        }
-    } catch (const std::exception& e) {
-        cerr << "SplineFit failed for " << fitName << ": " << e.what() << endl; return nullptr;
-    }
-    if (!fit) {
-        cerr << "SplineFit returned nullptr for " << fitName << endl; return nullptr;
+        fit = SplineFit(h_ratio, knots, n_knots, 0x38, "b1e1", fitName.c_str(), 0.27, 20.5);
+    } catch (...) {
+        return nullptr;
     }
     return fit;
 }
 
-// Helper to set standard style for histograms
-void setHistStyle(TH1* h, int color) {
-    h->SetLineColor(color);
-    h->SetMarkerColor(color);
-    h->SetMarkerStyle(20);
-    h->SetMarkerSize(1.2);
-}
-
-
-// --- 主执行函数 ---
+// =================================================================================
+// 主程序
+// =================================================================================
 void est_frag() {
+    auto GetNonZeroMin = [](TH1* h) -> double {
+        double min_val = std::numeric_limits<double>::max();
+        bool found = false;
+        for (int i = 1; i <= h->GetNbinsX(); ++i) {
+            double c = h->GetBinContent(i);
+            if (c > 0 && c < min_val) {
+                min_val = c;
+                found = true;
+            }
+        }
+        return found ? min_val : 1e-5; // 如果全是0，返回默认值
+    };
     gStyle->SetOptStat(0);
     gStyle->SetErrorX(0); 
     gErrorIgnoreLevel = kWarning;
 
-    unique_ptr<TFile> fluxFile(TFile::Open(FLUX_FILE_PATH.c_str()));
+    TFile* fluxFile = TFile::Open(FLUX_FILE_PATH.c_str());
     if (!fluxFile || fluxFile->IsZombie()) {
-        cerr << "FATAL: Cannot open flux file: " << FLUX_FILE_PATH << endl;
+        cerr << "FATAL: Flux file error." << endl;
         return;
     }
-    map<string, TF1*> fluxes;
-    for (const auto& particle : ALL_PARTICLES) {
-        fluxes[particle] = dynamic_cast<TF1*>(fluxFile->Get((particle + "_spline_Ek").c_str()));
-        if (!fluxes[particle]) {
-            cerr << "FATAL: Flux function for " << particle << " not found!" << endl;
+
+    map<string, TF1*> map_fluxes;
+    for (const auto& p : ALL_PARTICLES) {
+        TF1* f = (TF1*)fluxFile->Get((p + "_spline_Ek").c_str());
+        if(!f) {
+            cerr << "FATAL: Flux for " << p << " not found." << endl;
             return;
         }
+        map_fluxes[p] = f;
     }
 
-    map<string, vector<TH1D*>> results_by_secondary;
-    map<string, vector<string>> labels_by_secondary;
-    
-    map<string, bool> debug_printed_for_channel;
+    map<string, vector<TH1D*>> all_final_hists;
+    map<string, vector<string>> all_final_labels;
 
-    // --- Calculation Loop ---
     for (const auto& secondary : ALL_SECONDARY_ISOTOPES) {
-        vector<string> primaries_to_use;
-        int secondary_mass = getMassNumber(secondary);
-        for (const auto& potential_primary : ALL_PARTICLES) {
-            if (getMassNumber(potential_primary) > secondary_mass) {
-                primaries_to_use.push_back(potential_primary);
-            }
+        int sec_Z = (secondary.find("Be") == 0) ? 4 : 5;
+        int sec_A = getMassNumber(secondary);
+
+        vector<string> primaries;
+        for (const auto& p : ALL_PARTICLES) {
+            if (getMassNumber(p) > sec_A) primaries.push_back(p);
         }
 
-        if (primaries_to_use.empty()) continue;
+        for (const auto& primary : primaries) {
+            if (primary == "Be7") continue; 
 
-        for (const auto& primary : primaries_to_use) {
-            if(primary == "Be7") continue;
-            
-            cout << "\n>>> Processing channel: " << primary << " -> " << secondary << "..." << endl;
-            string channel_label = primary + " #rightarrow " + secondary;
+            cout << "\n>>> Processing " << primary << " -> " << secondary << "..." << endl;
+            string channel_label = primary + " -> " + secondary;
             
             string pdf_path = OUTPUT_DIR + "rew_results_" + primary + "_to_" + secondary + ".pdf";
-            unique_ptr<TCanvas> intermediate_canvas(new TCanvas("intermediate_canvas", "Intermediate Results", 900, 700));
-            intermediate_canvas->Print((pdf_path + "[").c_str());
-            
-            TF1* flux_X = fluxes.at(primary);
-            TF1* flux_Y = fluxes.at(secondary);
+            TCanvas* c1 = new TCanvas("c1", "Canvas", 900, 700);
+            c1->Print((pdf_path + "[").c_str());
 
-            // --- PDF Page 1: Fluxes ---
-            intermediate_canvas->Clear();
-            intermediate_canvas->SetLogy(true);
-            flux_X->SetLineColor(kRed);
-            flux_Y->SetLineColor(kBlue);
-            flux_X->SetTitle(Form("Input Fluxes for %s -> %s;E_{k}/n [GeV/n];Flux", primary.c_str(), secondary.c_str()));
-            flux_X->GetXaxis()->SetRangeUser(0.3, 100.0);
-            flux_X->Draw();
+            TF1* flux_X = map_fluxes[primary];
+            TF1* flux_Y = map_fluxes[secondary];
+
+            // PAGE 1: Fluxes
+            c1->Clear(); 
+            c1->SetLogy(1); c1->SetLogx(1);
+            
+            flux_X->SetLineColor(kRed); 
+            flux_X->SetTitle(Form("Fluxes %s", channel_label.c_str()));
+            flux_X->GetYaxis()->SetTitle("Flux"); // Title matches content
+            flux_X->GetXaxis()->SetRangeUser(0.27, 100.0);
+            flux_X->Draw(); 
+            flux_Y->SetLineColor(kBlue); 
             flux_Y->Draw("SAME");
-            {
-                unique_ptr<TLegend> leg(new TLegend(0.78, 0.78, 0.88, 0.88));
-                leg->SetBorderSize(0); leg->SetFillStyle(0);
-                leg->AddEntry(flux_X, Form("Flux(%s)", primary.c_str()), "l");
-                leg->AddEntry(flux_Y, Form("Flux(%s)", secondary.c_str()), "l");
-                leg->Draw();
-                intermediate_canvas->Print(pdf_path.c_str());
+
+            TLegend* leg1 = new TLegend(0.78, 0.78, 0.88, 0.88);
+            setLegendStyle(leg1);
+            leg1->AddEntry(flux_X, primary.c_str(), "l");
+            leg1->AddEntry(flux_Y, secondary.c_str(), "l");
+            leg1->Draw();
+            c1->Print(pdf_path.c_str());
+            delete leg1;
+
+            // PAGE 2: Flux Ratio Visualization
+            c1->Clear(); 
+            c1->SetLogy(0); c1->SetLogx(1);
+            
+            TH1D* h_fr = new TH1D("h_fr", "Flux Ratio (X/Y);E_{k}/n;Flux Ratio", 200, 0.27, 100);
+            h_fr->SetStats(0);
+            for(int b=1; b<=h_fr->GetNbinsX(); ++b) {
+                double x = h_fr->GetBinCenter(b);
+                double vy = flux_Y->Eval(x);
+                if(vy > 0) h_fr->SetBinContent(b, flux_X->Eval(x)/vy);
             }
-            
-            auto flux_ratio_func = [&](double ek) -> ValueWithError {
-                double valX = flux_X->Eval(ek);
-                double valY = flux_Y->Eval(ek);
-                // Assume 1% relative error on flux values as a reasonable estimate
-                ValueWithError flux_vw_X(valX, valX * 0.01);
-                ValueWithError flux_vw_Y(valY, valY * 0.01);
-                return flux_vw_X / flux_vw_Y;
+            h_fr->SetLineColor(kBlack);
+            h_fr->GetYaxis()->SetTitleOffset(1.2);
+            h_fr->Draw("L");
+            c1->Print(pdf_path.c_str());
+            delete h_fr;
+
+            auto calc_flux_ratio = [&](double ek) {
+                double vx = flux_X->Eval(ek);
+                double vy = flux_Y->Eval(ek);
+                if(vy == 0) return ValueWithError(0,0);
+                ValueWithError wx(vx, vx*0.01);
+                ValueWithError wy(vy, vy*0.01);
+                return wx/wy;
             };
-            
-            unique_ptr<TH1> h_acc_ratio_combined(nullptr);
-            TH1D* h_final_epsilon = nullptr;
 
-            for (const auto& det : DETECTORS) {
-                cout << "  -- Detector: " << det << " --" << endl;
-                try {
-                    string channel_suffix;
-                    if (secondary.rfind("Be", 0) == 0) { channel_suffix = "_rew_frag4.root"; } 
-                    else if (secondary.rfind("B", 0) == 0) { channel_suffix = "_rew_frag5.root"; } 
-                    else { throw runtime_error("Unknown secondary isotope family: " + secondary); }
-                    
-                    string chargePart, massPart;
-                    if (secondary.rfind("Be", 0) == 0) { chargePart = "_Z4_"; massPart = secondary.substr(2); } 
-                    else { chargePart = "_Z5_"; massPart = secondary.substr(1); }
-                    
-                    string eventHistName = "L1Inner_MC_BKG_H3a_" + det + chargePart + "Mass" + massPart;
-                    string acc_path_Y    = ACC_FILE_DIR + secondary + channel_suffix;
-                    string acc_path_XfragY = ACC_FILE_DIR + primary + channel_suffix;
-                    
-                    map<int, ValueWithError> acc_map_Y = calculateAcceptance(acc_path_Y, eventHistName);
-                    map<int, ValueWithError> acc_map_XfragY = calculateAcceptance(acc_path_XfragY, eventHistName);
-                    
-                    unique_ptr<TH1> h_temp_for_bins(getHistClone(TFile::Open(acc_path_Y.c_str()), eventHistName));
-                    unique_ptr<TH1D> h_acc_ratio_det( (TH1D*)h_temp_for_bins->Clone(Form("h_acc_ratio_%s_%s_%s", primary.c_str(), secondary.c_str(), det.c_str())) );
-                    h_acc_ratio_det->Reset();
+            string suffix = (secondary.find("Be") == 0) ? "_rew_frag4.root" : "_rew_frag5.root";
+            string acc_file_Y = ACC_FILE_DIR + secondary + suffix;
+            string acc_file_XtoY = ACC_FILE_DIR + primary + suffix;
 
-                    for (int i = 1; i <= h_acc_ratio_det->GetNbinsX(); ++i) {
-                        ValueWithError acc_ratio = acc_map_XfragY[i] / acc_map_Y[i];
-                        h_acc_ratio_det->SetBinContent(i, acc_ratio.val);
-                        h_acc_ratio_det->SetBinError(i, acc_ratio.err);
+            auto getHName = [&](const string& d) {
+                return string(Form("%s_BKG_H3a_%s_Z%d_Mass%d", CHAIN_NAME.c_str(), d.c_str(), sec_Z, sec_A));
+            };
+
+            // ----------------------------------------------------
+            // CORE LOGIC 1: COMBINED (Stitching)
+            // ----------------------------------------------------
+            TFile* ftmp = TFile::Open(acc_file_Y.c_str());
+            TH1* h_tpl_raw = (TH1*)ftmp->Get(getHName("TOF").c_str()); 
+            TH1D* h_template = (TH1D*)h_tpl_raw->Clone("h_template");
+            h_template->SetDirectory(0);
+            ftmp->Close(); delete ftmp;
+            if(DO_REBIN) h_template->Rebin(2);
+
+            TH1D* h_acc_ratio_comb = (TH1D*)h_template->Clone("h_ar_comb");
+            h_acc_ratio_comb->Reset();
+            h_acc_ratio_comb->SetTitle("Combined Acc Ratio (Stitched)");
+            h_acc_ratio_comb->SetDirectory(0);
+
+            TH1D* h_eps_comb = (TH1D*)h_template->Clone(Form("h_eps_%s_%s", primary.c_str(), secondary.c_str()));
+            h_eps_comb->Reset();
+            h_eps_comb->SetTitle(channel_label.c_str());
+            h_eps_comb->SetDirectory(0);
+
+            for(const auto& det : DETECTORS) {
+                map<int, ValueWithError> ay = calculateAcceptance(acc_file_Y, getHName(det));
+                map<int, ValueWithError> axy = calculateAcceptance(acc_file_XtoY, getHName(det));
+                
+                auto range = STITCHING_RANGES.at(det);
+                
+                for(int i=1; i<=h_acc_ratio_comb->GetNbinsX(); ++i) {
+                    double ek = h_acc_ratio_comb->GetBinCenter(i);
+                    if(ek >= range.first && ek < range.second) {
+                        ValueWithError r = axy[i] / ay[i];
+                        h_acc_ratio_comb->SetBinContent(i, r.val);
+                        h_acc_ratio_comb->SetBinError(i, r.err);
                     }
+                }
+            }
 
-                    if (!h_final_epsilon) {
-                        h_final_epsilon = (TH1D*)h_acc_ratio_det->Clone(Form("h_epsilon_%s_to_%s", primary.c_str(), secondary.c_str()));
-                        h_final_epsilon->SetTitle(channel_label.c_str());
-                        h_final_epsilon->Reset();
+            // Global Fit
+            TF1* fit_comb = smoothRatio(h_acc_ratio_comb, Form("fit_comb_%s_%s", primary.c_str(), secondary.c_str()), true);
+
+            if(fit_comb) {
+                for(int i=1; i<=h_eps_comb->GetNbinsX(); ++i) {
+                    double ek = h_eps_comb->GetBinCenter(i);
+                    bool inRange = false;
+                    for(auto& r : STITCHING_RANGES) if(ek >= r.second.first && ek < r.second.second) inRange = true;
+
+                    if(inRange) {
+                        ValueWithError fr = calc_flux_ratio(ek);
+                        ValueWithError ar(fit_comb->Eval(ek), h_acc_ratio_comb->GetBinError(i));
+                        ValueWithError eps = fr * ar;
+                        h_eps_comb->SetBinContent(i, eps.val);
+                        h_eps_comb->SetBinError(i, eps.err);
                     }
+                }
+                all_final_hists[secondary].push_back(h_eps_comb);
+                all_final_labels[secondary].push_back(channel_label);
+            }
 
-                    if (!h_acc_ratio_combined) {
-                        h_acc_ratio_combined.reset((TH1*)h_acc_ratio_det->Clone(Form("h_acc_ratio_combined_%s_to_%s", primary.c_str(), secondary.c_str())));
-                        h_acc_ratio_combined->Reset();
-                        h_acc_ratio_combined->SetTitle("Combined Acceptance Ratio (All Detectors)");
-                        setHistStyle(h_acc_ratio_combined.get(), kBlack);
+            // Draw Combined Acc Ratio
+            c1->Clear(); c1->SetLogx(1); c1->SetLogy(0);
+            h_acc_ratio_comb->GetXaxis()->SetRangeUser(0.27, 20.5);
+            h_acc_ratio_comb->GetYaxis()->SetTitle("Acceptance Ratio"); // Title Match
+            setHistStyle(h_acc_ratio_comb, kBlack);
+            h_acc_ratio_comb->SetTitleOffset(1.2);
+            h_acc_ratio_comb->Draw("P");
+            if(fit_comb) {
+                fit_comb->SetLineColor(kRed);
+                fit_comb->Draw("SAME");
+            }
+            c1->Print(pdf_path.c_str());
+
+            // Draw Combined Epsilon (Preview)
+            c1->Clear();
+            h_eps_comb->GetXaxis()->SetRangeUser(0.27, 20.5);
+            h_eps_comb->GetYaxis()->SetTitle("Background Fraction"); // Title Match
+            setHistStyle(h_eps_comb, kBlack);
+            h_eps_comb->Draw("P");
+            c1->Print(pdf_path.c_str());
+
+            // ----------------------------------------------------
+            // CORE LOGIC 2: PER-DETECTOR ANALYSIS (Overlap)
+            // ----------------------------------------------------
+            vector<TH1D*> vec_det_eps; 
+            vector<string> vec_det_names;
+
+            for(const auto& det : DETECTORS) {
+                auto range = DET_OVERLAP_RANGES.at(det);
+
+                map<int, ValueWithError> ay = calculateAcceptance(acc_file_Y, getHName(det));
+                map<int, ValueWithError> axy = calculateAcceptance(acc_file_XtoY, getHName(det));
+
+                // 准备 Acceptance 的图 (分子和分母)
+                TH1D* h_ay_det = (TH1D*)h_template->Clone(Form("h_ay_%s", det.c_str()));
+                h_ay_det->Reset(); h_ay_det->SetDirectory(0);
+                h_ay_det->SetTitle(Form("%s Acceptance", det.c_str()));
+                
+                TH1D* h_axy_det = (TH1D*)h_template->Clone(Form("h_axy_%s", det.c_str()));
+                h_axy_det->Reset(); h_axy_det->SetDirectory(0);
+                h_axy_det->SetTitle(Form("%s Frag Acceptance", det.c_str()));
+
+                TH1D* h_ar_det = (TH1D*)h_template->Clone(Form("h_ar_%s", det.c_str()));
+                h_ar_det->Reset(); h_ar_det->SetDirectory(0);
+                h_ar_det->SetTitle(Form("%s Acc Ratio", det.c_str()));
+
+                // 填充数据
+                for(int i=1; i<=h_ar_det->GetNbinsX(); ++i) {
+                    double ek = h_ar_det->GetBinCenter(i);
+                    if(ek >= range.first && ek < range.second) {
+                        // 填充单Acceptance
+                        h_ay_det->SetBinContent(i, ay[i].val); h_ay_det->SetBinError(i, ay[i].err);
+                        h_axy_det->SetBinContent(i, axy[i].val); h_axy_det->SetBinError(i, axy[i].err);
+                        
+                        // 填充Ratio
+                        ValueWithError r = axy[i] / ay[i];
+                        h_ar_det->SetBinContent(i, r.val);
+                        h_ar_det->SetBinError(i, r.err);
                     }
+                }
 
-                    for (int i = 1; i <= h_acc_ratio_det->GetNbinsX(); ++i) {
-                        double ek_n = h_acc_ratio_det->GetXaxis()->GetBinCenter(i);
-                        if (ek_n >= DETECTOR_RANGES.at(det).first && ek_n < DETECTOR_RANGES.at(det).second) {
-                            h_acc_ratio_combined->SetBinContent(i, h_acc_ratio_det->GetBinContent(i));
-                            h_acc_ratio_combined->SetBinError(i, h_acc_ratio_det->GetBinError(i));
+                int color = (det=="TOF")?COLOR_TOF : (det=="NaF"?COLOR_NAF : COLOR_AGL);
+
+                // --- Page: Single Acceptances ---
+                c1->Clear(); c1->SetLogx(1); c1->SetLogy(1);
+                h_ay_det->GetXaxis()->SetRangeUser(range.first*0.9, range.second*1.1);
+                h_ay_det->GetYaxis()->SetTitle("Acceptance [m^{2} sr]"); // Title Match
+                setHistStyle(h_ay_det, kBlue); // Y用蓝色
+                h_ay_det->GetYaxis()->SetTitleOffset(1.2);
+                h_ay_det->GetYaxis()->SetRangeUser(GetNonZeroMin(h_axy_det)*0.1, h_ay_det->GetMaximum()*10);
+                h_ay_det->Draw("P");
+                
+                setHistStyle(h_axy_det, kRed); // X->Y用红色
+                h_axy_det->Draw("SAME P");
+
+                TLegend* legAcc = new TLegend(0.75, 0.78, 0.9, 0.88);
+                setLegendStyle(legAcc);
+                legAcc->AddEntry(h_ay_det, "Acc", "p");
+                legAcc->AddEntry(h_axy_det, "Frag Acc", "p");
+                legAcc->Draw();
+                c1->Print(pdf_path.c_str());
+                delete legAcc; delete h_ay_det; delete h_axy_det;
+
+
+                // --- Page: Ratio & Fit ---
+                TF1* fit_det = smoothRatio(h_ar_det, Form("fit_%s_%s_%s", det.c_str(), primary.c_str(), secondary.c_str()), false);
+
+                c1->Clear(); c1->SetLogx(1); c1->SetLogy(0);
+                h_ar_det->GetXaxis()->SetRangeUser(range.first*0.9, range.second*1.1);
+                h_ar_det->GetYaxis()->SetTitle("Acceptance Ratio"); // Title Match
+                setHistStyle(h_ar_det, color);
+                h_ar_det->GetYaxis()->SetTitleOffset(1.2);
+                h_ar_det->Draw("P");
+                if(fit_det) {
+                    fit_det->SetLineColor(kBlack);
+                    fit_det->Draw("SAME");
+                }
+                c1->Print(pdf_path.c_str());
+
+                // --- Calc Epsilon ---
+                if(fit_det) {
+                    TH1D* h_eps_det = (TH1D*)h_template->Clone(Form("h_eps_%s", det.c_str()));
+                    h_eps_det->Reset(); h_eps_det->SetDirectory(0);
+                    
+                    for(int i=1; i<=h_eps_det->GetNbinsX(); ++i) {
+                        double ek = h_eps_det->GetBinCenter(i);
+                        if(ek >= range.first && ek < range.second) {
+                            ValueWithError fr = calc_flux_ratio(ek);
+                            ValueWithError ar(fit_det->Eval(ek), h_ar_det->GetBinError(i));
+                            ValueWithError eps = fr * ar;
+                            h_eps_det->SetBinContent(i, eps.val);
+                            h_eps_det->SetBinError(i, eps.err);
                         }
                     }
-
-                } catch (const std::runtime_error& e) {
-                    cerr << "    ERROR processing " << det << " for " << channel_label << ": " << e.what() << endl;
+                    setHistStyle(h_eps_det, color);
+                    h_eps_det->GetYaxis()->SetTitle("Background Fraction"); // Title Match
+                    vec_det_eps.push_back(h_eps_det);
+                    vec_det_names.push_back(det);
                 }
-            } // Detector loop
-            
-            if (!h_acc_ratio_combined) {
-                cerr << "ERROR: Combined acceptance ratio histogram could not be created for " << channel_label << ". Skipping." << endl;
-                intermediate_canvas->Print((pdf_path + "]").c_str());
-                continue;
-            }
-            
-            intermediate_canvas->Clear();
-            intermediate_canvas->SetLogy(false);
-            h_acc_ratio_combined->SetTitle(Form("Acceptance Ratio & Smooth (%s);E_{k}/n [GeV/n];Acc(X#rightarrowY)/Acc(Y)", "Combined"));
-            h_acc_ratio_combined->GetXaxis()->SetRangeUser(0.3, 20.5);
-            h_acc_ratio_combined->Draw("PZ");
-            
-            unique_ptr<TF1> fit_acc_ratio_combined(smoothRatio(h_acc_ratio_combined.get(), Form("fit_acc_ratio_combined_%s_to_%s", primary.c_str(), secondary.c_str())));
-            if (!fit_acc_ratio_combined) {
-                cerr << "    WARNING: Global spline fit failed for " << channel_label << ". Skipping final calculation." << endl;
-                intermediate_canvas->Print((pdf_path + "]").c_str());
-                continue;
-            }
-            fit_acc_ratio_combined->SetLineColor(kRed);
-            fit_acc_ratio_combined->Draw("SAME");
-            intermediate_canvas->Print(pdf_path.c_str());
-            
-            for (int i = 1; i <= h_final_epsilon->GetNbinsX(); ++i) {
-                double ek_n = h_final_epsilon->GetBinCenter(i);
-                
-                string current_det = "";
-                for (const auto& det_pair : DETECTOR_RANGES) {
-                    if (ek_n >= det_pair.second.first && ek_n < det_pair.second.second) {
-                        current_det = det_pair.first;
-                        break;
-                    }
-                }
-
-                if (!current_det.empty()) {
-                    ValueWithError flux_ratio_vw = flux_ratio_func(ek_n);
-                    ValueWithError acc_ratio_vw(fit_acc_ratio_combined->Eval(ek_n), h_acc_ratio_combined->GetBinError(i));
-                    
-                    ValueWithError epsilon_vw = flux_ratio_vw * acc_ratio_vw;
-                    h_final_epsilon->SetBinContent(i, epsilon_vw.val);
-                    h_final_epsilon->SetBinError(i, epsilon_vw.err);
-                }
+                delete h_ar_det;
             }
 
-            if (h_final_epsilon) {
-                results_by_secondary[secondary].push_back(h_final_epsilon);
-                labels_by_secondary[secondary].push_back(channel_label);
-
-                intermediate_canvas->Clear();
-                intermediate_canvas->SetLogy(false);
-                h_final_epsilon->SetTitle(Form("Final #epsilon for %s;E_{k}/n [GeV/n];#epsilon", channel_label.c_str()));
-                setHistStyle(h_final_epsilon, kBlack);
-                h_final_epsilon->SetMinimum(0);
-                h_final_epsilon->GetXaxis()->SetRangeUser(0.3, 20.5);
-                h_final_epsilon->Draw("P");
-                intermediate_canvas->Print(pdf_path.c_str());
-            }
+            // PAGE FINAL: SUMMARY
+            c1->Clear(); c1->SetLogx(1);
             
-            intermediate_canvas->Print((pdf_path + "]").c_str());
-            cout << "    INFO: Intermediate results saved to " << pdf_path << endl;
+            // 1. Draw Combined (Black Points)
+            TH1D* h_comb_points = (TH1D*)h_eps_comb->Clone("h_comb_points");
+            h_comb_points->SetDirectory(0);
+            h_comb_points->GetXaxis()->SetRangeUser(0.27, 20.5);
+            h_comb_points->SetTitle(Form("Summary %s", channel_label.c_str()));
+            h_comb_points->GetYaxis()->SetTitle("Background Fraction"); // Title Match
+            setHistStyle(h_comb_points, kBlack, 20); // Black, Circle Marker
+            h_comb_points->GetYaxis()->SetTitleOffset(1.2);
+            h_comb_points->Draw("P"); // Draw as Points
 
-        } // Primary loop
-    } // Secondary loop
+            TLegend* legSum = new TLegend(0.7, 0.68, 0.9, 0.88);
+            setLegendStyle(legSum);
+            legSum->AddEntry(h_comb_points, "Combined (Stitched)", "p");
 
-    cout << "\n--- All calculations finished. Starting to generate plots. ---\n" << endl;
-
-    unique_ptr<TFile> outFile(TFile::Open((OUTPUT_DIR + "Epsilon_Results.root").c_str(), "RECREATE"));
-
-    for (auto& pair : results_by_secondary) {
-        const string& secondary_name = pair.first;
-        vector<TH1D*>& hists_to_plot = pair.second;
-        const vector<string>& labels = labels_by_secondary.at(secondary_name);
-
-        if (hists_to_plot.empty()) continue;
-        
-        TH1D* h_sum = (TH1D*)hists_to_plot[0]->Clone(Form("h_epsilon_sum_%s", secondary_name.c_str()));
-        h_sum->SetTitle(Form("Total Fragmentation to %s", secondary_name.c_str()));
-        h_sum->Reset();
-
-        for (TH1D* h : hists_to_plot) {
-            h_sum->Add(h);
-        }
-
-        double y_min = 1.0e10, y_max = -1.0e10;
-        for (const auto& h : hists_to_plot) {
-            for (int i = 1; i <= h->GetNbinsX(); ++i) {
-                double content = h->GetBinContent(i);
-                if (content > 0) {
-                    y_min = std::min(y_min, content);
-                    y_max = std::max(y_max, content);
-                }
+            // 2. Draw Detectors (Points)
+            for(size_t i=0; i<vec_det_eps.size(); ++i) {
+                vec_det_eps[i]->Draw("P SAME");
+                legSum->AddEntry(vec_det_eps[i], vec_det_names[i].c_str(), "p");
             }
-        }
-        y_max = std::max(y_max, h_sum->GetMaximum());
+            legSum->Draw();
+            c1->Print(pdf_path.c_str());
 
-        y_min = (y_min < 1.0e9) ? y_min * 0.5 : 1e-6;
-        y_max = (y_max > 0) ? y_max * 1.4 : 1.0;
+            string root_out = OUTPUT_DIR + "Epsilon_" + primary + "_to_" + secondary + ".root";
+            TFile* fout = new TFile(root_out.c_str(), "RECREATE");
+            h_eps_comb->Write();
+            for(auto h : vec_det_eps) h->Write();
+            fout->Close(); delete fout;
 
-        TCanvas* c1 = new TCanvas(Form("c_%s", secondary_name.c_str()), Form("Epsilon for %s", secondary_name.c_str()), 800, 400);
-        c1->SetGrid();
-        
-        TH1* frame = c1->DrawFrame(0.0, 0, 20.5, y_max);
-        frame->SetTitle(Form("Fragmentation Contribution to %s;E_{k}/n [GeV/n];#epsilon (Fragmentation Fraction)", secondary_name.c_str()));
-        frame->GetYaxis()->SetTitleOffset(1.2);
+            c1->Print((pdf_path + "]").c_str());
+            delete c1;
+            delete h_template;
+            delete h_acc_ratio_comb;
+            delete h_comb_points;
+            delete legSum;
+            for(auto h : vec_det_eps) delete h;
 
-        TLegend* legend = new TLegend(0.7, 0.56, 0.95, 0.86);
-        legend->SetTextSize(0.04); 
-        legend->SetBorderSize(0); legend->SetFillStyle(0);
-
-        for (size_t i = 0; i < hists_to_plot.size(); ++i) {
-            TH1D* h = hists_to_plot[i];
-            int color = PLOT_COLORS[i % PLOT_COLORS.size()];
-            setHistStyle(h, color);
-            h->Draw("P SAME");
-            legend->AddEntry(h, labels[i].c_str(), "p");
-        }
-        
-        setHistStyle(h_sum, kBlack);
-        h_sum->Draw("P SAME");
-        legend->AddEntry(h_sum, "Total", "p");
-
-        legend->Draw();
-        c1->Update();
-
-        string output_filename = OUTPUT_DIR + "rew_frag_epsilon_" + secondary_name + ".png";
-        c1->SaveAs(output_filename.c_str());
-        cout << ">>> Successfully created plot: " << output_filename << endl;
-        
-        outFile->cd();
-        for (TH1D* h : hists_to_plot) {
-            h->Write();
-        }
-        h_sum->Write();
-
-        delete c1;
-        delete legend;
-        delete h_sum;
+        } 
     }
 
-    outFile->Close();
-    cout << "\n--- All plots generated and results saved to " << outFile->GetName() << ". Script finished. ---\n" << endl;
+    cout << "\n--- Generating Summary PNGs ---\n" << endl;
+    
+    TFile* resFile = new TFile((OUTPUT_DIR + "Epsilon_Results.root").c_str(), "RECREATE");
+
+    for(auto const& [sec, hists] : all_final_hists) {
+        if(hists.empty()) continue;
+
+        TH1D* h_sum = (TH1D*)hists[0]->Clone(Form("h_sum_%s", sec.c_str()));
+        h_sum->Reset();
+        h_sum->SetTitle(Form("Total Fragmentation to %s", sec.c_str()));
+        
+        for(auto h : hists) h_sum->Add(h);
+
+        TCanvas* c2 = new TCanvas("c2", "Sum", 1200, 600);
+        c2->SetGrid();
+        
+        double ymax = h_sum->GetMaximum() * 1.25;
+        if(ymax <= 0) ymax = 1.0;
+
+        TH1* frame = c2->DrawFrame(0.27, 0, 21.5, ymax);
+        frame->SetTitle(Form("Fragmentation to %s;E_{k}/n;Background Fraction", sec.c_str())); // Title Match
+
+        TLegend* leg = new TLegend(0.68, 0.5, 0.88, 0.88);
+        setLegendStyle(leg);
+
+        const vector<int> colors = {kRed, kBlue, kGreen+2, kMagenta, kOrange-3, kCyan+1, kPink+7, kSpring-5};
+
+        for(size_t i=0; i<hists.size(); ++i) {
+            setHistStyle(hists[i], colors[i % colors.size()]);
+            hists[i]->GetYaxis()->SetTitleOffset(1.1);
+            hists[i]->GetXaxis()->SetRangeUser(0.27, 21.5);
+            hists[i]->Draw("P SAME");
+            hists[i]->Write();
+            leg->AddEntry(hists[i], all_final_labels[sec][i].c_str(), "p");
+        }
+
+        setHistStyle(h_sum, kBlack);
+        h_sum->GetYaxis()->SetTitleOffset(1.1);
+        h_sum->Draw("P SAME");
+        h_sum->Write();
+        leg->AddEntry(h_sum, "Total", "p");
+        leg->Draw();
+
+        c2->SaveAs((OUTPUT_DIR + "rew_frag_epsilon_" + sec + ".png").c_str());
+        
+        delete c2; delete leg; delete h_sum;
+        for(auto h : hists) delete h;
+    }
+
+    resFile->Close(); delete resFile;
+    fluxFile->Close(); delete fluxFile;
+
+    cout << "Done." << endl;
 }

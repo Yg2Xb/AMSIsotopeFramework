@@ -99,8 +99,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
         string dataHistName;
         if (fitFragMass) {
             // New logic for fitting fragment mass from BKG histogram
-            // Format: UnbiasedL1Inner_ISS_BKG_H4_Oxygen_AGL_Z4_Mass10
-            dataHistName = Form("%s_ISS_BKG_H4_%s_%s_Z%d_Mass%d", 
+            dataHistName = Form("%s_BKG_H2b_%s_%s", 
                                 chainName.c_str(), 
                                 sourceName.c_str(), 
                                 DetName[idet], 
@@ -334,7 +333,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
 
 // Entry point to run the analysis
 void HistTempFit_hist() {
-    HistTempFit("Be", 7, true, true, 1, 2);
+    //HistTempFit("Be", 7, true, true, 1, 2);
     HistTempFit("Be", 7, true, true, 2, 2, true, "Boron");
     HistTempFit("Be", 7, true, true, 2, 2, true, "Carbon");
     HistTempFit("Be", 7, true, true, 2, 2, true, "Nitrogen");

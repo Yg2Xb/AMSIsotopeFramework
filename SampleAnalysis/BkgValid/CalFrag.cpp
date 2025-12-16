@@ -1,45 +1,23 @@
 #include <TFile.h>
 #include <TH1.h>
-#include <TH1F.h>
 #include <TH1D.h>
 #include <TString.h>
 #include <TCanvas.h>
 #include <TStyle.h>
 #include <TROOT.h>
 #include <TLegend.h>
-#include <TAxis.h>
-#include <TArrayD.h>
-#include <TPad.h>
-#include <TLine.h>
+#include <TGraph.h>
 #include <TF1.h>
-#include <TBox.h>
 #include <TFitResult.h>
 #include <TFitResultPtr.h>
-#include <TGraph.h>
-#include <iomanip>
-
 #include <iostream>
 #include <vector>
-#include <array>
-#include <cmath>
-#include <memory>
-#include <stdexcept>
 #include <map>
+#include <cmath>
 #include <string>
-#include <numeric>
+#include <iomanip>
 #include <algorithm>
-#include <sstream>
 
-// ===================================================================
-// ======================= DEBUG CONFIGURATION =======================
-// ===================================================================
-const bool DEBUG_MODE = false;
-const std::string DEBUG_SOURCE = "Boron";
-const std::string DEBUG_FRAGMENT = "Beryllium";
-const std::string DEBUG_CHAIN = "L1Inner";
-// ===================================================================
-
-// --- Helper: ValueWithError (Error Propagation) ---
 struct ValueWithError {
     double val = 0.0;
     double err = 0.0;
@@ -47,977 +25,625 @@ struct ValueWithError {
     ValueWithError(double v, double e) : val(v), err(e) {}
     ValueWithError operator+(const ValueWithError& o) const { return {val + o.val, std::hypot(err, o.err)}; }
     ValueWithError operator-(const ValueWithError& o) const { return {val - o.val, std::hypot(err, o.err)}; }
-    ValueWithError operator*(double scalar) const { return {val * scalar, std::abs(err * scalar)}; }
-    ValueWithError operator*(const ValueWithError& o) const {
-        double p_val = val * o.val;
-        double p_err = std::hypot(err * o.val, val * o.err);
-        return {p_val, p_err};
-    }
+    ValueWithError operator*(double s) const { return {val * s, std::abs(err * s)}; }
+    ValueWithError operator*(const ValueWithError& o) const { return {val * o.val, std::hypot(err * o.val, val * o.err)}; }
     ValueWithError operator/(const ValueWithError& o) const {
-        if (o.val == 0.0) return {std::nan(""), std::nan("")};
-        double q_val = val / o.val;
-        double q_err = std::hypot(err / o.val, (val * o.err) / (o.val * o.val));
-        return {q_val, q_err};
-    }
-    ValueWithError operator/(double scalar) const {
-        if (scalar == 0.0) return {std::nan(""), std::nan("")};
-        return {val / scalar, err / std::abs(scalar)};
+        if (o.val == 0) return {0, 0};
+        double q = val / o.val;
+        double e = std::hypot(err / o.val, (val * o.err) / (o.val * o.val));
+        return {q, e};
     }
 };
-ValueWithError operator*(double scalar, const ValueWithError& ve) { return ve * scalar; }
 
-// --- Helper: File and Histogram Operations ---
-const std::map<std::string, std::string> particleNameToAbbr = {
-    {"Beryllium", "Be"}, {"Boron", "B"}, {"Carbon", "C"}, {"Nitrogen", "N"}, {"Oxygen", "O"}
+struct AnalysisConfig {
+    std::string source;
+    std::string fragment;
+    std::string fragFileID;
+    std::string fragAbbr;
+    int useMass;
+    std::map<std::string, double> srcAbundance;
+    std::map<std::string, std::string> mcFiles;
+    std::map<std::string, int> fragIsoMap;
+    std::vector<std::string> fitIsotopes;
+    std::vector<std::string> targetIsotopes;
 };
 
-std::unique_ptr<TFile> openFile(const TString& filename, const char* option = "READ") {
-    auto file = std::unique_ptr<TFile>(TFile::Open(filename.Data(), option));
-    if (!file || file->IsZombie()) {
-        throw std::runtime_error("Error opening file: " + std::string(filename.Data()));
-    }
-    if (DEBUG_MODE || std::string(option) == "RECREATE") {
-        std::cout << "[INFO] Opened file: " << filename << std::endl;
-    }
-    return file;
-}
+struct DetResults {
+    std::map<std::string, TH1D*> combine;
+    std::map<std::string, TH1D*> tof;
+    std::map<std::string, TH1D*> naf;
+    std::map<std::string, TH1D*> agl;
+};
 
-// ADAPTIVE CHANGE: Template remains, but generally we will use TH1* or TH1D*
-// This allows reading TH1F or TH1D transparently.
-template<typename HistType = TH1>
-HistType* getHistFromFile(TFile* file, const TString& histName) {
-    if (!file) {
-         throw std::runtime_error("Input TFile pointer is null when trying to get histogram: " + std::string(histName.Data()));
-    }
-    HistType* hist = nullptr;
-    file->GetObject(histName, hist);
-    if (!hist) {
-        std::cout << "[WARNING] Could not find histogram: " << std::string(histName.Data()) << " in file " << file->GetName() << ". Assuming it's zero." << std::endl;
+struct MCSourceData {
+    std::string isoName;
+    double abundance;
+    TH1* h_gen;
+    TH1D* h_den_stitched;
+    std::map<std::string, TH1D*> h_num_stitched; 
+    std::map<std::string, TH1*> h_den_parts; 
+    std::map<std::string, std::map<std::string, TH1*>> h_num_parts;
+};
+
+TH1* GetHist(TFile* f, TString name) {
+    if (!f) return nullptr;
+    TH1* h = (TH1*)f->Get(name);
+    if (!h) {
+        std::cout << "[ERROR] Hist Missing: " << name << " in " << f->GetName() << std::endl;
         return nullptr;
     }
-    hist->SetDirectory(0);
-    return hist;
+    h->SetDirectory(0);
+    return h;
 }
 
-void fillHistBin(TH1* hist, int bin_idx, const ValueWithError& vw) {
-    if(hist) {
-        hist->SetBinContent(bin_idx, vw.val);
-        hist->SetBinError(bin_idx, vw.err);
-    }
+TH1D* CreateHist(const char* name, TH1* ref) {
+    TH1D* h = new TH1D(name, "", ref->GetNbinsX(), ref->GetXaxis()->GetXbins()->GetArray());
+    h->SetDirectory(0);
+    h->Sumw2();
+    return h;
 }
 
-// --- Configuration for a specific analysis process ---
-struct AnalysisConfig {
-    std::string sourceParticle;
-    std::string fragmentParticle;
-    bool InIsoLevel;
-    std::vector<std::string> primaryFitIsotopes;
-    int useMass;
-    std::string fragFileID;
-    std::map<std::string, double> sourceIsotopeFractions;
-    std::vector<std::string> fragmentIsotopes;
-    std::map<std::string, int> fragZandMass;
-    std::map<std::string, std::string> mcSourceFiles;
-    std::string mcSourceGenHist = "MC_FLUX_H3";
-};
-
-// --- 68% Uncertainty Calculation (from plotR.cpp) ---
-double calculate68PercentUncertainty_Linear(TH1* hist, TF1* fit_func, double fit_min, double fit_max) {
-    if (!hist || !fit_func) return 0.0;
-    
-    int total_points = 0;
-    for (int bin = hist->GetXaxis()->FindBin(fit_min); bin <= hist->GetXaxis()->FindBin(fit_max); ++bin) {
-        double y = hist->GetBinContent(bin);
-        double y_err = hist->GetBinError(bin);
-        if (y != 0 && !std::isnan(y) && !std::isinf(y) && y_err > 0) {
-            total_points++;
+TH1D* StitchHists(const std::map<std::string, TH1*>& hists, const TH1* ref) {
+    if(hists.empty() || !hists.begin()->second) return nullptr;
+    TH1D* out = CreateHist(TString::Format("%s_stitched", hists.begin()->second->GetName()), (TH1*)ref);
+    for (int i = 1; i <= out->GetNbinsX(); ++i) {
+        double center = out->GetBinCenter(i);
+        std::string det = (center < 1.2) ? "TOF" : (center < 3.2) ? "NaF" : "AGL";
+        if (hists.count(det) && hists.at(det)) {
+            int srcBin = hists.at(det)->FindBin(center);
+            out->SetBinContent(i, hists.at(det)->GetBinContent(srcBin));
+            out->SetBinError(i, hists.at(det)->GetBinError(srcBin));
         }
     }
+    return out;
+}
+
+ValueWithError GetBinVal(TH1* h, int bin) {
+    if (!h) return {0, 0};
+    return {h->GetBinContent(bin), h->GetBinError(bin)};
+}
+
+ValueWithError GetValDebug(TH1* h, double energy, TString fName, TString desc) {
+    if (!h) {
+        std::cout << "    [FAIL] " << desc << ": Hist is NULL in " << fName << "\n";
+        return {0,0};
+    }
+    int bin = h->FindBin(energy);
+    double low = h->GetXaxis()->GetBinLowEdge(bin);
+    double up = h->GetXaxis()->GetBinUpEdge(bin);
+    ValueWithError v(h->GetBinContent(bin), h->GetBinError(bin));
     
-    if (total_points == 0) return 0.0;
-    
-    double delta = 0.0;
-    double step = 0.001;
-    int target_points = static_cast<int>(std::ceil(0.68 * total_points));
-    
-    while (delta < 10.0) {
-        int points_within = 0;
-        for (int bin = hist->GetXaxis()->FindBin(fit_min); bin <= hist->GetXaxis()->FindBin(fit_max); ++bin) {
-            double x = hist->GetBinCenter(bin);
-            double y = hist->GetBinContent(bin);
-            double y_err = hist->GetBinError(bin);
-            
-            if (y != 0 && !std::isnan(y) && !std::isinf(y) && y_err > 0) {
-                double fit_val = fit_func->Eval(x);
-                if (y >= (fit_val - delta) && y <= (fit_val + delta)) {
-                    points_within++;
-                }
-            }
+    std::cout << "    " << std::left << std::setw(18) << desc 
+              << " | File: " << std::setw(25) << fName.Data()
+              << " | Hist: " << std::setw(40) << h->GetName()
+              << " | Bin: " << std::setw(3) << bin 
+              << " [" << std::fixed << std::setprecision(3) << low << "," << up << "]"
+              << " | Val: " << std::scientific << std::setprecision(4) << v.val << "\n";
+    return v;
+}
+
+// -------------------------------------------------------------------
+// Modified DrawFit Function
+// -------------------------------------------------------------------
+void DrawFit(TH1* h, TLegend* leg, double min, double max, int color, TString label) {
+    bool hasData = false;
+    for(int b=h->GetXaxis()->FindBin(min); b<=h->GetXaxis()->FindBin(max); ++b) {
+        if(h->GetBinContent(b) > 0) hasData = true;
+    }
+    if(!hasData) return;
+
+    // --- Step 1: Attempt Constant Fit (pol0) ---
+    TF1* f0 = new TF1(TString::Format("fit0_%s_%f", h->GetName(), min), "pol0", min, max);
+    f0->SetLineColor(color);
+    f0->SetLineWidth(2);
+    // Use "SQN" first: Store result, Quiet, No draw (yet)
+    TFitResultPtr r0 = h->Fit(f0, "SQN+"); 
+
+    bool useConst = false;
+    if (r0->IsValid()) {
+        double ndf = r0->Ndf();
+        double chi2 = r0->Chi2();
+        // Check condition: Success AND Chi2/NDF < 1.5
+        if (ndf > 0 && (chi2 / ndf) < 2) {
+            useConst = true;
+        } else if (ndf == 0 && chi2 < 1.0) {
+            // Edge case: if NDF is 0 (e.g. 1 point), treat as good fit if chi2 is small
+            useConst = true;
         }
+    }
+
+    if (useConst) {
+        // --- Success with Constant Fit ---
+        f0->Draw("SAME");
+        double p0 = f0->GetParameter(0); double e0 = f0->GetParError(0);
         
-        if (points_within >= target_points) {
-            return delta;
-        }
-        delta += step;
+        TString txt = TString::Format("%s: %.2f #pm %.2f (Const)", label.Data(), p0, e0);
+        leg->AddEntry(f0, txt, "l");
+        return; // Done, exit function
     }
-    return delta;
+
+    // --- Step 2: Fallback to Linear Fit (pol1) ---
+    // Clean up the unused constant fit function object to avoid clutter
+    delete f0; 
+
+    TF1* f1 = new TF1(TString::Format("fit_%s_%f", h->GetName(), min), "pol1", min, max);
+    f1->SetLineColor(color);
+    f1->SetLineWidth(2);
+    TFitResultPtr r1 = h->Fit(f1, "SRQ+"); // Draw this one ("R" for range, "Q" for quiet, "+" to add to list)
+    
+    if (r1->IsValid()) {
+        double p0 = f1->GetParameter(0); double e0 = f1->GetParError(0);
+        double p1 = f1->GetParameter(1); double e1 = f1->GetParError(1);
+        f1->Draw("SAME");
+        
+        TString txt = TString::Format("%s: %.2f #pm %.2f + (%.2f #pm %.2f) #times E_{k}/n [GeV]", 
+                                      label.Data(), p0, e0, p1, e1);
+        
+        leg->AddEntry(f1, txt, "l");
+    }
 }
+// -------------------------------------------------------------------
 
-// --- Plotting Helper (Modified to create two separate plots and add fits to comparison) ---
-void createComparisonPlots(TH1* h_iss, TH1* h_mc, const std::string& title, 
-                          const std::string& y_axis_title, const std::string& output_path) {
-    if (!h_iss) {
-        std::cerr << "[PLOT ERROR] ISS histogram is null for plot: " << title << std::endl;
-        return;
-    }
+void CreateComparisonPlots(TH1* h_iss, TH1* h_mc, TString title, TString outPath, int detMode) {
+    if (!h_iss) return;
 
-    // Renamed ranges to match the ratio plot's usage of 1.27-6.1 and 6.1-21.5
-    const double x_min = 0.4;
-    const double x_max = 21.0;
-    // USER REQUESTED CHANGE 1: Low E fit range starts at 0.4 instead of 1.27
-    const double fit_linear_min_low = 0.4; 
-    const double fit_linear_max_low = 6.1;  
-    const double fit_linear_min_high = 6.1; 
-    const double fit_linear_max_high = 21.5; 
-    
-    // =================================================================================
-    // ========== PLOT 1: ISS vs MC Comparison (New: Fits for both ISS and MC) ==========
-    // =================================================================================
-    TCanvas* c1 = new TCanvas("c1", title.c_str(), 800, 600);
-    c1->SetBottomMargin(0.15);
-    c1->SetTopMargin(0.12);
-    c1->SetLeftMargin(0.18);
-    c1->SetRightMargin(0.03);
-    c1->SetGrid();
-    
-    // --- 1. Draw ISS Data ---
-    h_iss->SetMarkerStyle(20);
-    h_iss->SetMarkerColor(kBlack);
-    h_iss->SetLineColor(kBlack);
-    h_iss->SetTitle(title.c_str());
-    h_iss->GetYaxis()->SetTitle(y_axis_title.c_str());
-    h_iss->GetXaxis()->SetTitle("E_{k}/n [GeV]");
-    h_iss->GetXaxis()->SetRangeUser(x_min, x_max);
-    h_iss->SetStats(0);
-    
-    double max_y = 0;
-    for(int i = 1; i <= h_iss->GetNbinsX(); ++i) {
-        double x = h_iss->GetBinCenter(i);
-        if (x > x_max || x < x_min) continue;
-        max_y = std::max(max_y, h_iss->GetBinContent(i));
-    }
-    if (h_mc) {
-        for(int i = 1; i <= h_mc->GetNbinsX(); ++i) {
-            double x = h_mc->GetBinCenter(i);
-            if (x > x_max || x < x_min) continue;
-            max_y = std::max(max_y, h_mc->GetBinContent(i));
+    auto getMinMax = [](TH1* h, double& minVal, double& maxVal) {
+        if(!h) return;
+        for(int i=1; i<=h->GetNbinsX(); ++i) {
+            double c = h->GetBinCenter(i);
+            if(c < 0.4 || c > 21.5) continue;
+            double v = h->GetBinContent(i);
+            if(v == 0) continue;
+            if(v < minVal) minVal = v;
+            if(v > maxVal) maxVal = v;
         }
-    }
-    h_iss->GetYaxis()->SetRangeUser(0, max_y * 1.2);
-    h_iss->GetYaxis()->SetTitleOffset(1.7);
+    };
+
+    TCanvas* c1 = new TCanvas("c1", title, 800, 600);
+    c1->SetGrid();
+    h_iss->SetMarkerStyle(20); h_iss->SetLineColor(kBlack);
+    h_iss->SetTitle(title); h_iss->GetXaxis()->SetTitle("E_{k}/n [GeV]"); h_iss->GetYaxis()->SetTitle("Ratio");
+    
+    double yMin = 1e9, yMax = -1e9;
+    getMinMax(h_iss, yMin, yMax);
+    if(h_mc) getMinMax(h_mc, yMin, yMax);
+    if(yMin > yMax) { yMin = 0; yMax = 1; }
+    double diff = yMax - yMin; if(diff == 0) diff = 1.0;
+    h_iss->GetYaxis()->SetRangeUser(yMin - diff * 0.2, yMax + diff * 0.2);
+    
+    double xMin = 0.4, xMax = 21.5;
+    if (detMode == 1) { xMin = 0.3; xMax = 1.5; }
+    else if (detMode == 2) { xMin = 0.8; xMax = 6.1; }
+    else if (detMode == 3) { xMin = 2.5; xMax = 21.5; }
+    
+    h_iss->GetXaxis()->SetRangeUser(xMin, xMax);
     h_iss->Draw("PZ");
     
-    // --- Legend for Data/MC (Top Right) ---
-    TLegend* legend1 = new TLegend(0.6, 0.70, 0.9, 0.88);
-    legend1->SetBorderSize(1);
-    legend1->SetFillStyle(0);
-    legend1->AddEntry(h_iss, "ISS Data", "ep");
+    TLegend* leg = new TLegend(0.6, 0.75, 0.88, 0.88);
+    leg->AddEntry(h_iss, "ISS Data", "ep");
+    if (h_mc) {
+        h_mc->SetMarkerStyle(20); h_mc->SetMarkerColor(kRed); h_mc->SetLineColor(kRed);
+        h_mc->Draw("PZ SAME"); leg->AddEntry(h_mc, "MC Simulation", "ep");
+    }
+    leg->Draw();
+    c1->SaveAs(outPath + "_comp.png"); delete c1;
     
     if (h_mc) {
-        h_mc->SetMarkerStyle(20);
-        h_mc->SetMarkerColor(kRed);
-        h_mc->SetLineColor(kRed);
-        h_mc->Draw("PZ SAME");
-        legend1->AddEntry(h_mc, "MC Simulation", "ep");
-    }
-    legend1->Draw();
-    
-    // --- Legend for Fits (Bottom Left) ---
-    TLegend* legend_fits = new TLegend(0.3, 0.15, 0.8, 0.3); // Adjusted to bottom left
-    legend_fits->SetBorderSize(1);
-    legend_fits->SetFillStyle(0);
-    legend_fits->SetTextSize(0.025);
+        TCanvas* c2 = new TCanvas("c2", title + " Ratio", 800, 600); c2->SetGrid();
+        TH1* h_ratio = (TH1*)h_iss->Clone("ratio"); h_ratio->Divide(h_mc);
+        h_ratio->SetTitle(title); h_ratio->GetYaxis()->SetTitle("ISS/MC");
+        h_ratio->GetXaxis()->SetRangeUser(xMin, xMax); 
+        
+        double rMin = 1e9, rMax = -1e9;
+        getMinMax(h_ratio, rMin, rMax);
+        if(rMin > rMax) { rMin = 0; rMax = 1; }
+        double rDiff = rMax - rMin; if(rDiff == 0) rDiff = 1.0;
+        h_ratio->GetYaxis()->SetRangeUser(rMin - rDiff * 1.2, rMax + rDiff * 1.2);
 
-    // Lambda to perform the fit and add to the legend
-    auto perform_and_draw_fit = [&](TH1* hist, const char* name_prefix, double min_e, double max_e, 
-                                    Color_t color, const char* label_prefix) {
-        if (!hist) return (TF1*)nullptr;
-
-        // Check for data in range
-        bool hasData = false;
-        for (int bin = hist->GetXaxis()->FindBin(min_e); 
-             bin <= hist->GetXaxis()->FindBin(max_e); ++bin) {
-            if (hist->GetBinContent(bin) != 0) {
-                hasData = true;
-                break;
-            }
+        h_ratio->Draw("PZ");
+        TLegend* fitLeg = new TLegend(0.15, 0.78, 0.85, 0.88);
+        fitLeg->SetBorderSize(0); fitLeg->SetFillStyle(0); fitLeg->SetTextSize(0.035);
+        
+        if (detMode == 0) { 
+            DrawFit(h_ratio, fitLeg, 0.3, 7.0, kMagenta, "Low"); 
+            DrawFit(h_ratio, fitLeg, 7.0, 21.5, kOrange+1, "High"); 
+        } else if (detMode == 1) {
+            DrawFit(h_ratio, fitLeg, 0.3, 1.5, kMagenta, "TOF");
+        } else if (detMode == 2) {
+            DrawFit(h_ratio, fitLeg, 0.8, 6.1, kMagenta, "NaF");
+        } else if (detMode == 3) {
+            DrawFit(h_ratio, fitLeg, 2.5, 7.0, kMagenta, "AGL-Low");
+            DrawFit(h_ratio, fitLeg, 7.0, 21.5, kOrange+1, "AGL-High");
         }
-        
-        if (!hasData) return (TF1*)nullptr;
-        
-        TString fit_name = TString::Format("%s_%s_%.1f_%.1f", name_prefix, hist->GetName(), min_e, max_e);
-        TF1* fit_func = new TF1(fit_name, "pol0", min_e, max_e);
-        fit_func->SetLineColor(color);
-        fit_func->SetLineWidth(2);
-        
-        // Use R option for range, Q for quiet, S for store fit results
-        TFitResultPtr r = hist->Fit(fit_func, "SRQ+"); 
-        
-        if (r->IsValid() && r->Status() == 0) {
-            double p0 = fit_func->GetParameter(0);
-            
-            // USER REQUESTED CHANGE 2: Display standard fit error (GetParError(0)) 
-            // and use %.3f for precision.
-            double fit_err = fit_func->GetParError(0); 
-            // Calculate 68% uncertainty for the visual band width (as originally intended)
-            double delta_for_band = calculate68PercentUncertainty_Linear(hist, fit_func, min_e, max_e); 
-            delta_for_band = delta_for_band;
-            
-            // Draw uncertainty band
-            const int n_points = 100;
-            double x_arr[n_points * 2];
-            double y_arr[n_points * 2];
-            
-            for (int i = 0; i < n_points; ++i) {
-                double x = min_e + i * (max_e - min_e) / (n_points - 1);
-                double y_center = fit_func->Eval(x);
-                // Use the 68% uncertainty for the band width
-                x_arr[i] = x;
-                y_arr[i] = y_center + delta_for_band; 
-                x_arr[2 * n_points - 1 - i] = x;
-                y_arr[2 * n_points - 1 - i] = y_center - delta_for_band;
-            }
-            
-            TGraph* uncertainty_band = new TGraph(2 * n_points, x_arr, y_arr);
-            uncertainty_band->SetFillColorAlpha(color, 0.15);
-            uncertainty_band->SetFillStyle(1001);
-            uncertainty_band->SetLineColor(color);
-            uncertainty_band->SetLineWidth(1);
-            uncertainty_band->Draw("F SAME");
-            fit_func->Draw("SAME");
-            
-            // Update label format to use fit_err and 3 decimal places
-            TString fit_label = TString::Format("%s (%.1f-%.1f GeV): %.4f #pm %.4f", 
-                                               label_prefix, min_e, max_e, p0, delta_for_band);
-            cout<<"Nuc: "<<title<<", Fit Range: "<<min_e<<"-"<<max_e<<", Fit Value: "<<p0<<" +/- "<<fit_err<<", 68% Uncertainty Band: +/- "<<delta_for_band<<endl;
-            legend_fits->AddEntry(uncertainty_band, fit_label, "lf");
-            
-            return fit_func;
-        }
-        delete fit_func;
-        return (TF1*)nullptr;
-    };
-
-
-    // --- 2. ISS Fits ---
-    perform_and_draw_fit(h_iss, "iss_low", fit_linear_min_low, fit_linear_max_low, kBlack, "ISS Data");
-    perform_and_draw_fit(h_iss, "iss_high", fit_linear_min_high, fit_linear_max_high, kGray+2, "ISS Data");
-
-    // --- 3. MC Fits ---
-    if (h_mc) {
-        perform_and_draw_fit(h_mc, "mc_low", fit_linear_min_low, fit_linear_max_low, kRed, "MC Sim.");
-        perform_and_draw_fit(h_mc, "mc_high", fit_linear_min_high, fit_linear_max_high, kOrange+7, "MC Sim.");
+        fitLeg->Draw(); c2->SaveAs(outPath + "_ratio.png"); delete c2; delete h_ratio;
     }
-    
-    // Redraw data points to be on top of the bands
-    h_iss->Draw("PZ SAME");
-    if (h_mc) h_mc->Draw("PZ SAME");
-    
-    legend_fits->Draw();
-    
-    c1->SaveAs((output_path + "_comparison.png").c_str());
-    delete c1;
-    
-    // =================================================================================
-    // ========== PLOT 2: ISS/MC Ratio with Fits (The original ratio plot) ==========
-    // =================================================================================
-    // 保持 Ratio Plot 的拟合范围不变 (1.27-6.1)
-    if (!h_mc) {
-        std::cout << "[INFO] No MC histogram, skipping ratio plot for: " << title << std::endl;
-        return;
-    }
-    
-    TCanvas* c2 = new TCanvas("c2", "Ratio", 800, 600);
-    c2->SetTopMargin(0.05);
-    c2->SetGrid();
-    
-    TH1* h_ratio = (TH1*)h_iss->Clone("h_ratio");
-    h_ratio->Divide(h_mc);
-    h_ratio->SetTitle("");
-    h_ratio->SetMarkerStyle(20);
-    h_ratio->SetMarkerColor(kBlue);
-    h_ratio->SetLineColor(kBlue);
-    h_ratio->GetXaxis()->SetTitle("Measured E_{k}/n [GeV]");
-    h_ratio->GetYaxis()->SetTitle("ISS/MC");
-    h_ratio->GetYaxis()->SetTitleOffset(1.3);
-    h_ratio->GetXaxis()->SetRangeUser(x_min, x_max);
-    h_ratio->SetStats(0);
-    
-    TLegend* legend2 = new TLegend(0.15, 0.70, 0.76, 0.95);
-    legend2->SetFillStyle(0);
-    legend2->SetBorderSize(1);
-    legend2->SetTextSize(0.028);
-    legend2->AddEntry(h_ratio, (title+" ISS/MC").c_str(), "pe");
-    
-    // First linear fit (1.27 - 6.1 GeV)
-    const double fit_linear_min_ratio_orig = 1.27; 
-    const double fit_linear_max_ratio_orig = 6.1;
-    
-    bool hasDataLinear1 = false;
-    for (int bin = h_ratio->GetXaxis()->FindBin(fit_linear_min_ratio_orig); 
-         bin <= h_ratio->GetXaxis()->FindBin(fit_linear_max_ratio_orig); ++bin) {
-        if (h_ratio->GetBinContent(bin) != 0) {
-            hasDataLinear1 = true;
-            break;
-        }
-    }
-    
-    TF1* fit_linear1 = nullptr;
-    TGraph* uncertainty_band1 = nullptr;
-    
-    if (hasDataLinear1) {
-        fit_linear1 = new TF1("fit_linear1", "pol0", fit_linear_min_ratio_orig, fit_linear_max_ratio_orig); 
-        fit_linear1->SetLineColor(kMagenta);
-        fit_linear1->SetLineWidth(2);
-        
-        TFitResultPtr r_linear1 = h_ratio->Fit(fit_linear1, "SRQ");
-        
-        if (r_linear1->IsValid() && r_linear1->Status() == 0) {
-            double p0 = fit_linear1->GetParameter(0);
-            double chi2 = r_linear1->Chi2();
-            int ndf = r_linear1->Ndf();
-            
-            double delta_linear1 = calculate68PercentUncertainty_Linear(h_ratio, fit_linear1, 
-                                                                        fit_linear_min_ratio_orig, fit_linear_max_ratio_orig); 
-            
-            const int n_points = 100;
-            double x_arr[n_points * 2];
-            double y_arr[n_points * 2];
-            
-            for (int i = 0; i < n_points; ++i) {
-                double x = fit_linear_min_ratio_orig + i * (fit_linear_max_ratio_orig - fit_linear_min_ratio_orig) / (n_points - 1); 
-                double y_center = fit_linear1->Eval(x);
-                x_arr[i] = x;
-                y_arr[i] = y_center + delta_linear1;
-                x_arr[2 * n_points - 1 - i] = x;
-                y_arr[2 * n_points - 1 - i] = y_center - delta_linear1;
-            }
-            
-            uncertainty_band1 = new TGraph(2 * n_points, x_arr, y_arr);
-            uncertainty_band1->SetFillColorAlpha(kMagenta, 0.25);
-            uncertainty_band1->SetFillStyle(1001);
-            uncertainty_band1->SetLineColor(kMagenta - 7);
-            uncertainty_band1->SetLineWidth(1);
-            
-            TString fit_label = TString::Format("constant fit (1.27-6.1 GeV): %.2f #pm %.2f", 
-                                               p0, delta_linear1);
-            legend2->AddEntry(uncertainty_band1, fit_label, "lf");
-            
-            if (ndf > 0) {
-                TString chi2_label = TString::Format("#chi^{2}/NDF = %.1f / %d = %.2f", 
-                                                    chi2, ndf, chi2 / ndf);
-                legend2->AddEntry((TObject*)0, chi2_label, "");
-            }
-        }
-    }
-    
-    // Second linear fit (6.1 - 21.5 GeV)
-    const double fit_second_min_ratio_orig = 6.1;
-    const double fit_second_max_ratio_orig = 21.5;
-    
-    bool hasDataLinear2 = false;
-    for (int bin = h_ratio->GetXaxis()->FindBin(fit_second_min_ratio_orig); 
-         bin <= h_ratio->GetXaxis()->FindBin(fit_second_max_ratio_orig); ++bin) { 
-        if (h_ratio->GetBinContent(bin) != 0) {
-            hasDataLinear2 = true;
-            break;
-        }
-    }
-    
-    TF1* fit_linear2 = nullptr;
-    TGraph* uncertainty_band2 = nullptr;
-    double min_y_second_fit = 1e9;
-    
-    if (hasDataLinear2) {
-        fit_linear2 = new TF1("fit_linear2", "pol0", fit_second_min_ratio_orig, fit_second_max_ratio_orig); 
-        fit_linear2->SetLineColor(kOrange + 1);
-        fit_linear2->SetLineWidth(2);
-        
-        TFitResultPtr r_linear2 = h_ratio->Fit(fit_linear2, "SRQ+");
-        
-        if (r_linear2->IsValid() && r_linear2->Status() == 0) {
-            double p0 = fit_linear2->GetParameter(0);
-            double chi2 = r_linear2->Chi2();
-            int ndf = r_linear2->Ndf();
-            
-            double delta_linear2 = calculate68PercentUncertainty_Linear(h_ratio, fit_linear2,
-                                                                        fit_second_min_ratio_orig, fit_second_max_ratio_orig); 
-            
-            const int n_points = 100;
-            for (int i = 0; i < n_points; ++i) {
-                double x = fit_second_min_ratio_orig + i * (fit_second_max_ratio_orig - fit_second_min_ratio_orig) / (n_points - 1); 
-                double y_center = fit_linear2->Eval(x);
-                min_y_second_fit = std::min(min_y_second_fit, y_center - delta_linear2);
-            }
-            
-            double x_arr[n_points * 2];
-            double y_arr[n_points * 2];
-            
-            for (int i = 0; i < n_points; ++i) {
-                double x = fit_second_min_ratio_orig + i * (fit_second_max_ratio_orig - fit_second_min_ratio_orig) / (n_points - 1); 
-                double y_center = fit_linear2->Eval(x);
-                x_arr[i] = x;
-                y_arr[i] = y_center + delta_linear2;
-                x_arr[2 * n_points - 1 - i] = x;
-                y_arr[2 * n_points - 1 - i] = y_center - delta_linear2;
-            }
-            
-            uncertainty_band2 = new TGraph(2 * n_points, x_arr, y_arr);
-            uncertainty_band2->SetFillColorAlpha(kOrange + 1, 0.25);
-            uncertainty_band2->SetFillStyle(1001);
-            uncertainty_band2->SetLineColor(kOrange - 6);
-            uncertainty_band2->SetLineWidth(1);
-            
-            TString fit_label = TString::Format("constant fit (6.1-21.5 GeV): %.2f #pm %.2f",
-                                               p0, delta_linear2);
-            legend2->AddEntry(uncertainty_band2, fit_label, "lf");
-            
-            if (ndf > 0) {
-                TString chi2_label = TString::Format("#chi^{2}/NDF = %.1f / %d = %.2f", 
-                                                    chi2, ndf, chi2 / ndf);
-                legend2->AddEntry((TObject*)0, chi2_label, "");
-            }
-        }
-    }
-    
-    double min_r = 1e9, max_r = -1e9;
-    for (int i = 1; i <= h_ratio->GetNbinsX(); ++i) {
-        double x = h_ratio->GetBinCenter(i);
-        if (x > x_max || x < x_min) continue;
-        double y = h_ratio->GetBinContent(i);
-        if (y != 0 && !std::isnan(y) && !std::isinf(y)) {
-            min_r = std::min(min_r, y);
-            max_r = std::max(max_r, y);
-        }
-    }
-    
-    if (min_y_second_fit < 1e9) {
-        min_r = std::min(min_r, min_y_second_fit * 0.8);
-    }
-    
-    if (min_r > max_r) { min_r = 0.2; max_r = 1.8; }
-    h_ratio->GetYaxis()->SetRangeUser(min_r * 0.75, max_r * 1.25);
-    
-    h_ratio->Draw("PZ");
-    
-    if (uncertainty_band1) {
-        uncertainty_band1->Draw("F SAME");
-        fit_linear1->Draw("SAME");
-    }
-    
-    if (uncertainty_band2) {
-        uncertainty_band2->Draw("F SAME");
-        fit_linear2->Draw("SAME");
-    }
-    
-    legend2->Draw();
-    c2->SaveAs((output_path + "_ratio.png").c_str());
-    delete c2;
-    delete h_ratio;
+    delete leg;
 }
 
-// --- MC Calculation Helpers ---
-// ADAPTIVE CHANGE: Accept map of TH1* (generic), return TH1D* (Double precision)
-TH1D* stitchHistograms(const std::map<std::string, TH1*>& hists, TH1* refHist) {
-    // Create histogram using refHist bins, but ensure it is TH1D
-    auto combined = new TH1D(TString::Format("%s_stitched", refHist->GetName()), 
-                             refHist->GetTitle(), 
-                             refHist->GetNbinsX(), 
-                             refHist->GetXaxis()->GetXbins()->GetArray());
-    combined->Reset();
-    const double boundary1 = 1.28, boundary2 = 3.06;
-    for (int i = 1; i <= combined->GetNbinsX(); ++i) {
-        double binCenter = combined->GetBinCenter(i);
-        std::string det = (binCenter < boundary1) ? "TOF" : (binCenter < boundary2) ? "NaF" : "AGL";
-        if (hists.count(det) && hists.at(det) != nullptr) {
-            TH1* h = hists.at(det);
-            int source_bin = h->FindBin(binCenter);
-            // GetBinContent works for both TH1F and TH1D, returns double
-            combined->SetBinContent(i, h->GetBinContent(source_bin));
-            combined->SetBinError(i, h->GetBinError(source_bin));
-        }
-    }
-    return combined;
-}
-
-// ADAPTIVE CHANGE: Use TH1D for internal calculation logic
-std::map<std::string, TH1D*> calculateMCRatios(const AnalysisConfig& config, const std::string& chain, 
-                                                TH1* refHist, bool is_debug_target) {
-    std::cout << "\n--- Calculating MC Ratios for " << config.sourceParticle << " -> " 
-              << config.fragmentParticle << " ---\n";
-    std::map<std::string, TH1D*> mc_ratios;
-    const std::string mcBaseDir = "/eos/user/z/zixuan/Isotope/Add/";
-    const std::array<std::string, 3> detectors = {"TOF", "NaF", "AGL"};
-    const int nBins = refHist->GetNbinsX();
-
-    // Use TH1D for accumulation
-    TH1D* h_mc_total_source = new TH1D("h_mc_total_source_stitched", "", nBins, refHist->GetXaxis()->GetXbins()->GetArray());
-    TH1D* h_mc_total_frag = new TH1D("h_mc_total_frag_stitched", "", nBins, refHist->GetXaxis()->GetXbins()->GetArray());
+DetResults CalculateMCRatio(const AnalysisConfig& cfg, TH1* refHist, TString chain, TString denSuffix) {
+    std::cout << "\n>>> [MC] Calculation (" << denSuffix << "): " << cfg.source << " -> " << cfg.fragment << std::endl;
+    DetResults res;
+    TString mcPath = "/eos/user/z/zixuan/Isotope/Add/";
+    std::vector<std::string> dets = {"TOF", "NaF", "AGL"};
     
-    std::map<std::string, TH1D*> h_mc_frag_isos;
-    for (const auto& frag_iso : config.fragmentIsotopes) {
-        h_mc_frag_isos[frag_iso] = new TH1D(TString::Format("h_mc_%s_stitched", frag_iso.c_str()), "", nBins, refHist->GetXaxis()->GetXbins()->GetArray());
+    TH1D* sum_den = CreateHist("mc_sum_den", refHist);
+    std::map<std::string, TH1D*> sum_num;
+    for (auto const& [iso, m] : cfg.fragIsoMap) sum_num[iso] = CreateHist(("mc_sum_num_" + iso).c_str(), refHist);
+    TH1D* sum_num_tot = CreateHist("mc_sum_num_tot", refHist);
+
+    std::map<std::string, TH1D*> sum_den_d, sum_num_tot_d;
+    std::map<std::string, std::map<std::string, TH1D*>> sum_num_d;
+    for(auto d : dets) {
+        sum_den_d[d] = CreateHist(("mc_sum_den_"+d).c_str(), refHist);
+        sum_num_tot_d[d] = CreateHist(("mc_sum_num_tot_"+d).c_str(), refHist);
+        for(auto const& [iso, m] : cfg.fragIsoMap) sum_num_d[d][iso] = CreateHist(("mc_sum_num_"+d+"_"+iso).c_str(), refHist);
     }
 
-    std::map<std::string, std::unique_ptr<TH1>> h_gen_map;
-    for (const auto& pair : config.mcSourceFiles) {
-        const std::string& source_iso = pair.first;
-        auto mc_file = openFile(mcBaseDir + pair.second);
-        // Use generic TH1 GetObject
-        h_gen_map[source_iso].reset(getHistFromFile<TH1>(mc_file.get(), config.mcSourceGenHist.c_str()));
-        if(h_gen_map[source_iso]) h_gen_map[source_iso]->Rebin(2);
-    }
+    std::vector<MCSourceData> mcDataList;
+    for (auto const& [srcIso, srcFile] : cfg.mcFiles) {
+        TString fullPath = mcPath + srcFile.c_str();
+        TFile* f = TFile::Open(fullPath);
+        if(!f || f->IsZombie()) continue;
+        
+        MCSourceData mcData;
+        mcData.isoName = srcIso;
+        mcData.abundance = cfg.srcAbundance.at(srcIso);
+        
+        TH1* hg = GetHist(f, "MC_FLUX_H3");
+        if(hg) { hg->Rebin(2); mcData.h_gen = hg; } 
+        else mcData.h_gen = nullptr;
 
-    for (const auto& pair : config.mcSourceFiles) {
-        const std::string& current_source_iso = pair.first;
-        auto mc_file = openFile(mcBaseDir + pair.second);
-
-        std::map<std::string, TH1*> source_hists_per_det;
-        for(const auto& det : detectors) {
-            source_hists_per_det[det] = getHistFromFile<TH1>(mc_file.get(), 
-                TString::Format("%s_MC_BKG_H1_%s", chain.c_str(), det.c_str()));
-            if(source_hists_per_det[det]) source_hists_per_det[det]->Rebin(2);
+        for(auto det : dets) {
+            TString n = TString::Format("%s_BKG_%s_%s_%s", chain.Data(), denSuffix.Data(), cfg.source.c_str(), det.c_str());
+            TH1* h = GetHist(f, n);
+            if(h) h->Rebin(2);
+            mcData.h_den_parts[det] = h;
         }
-        std::unique_ptr<TH1D> stitched_source(stitchHistograms(source_hists_per_det, refHist));
+        mcData.h_den_stitched = StitchHists(mcData.h_den_parts, refHist);
 
-        std::map<std::string, std::unique_ptr<TH1D>> stitched_frags;
-        for (const auto& frag_iso : config.fragmentIsotopes) {
-            std::map<std::string, TH1*> frag_hists_per_det;
-            int frag_Z = (config.fragmentParticle == "Beryllium") ? 4 : 5;
-            for(const auto& det : detectors) {
-                TString histname = TString::Format("%s_MC_BKG_H2_%s_Z%d_Mass%d", 
-                    chain.c_str(), det.c_str(), frag_Z, config.fragZandMass.at(frag_iso));
-                frag_hists_per_det[det] = getHistFromFile<TH1>(mc_file.get(), histname);
-                if(frag_hists_per_det[det]) frag_hists_per_det[det]->Rebin(2);
+        int fZ = (cfg.fragment == "Beryllium") ? 4 : 5;
+        for (auto const& [iso, mass] : cfg.fragIsoMap) {
+            for(auto det : dets) {
+                TString n = TString::Format("%s_BKG_H2a2_%s_Z%d_Mass%d", chain.Data(), det.c_str(), fZ, mass);
+                TH1* h = GetHist(f, n);
+                if(h) h->Rebin(2);
+                mcData.h_num_parts[iso][det] = h;
             }
-            stitched_frags[frag_iso].reset(stitchHistograms(frag_hists_per_det, refHist));
+            mcData.h_num_stitched[iso] = StitchHists(mcData.h_num_parts[iso], refHist);
         }
+        mcDataList.push_back(mcData);
+        f->Close(); delete f; 
+    }
 
-        for (int i_bin = 1; i_bin <= nBins; ++i_bin) {
-            if (refHist->GetBinCenter(i_bin) > 21) continue;
+    std::cout << "\n---------------------------------------------------------------------------------------------------\n";
+    std::cout << "MC DETAILED DEBUG OUTPUT (" << denSuffix << ")\n";
+    std::cout << "---------------------------------------------------------------------------------------------------\n";
 
-            double total_gen_in_bin = 0.0;
-            for (const auto& inner_pair : config.mcSourceFiles) {
-                const std::string& iso = inner_pair.first;
-                if (h_gen_map.count(iso) && h_gen_map.at(iso)) {
-                    total_gen_in_bin += h_gen_map.at(iso)->GetBinContent(i_bin);
+    for (int i = 1; i <= refHist->GetNbinsX(); ++i) {
+        double low = refHist->GetXaxis()->GetBinLowEdge(i);
+        double up = refHist->GetXaxis()->GetBinUpEdge(i);
+        double cent = refHist->GetBinCenter(i);
+        
+        if (cent < 0.3 || cent > 21.5) continue;
+        
+        double totGen = 0;
+        for(auto& d : mcDataList) if(d.h_gen) totGen += d.h_gen->GetBinContent(i);
+        if (totGen <= 0) continue;
+
+        std::cout << "\nBin " << i << " [" << std::fixed << std::setprecision(3) << low << ", " << up << "] TotalGen: " << totGen << "\n";
+
+        for(auto& d : mcDataList) {
+            double curGen = d.h_gen ? d.h_gen->GetBinContent(i) : 0;
+            if(curGen <= 0) continue;
+            double w = (totGen / curGen) * d.abundance;
+            
+            ValueWithError vDenRaw = GetBinVal(d.h_den_stitched, i);
+            ValueWithError vDenW = vDenRaw * w;
+            
+            std::cout << "  Src " << d.isoName << " (Gen=" << curGen << ", Abd=" << d.abundance << ", W=" << w << "):\n";
+            std::cout << "    DenRaw: " << vDenRaw.val << " -> WDen: " << vDenW.val << "\n";
+            
+            sum_den->SetBinContent(i, sum_den->GetBinContent(i) + vDenW.val);
+            sum_den->SetBinError(i, std::hypot(sum_den->GetBinError(i), vDenW.err));
+
+            for(auto det : dets) {
+                double minE = (det=="TOF")?0.3:(det=="NaF")?0.8:2.5;
+                double maxE = (det=="TOF")?1.5:(det=="NaF")?6.1:21.5;
+                if(cent >= minE && cent <= maxE) {
+                    ValueWithError vDenPart = GetBinVal(d.h_den_parts[det], d.h_den_parts[det]?d.h_den_parts[det]->FindBin(cent):0) * w;
+                    sum_den_d[det]->SetBinContent(i, sum_den_d[det]->GetBinContent(i) + vDenPart.val);
+                    sum_den_d[det]->SetBinError(i, std::hypot(sum_den_d[det]->GetBinError(i), vDenPart.err));
                 }
             }
-            
-            double n_gen_current = (h_gen_map.count(current_source_iso) && h_gen_map.at(current_source_iso)) ? 
-                h_gen_map.at(current_source_iso)->GetBinContent(i_bin) : 0.0;
-            
-            double weight = 0.0;
-            if (n_gen_current > 0) {
-                weight = (total_gen_in_bin / n_gen_current) * config.sourceIsotopeFractions.at(current_source_iso);
-            }
 
-            ValueWithError raw_source_vw(stitched_source->GetBinContent(i_bin), stitched_source->GetBinError(i_bin));
-            ValueWithError weighted_source_vw = raw_source_vw * weight;
+            for (auto const& [iso, h] : d.h_num_stitched) {
+                ValueWithError vNumRaw = GetBinVal(h, i);
+                ValueWithError vNumW = vNumRaw * w;
+                std::cout << "    Frag " << iso << ": NumRaw: " << vNumRaw.val << " -> WNum: " << vNumW.val << "\n";
 
-            h_mc_total_source->SetBinContent(i_bin, h_mc_total_source->GetBinContent(i_bin) + weighted_source_vw.val);
-            h_mc_total_source->SetBinError(i_bin, std::hypot(h_mc_total_source->GetBinError(i_bin), weighted_source_vw.err));
-            
-            for (const auto& frag_iso : config.fragmentIsotopes) {
-                ValueWithError raw_frag_vw = {stitched_frags[frag_iso]->GetBinContent(i_bin), 
-                                              stitched_frags[frag_iso]->GetBinError(i_bin)};
-                ValueWithError weighted_frag_vw = raw_frag_vw * weight;
-                
-                h_mc_frag_isos[frag_iso]->SetBinContent(i_bin, 
-                    h_mc_frag_isos[frag_iso]->GetBinContent(i_bin) + weighted_frag_vw.val);
-                h_mc_frag_isos[frag_iso]->SetBinError(i_bin, 
-                    std::hypot(h_mc_frag_isos[frag_iso]->GetBinError(i_bin), weighted_frag_vw.err));
-                
-                h_mc_total_frag->SetBinContent(i_bin, h_mc_total_frag->GetBinContent(i_bin) + weighted_frag_vw.val);
-                h_mc_total_frag->SetBinError(i_bin, std::hypot(h_mc_total_frag->GetBinError(i_bin), weighted_frag_vw.err));
-            }
-        }
-    }
+                sum_num[iso]->SetBinContent(i, sum_num[iso]->GetBinContent(i) + vNumW.val);
+                sum_num[iso]->SetBinError(i, std::hypot(sum_num[iso]->GetBinError(i), vNumW.err));
+                sum_num_tot->SetBinContent(i, sum_num_tot->GetBinContent(i) + vNumW.val);
+                sum_num_tot->SetBinError(i, std::hypot(sum_num_tot->GetBinError(i), vNumW.err));
 
-    if (config.InIsoLevel) {
-        for (const auto& frag_iso : config.fragmentIsotopes) {
-            TH1D* ratio = (TH1D*)h_mc_frag_isos[frag_iso]->Clone(TString::Format("h_mc_ratio_%s", frag_iso.c_str()));
-            ratio->Divide(h_mc_total_source);
-            mc_ratios[frag_iso] = ratio;
-        }
-    }
-    
-    TH1D* total_ratio_hist = (TH1D*)h_mc_total_frag->Clone("h_mc_ratio_total");
-    total_ratio_hist->Divide(h_mc_total_source);
-    mc_ratios["Total"] = total_ratio_hist;
-
-    delete h_mc_total_source;
-    delete h_mc_total_frag;
-    for(auto const& [key, val] : h_mc_frag_isos) delete val;
-    
-    return mc_ratios;
-}
-
-// CHANGED: Helper function to check if we should zero out specific MC points for specific isotopes
-bool shouldZeroPoint(const AnalysisConfig& config, int bin_number_in_range, const std::string& isotope = "Total") {
-    // For C to Be9 specifically: zero out 8th and 18th point
-    if (config.sourceParticle == "Carbon" && isotope == "Be9") {
-        if (bin_number_in_range == 8 || bin_number_in_range == 18) {
-            return true;
-        }
-    }
-    
-    // For O to Be (Total only): zero out 7th point
-    if (config.sourceParticle == "Oxygen" && config.fragmentParticle == "Beryllium" && isotope == "Total") {
-        if (bin_number_in_range == 7) {
-            return true;
-        }
-    }
-    
-    // For O to B (Total only): zero out 5th point
-    if (config.sourceParticle == "Oxygen" && config.fragmentParticle == "Boron" && isotope == "Total") {
-        if (bin_number_in_range == 5) {
-            return true;
-        }
-    }
-    
-    return false;
-}
-
-// --- Main Calculation Function ---
-void runAnalysis(const std::string& chain, const AnalysisConfig& config) {
-    bool is_debug_target = (DEBUG_MODE && config.sourceParticle == DEBUG_SOURCE && 
-                           config.fragmentParticle == DEBUG_FRAGMENT && chain == DEBUG_CHAIN);
-
-    std::cout << "\n===================================================================\n";
-    std::cout << "Starting Analysis: " << config.sourceParticle << " -> " << config.fragmentParticle
-              << " for chain: " << chain << " (InIsoLevel Z: " << (config.InIsoLevel ? "Yes" : "No") << ")" << std::endl;
-    std::cout << "===================================================================\n";
-
-    const std::array<std::string, 3> detectors = {"TOF", "NaF", "AGL"};
-    
-    // ADAPTIVE CHANGE 2: Direct L1 Yield Path and Counts Path
-    // Removed QFit path.
-    TString l1YieldFilePath = "/eos/user/z/zixuan/Isotope/ChargeTemp/PureL1TempFit_AllL1QUnbiasedL1Inner.root";
-    TString countsFilePath = TString::Format("/eos/user/z/zixuan/Isotope/Add/%s.root", config.fragFileID.c_str());
-    TString outputFilePath = TString::Format("/eos/user/z/zixuan/Isotope/BkgValid/%s_to_%s_%s_Validation.root", 
-        config.sourceParticle.c_str(), config.fragmentParticle.c_str(), chain.c_str());
-
-    auto l1YieldFile = openFile(l1YieldFilePath);
-    auto countsFile = openFile(countsFilePath);
-    auto outputFile = openFile(outputFilePath, "RECREATE");
-
-    // Use TH1D for calculation precision, regardless of file content type
-    TH1F* refHist = getHistFromFile<TH1F>(countsFile.get(), 
-        TString::Format("%s_ISS_BKG_H1_%s_TOF", chain.c_str(), config.sourceParticle.c_str()));
-    if (!refHist) {
-        throw std::runtime_error("Reference histogram for binning not found!");
-    }
-    refHist->Rebin(2);
-    const TAxis* xAxis = refHist->GetXaxis();
-    const int nBins = xAxis->GetNbins();
-    const Double_t* binEdges = xAxis->GetXbins()->GetArray();
-
-    // ADAPTIVE CHANGE: Use TH1* to hold whatever is read, allows for F or D
-    std::map<std::string, TH1*> rawFragCountsHists;
-    std::map<std::string, TH1*> l1SignalYieldHists; // Source from Source
-    std::map<std::string, TH1*> l1ContamYieldHists; // Source from Fragment
-
-    for (const auto& det : detectors) {
-        // 1. Raw L2 Counts (Fragment candidates in L2)
-        rawFragCountsHists[det] = getHistFromFile<TH1>(countsFile.get(), 
-            TString::Format("%s_ISS_BKG_H3_%s_%s", chain.c_str(), config.sourceParticle.c_str(), det.c_str()));
-        if(rawFragCountsHists[det]) rawFragCountsHists[det]->Rebin(2);
-        
-        // 2. Direct L1 Yields (Requirement 2)
-        // Format: h_yield_in_{Source}_from_{Source}_{Det}
-        TString sigName = TString::Format("h_yield_in_%s_from_%s_%s", 
-                                          config.sourceParticle.c_str(), config.sourceParticle.c_str(), det.c_str());
-        l1SignalYieldHists[det] = getHistFromFile<TH1>(l1YieldFile.get(), sigName);
-        l1SignalYieldHists[det]->Rebin(2);
-
-        // Format: h_yield_in_{Source}_from_{Fragment}_{Det}
-        TString contamName = TString::Format("h_yield_in_%s_from_%s_%s", 
-                                             config.fragmentParticle.c_str(), config.sourceParticle.c_str(), det.c_str());
-        l1ContamYieldHists[det] = getHistFromFile<TH1>(l1YieldFile.get(), contamName);
-        l1ContamYieldHists[det]->Rebin(2);
-    }
-    
-    std::unique_ptr<TFile> fragmentFitFile, normalFitFile;
-    if (config.InIsoLevel) {
-        std::string fragAbbr = particleNameToAbbr.at(config.fragmentParticle);
-        TString fragmentFitFilePath = TString::Format("/eos/user/z/zixuan/Isotope/MassTempFit/wide_MassTF_%s_%s_H2_UseMass%d_FragFrom%s.root", fragAbbr.c_str(), chain.c_str(), config.useMass, config.sourceParticle.c_str());
-        TString normalFitFilePath = TString::Format("/eos/user/z/zixuan/Isotope/MassTempFit/wide_MassTF_%s_%s_H2_UseMass%d.root", fragAbbr.c_str(), chain.c_str(), config.useMass);
-        fragmentFitFile = openFile(fragmentFitFilePath);
-        normalFitFile   = openFile(normalFitFilePath);
-    }
-
-    // ADAPTIVE CHANGE: Always create TH1D for output calculations to maintain precision
-    auto createHist = [&](const char* name, const char* title) {
-        auto hist = new TH1D(name, title, nBins, binEdges);
-        hist->SetStats(0);
-        return hist;
-    };
-    
-    std::map<std::string, TH1D*> h_iss_ratios;
-    if (config.InIsoLevel) {
-        for (const auto& iso : config.fragmentIsotopes) {
-            h_iss_ratios[iso] = createHist(TString::Format("h_iss_ratio_%s", iso.c_str()), "");
-        }
-    }
-    h_iss_ratios["Total"] = createHist("h_iss_ratio_total", "");
-
-    // Get MC Ratios (returns TH1D* now)
-    std::map<std::string, TH1D*> h_mc_ratios = calculateMCRatios(config, chain, refHist, is_debug_target);
-
-    int bin_count_in_range = 0;
-    
-    for (int i_bin = 1; i_bin <= nBins; ++i_bin) {
-        double binCenter = xAxis->GetBinCenter(i_bin);
-        if (binCenter > 21.5 || binCenter < 0.2) continue;
-        
-        bin_count_in_range++;
-        
-        std::string det = (binCenter < 1.28) ? "TOF" : (binCenter < 3.06) ? "NaF" : "AGL";
-
-        ValueWithError rawFragCounts_vw(0,0), final_source_yield_vw(0,0), final_contam_yield_vw(0,0);
-
-        // Safe extraction from TH1* (supports F and D via GetBinContent)
-        if (rawFragCountsHists.count(det) && rawFragCountsHists[det]) 
-            rawFragCounts_vw = {rawFragCountsHists[det]->GetBinContent(i_bin), rawFragCountsHists[det]->GetBinError(i_bin)};
-        
-        if (l1SignalYieldHists.count(det) && l1SignalYieldHists[det])
-            final_source_yield_vw = {l1SignalYieldHists[det]->GetBinContent(i_bin), l1SignalYieldHists[det]->GetBinError(i_bin)};
-            
-        if (l1ContamYieldHists.count(det) && l1ContamYieldHists[det])
-            final_contam_yield_vw = {l1ContamYieldHists[det]->GetBinContent(i_bin), l1ContamYieldHists[det]->GetBinError(i_bin)};
-
-        // Logic change: Denominator is simply the signal yield obtained from file
-        if (final_source_yield_vw.val <= 0) continue;
-
-        if (is_debug_target) {
-            std::cout << std::string(125, '-') << "\n";
-            std::cout << "Bin " << i_bin << " (Point " << bin_count_in_range << ", Center: " 
-                     << std::fixed << std::setprecision(4) << binCenter << " GeV, Det: " << det << ")\n\n";
-            std::cout << "--- ISS CALCULATION ---\n";
-            std::cout << "Final Source (Denominator): " << final_source_yield_vw.val 
-                     << " +/- " << final_source_yield_vw.err << "\n";
-            std::cout << "Final Contamination (L1): " << final_contam_yield_vw.val 
-                     << " +/- " << final_contam_yield_vw.err << "\n\n";
-        }
-
-        ValueWithError pure_total_frag_bin(0,0);
-        if (config.InIsoLevel) {
-            std::map<std::string, ValueWithError> frag_fracs_vw, norm_fracs_vw;
-            ValueWithError frag_frac_sum(0,0), norm_frac_sum(0,0);
-
-            auto get_fractions = [&](TFile* file, const std::vector<std::string>& isotopes, 
-                                    std::map<std::string, ValueWithError>& vw_map, ValueWithError& sum_vw) {
-                for (const auto& iso : isotopes) {
-                    // Use TH1 for generic read
-                    auto h = getHistFromFile<TH1>(file, TString::Format("h_best_%s_frac_%s", iso.c_str(), det.c_str()));
-                    if(h) {
-                        vw_map[iso] = {h->GetBinContent(i_bin), h->GetBinError(i_bin)};
-                        sum_vw = sum_vw + vw_map[iso];
-                        delete h;
-                    }
-                }
-                const auto& last_iso = config.fragmentIsotopes.back();
-                vw_map[last_iso] = ValueWithError(1.0, 0.0) - sum_vw;
-            };
-            
-            get_fractions(fragmentFitFile.get(), config.primaryFitIsotopes, frag_fracs_vw, frag_frac_sum);
-            get_fractions(normalFitFile.get(), config.primaryFitIsotopes, norm_fracs_vw, norm_frac_sum);
-            
-            for (const auto& iso : config.fragmentIsotopes) {
-                // Calculation: (Raw_L2 * Frac) - (L1_Contam * Norm_Frac) -> All normalized by L1_Signal
-                ValueWithError raw_iso_counts_vw = rawFragCounts_vw * frag_fracs_vw[iso];
-                ValueWithError contamination_term_for_iso = final_contam_yield_vw * norm_fracs_vw[iso];
-                ValueWithError pure_iso_counts_vw = raw_iso_counts_vw - contamination_term_for_iso;
-                ValueWithError ratio_vw = pure_iso_counts_vw / final_source_yield_vw;
-                fillHistBin(h_iss_ratios[iso], i_bin, ratio_vw);
-                pure_total_frag_bin = pure_total_frag_bin + pure_iso_counts_vw;
-            }
-        } else {
-            // If not doing isotopic analysis, Total Fragment - L1 Contamination
-            pure_total_frag_bin = rawFragCounts_vw - final_contam_yield_vw;
-        }
-
-        ValueWithError total_ratio_vw = pure_total_frag_bin / final_source_yield_vw;
-        fillHistBin(h_iss_ratios["Total"], i_bin, total_ratio_vw);
-    }
-    
-    outputFile->cd();
-    gROOT->SetBatch(kTRUE);
-    gStyle->SetOptStat(0);
-    std::string plot_dir = "/eos/user/z/zixuan/Isotope/BkgValid/Plots/";
-    
-    int bin_count = 0;
-    for (int i_bin = 1; i_bin <= nBins; ++i_bin) {
-        double binCenter = xAxis->GetBinCenter(i_bin);
-        if (binCenter > 21.5 || binCenter < 0.4) continue;
-        
-        bin_count++;
-        
-        if (config.InIsoLevel) {
-            for (const auto& iso : config.fragmentIsotopes) {
-                if (shouldZeroPoint(config, bin_count, iso)) {
-                    if (h_mc_ratios.count(iso) && h_mc_ratios[iso]) {
-                        h_mc_ratios[iso]->SetBinContent(i_bin, 0);
-                        h_mc_ratios[iso]->SetBinError(i_bin, 0);
-                        std::cout << "[INFO] Zeroing MC " << iso << " point " << bin_count 
-                                 << " (bin " << i_bin << ", E=" << binCenter << " GeV)" << std::endl;
+                for(auto det : dets) {
+                    double minE = (det=="TOF")?0.3:(det=="NaF")?0.8:2.5;
+                    double maxE = (det=="TOF")?1.5:(det=="NaF")?6.1:21.5;
+                    if(cent >= minE && cent <= maxE) {
+                        ValueWithError vNumPart = GetBinVal(d.h_num_parts[iso][det], d.h_num_parts[iso][det]?d.h_num_parts[iso][det]->FindBin(cent):0) * w;
+                        sum_num_d[det][iso]->SetBinContent(i, sum_num_d[det][iso]->GetBinContent(i) + vNumPart.val);
+                        sum_num_d[det][iso]->SetBinError(i, std::hypot(sum_num_d[det][iso]->GetBinError(i), vNumPart.err));
+                        sum_num_tot_d[det]->SetBinContent(i, sum_num_tot_d[det]->GetBinContent(i) + vNumPart.val);
+                        sum_num_tot_d[det]->SetBinError(i, std::hypot(sum_num_tot_d[det]->GetBinError(i), vNumPart.err));
                     }
                 }
             }
         }
         
-        if (shouldZeroPoint(config, bin_count, "Total")) {
-            if (h_mc_ratios.count("Total") && h_mc_ratios["Total"]) {
-                h_mc_ratios["Total"]->SetBinContent(i_bin, 0);
-                h_mc_ratios["Total"]->SetBinError(i_bin, 0);
-                std::cout << "[INFO] Zeroing MC Total point " << bin_count 
-                         << " (bin " << i_bin << ", E=" << binCenter << " GeV)" << std::endl;
-            }
-        }
+        double finalDen = sum_den->GetBinContent(i);
+        double finalNumTot = sum_num_tot->GetBinContent(i);
+        double finalRatio = (finalDen > 0) ? finalNumTot / finalDen : 0;
+        std::cout << "  => MIXED TOTAL: Den=" << finalDen << " Num=" << finalNumTot << " Ratio=" << finalRatio << "\n";
     }
-    
-    if (config.InIsoLevel) {
-        for (const auto& iso : config.fragmentIsotopes) {
-            h_iss_ratios[iso]->Write();
-            if (h_mc_ratios.count(iso)) h_mc_ratios[iso]->Write();
-            
-            createComparisonPlots(h_iss_ratios[iso], h_mc_ratios.count(iso) ? h_mc_ratios[iso] : nullptr,
-                TString::Format("%s#rightarrow^{%d}%s (%s)", config.sourceParticle.c_str(), 
-                    config.fragZandMass.at(iso), config.fragmentParticle.c_str(), chain.c_str()).Data(),
-                TString::Format("L2 frag ^{%d}%s / L1%s ", config.fragZandMass.at(iso), 
-                    config.fragmentParticle.c_str(), config.sourceParticle.c_str()).Data(),
-                plot_dir + TString::Format("%s_to_%s_%s", config.sourceParticle.c_str(), iso.c_str(), chain.c_str()).Data());
-        }
-    }
-    
-    h_iss_ratios["Total"]->Write();
-    if (h_mc_ratios.count("Total")) h_mc_ratios["Total"]->Write();
-    
-    createComparisonPlots(h_iss_ratios["Total"], h_mc_ratios.count("Total") ? h_mc_ratios["Total"] : nullptr,
-        TString::Format("%s#rightarrow%s (%s)", config.sourceParticle.c_str(), 
-            config.fragmentParticle.c_str(), chain.c_str()).Data(),
-        TString::Format("L2 frag %s / L1 %s", config.fragmentParticle.c_str(), 
-            config.sourceParticle.c_str()).Data(),
-        plot_dir + TString::Format("%s_to_%s_Total_%s", config.sourceParticle.c_str(), 
-            config.fragmentParticle.c_str(), chain.c_str()).Data());
 
-    std::cout << "Analysis complete. Results saved to " << outputFile->GetName() << std::endl;
+    for(auto& d : mcDataList) {
+        if(d.h_gen) delete d.h_gen;
+        if(d.h_den_stitched) delete d.h_den_stitched;
+        for(auto& p : d.h_num_stitched) delete p.second;
+        for(auto& p : d.h_den_parts) if(p.second) delete p.second;
+        for(auto& px : d.h_num_parts) for(auto& py : px.second) if(py.second) delete py.second;
+    }
+
+    for(auto const& [iso, h] : sum_num) {
+        TH1D* r = CreateHist(("h_mc_ratio_"+iso).c_str(), refHist); r->Divide(h, sum_den);
+        res.combine[iso] = r; delete h;
+    }
+    TH1D* rt = CreateHist("h_mc_ratio_Total", refHist); rt->Divide(sum_num_tot, sum_den);
+    res.combine["Total"] = rt; delete sum_num_tot; delete sum_den;
+
+    for(auto d : dets) {
+        for(auto const& [iso, h] : sum_num_d[d]) {
+            TH1D* r = CreateHist(("h_mc_ratio_"+d+"_"+iso).c_str(), refHist); r->Divide(h, sum_den_d[d]);
+            if(d=="TOF") res.tof[iso] = r; else if(d=="NaF") res.naf[iso] = r; else res.agl[iso] = r;
+            delete h;
+        }
+        TH1D* rtd = CreateHist(("h_mc_ratio_"+d+"_Total").c_str(), refHist); rtd->Divide(sum_num_tot_d[d], sum_den_d[d]);
+        if(d=="TOF") res.tof["Total"] = rtd; else if(d=="NaF") res.naf["Total"] = rtd; else res.agl["Total"] = rtd;
+        delete sum_num_tot_d[d]; delete sum_den_d[d];
+    }
     
-    for(auto const& [key, val] : h_iss_ratios) delete val;
-    for(auto const& [key, val] : h_mc_ratios) delete val;
+    return res;
 }
 
-// --- Main entry point ---
-void CalFrag() {
-    AnalysisConfig config_B_to_Be;
-    config_B_to_Be.sourceParticle = "Boron";
-    config_B_to_Be.fragmentParticle = "Beryllium";
-    config_B_to_Be.InIsoLevel = true;
-    config_B_to_Be.primaryFitIsotopes = {"Be7", "Be9"};
-    config_B_to_Be.useMass = 7;
-    config_B_to_Be.fragFileID = "Be_frag4";
-    config_B_to_Be.sourceIsotopeFractions = {{"B10", 0.3}, {"B11", 0.7}};
-    config_B_to_Be.fragmentIsotopes = {"Be7", "Be9", "Be10"};
-    config_B_to_Be.fragZandMass = {{"Be7", 7}, {"Be9", 9}, {"Be10", 10}};
-    config_B_to_Be.mcSourceFiles = {{"B10", "B10_rew_frag4.root"}, {"B11", "B11_rew_frag4.root"}};
-    
-    AnalysisConfig config_C_to_Be;
-    config_C_to_Be.sourceParticle = "Carbon";
-    config_C_to_Be.fragmentParticle = "Beryllium";
-    config_C_to_Be.InIsoLevel = true;
-    config_C_to_Be.primaryFitIsotopes = {"Be7", "Be9"};
-    config_C_to_Be.useMass = 7;
-    config_C_to_Be.fragFileID = "Be_frag4";
-    config_C_to_Be.sourceIsotopeFractions = {{"C12", 1.0}};
-    config_C_to_Be.fragmentIsotopes = {"Be7", "Be9", "Be10"};
-    config_C_to_Be.fragZandMass = {{"Be7", 7}, {"Be9", 9}, {"Be10", 10}};
-    config_C_to_Be.mcSourceFiles = {{"C12", "C12_rew_frag4.root"}};
-    
-    AnalysisConfig config_N_to_Be;
-    config_N_to_Be.sourceParticle = "Nitrogen";
-    config_N_to_Be.fragmentParticle = "Beryllium";
-    config_N_to_Be.InIsoLevel = true;
-    config_N_to_Be.primaryFitIsotopes = {"Be7", "Be9"};
-    config_N_to_Be.useMass = 7;
-    config_N_to_Be.fragFileID = "Be_frag4";
-    config_N_to_Be.sourceIsotopeFractions = {{"N14", 0.5}, {"N15", 0.5}};
-    config_N_to_Be.fragmentIsotopes = {"Be7", "Be9", "Be10"};
-    config_N_to_Be.fragZandMass = {{"Be7", 7}, {"Be9", 9}, {"Be10", 10}};
-    config_N_to_Be.mcSourceFiles = {{"N14", "N14_rew_frag4.root"}, {"N15", "N15_rew_frag4.root"}};
-    
-    AnalysisConfig config_O_to_Be;
-    config_O_to_Be.sourceParticle = "Oxygen";
-    config_O_to_Be.fragmentParticle = "Beryllium";
-    config_O_to_Be.InIsoLevel = true;
-    config_O_to_Be.primaryFitIsotopes = {"Be7", "Be9"};
-    config_O_to_Be.useMass = 7;
-    config_O_to_Be.fragFileID = "Be_frag4";
-    config_O_to_Be.sourceIsotopeFractions = {{"O16", 1.0}};
-    config_O_to_Be.fragmentIsotopes = {"Be7", "Be9", "Be10"};
-    config_O_to_Be.fragZandMass = {{"Be7", 7}, {"Be9", 9}, {"Be10", 10}};
-    config_O_to_Be.mcSourceFiles = {{"O16", "O16_rew_frag4.root"}};
+void RunAnalysis(TString chain, const AnalysisConfig& cfg) {
+    std::cout << "\n======================================================\n";
+    std::cout << "[INFO] Starting Analysis for " << cfg.source << " -> " << cfg.fragment << std::endl;
 
-    AnalysisConfig config_C_to_B;
-    config_C_to_B.sourceParticle = "Carbon";
-    config_C_to_B.fragmentParticle = "Boron";
-    config_C_to_B.InIsoLevel = true;
-    config_C_to_B.primaryFitIsotopes = {"B10"};
-    config_C_to_B.useMass = 10;
-    config_C_to_B.fragFileID = "B_frag5";
-    config_C_to_B.sourceIsotopeFractions = {{"C12", 1.0}};
-    config_C_to_B.fragmentIsotopes = {"B10", "B11"};
-    config_C_to_B.fragZandMass = {{"B10", 10}, {"B11", 11}};
-    config_C_to_B.mcSourceFiles = {{"C12", "C12_rew_frag5.root"}};
+    TString pL1 = TString::Format("/eos/user/z/zixuan/Isotope/ChargeTemp/PureQFit_%sTo%s_UnbiasedL1Inner.root", cfg.source.c_str(), cfg.fragment.c_str());
+    TString pCnt = TString::Format("/eos/user/z/zixuan/Isotope/Add/%s.root", cfg.fragFileID.c_str());
+    TString pOut = TString::Format("/eos/user/z/zixuan/Isotope/BkgValid/%s_to_%s_%s_Validation.root", cfg.source.c_str(), cfg.fragment.c_str(), chain.Data());
     
-    AnalysisConfig config_N_to_B;
-    config_N_to_B.sourceParticle = "Nitrogen";
-    config_N_to_B.fragmentParticle = "Boron";
-    config_N_to_B.InIsoLevel = true;
-    config_N_to_B.primaryFitIsotopes = {"B10"};
-    config_N_to_B.useMass = 10;
-    config_N_to_B.fragFileID = "B_frag5";
-    config_N_to_B.sourceIsotopeFractions = {{"N14", 0.5}, {"N15", 0.5}};
-    config_N_to_B.fragmentIsotopes = {"B10", "B11"};
-    config_N_to_B.fragZandMass = {{"B10", 10}, {"B11", 11}};
-    config_N_to_B.mcSourceFiles = {{"N14", "N14_rew_frag5.root"}, {"N15", "N15_rew_frag5.root"}};
+    TFile* fL1 = TFile::Open(pL1);
+    if(!fL1 || fL1->IsZombie()) std::cout << "[ERROR] Cannot open L1 file: " << pL1 << std::endl;
+
+    TFile* fCnt = TFile::Open(pCnt);
+    if(!fCnt || fCnt->IsZombie()) std::cout << "[ERROR] Cannot open Add file: " << pCnt << std::endl;
+
+    TFile* fOut = TFile::Open(pOut, "RECREATE");
     
-    AnalysisConfig config_O_to_B;
-    config_O_to_B.sourceParticle = "Oxygen";
-    config_O_to_B.fragmentParticle = "Boron";
-    config_O_to_B.InIsoLevel = true;
-    config_O_to_B.primaryFitIsotopes = {"B10"};
-    config_O_to_B.useMass = 10;
-    config_O_to_B.fragFileID = "B_frag5";
-    config_O_to_B.sourceIsotopeFractions = {{"O16", 1.0}};
-    config_O_to_B.fragmentIsotopes = {"B10", "B11"};
-    config_O_to_B.fragZandMass = {{"B10", 10}, {"B11", 11}};
-    config_O_to_B.mcSourceFiles = {{"O16", "O16_rew_frag5.root"}};
+    TString pFitF = TString::Format("/eos/user/z/zixuan/Isotope/MassTempFit/wide_MassTF_%s_%s_H2_UseMass%d_FragFrom%s.root", cfg.fragAbbr.c_str(), chain.Data(), cfg.useMass, cfg.source.c_str());
+    TString pFitN = TString::Format("/eos/user/z/zixuan/Isotope/MassTempFit/wide_MassTF_%s_%s_H2_UseMass%d.root", cfg.fragAbbr.c_str(), chain.Data(), cfg.useMass);
     
-    try {
-        const std::vector<std::string> chains = {"UnbiasedL1Inner"};
-        const std::vector<AnalysisConfig> all_configs = {
-            config_B_to_Be, config_C_to_Be,
-            config_N_to_Be, config_O_to_Be
+    TFile* fMF = TFile::Open(pFitF);
+    if(!fMF || fMF->IsZombie()) std::cout << "[ERROR] Cannot open Frag MassFit: " << pFitF << std::endl;
+    
+    TFile* fMN = TFile::Open(pFitN);
+    if(!fMN || fMN->IsZombie()) std::cout << "[ERROR] Cannot open Norm MassFit: " << pFitN << std::endl;
+    
+    TH1* ref = GetHist(fCnt, TString::Format("%s_BKG_H1a_%s_TOF", chain.Data(), cfg.source.c_str()));
+    if(!ref) return;
+    ref->Rebin(2);
+    
+    // Loop for Equ1, Equ2, Equ3
+    struct EquInfo { std::string name; std::string mcDen; std::string l1Sig; };
+    std::vector<EquInfo> equs = {
+        {"Equ1", "H1a", "L1Sig_Any"},
+        {"Equ2", "H1b", "L1Sig_Pass"},
+        {"Equ3", "H1c", "L1Sig_Frag"}
+    };
+
+    for(const auto& eq : equs) {
+        std::cout << "\n>>> Processing " << eq.name << " <<<\n";
+        DetResults mcRes = CalculateMCRatio(cfg, ref, chain, eq.mcDen.c_str());
+        DetResults issRes;
+        
+        for(auto iso : cfg.targetIsotopes) {
+            issRes.combine[iso] = CreateHist(("h_iss_ratio_"+iso).c_str(), ref);
+            issRes.tof[iso] = CreateHist(("h_iss_ratio_TOF_"+iso).c_str(), ref);
+            issRes.naf[iso] = CreateHist(("h_iss_ratio_NaF_"+iso).c_str(), ref);
+            issRes.agl[iso] = CreateHist(("h_iss_ratio_AGL_"+iso).c_str(), ref);
+        }
+
+        std::cout << "\n--- ISS DEBUG (" << eq.name << ") ---\n";
+        std::vector<std::string> dets = {"TOF", "NaF", "AGL"};
+        
+        for (int i = 1; i <= ref->GetNbinsX(); ++i) {
+            double cent = ref->GetBinCenter(i);
+            if (cent < 0.3 || cent > 21.5) continue;
+            
+            // Combine Logic
+            std::string detC = (cent < 1.2) ? "TOF" : (cent < 3.2) ? "NaF" : "AGL";
+            
+            TString nNum = TString::Format("%s_BKG_H2a_%s_%s", chain.Data(), cfg.source.c_str(), detC.c_str());
+            TH1* hNum = GetHist(fCnt, nNum); if(hNum) hNum->Rebin(2); 
+            ValueWithError vNum = GetValDebug(hNum, cent, "Add(H2a)", "RawNum"); if(hNum) delete hNum;
+
+            TString nDen = TString::Format("h_yield_in_%s_from_%s_%s_%s_%s", cfg.source.c_str(), cfg.source.c_str(), detC.c_str(), eq.l1Sig.c_str(), chain.Data());
+            TH1* hDen = GetHist(fL1, nDen); if(hDen) hDen->Rebin(2);
+            ValueWithError vDen = GetValDebug(hDen, cent, "PureQFit", "L1Den"); if(hDen) delete hDen;
+
+            TString nCt = TString::Format("h_yield_in_%s_from_%s_%s_%s_%s", cfg.source.c_str(), cfg.fragment.c_str(), detC.c_str(), eq.l1Sig.c_str(), chain.Data());
+            TH1* hC = GetHist(fL1, nCt); if(hC) hC->Rebin(2);
+            ValueWithError vCnt = GetValDebug(hC, cent, "PureQFit", "L1Contam"); if(hC) delete hC;
+
+            ValueWithError sumNum(0,0);
+            ValueWithError sumFracF(0,0), sumFracN(0,0);
+
+            if (vDen.val > 0) {
+                for (auto iso : cfg.targetIsotopes) {
+                    if (iso == "Total") continue;
+                    ValueWithError fF(0,0), fN(0,0);
+                    bool isFit = false; for(auto fitIso : cfg.fitIsotopes) if(iso == fitIso) isFit = true;
+                    
+                    auto GetF = [&](TFile* f, TString nIso, TString detName) {
+                        if(!f) return ValueWithError(0,0);
+                        TString n = TString::Format("h_best_%s_frac_%s", nIso.Data(), detName.Data());
+                        TH1* h = GetHist(f, n); 
+                        ValueWithError v = h ? ValueWithError(h->GetBinContent(h->FindBin(cent)), h->GetBinError(h->FindBin(cent))) : ValueWithError(0,0);
+                        if(h) delete h; return v;
+                    };
+
+                    if(isFit) {
+                        fF = GetF(fMF, iso.c_str(), detC.c_str()); sumFracF = sumFracF + fF;
+                        fN = GetF(fMN, iso.c_str(), detC.c_str()); sumFracN = sumFracN + fN;
+                    } else {
+                        fF = ValueWithError(1.0, 0.0) - sumFracF;
+                        fN = ValueWithError(1.0, 0.0) - sumFracN;
+                    }
+                    ValueWithError vTrue = (vNum * fF) - (vCnt * fN);
+                    ValueWithError rat = vTrue / vDen;
+                    issRes.combine[iso]->SetBinContent(i, rat.val); issRes.combine[iso]->SetBinError(i, rat.err);
+                    sumNum = sumNum + vTrue;
+                }
+                ValueWithError rTot = sumNum / vDen;
+                issRes.combine["Total"]->SetBinContent(i, rTot.val); issRes.combine["Total"]->SetBinError(i, rTot.err);
+            }
+
+            // Individual Logic
+            for(auto d : dets) {
+                double minE = (d=="TOF")?0.3:(d=="NaF")?0.8:2.5;
+                double maxE = (d=="TOF")?1.5:(d=="NaF")?6.1:21.5;
+                if(cent < minE || cent > maxE) continue;
+
+                TString nNumD = TString::Format("%s_BKG_H2a_%s_%s", chain.Data(), cfg.source.c_str(), d.c_str());
+                TH1* hNumD = GetHist(fCnt, nNumD); if(hNumD) hNumD->Rebin(2);
+                ValueWithError vNumD = GetBinVal(hNumD, hNumD?hNumD->FindBin(cent):0); if(hNumD) delete hNumD;
+
+                TString nDenD = TString::Format("h_yield_in_%s_from_%s_%s_%s_%s", cfg.source.c_str(), cfg.source.c_str(), d.c_str(), eq.l1Sig.c_str(), chain.Data());
+                TH1* hDenD = GetHist(fL1, nDenD); if(hDenD) hDenD->Rebin(2);
+                ValueWithError vDenD = GetBinVal(hDenD, hDenD?hDenD->FindBin(cent):0); if(hDenD) delete hDenD;
+
+                TString nCtD = TString::Format("h_yield_in_%s_from_%s_%s_%s_%s", cfg.source.c_str(), cfg.fragment.c_str(), d.c_str(), eq.l1Sig.c_str(), chain.Data());
+                TH1* hCD = GetHist(fL1, nCtD); if(hCD) hCD->Rebin(2);
+                ValueWithError vCntD = GetBinVal(hCD, hCD?hCD->FindBin(cent):0); if(hCD) delete hCD;
+
+                if(vDenD.val <= 0) continue;
+                ValueWithError sumNumD(0,0);
+                ValueWithError sFF(0,0), sFN(0,0);
+
+                for (auto iso : cfg.targetIsotopes) {
+                    if (iso == "Total") continue;
+                    ValueWithError fF(0,0), fN(0,0);
+                    bool isFit = false; for(auto fitIso : cfg.fitIsotopes) if(iso == fitIso) isFit = true;
+                    
+                    auto GetFD = [&](TFile* f, TString nIso) {
+                        if(!f) return ValueWithError(0,0);
+                        TString n = TString::Format("h_best_%s_frac_%s", nIso.Data(), d.c_str());
+                        TH1* h = GetHist(f, n); 
+                        ValueWithError v = h ? ValueWithError(h->GetBinContent(h->FindBin(cent)), h->GetBinError(h->FindBin(cent))) : ValueWithError(0,0);
+                        if(h) delete h; return v;
+                    };
+
+                    if(isFit) {
+                        fF = GetFD(fMF, iso.c_str()); sFF = sFF + fF;
+                        fN = GetFD(fMN, iso.c_str()); sFN = sFN + fN;
+                    } else {
+                        fF = ValueWithError(1.0, 0.0) - sFF;
+                        fN = ValueWithError(1.0, 0.0) - sFN;
+                    }
+                    ValueWithError vTrue = (vNumD * fF) - (vCntD * fN);
+                    ValueWithError rat = vTrue / vDenD;
+                    
+                    if(d=="TOF") { issRes.tof[iso]->SetBinContent(i, rat.val); issRes.tof[iso]->SetBinError(i, rat.err); }
+                    else if(d=="NaF") { issRes.naf[iso]->SetBinContent(i, rat.val); issRes.naf[iso]->SetBinError(i, rat.err); }
+                    else { issRes.agl[iso]->SetBinContent(i, rat.val); issRes.agl[iso]->SetBinError(i, rat.err); }
+                    sumNumD = sumNumD + vTrue;
+                }
+                ValueWithError rTotD = sumNumD / vDenD;
+                if(d=="TOF") { issRes.tof["Total"]->SetBinContent(i, rTotD.val); issRes.tof["Total"]->SetBinError(i, rTotD.err); }
+                else if(d=="NaF") { issRes.naf["Total"]->SetBinContent(i, rTotD.val); issRes.naf["Total"]->SetBinError(i, rTotD.err); }
+                else { issRes.agl["Total"]->SetBinContent(i, rTotD.val); issRes.agl["Total"]->SetBinError(i, rTotD.err); }
+            }
+        }
+        
+// 修改后的 SaveSet：分级创建目录，确保保存成功
+        auto SaveSet = [&](std::map<std::string, TH1D*>& iss, std::map<std::string, TH1D*>& mc, TString dir, int m) {
+            fOut->cd(); // 1. 先回到文件顶层
+            
+            // 2. 检查并创建第一级目录 (例如 Combine, TOF, NaF...)
+            if (!fOut->GetDirectory(dir)) {
+                fOut->mkdir(dir);
+            }
+            fOut->cd(dir); // 进入第一级
+
+            // 3. 检查并创建第二级目录 (例如 Equ1, Equ2...)
+            // 注意：eq.name 是 std::string，需要 .c_str()
+            if (!gDirectory->GetDirectory(eq.name.c_str())) {
+                gDirectory->mkdir(eq.name.c_str());
+            }
+            gDirectory->cd(eq.name.c_str()); // 进入第二级
+
+            // 4. 保存直方图 (逻辑不变)
+            for(auto const& [iso, h] : iss) {
+                h->Write(); // 写入 ISS 结果
+                
+                TH1* hm = mc.count(iso) ? mc[iso] : nullptr;
+                if(hm) hm->Write(); // 写入 MC 结果
+                
+                // 画图逻辑 (逻辑不变)
+                TString tit = TString::Format("%s->%s %s %s %s", cfg.source.c_str(), cfg.fragment.c_str(), dir.Data(), eq.name.c_str(), iso.c_str());
+                TString p = "/eos/user/z/zixuan/Isotope/BkgValid/Plots/" + TString::Format("%s_to_%s_%s_%s_%s_%s", cfg.source.c_str(), cfg.fragment.c_str(), chain.Data(), dir.Data(), eq.name.c_str(), iso.c_str());
+                CreateComparisonPlots(h, hm, tit, p, m);
+            }
         };
         
-        for (const auto& chain : chains) {
-            for (const auto& config : all_configs) {
-                runAnalysis(chain, config);
-            }
-        }
-
-    } catch (const std::exception& e) {
-        std::cerr << "[FATAL ERROR] An exception occurred: " << e.what() << std::endl;
+        SaveSet(issRes.combine, mcRes.combine, "Combine", 0);
+        SaveSet(issRes.tof, mcRes.tof, "TOF", 1);
+        SaveSet(issRes.naf, mcRes.naf, "NaF", 2);
+        SaveSet(issRes.agl, mcRes.agl, "AGL", 3);
+        
+        for(auto p : issRes.combine) delete p.second; for(auto p : issRes.tof) delete p.second;
+        for(auto p : issRes.naf) delete p.second; for(auto p : issRes.agl) delete p.second;
+        for(auto p : mcRes.combine) delete p.second; for(auto p : mcRes.tof) delete p.second;
+        for(auto p : mcRes.naf) delete p.second; for(auto p : mcRes.agl) delete p.second;
     }
+    
+    if(fL1) fL1->Close(); if(fCnt) fCnt->Close(); if(fOut) fOut->Close(); if(fMF) fMF->Close(); if(fMN) fMN->Close();
+}
+
+void CalFrag() {
+    gROOT->SetBatch(kTRUE);
+    gStyle->SetOptStat(0);
+    gStyle->SetPadTopMargin(0.1);
+    
+    AnalysisConfig cB; cB.source="Boron"; cB.fragment="Beryllium"; cB.fragAbbr="Be"; cB.fragFileID="Be_frag4"; cB.useMass=7;
+    cB.srcAbundance={{"B10",0.3},{"B11",0.7}}; cB.mcFiles={{"B10","B10_rew_frag4.root"},{"B11","B11_rew_frag4.root"}};
+    cB.fragIsoMap={{"Be7",7},{"Be9",9},{"Be10",10}}; cB.fitIsotopes={"Be7","Be9"}; cB.targetIsotopes={"Be7","Be9","Be10","Total"};
+    
+    AnalysisConfig cC; cC.source="Carbon"; cC.fragment="Beryllium"; cC.fragAbbr="Be"; cC.fragFileID="Be_frag4"; cC.useMass=7;
+    cC.srcAbundance={{"C12",1.0}}; cC.mcFiles={{"C12","C12_rew_frag4.root"}};
+    cC.fragIsoMap={{"Be7",7},{"Be9",9},{"Be10",10}}; cC.fitIsotopes={"Be7","Be9"}; cC.targetIsotopes={"Be7","Be9","Be10","Total"};
+    
+    AnalysisConfig cN; cN.source="Nitrogen"; cN.fragment="Beryllium"; cN.fragAbbr="Be"; cN.fragFileID="Be_frag4"; cN.useMass=7;
+    cN.srcAbundance={{"N14",0.5},{"N15",0.5}}; cN.mcFiles={{"N14","N14_rew_frag4.root"},{"N15","N15_rew_frag4.root"}};
+    cN.fragIsoMap={{"Be7",7},{"Be9",9},{"Be10",10}}; cN.fitIsotopes={"Be7","Be9"}; cN.targetIsotopes={"Be7","Be9","Be10","Total"};
+    
+    AnalysisConfig cO; cO.source="Oxygen"; cO.fragment="Beryllium"; cO.fragAbbr="Be"; cO.fragFileID="Be_frag4"; cO.useMass=7;
+    cO.srcAbundance={{"O16",1.0}}; cO.mcFiles={{"O16","O16_rew_frag4.root"}};
+    cO.fragIsoMap={{"Be7",7},{"Be9",9},{"Be10",10}}; cO.fitIsotopes={"Be7","Be9"}; cO.targetIsotopes={"Be7","Be9","Be10","Total"};
+
+    RunAnalysis("UnbiasedL1Inner", cB);
+    RunAnalysis("UnbiasedL1Inner", cC);
+    RunAnalysis("UnbiasedL1Inner", cN);
+    RunAnalysis("UnbiasedL1Inner", cO);
 }

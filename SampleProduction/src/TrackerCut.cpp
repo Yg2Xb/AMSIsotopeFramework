@@ -147,7 +147,6 @@ CutResult<5> TrackerCut::cutL1Unbiased(int charge, bool isISS,
 
     double low = 0.46 + (charge - 3) * 0.16;
     double up = (charge <= 5 ) ? 0.65 : 0.65+(charge-5)*0.03;
-
     std::array<bool, 5> cuts{
         (l1Q < charge + coe*up),
         (l1Q > charge - coe*low),
@@ -166,7 +165,6 @@ CutResult<5> TrackerCut::cutL1Norm(int charge, bool isISS, float coe) const {
     // Chi2 calculation still needs array access unless cached
     double l1ChiY = (status_.innerLayerHits - 2) * event_->tk_chis1[0][0][2][1] - 
                     (status_.innerLayerHits - 3) * event_->tk_chis1[0][0][1][1];
-
     double l1Q = status_.L1Q_Normal; // CACHED
     int qStatus = status_.L1QStatus_Normal; // CACHED
     
@@ -223,7 +221,6 @@ CutResult<4> TrackerCut::cutInnerTracker(int charge, bool isISS,
     double innerNormChisY = event_->tk_chis1[Tracker::Algorithm::DEFAULT]
                                           [Tracker::Alignment::DEFAULT]
                                           [Tracker::Span::INNER][1];
-
     std::array<bool, 4> cuts{
         hasInnerHits,
         innerNormChisY < 10,
@@ -252,7 +249,8 @@ CutResult<3> TrackerCut::cutBackground(int charge, bool isISS,
 
 CutResult<1> TrackerCut::cutPhysTrigger(bool isISS) const {
     if (!event_) return CutResult<1>();
-    int ptrig = isISS ? event_->physbpatt2 : 0x3EL;
+    //int ptrig = isISS ? event_->physbpatt2 : 0x3EL;
+    int ptrig = isISS ? event_->physbpatt2 : event_->physbpatt1; //2025.12.07, apply mc phystrigger
     return CutResult<1>({ (ptrig & 0x3EL) != 0 });
 }
 
@@ -307,13 +305,13 @@ CutResult<2> TrackerCut::getDenominatorL1PickUp(int charge, bool isISS) const {
     return CutResult<2>(cuts, false);
 }
 
-bool TrackerCut::AccUndepCut(int charge, bool isISS, bool forBackground) const {
+bool TrackerCut::AccUndepCut(int charge, bool isISS, bool forBackground, double coe) const {
     if (!event_) return false;
     auto phys = cutPhysTrigger(isISS);
     auto basic = cutBasicAndFiducial(isISS);
     auto inTrk = cutInnerTracker(charge, isISS);
-    auto inQ = cutInnerQ(charge, isISS);
-    auto tof = cutUTOFQ(charge, isISS);
+    auto inQ = cutInnerQ(charge, isISS, false, forBackground, coe);
+    auto tof = cutUTOFQ(charge, isISS, false, forBackground, coe);
     auto bg = cutBackground(charge, isISS, false, forBackground);
     return phys.total && basic.total && inTrk.total && inQ.total && tof.total && bg.details[0];
 }
@@ -326,23 +324,23 @@ bool TrackerCut::Q_L1_BkgIndependCut(int charge, bool isISS) const {
     return phys.total && basic.total && inTrk.total;
 }
 
-CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS, bool forBackground) const {
+CutResult<2> TrackerCut::TwoAccTrackerCut(int charge, bool isISS, bool forBackground, double coe) const {
     if (!event_) return CutResult<2>();
-    bool accunb = AccUndepCut(charge, isISS, forBackground);
+    bool accunb = AccUndepCut(charge, isISS, forBackground, coe);
     return CutResult<2>({
-        accunb && cutL1Unbiased(charge, isISS).total,
-        accunb && cutL1Norm(charge, isISS).total 
+        accunb && cutL1Unbiased(charge, isISS, false, false, coe).total,
+        accunb && cutL1Norm(charge, isISS, coe).total 
     }, false);
 }
 
-CutResult<14> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const {
-    std::array<bool, 14> cuts; cuts.fill(false);
-    if (!event_) return CutResult<14>(cuts, false);
+CutResult<10> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const {
+    std::array<bool, 10> cuts; cuts.fill(false);
+    if (!event_) return CutResult<10>(cuts, false);
     
     // 1. Base
-    if (!cutPhysTrigger(isISS).total) return CutResult<14>(cuts, false);
-    if (!cutBasicAndFiducial(isISS).total) return CutResult<14>(cuts, false);
-    if (!cutInnerTracker(charge, isISS).total) return CutResult<14>(cuts, false);
+    if (!cutPhysTrigger(isISS).total) return CutResult<10>(cuts, false);
+    if (!cutBasicAndFiducial(isISS).total) return CutResult<10>(cuts, false);
+    if (!cutInnerTracker(charge, isISS).total) return CutResult<10>(cuts, false);
 
     // 2. Variables (Cached)
     auto bg = cutBackground(charge, isISS, false, forBackground);
@@ -356,52 +354,42 @@ CutResult<14> TrackerCut::chargeTempCut(int charge, int fragZ, bool isISS, bool 
     bool L1U_Qual = l1u.details[2] && l1u.details[3];
 
     // 4. Strict
-    double bkg_coe = (charge <= 3) ? 0.4 : (charge==2 ? 0.1 : 0.8); // Fix charge==2 logic order
-    if (charge==2) bkg_coe = 0.1; // Ensure override
+    double bkg_coe = (charge == 2) ? 0.1 : ((charge <= 3) ? 0.4 : 0.6);
 
     auto s_InQ  = cutInnerQ(charge, isISS, false, false, bkg_coe);
     auto s_TOF  = cutUTOFQ(charge, isISS, false, false, bkg_coe);
     auto s_L1N  = cutL1Norm(charge, isISS, bkg_coe);
     auto s_L1U  = cutL1Unbiased(charge, isISS, false, false, bkg_coe);
 
+    // Indices: 0 L1Sig any, 1 L1Sig PassFullSel for BL1, 2 L1Temp, 3 L2Temp, 4 InnerTemp
     // --- Group 1: L1 Signal Study ---
-    double Q_Low  = charge - 0.55;
-    double Q_High = charge + 0.45;
-    // Logic check: cutInnerQ check RMS (details[1])
     bool rms_ok = cutInnerQ(charge, isISS).details[1]; 
 
     if (rms_ok && bg.details[0]) {
-        cuts[1] = L1N_Qual; cuts[0] = L1U_Qual; // Any
-        if (innerQ > Q_Low && innerQ < Q_High) { cuts[3] = L1N_Qual; cuts[2] = L1U_Qual; } // Pass
-        if (innerQ < Q_Low) { cuts[5] = L1N_Qual; cuts[4] = L1U_Qual; } // Frag
+        cuts[0] = L1U_Qual; cuts[1] = L1N_Qual;  // Any
+        if (AccUndepCut(charge, isISS, forBackground, 1.0)) { cuts[2] = L1U_Qual; cuts[3] = L1N_Qual; } // Pass Full TrackerCut except L1 
     }
 
     // --- Group 2: Templates ---
+    // L1 Template
     if (s_InQ.total && s_TOF.details[1] && bg.details[1]) {
-        cuts[7] = L1N_Qual; cuts[6] = L1U_Qual;
+         cuts[4] = L1U_Qual; cuts[5] = L1N_Qual;
     }
 
-    // L2 Template (Cached vars)
+    // L2 Template
     bool L38_ok = std::abs(L38 - charge) < 0.45 * bkg_coe;
     if (status_.hasL2XY && status_.hasL2QStatusGood && L38_ok && s_TOF.details[2] && bg.details[1]) {
-        cuts[9] = s_L1N.total; cuts[8] = s_L1U.total;
-    }
-
-    // --- Group 3: Inner Signal Study ---
-    // InnerSig: L1 selects X (Normal/Unb Q window check manually)
-    if(rms_ok && bg.details[0]){
-        double q_l1_u = status_.L1Q_Unbiased;
-        double q_l1_n = status_.L1Q_Normal;
-        cuts[11] = L1N_Qual && q_l1_n > (charge - 0.2) && q_l1_n < (charge + 0.4);
-        cuts[10] = L1U_Qual && q_l1_u > (charge - 0.2) && q_l1_u < (charge + 0.4);
+        cuts[6] = s_L1U.total; cuts[7] = s_L1N.total; 
     }
 
     // InnerTemp: Pure X
-    if (s_TOF.details[2] && bg.details[1]) {
-        cuts[13] = s_L1N.total; cuts[12] = s_L1U.total;
+    double LowerTOFmeanQ = (event_->tof_ql[2] + event_->tof_ql[3]) * 0.5; 
+    if(event_->tof_ql[2]==0 || event_->tof_ql[3]==0) LowerTOFmeanQ = LowerTOFmeanQ*2;
+    if (rms_ok && cutUTOFQ(charge, isISS, false, false, 0.4).details[1] && LowerTOFmeanQ > charge - 0.5*0.4 && LowerTOFmeanQ < charge + 0.5*0.4 && bg.details[1]) {
+        cuts[8] = cutL1Norm(charge, isISS, 0.4).total; cuts[9] = cutL1Unbiased(charge, isISS, false, false, 0.4).total;
     }
 
-    return CutResult<14>(cuts, false);
+    return CutResult<10>(cuts, false);
 }
 
 // Selector for Fragmentation
@@ -418,15 +406,14 @@ std::array<bool, 2> TrackerCut::FragSampleSel(int charge, int fragZ, int selecto
 
     // 2. Calculate Inner Status Candidates (Sacrifice CPU for Code Size)
     double q = status_.innerQ;
-    double X_lo = charge - 0.55, X_hi = charge + 0.45;
     double Y_lo = fragZ  - 0.55, Y_hi = fragZ  + 0.45;
 
     // [0]Num:TargetY, [1]Den1:Any, [2]Den2:PassX, [3]Den3:Frag
     bool inner_opts[4] = {
-        (q > Y_lo && q < Y_hi),         // 0: X -> Y
-        true,                           // 1: X -> Any (RMS checked)
-        (q > X_lo && q < X_hi),         // 2: X -> X
-        (q < X_lo)          // 3: X -> Frag
+        (q > Y_lo && q < Y_hi),         // 0: X -> Y, cut inner for mass fit
+        true,                           // 1: X -> Any, No inner cut
+        true,         // 2: X -> X, no inner cut
+        true          // 3: X -> Frag, no inner cut
     };
 
     if (!inner_opts[selector & 3]) return pass; // Safety mask & 3
@@ -436,8 +423,8 @@ std::array<bool, 2> TrackerCut::FragSampleSel(int charge, int fragZ, int selecto
     auto l1u = cutL1Unbiased(charge, isISS);
     double q_l1_u = status_.L1Q_Unbiased;
     double q_l1_n = status_.L1Q_Normal;
-    bool L1N_X = l1n.details[2] && l1n.details[3] && l1n.details[4] && q_l1_n > (charge - 0.2) && q_l1_n < (charge + 0.4);
-    bool L1U_X = l1u.details[2] && l1u.details[3] && q_l1_u > (charge - 0.2) && q_l1_u < (charge + 0.4);
+    bool L1N_X = l1n.details[2] && l1n.details[3] && l1n.details[4] && q_l1_n > (charge - 0.25) && q_l1_n < (charge + 0.4);
+    bool L1U_X = l1u.details[2] && l1u.details[3] && q_l1_u > (charge - 0.25) && q_l1_u < (charge + 0.4);
     
     pass[0] = L1U_X; // Unbiased
     pass[1] = L1N_X; // Normal

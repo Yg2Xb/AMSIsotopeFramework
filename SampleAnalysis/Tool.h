@@ -842,5 +842,4 @@ vector<vector<double>> DoGausPlusAsymGausFit(TH1* hist, double xmin, double xmax
     return results;
 }
 
-
 } // namespace AMS_Iso

@@ -22,18 +22,19 @@
      return event_->rich_beta[betaType];  // 直接返回
  }
  
- CutResult<5> RICHCut::cutBasic() const {
-     if (!event_) return CutResult<5>();
+ CutResult<6> RICHCut::cutBasic() const {
+     if (!event_) return CutResult<6>();
  
-     std::array<bool, 5> cuts{
-         event_->rich_good && event_->rich_clean,
-         event_->rich_pb > 0.01,
-         event_->rich_pmt > RICH::cut_pmt[richRegion],
-         (event_->rich_npe[0] / event_->rich_npe[2]) > RICH::cut_per[richRegion],
-         event_->rich_beta[0] > 0
+     std::array<bool, 6> cuts{
+        event_->rich_good && event_->rich_clean,
+        event_->rich_pb > 0.01,
+        event_->rich_pmt > RICH::cut_pmt[richRegion],
+        event_->rich_npe[2] > 0 ? (event_->rich_npe[0] / event_->rich_npe[2]) > RICH::cut_per[richRegion] : false,
+        event_->rich_hit > 0 ? (event_->rich_usedm / event_->rich_hit) < 0.85 : false, 
+        event_->rich_beta[0] > 0
      };
  
-     return CutResult<5>(cuts);
+     return CutResult<6>(cuts);
  }
  
  CutResult<3> RICHCut::cutCharge(int charge) const {

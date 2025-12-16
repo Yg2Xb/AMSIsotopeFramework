@@ -492,9 +492,9 @@ void selectdata::Init(TTree *tree)
    /*
    fChain->SetBranchAddress("physbpatt", &physbpatt, &b_physbpatt);
    fChain->SetBranchAddress("jmembpatt", &jmembpatt, &b_jmembpatt);
-   fChain->SetBranchAddress("physbpatt1", &physbpatt1, &b_physbpatt1);
    fChain->SetBranchAddress("jmembpatt1", &jmembpatt1, &b_jmembpatt1);
    */
+   fChain->SetBranchAddress("physbpatt1", &physbpatt1, &b_physbpatt1);
    fChain->SetBranchAddress("physbpatt2", &physbpatt2, &b_physbpatt2);
    /*
    fChain->SetBranchAddress("jmembpatt2", &jmembpatt2, &b_jmembpatt2);
