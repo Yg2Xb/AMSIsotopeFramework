@@ -88,7 +88,7 @@ TrackerCut& operator=(TrackerCut&&) = default;
                        int span = Tracker::Span::DEFAULT) const;
 
     // --- Basic Cuts ---
-    CutResult<4> cutBasicAndFiducial(bool isISS) const;
+    CutResult<4> cutBasicAndFiducial(bool isISS, bool isUnbiased = false, bool forInTrkEffNum = false) const;
     CutResult<1> cutPhysTrigger(bool isISS) const;
 
     // --- Charge Cuts ---
@@ -106,22 +106,25 @@ TrackerCut& operator=(TrackerCut&&) = default;
 
     // --- Complex Cuts ---
     CutResult<10> cutTracker(int charge, bool isISS = true) const;
-    CutResult<2> cutUnphysical(int charge, bool isISS = true) const;
     CutResult<2> TwoAccTrackerCut(int charge, bool isISS, bool forBackground = false, double coe = 1.) const;
-    CutResult<2> getDenominatorL1PickUp(int charge, bool isISS) const;
     
-    CutResult<10> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const;
+    CutResult<12> chargeTempCut(int charge, int fragZ, bool isISS, bool forBackground) const;
 
     bool AccUndepCut(int charge, bool isISS, bool forBackground = false, double coe = 1.) const;
     bool Q_L1_BkgIndependCut(int charge, bool isISS) const;
-    // Selector for Fragmentation Analysis (Equ1, 2, 3)
-    // selector: 
-    //   0 = Numerator (X -> Y)
-    //   1 = Equ1 Denom (X -> Any)
-    //   2 = Equ2 Denom (X -> X)
-    //   3 = Equ3 Denom (X -> Frag)
-    // Returns: {Unbiased_Result, Normal_Result}
-    std::array<bool, 2> FragSampleSel(int charge, int fragZ, int selector, bool isISS, bool forBackground) const;
+    
+    bool FragSampleSel(int charge, int fragZ, int c, int selector, bool isISS, bool forBackground) const;
+    
+    //eff
+    CutResult<2> getEfficiencyTrigger(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> getEfficiencynAcc(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> getEfficiencyL1QLowLimit(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> getEfficiencyL1PickUp(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> getEfficiencyInnerTracking(int charge, bool isISS) const;
+    CutResult<2> getEfficiencyInnerTrackerQ(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> getEfficiencyUTOFQ(int charge, bool isISS, bool forBackground = false) const;
+    CutResult<2> getEfficiencyBkgReduction(int charge, bool isISS) const;
+    CutResult<2> TwoAccTrackerCut_OneTrk(int charge, bool isISS) const;
 
     // Helpers
     double getRadius(bool isUnphysical, int layer) const;

@@ -239,11 +239,17 @@ double rigidityToKineticEnergy(double rig_gv, int z, double a) {
 }
 
 double kineticEnergyToRigidity(double ek_per_nucleon, int z, double a) {
-    if (ek_per_nucleon < 0.0 || z == 0) return -100000.0;
+    if (ek_per_nucleon < 0.0 || z <= 0 || a <= 0) {
+        return std::numeric_limits<double>::quiet_NaN(); 
+    }
+    double gamma = ek_per_nucleon / MASS_UNIT + 1.0;
+    // 3. 计算 beta * gamma (即 sqrt(gamma^2 - 1))
+    // 对于极低能量，使用 (gamma+1)*(gamma-1) 在数值上更稳定
+    double momentum_factor = std::sqrt((gamma + 1.0) * (gamma - 1.0));
     
-    double factor = (a * MASS_UNIT) / z;
-    double ek_term = ek_per_nucleon / MASS_UNIT + 1;
-    return factor * std::sqrt(ek_term * ek_term - 1);
+    double rigidity = (a * MASS_UNIT / z) * momentum_factor;
+    
+    return rigidity;
 }
 
 double dR_dEk(double ek_per_nucleon, int z, double a) {

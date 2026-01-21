@@ -39,12 +39,12 @@ using namespace std;
 
 const std::string outputDir = "/eos/user/z/zixuan/Isotope/ChargeTemp/";
 const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
-const std::vector<std::string> signal_types = {"L1Sig_Any", "L1Sig_Pass", "L1Sig_Frag"};
+const std::vector<std::string> signal_types = {"L1Sig_Any", "L1Sig_PassLoose", "L1Sig_Pass"};
 
 const std::map<std::string, std::pair<double, double>> detector_ek_ranges = {
-  {"TOF", {0.25, 1.50}},
-  {"NaF", {0.80, 6.10}},
-  {"AGL", {2.50, 22.0}}
+  {"TOF", {0.25, 1.5}},
+  {"NaF", {0.61, 6.10}},
+  {"AGL", {2.50, 23.0}}
 };
 
 struct ElementInfo { int Z; std::string name; };
@@ -256,60 +256,64 @@ UnifiedFitResult UnifiedChargeFitter::calculateAllYields(const std::string& sour
         if (frac_param->IsA()->InheritsFrom(RooRealVar::Class())) {
             err_F_A = ((RooRealVar*)frac_param)->getError();
         } else if (lastFraction_ && lastFraction_.get() == frac_param) {
-            err_F_A = 0.0; 
+            double sum_err_sq = 0;
+            for(const auto& p : fractionParams_) sum_err_sq += pow(p->getError(), 2);
+            err_F_A = sqrt(sum_err_sq); 
         }
         res.fit_fractions_err[el] = err_F_A;
     }
 
-    int Z_window = element_db_by_name.at(sourceName);
-    double narrowMin = Z_window - 0.2;
-    double narrowMax = Z_window + 0.4;
-    
-    if (narrowMax >= fitMin_ && narrowMin <= fitMax_) {
-        std::string range_name = "narrow_range_" + sourceName;
-        charge_->setRange(range_name.c_str(), narrowMin, narrowMax);
+    if (element_db_by_name.count(sourceName)) {
+        int Z_window = element_db_by_name.at(sourceName);
+        double narrowMin = Z_window - 0.2;
+        double narrowMax = Z_window + 0.4;
+        
+        if (narrowMax >= fitMin_ && narrowMin <= fitMax_) {
+            std::string range_name = "narrow_range_" + sourceName;
+            charge_->setRange(range_name.c_str(), narrowMin, narrowMax);
 
-        int bin_low = h_signal_extended_->GetXaxis()->FindBin(narrowMin);
-        int bin_high = h_signal_extended_->GetXaxis()->FindBin(narrowMax);
-        double N_sig_window = h_signal_extended_->Integral(bin_low, bin_high);
-        double err_N_sig_window = (N_sig_window > 0) ? sqrt(N_sig_window) : 0.0;
+            int bin_low = h_signal_extended_->GetXaxis()->FindBin(narrowMin);
+            int bin_high = h_signal_extended_->GetXaxis()->FindBin(narrowMax);
+            double N_sig_window = h_signal_extended_->Integral(bin_low, bin_high);
+            double err_N_sig_window = (N_sig_window > 0) ? sqrt(N_sig_window) : 0.0;
 
-        auto integral_R_total_obj = std::unique_ptr<RooAbsReal>(total_pdf_->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
-        double R_total_window = integral_R_total_obj->getVal();
-        double err_R_total_window = 0.0; 
+            auto integral_R_total_obj = std::unique_ptr<RooAbsReal>(total_pdf_->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
+            double R_total_window = integral_R_total_obj->getVal();
+            double err_R_total_window = 0.0; 
 
-        if (R_total_window > 1e-9) {
-            for (const auto& component_el : templateElements_) { 
-                double F_A = res.fit_fractions.at(component_el);
-                double err_F_A = res.fit_fractions_err.at(component_el);
+            if (R_total_window > 1e-9) {
+                for (const auto& component_el : templateElements_) { 
+                    double F_A = res.fit_fractions.at(component_el);
+                    double err_F_A = res.fit_fractions_err.at(component_el);
 
-                auto integral_R_A_obj = std::unique_ptr<RooAbsReal>(template_pdfs_.at(component_el)->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
-                double R_A = integral_R_A_obj->getVal();
-                
-                const auto& h_template = h_templates_extended_.at(component_el);
-                double N_template_total = h_template->Integral();
-                double k_template_narrow = h_template->Integral(h_template->GetXaxis()->FindBin(narrowMin), h_template->GetXaxis()->FindBin(narrowMax));
-                double R_A_for_err = (N_template_total > 0) ? k_template_narrow / N_template_total : 0.0;
-                double err_R_A = (N_template_total > 0) ? sqrt(std::max(0.0, R_A_for_err * (1.0 - R_A_for_err) / N_template_total)) : 0.0;
+                    auto integral_R_A_obj = std::unique_ptr<RooAbsReal>(template_pdfs_.at(component_el)->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
+                    double R_A = integral_R_A_obj->getVal();
+                    
+                    const auto& h_template = h_templates_extended_.at(component_el);
+                    double N_template_total = h_template->Integral();
+                    double k_template_narrow = h_template->Integral(h_template->GetXaxis()->FindBin(narrowMin), h_template->GetXaxis()->FindBin(narrowMax));
+                    double R_A_for_err = (N_template_total > 0) ? k_template_narrow / N_template_total : 0.0;
+                    double err_R_A = (N_template_total > 0) ? sqrt(std::max(0.0, R_A_for_err * (1.0 - R_A_for_err) / N_template_total)) : 0.0;
 
-                double P_A_window = F_A * R_A / R_total_window;
-                double rel_err_sq_P_A = 0.0;
-                if (F_A > 0) rel_err_sq_P_A += pow(err_F_A / F_A, 2);
-                if (R_A > 0) rel_err_sq_P_A += pow(err_R_A / R_A, 2);
-                if (R_total_window > 0) rel_err_sq_P_A += pow(err_R_total_window / R_total_window, 2);
-                double err_P_A_window = P_A_window * sqrt(rel_err_sq_P_A);
+                    double P_A_window = F_A * R_A / R_total_window;
+                    double rel_err_sq_P_A = 0.0;
+                    if (F_A > 0) rel_err_sq_P_A += pow(err_F_A / F_A, 2);
+                    if (R_A > 0) rel_err_sq_P_A += pow(err_R_A / R_A, 2);
+                    if (R_total_window > 0) rel_err_sq_P_A += pow(err_R_total_window / R_total_window, 2);
+                    double err_P_A_window = P_A_window * sqrt(rel_err_sq_P_A);
 
-                res.fraction_in_source_window[component_el] = P_A_window;
-                res.fraction_in_source_window_err[component_el] = err_P_A_window;
+                    res.fraction_in_source_window[component_el] = P_A_window;
+                    res.fraction_in_source_window_err[component_el] = err_P_A_window;
 
-                double Yield_A = N_sig_window * P_A_window;
-                double rel_err_sq_Yield_A = 0.0;
-                if (N_sig_window > 0) rel_err_sq_Yield_A += pow(err_N_sig_window / N_sig_window, 2);
-                if (P_A_window > 0) rel_err_sq_Yield_A += pow(err_P_A_window / P_A_window, 2);
-                double err_Yield_A = Yield_A * sqrt(rel_err_sq_Yield_A);
+                    double Yield_A = N_sig_window * P_A_window;
+                    double rel_err_sq_Yield_A = 0.0;
+                    if (N_sig_window > 0) rel_err_sq_Yield_A += pow(err_N_sig_window / N_sig_window, 2);
+                    if (P_A_window > 0) rel_err_sq_Yield_A += pow(err_P_A_window / P_A_window, 2);
+                    double err_Yield_A = Yield_A * sqrt(rel_err_sq_Yield_A);
 
-                res.yield_in_source_window[component_el] = Yield_A;
-                res.yield_in_source_window_err[component_el] = err_Yield_A;
+                    res.yield_in_source_window[component_el] = Yield_A;
+                    res.yield_in_source_window_err[component_el] = err_Yield_A;
+                }
             }
         }
     }
@@ -329,7 +333,7 @@ std::unique_ptr<RooPlot> UnifiedChargeFitter::generatePlotAndCalcChi2(UnifiedFit
     data_hist_->plotOn(frame.get(), Name("data_hist"), MarkerStyle(20), MarkerSize(0.8));
     total_pdf_->plotOn(frame.get(), Name("total_pdf"), LineColor(kRed), LineWidth(2));
     
-    std::vector<int> colors = {kBrown, kBlue, kOrange - 3, kGreen + 2, kAzure + 7, kMagenta, kCyan + 2}; 
+    std::vector<int> colors = {28, kBlue, kOrange - 3, kGreen + 2, kAzure + 7, kMagenta, kCyan + 2}; 
     for (size_t i = 0; i < templateElements_.size(); ++i) { 
         total_pdf_->plotOn(frame.get(), Components(*template_pdfs_.at(templateElements_[i])), Name(Form("comp_%s", templateElements_[i].c_str())), LineColor(colors[i % colors.size()]), LineWidth(2));
     }
@@ -347,36 +351,30 @@ std::unique_ptr<RooPlot> UnifiedChargeFitter::generatePlotAndCalcChi2(UnifiedFit
 }
 
 void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode, const std::string& SourceNuc) {
-    std::string signalInputFileName = "/eos/ams/group/ihep/zixuan/filter/basic_L1Q2p5to8p8.root";
+    std::string signalInputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_withBkg_bkgest.root";
     auto signalFile = std::unique_ptr<TFile>(TFile::Open(signalInputFileName.c_str()));      
-    if (!signalFile || signalFile->IsZombie()) {      
-        return;      
-    }
-    
-    std::string templateInputFileName = "/eos/user/z/zixuan/Isotope/PureChargeTemp/PureChargeTemplates_UnbiasedL1Inner.root";
-    auto templateFile = std::unique_ptr<TFile>(TFile::Open(templateInputFileName.c_str()));      
-    if (!templateFile || templateFile->IsZombie()) {      
-        return;      
-    }
+    if (!signalFile || signalFile->IsZombie()) { return; }
 
-    std::string pdf_filename = outputDir + mode + "QFit_" + SourceNuc + "ToBeryllium_" + chain + ".pdf";
-    std::string root_filename = outputDir + mode + "QFit_" + SourceNuc + "ToBeryllium_" + chain + ".root";
-    auto c_pdf = std::make_unique<TCanvas>("c_pdf", "PDF Canvas", 800, 600);
+    std::string templateInputFileName = Form("/eos/user/z/zixuan/Isotope/PureChargeTemp/withBkg_PureChargeTemplates_%s.root", chain.c_str());
+    auto templateFile = std::unique_ptr<TFile>(TFile::Open(templateInputFileName.c_str()));      
+    if (!templateFile || templateFile->IsZombie()) { return; }
+
+    std::string pdf_filename = outputDir + "withBkg_" + mode + "QFit_" + SourceNuc + "ToBeryllium_" + chain + ".frag.pdf";
+    std::string root_filename = outputDir + "withBkg_" + mode + "QFit_" + SourceNuc + "ToBeryllium_" + chain + ".frag.root";
+    
+    TCanvas* c_pdf = new TCanvas("c_pdf", "PDF Canvas", 800, 600);
     c_pdf->Print((pdf_filename + "[").c_str());
     auto outputFile = std::make_unique<TFile>(root_filename.c_str(), "RECREATE");
 
     for (const auto& detector : detectors) {
         const std::vector<std::string> required_elements = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"}; 
-
         std::map<std::string, std::unique_ptr<TH2F>> templates_rebinned;
         bool all_templates_found = true;
         for (const auto& el : required_elements) {
-            std::string templateHistName = Form("h2d_%sQTemp_%s_%s", mode.c_str(), el.c_str(), detector.c_str());
+            std::string useMode = (el == "Helium" || el == "Oxygen") ? "Pure" : mode;
+            std::string templateHistName = Form("h2d_%sQTemp_%s_%s", useMode.c_str(), el.c_str(), detector.c_str());
             TH2F* h_template_raw = (TH2F*)templateFile->Get(templateHistName.c_str());
-            if (!h_template_raw) {      
-                all_templates_found = false;      
-                break;      
-            }
+            if (!h_template_raw) { all_templates_found = false; break; }
             templates_rebinned[el] = std::unique_ptr<TH2F>((TH2F*)h_template_raw->Clone(Form("%s_rebinned", templateHistName.c_str())));
             templates_rebinned[el]->RebinX(1); 
             if(mode == "Tune") templates_rebinned[el]->Smooth(1,"G"); 
@@ -384,11 +382,9 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
         if (!all_templates_found) { continue; }
 
         for (const auto& sigType : signal_types) {
-            std::string signalHistName = chain + "_BKG_H4_" + SourceNuc + "_" + sigType + "_" + detector;
+            std::string signalHistName = chain + "_BKG_H4_" + "Beryllium" + "_" + sigType + "_" + detector;
             TH2F* h_signal_raw = (TH2F*)signalFile->Get(signalHistName.c_str());
-            if (!h_signal_raw) {      
-                continue;      
-            }
+            if (!h_signal_raw) { continue; }
             auto h_signal_rebinned = std::unique_ptr<TH2F>((TH2F*)h_signal_raw->Clone(Form("%s_rebinned", signalHistName.c_str())));
             h_signal_rebinned->RebinX(2);
 
@@ -396,17 +392,11 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
             const TAxis* y_axis = h_signal_rebinned->GetYaxis();
             auto h_chi2ndf = std::make_unique<TH1D>(Form("h_chi2ndf_%s_%s_%s", detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
             
-            std::map<std::string, std::unique_ptr<TH1D>> h_fitfracs;
+            std::map<std::string, std::unique_ptr<TH1D>> h_window_yields;
             for (const auto& el : required_elements) {
-                h_fitfracs[el] = std::make_unique<TH1D>(Form("h_fitfrac_%s_%s_%s_%s", el.c_str(), detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
+                h_window_yields[el] = std::make_unique<TH1D>(Form("h_yield_in_%s_window_from_%s_%s_%s_%s", SourceNuc.c_str(), el.c_str(), detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
             }
 
-            std::map<std::string, std::unique_ptr<TH1D>> h_yields, h_fracs_in_window;
-            for (const auto& comp_el : required_elements) {
-                h_yields[comp_el] = std::make_unique<TH1D>(Form("h_yield_in_%s_from_%s_%s_%s_%s", SourceNuc.c_str(), comp_el.c_str(), detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
-                h_fracs_in_window[comp_el] = std::make_unique<TH1D>(Form("h_frac_in_%s_from_%s_%s_%s_%s", SourceNuc.c_str(), comp_el.c_str(), detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
-            }
-            
             for (int y_bin = 1; y_bin <= n_bins_y; ++y_bin) {
                 double ek_center = y_axis->GetBinCenter(y_bin);
                 double ek_low = y_axis->GetBinLowEdge(y_bin);
@@ -416,134 +406,88 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
                 std::map<std::string, TH2F*> templates_raw_ptr;
                 for(auto const& [key, val] : templates_rebinned) templates_raw_ptr[key] = val.get();
                 
-                double fitMinVal = 2.5;
-                double fitMaxVal = 8.5;
+                double fitMinVal = 2.6; double fitMaxVal = 8.5;
                 std::vector<std::string> current_templates;
-
                 int Z_source = element_db_by_name.at(SourceNuc);
 
-                if (sigType == "L1Sig_Pass") {
-                    fitMinVal = Z_source - 1.4;
-                    fitMaxVal = std::min(8.5, Z_source + 1.4);
-                    for (int z = Z_source - 1; z <= Z_source + 1; ++z) {
-                        if (element_db_by_z.count(z)) {
-                            std::string name = element_db_by_z.at(z).name;
-                            if (std::find(required_elements.begin(), required_elements.end(), name) != required_elements.end()) {
-                                current_templates.push_back(name);
-                            }
-                        }
-                    }
-                } else if (sigType == "L1Sig_Frag") {
-                    fitMinVal = 2.5;
-                    fitMaxVal = Z_source + 0.4;
-                    for (const auto& el : required_elements) {
-                        if (element_db_by_name.at(el) < fitMaxVal) {
-                            current_templates.push_back(el);
-                        }
-                    }
+                if (sigType == "L1Sig_Any") {
+                    fitMinVal = 2.6; fitMaxVal = 8.5;
+                    current_templates = required_elements;
                 } else {
-                    fitMinVal = 2.5;
-                    fitMaxVal = 8.5;
-                    for (const auto& el : required_elements) {
-                        if (element_db_by_name.at(el) < fitMaxVal) {
-                            current_templates.push_back(el);
-                        }
+                    fitMinVal = Z_source - 1.6; fitMaxVal = std::min(8.5, Z_source + 1.6);
+                    for (int z = Z_source - 1; z <= Z_source + 1; ++z) {
+                        if (element_db_by_z.count(z)) current_templates.push_back(element_db_by_z.at(z).name);
                     }
                 }
 
                 if (current_templates.empty()) continue;
 
                 UnifiedChargeFitter fitter(chain, detector, y_bin, h_signal_rebinned.get(), templates_raw_ptr, fitMinVal, fitMaxVal, current_templates, SourceNuc);
-                if (!fitter.initializeAndProject()) {      
-                    continue;      
-                }
-                
-                if (!fitter.runFit()) {      
-                }
+                if (!fitter.initializeAndProject()) continue;
+                fitter.runFit();
                 
                 UnifiedFitResult result = fitter.calculateAllYields(SourceNuc);
                 result.ekpernuc_center = ek_center;
                 result.ekpernuc_low = ek_low;      
                 result.ekpernuc_up = y_axis->GetBinUpEdge(y_bin);
-                result.ekpernuc_width = y_axis->GetBinWidth(y_bin);
                 auto frame = fitter.generatePlotAndCalcChi2(result);
 
                 h_chi2ndf->SetBinContent(y_bin, result.chi2ndf);
                 for (const auto& el : current_templates) { 
-                    h_fitfracs.at(el)->SetBinContent(y_bin, result.fit_fractions[el]);
-                    h_fitfracs.at(el)->SetBinError(y_bin, result.fit_fractions_err[el]);
-                    
                     if (result.yield_in_source_window.count(el)) {
-                        h_yields.at(el)->SetBinContent(y_bin, result.yield_in_source_window[el]);
-                        h_yields.at(el)->SetBinError(y_bin, result.yield_in_source_window_err[el]);
-                        h_fracs_in_window.at(el)->SetBinContent(y_bin, result.fraction_in_source_window[el]);
-                        h_fracs_in_window.at(el)->SetBinError(y_bin, result.fraction_in_source_window_err[el]);
+                        h_window_yields.at(el)->SetBinContent(y_bin, result.yield_in_source_window[el]);
+                        h_window_yields.at(el)->SetBinError(y_bin, result.yield_in_source_window_err[el]);
                     }
                 }
                 
                 c_pdf->Clear();
                 c_pdf->Divide(1, 2);
                 TPad* pad1 = (TPad*)c_pdf->cd(1);
-                pad1->SetPad(0, 0.3, 1, 1); 
-                pad1->SetLogy(); 
-                pad1->SetBottomMargin(0.02);
+                pad1->SetPad(0, 0.3, 1, 1); pad1->SetLogy(); pad1->SetBottomMargin(0.02);
                 
                 frame->SetTitle(Form("%s %s %sFit (E_{k}=%.2f-%.2f GeV/n)", detector.c_str(), sigType.c_str(), mode.c_str(), result.ekpernuc_low, result.ekpernuc_up));
                 frame->GetYaxis()->SetTitle("Events"); frame->GetXaxis()->SetLabelSize(0);
-                
                 frame->SetMinimum(20); 
-                auto hmax = h_signal_rebinned.get()->ProjectionX(Form("hmax%d", y_bin), y_bin, y_bin);
-                double ymax = (sigType == "L1Sig_Pass") ? hmax->GetMaximum() : hmax->GetBinContent(hmax->FindBin(2.6));
+                auto hproj = std::unique_ptr<TH1D>(h_signal_rebinned->ProjectionX(Form("hproj_%d", y_bin), y_bin, y_bin));
+                double ymax = (sigType != "L1Sig_Any") ? hproj->GetMaximum() : hproj->GetBinContent(hproj->FindBin(2.6));
                 frame->SetMaximum(5 * ymax); 
                 frame->Draw();
 
-                auto legend = std::make_unique<TLegend>(0.75, 0.55, 0.93, 0.88); 
+                TLegend* legend = new TLegend(0.75, 0.55, 0.93, 0.88); 
                 legend->SetFillStyle(0); legend->SetBorderSize(0); legend->SetTextSize(0.03);
-                legend->AddEntry("data_hist", "Data", "pe");
-                legend->AddEntry("total_pdf", "Total Fit", "l");
-                for (const auto& el : fitter.getTemplateElements()) { 
-                    legend->AddEntry(Form("comp_%s", el.c_str()), el.c_str(), "l");
+                legend->AddEntry(frame->findObject("data_hist"), "Data", "pe");
+                legend->AddEntry(frame->findObject("total_pdf"), "Total Fit", "l");
+                for (const auto& el : fitter.getTemplateElements()) {
+                    legend->AddEntry(frame->findObject(Form("comp_%s", el.c_str())), el.c_str(), "l");
                 }
                 legend->Draw(); 
 
-                auto info = std::make_unique<TPaveText>(0.15, 0.50, 0.45, 0.87, "NDC"); 
-                info->SetFillStyle(0); info->SetBorderSize(0); info->SetTextAlign(12);
-                info->SetTextSize(0.03);
-                
-                double rawChi2 = result.chi2ndf * result.ndf;
-                info->AddText(Form("#chi^{2}/ndf = %.1f/%d = %.2f", rawChi2, result.ndf, result.chi2ndf));
-                
-                double wMin = Z_source - 0.2;
-                double wMax = Z_source + 0.4;
-                info->AddText(Form("in L1Q [%.1f, %.1f]:", wMin, wMax));
+                TPaveText* info = new TPaveText(0.14, 0.48, 0.5, 0.88, "NDC"); 
+                info->SetFillStyle(0); info->SetBorderSize(0); info->SetTextAlign(12); info->SetTextSize(0.03);
+                info->AddText(Form("#chi^{2}/ndf = %.1f/%d = %.2f", result.chi2ndf * result.ndf, result.ndf, result.chi2ndf));
+                info->AddText("Nuclei Fractions:");
                 for (const auto& el : current_templates) {
-                    if (result.yield_in_source_window.count(el)) {
-                        double yld = result.yield_in_source_window[el];
-                        double err = result.yield_in_source_window_err[el];
-                        info->AddText(Form("%s: %.1f #pm %.1f", el.c_str(), yld, err));
-                    }
+                    info->AddText(Form("  %s: %.4f#pm%.4f", el.c_str(), result.fit_fractions[el], result.fit_fractions_err[el]));
                 }
                 info->Draw();
                 
                 TPad* pad2 = (TPad*)c_pdf->cd(2);
                 pad2->SetPad(0, 0, 1, 0.3); pad2->SetTopMargin(0.02); pad2->SetBottomMargin(0.3); pad2->SetGridy();
-                auto pullGraph = std::make_unique<TGraphErrors>();
-                calculatePull(frame.get(), pullGraph.get(), frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
-                setupPullPlot(pullGraph.get(), frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
+                TGraphErrors* pullGraph = new TGraphErrors();
+                calculatePull(frame.get(), pullGraph, frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
+                setupPullPlot(pullGraph, frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
                 pullGraph->Draw("AP");
                 TLine zeroLine(frame->GetXaxis()->GetXmin(), 0, frame->GetXaxis()->GetXmax(), 0);
                 zeroLine.SetLineStyle(2); zeroLine.SetLineColor(kGray + 1);
                 zeroLine.Draw("SAME");
+                
+                c_pdf->Update();
                 c_pdf->Print(pdf_filename.c_str());
             }
             
             outputFile->cd();
             h_chi2ndf->Write();
-            for (const auto& el : required_elements) {
-                h_fitfracs.at(el)->Write();
-                h_yields.at(el)->Write();
-                h_fracs_in_window.at(el)->Write();
-            }
+            for (auto& pair : h_window_yields) pair.second->Write();
         }
     }
     c_pdf->Print((pdf_filename + "]").c_str());
@@ -553,12 +497,15 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
 void ChargeTempFit() {
     gROOT->SetBatch(kTRUE);
     gStyle->SetOptStat(0);
-    gStyle->SetPadTickX(1);
-    gStyle->SetPadTickY(1);
+    gStyle->SetPadTickX(1); gStyle->SetPadTickY(1);
     RooMsgService::instance().setGlobalKillBelow(RooFit::ERROR);
     
     runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Boron");
     runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Carbon");
     runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Nitrogen");
     runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Oxygen");
+    runUnifiedChargeAnalysis("L1Inner", "Pure", "Boron");
+    runUnifiedChargeAnalysis("L1Inner", "Pure", "Carbon");
+    runUnifiedChargeAnalysis("L1Inner", "Pure", "Nitrogen");
+    runUnifiedChargeAnalysis("L1Inner", "Pure", "Oxygen");
 }

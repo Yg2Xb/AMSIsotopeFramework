@@ -420,7 +420,7 @@ void RunAnalysis(TString chain, const AnalysisConfig& cfg) {
     std::cout << "[INFO] Starting Analysis for " << cfg.source << " -> " << cfg.fragment << std::endl;
 
     TString pL1 = TString::Format("/eos/user/z/zixuan/Isotope/ChargeTemp/PureQFit_%sTo%s_UnbiasedL1Inner.root", cfg.source.c_str(), cfg.fragment.c_str());
-    TString pCnt = TString::Format("/eos/user/z/zixuan/Isotope/Add/%s.root", cfg.fragFileID.c_str());
+    TString pCnt = TString::Format("/eos/user/z/zixuan/Isotope/Add_new/%s_notune.root", cfg.fragFileID.c_str());
     TString pOut = TString::Format("/eos/user/z/zixuan/Isotope/BkgValid/%s_to_%s_%s_Validation.root", cfg.source.c_str(), cfg.fragment.c_str(), chain.Data());
     
     TFile* fL1 = TFile::Open(pL1);

@@ -27,7 +27,7 @@ using namespace AMS_Iso;
 void buildCDFLookupTables(const std::string& nucleusName = "Beryllium");
 
 // 全局常量
-const double qmin_global = 1.5, qmax_global = 8.5;
+const double qmin_global = 1.5, qmax_global = 9.5;
 
 // EGE 参数列表 (不再包含 LG)
 const std::vector<std::pair<std::string, int>> EGE_PARAM_LIST = {
@@ -46,12 +46,12 @@ const std::vector<std::string> TEMPLATES = {"L1Template", "L2Template"};
 
 // 探测器能量范围
 const std::map<std::string, std::pair<double, double>> DETECTOR_RANGES = {
-    {"TOF", {0.3, 1.28}}, {"NaF", {0.71, 5.1}}, {"AGL", {2.8, 20.0}}
+    {"TOF", {0.25, 1.28}}, {"NaF", {0.71, 6.10}}, {"AGL", {2.70, 22.0}}
 };
 
 // 安全外推范围
 const std::map<std::string, std::pair<double, double>> SAFE_DETECTOR_RANGES = {
-    {"TOF", {0.33, 1.26}}, {"NaF", {0.75, 5.4}}, {"AGL", {2.95, 19.9}}
+    {"TOF", {0.3, 1.26}}, {"NaF", {0.75, 5.6}}, {"AGL", {2.95, 19.9}}
 };
 
 // 参数限制 (已移除 Width 和 Sigma，只保留 EGE 相关)
@@ -200,11 +200,11 @@ void buildCDFLookupTables(const std::string& nucleusName) {
     const time_t start_time = time(nullptr);
     std::cout << "Starting performance monitoring..." << std::endl;
 
-    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_iter0.root";
-    const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/CDFLookupTable_fromSpline_" + nucleusName + ".root";
+    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter1.root";
+    const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/withBkg_CDFLookupTable_fromSpline_" + nucleusName + ".root";
     
     // 读取 Binning 信息 (保持原样)
-    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_HeToOxy_iter1.root";
+    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter0.root";
     const std::string binningHistName = "UnbiasedL1Inner_Helium_AGL_L1Template_EGE_Peak";
     std::vector<double> energyBins;
     auto finBinning = std::unique_ptr<TFile>(TFile::Open(binningFileName.c_str()));
@@ -236,8 +236,8 @@ void buildCDFLookupTables(const std::string& nucleusName) {
                 double ekCenter = (energyBins[iy] + energyBins[iy+1]) / 2.0;
 
                 // 简单的能量切割
-                if ((det == "TOF" && (ekCenter < 0.3 || ekCenter > 1.5)) ||
-                    (det == "NaF" && (ekCenter < 0.6 || ekCenter > 6.0)) ||
+                if ((det == "TOF" && (ekCenter < 0.25 || ekCenter > 1.5)) ||
+                    (det == "NaF" && (ekCenter < 0.6 || ekCenter > 6.1)) ||
                     (det == "AGL" && (ekCenter < 2.5 || ekCenter > 22.0))) continue;
                 
                 printf("--> Processing Bin %zu (Ek_low = %.4f, Ek_center = %.4f)\n", iy, ekLow, ekCenter);

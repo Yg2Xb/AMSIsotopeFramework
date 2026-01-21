@@ -82,20 +82,20 @@ public:
     // MC source dim is 1, ISS source dim is sources.size()
     std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1a; // Equ1 Denom
     std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1b; // Equ2 Denom
+    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1b2; // Equ2 Denom
     std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1c; // Equ3 Denom
 
     // ---- H2 Series: frag corr num samples ----
     
-    // H2a: Fragment to Element Y counts
-    // Dimensions: [chain][source][det]
-    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H2a; 
-
     // H2b: Mass distribution (1/Mass vs Ek) for fitting
     // Dimensions: [chain][source][det]
     std::vector<std::vector<std::vector<H2Ptr>>> BKG_H2b;
+    // H2b: Mass distribution (1/Mass vs Ek) for fitting with L1Q window cut and standard selection except L1Q
+    std::vector<std::vector<std::vector<H2Ptr>>> BKG_H2b2;
 
     // H2a2: MC Unique - Fragment Isotope Counts
     // Dimensions: [chain][det][iso] (Counts of specific isotopes from MC truth)
+    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H2a; 
     std::vector<std::vector<std::vector<H1Ptr>>> BKG_H2a2;
 
     // ---- H3 Series: Background Estimation (MC Only) ----
@@ -114,15 +114,16 @@ public:
     // ======= FLUX AREA ===========
     // ==========================================
 
-    // FLUXH1: Efficiency samples (Equ4)
-    // Dimensions: [chain][cut_group][num_den][det][iso]
-    std::vector<std::vector<std::vector<std::vector<std::vector<H1Ptr>>>>> FLUXH1; 
+    // FLUXH1: Efficiency samples 
+    // Dimensions: [cut_group][num_den][det][iz]
+    std::vector<std::vector<std::vector<std::vector<H1Ptr>>>> FLUXH1; 
 
     // ISS Flux Aux
     std::vector<H1Ptr> ISS_FLUXH2; // rig expoT
     std::vector<std::vector<H1Ptr>> ISS_FLUXH3; // ek expoT [det][iso]
     //old bt check
     std::vector<H2Ptr> ISS_FLUXH4; // Generated counts
+    std::vector<H2Ptr> ISS_FLUXH5; // cutoff rig vs measure rig
 
     // MC Flux Aux
     //std::vector<std::vector<std::vector<std::vector<H1Ptr>>>> MC_FLUXH2; // [chain][cut][det][gen/rec]

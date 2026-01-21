@@ -56,7 +56,7 @@ void HistTempFit_hist();
 
 // Defines the properties for each element available for fitting
 const char* DetName[] = {"TOF", "NaF", "AGL"};
-const double DetRanges[3][2] = {{0.25, 1.5}, {0.8, 6.1}, {2.5, 22.0}};
+const double DetRanges[3][2] = {{0.25, 1.5}, {0.61, 6.10}, {2.50, 23.0}};
 
 const std::map<std::string, IsotopeConfig> IsoFitConstants::configs = {
     {"Li", {"Li", 3, {6, 7}, {0.5}, 

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # 定义日志和输出文件所在的目录
-LOG_DIR="/afs/cern.ch/work/z/zixuan/logISS"
+#LOG_DIR="/afs/cern.ch/work/z/zuhao/public/yanzx/log9/"
+LOG_DIR="/afs/cern.ch/work/z/zixuan/logISS/"
 
 # 定义用于存储错误作业列表的输出文件路径 
 ERR_JOB_LIST="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/joblist/list_jobs_err2.txt"
@@ -54,7 +55,7 @@ if [ -z "$BATCH_NAMES" ]; then
 fi
 
 # 2. 对每一个批次名进行检查
-EXPECTED_COUNT=2676 # 0 到 2676 共有 2677 个文件
+EXPECTED_COUNT=2869 # 0 到 2869 共有 2870 个文件
 
 for BATCH_NAME in $BATCH_NAMES; do
     
@@ -71,8 +72,8 @@ for BATCH_NAME in $BATCH_NAMES; do
     # 存储所有需要重新提交的 Process ID (无论是缺失还是失败)
     RESUBMIT_PIDS="" 
     
-    # 检查 0 到 2676 的每个文件
-    for i in $(seq 0 2676); do
+    # 检查 0 到 2869 的每个文件
+    for i in $(seq 0 2869); do
         FILE_NAME="$LOG_DIR/output_${BATCH_NAME}.${i}"
         
         # 检查文件是否存在
@@ -97,7 +98,7 @@ for BATCH_NAME in $BATCH_NAMES; do
     echo "--- 完整性检查报告 ---"
     
     if [ -z "$MISSING_IDS" ]; then
-        echo "文件完整性: 成功。从 0 到 2676 (共 $EXPECTED_COUNT 个文件) 全部存在且连续。"
+        echo "文件完整性: 成功。从 0 到 2869 (共 $EXPECTED_COUNT 个文件) 全部存在且连续。"
     else
         echo "文件完整性: 失败。缺少以下 ID 的文件: $MISSING_IDS"
     fi

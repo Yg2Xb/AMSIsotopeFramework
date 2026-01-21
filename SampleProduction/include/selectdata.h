@@ -129,6 +129,11 @@ public :
    Float_t         tk_exqln[2][2][3];
    Int_t           tk_exqls[2];
    Float_t         tk_exdis[2];
+   Float_t         tk_exqvn[2][2];
+   Float_t         tk_l1qxy[2];
+   Int_t           ibetahs;
+   Int_t           itrdtracks;
+   Float_t         betahs;
    Float_t         tk_res[9][2];
    Float_t         tk_fzm[2];
    Float_t         tk_rigidity1[3][3][7];
@@ -136,6 +141,7 @@ public :
    Float_t         tk_chis1[3][3][7][3];
    Float_t         tk_dir0[3][3][4];
    Float_t         tk_pos[9][3];
+   Float_t         tk_pos1s[9][3];
    Float_t         tk_dir[9][3];
    Int_t           tof_btype;
    Int_t           tof_bpatt;
@@ -157,6 +163,9 @@ public :
    Float_t         tof_q[2];
    Float_t         tof_qrms[2];
    Float_t         tof_ql[4];
+   Float_t         tof_chiscs;
+   Float_t         tof_chists;
+   Float_t         tof_qls[4];
    Float_t         tof_ql1[4];
    Int_t           tof_qs;
    Int_t           rich_itrtrack;
@@ -191,6 +200,7 @@ public :
    Int_t           rich_rz;
    Float_t         rich_rq;
    Float_t         rich_rpz;
+   Int_t           anti_nhit;
    Int_t           itrtracks;
    Int_t           tk_hitbs[2];
    Int_t           tk_ibetahs;
@@ -310,6 +320,10 @@ public :
    TBranch        *b_tk_exqln;   //!
    TBranch        *b_tk_exqls;   //!
    TBranch        *b_tk_exdis;   //!
+   TBranch        *b_tk_exqvn;   //!
+   TBranch        *b_ibetahs;   //!
+   TBranch        *b_itrdtracks;   //!
+   TBranch        *b_betahs;   //!
    TBranch        *b_tk_res;   //!
    TBranch        *b_tk_fzm;   //!
    TBranch        *b_tk_rigidity1;   //!
@@ -317,7 +331,9 @@ public :
    TBranch        *b_tk_chis1;   //!
    TBranch        *b_tk_dir0;   //!
    TBranch        *b_tk_pos;   //!
+   TBranch        *b_tk_pos1s;   //!
    TBranch        *b_tk_dir;   //!
+   TBranch        *b_tk_l1qxy;   //!
    TBranch        *b_tof_btype;   //!
    TBranch        *b_tof_bpatt;   //!
    TBranch        *b_tof_beta;   //!
@@ -338,6 +354,9 @@ public :
    TBranch        *b_tof_q;   //!
    TBranch        *b_tof_qrms;   //!
    TBranch        *b_tof_ql;   //!
+   TBranch        *b_tof_chiscs;   //!
+   TBranch        *b_tof_chists;   //!
+   TBranch        *b_tof_qls;   //!
    TBranch        *b_tof_ql1;   //!
    TBranch        *b_tof_qs;   //!
    TBranch        *b_rich_itrtrack;   //!
@@ -373,6 +392,7 @@ public :
    TBranch        *b_rich_rq;   //!
    TBranch        *b_rich_rpz;   //!
    TBranch        *b_itrtracks;   //!
+   TBranch        *b_anti_nhit;   //!
    TBranch        *b_tk_hitbs;   //!
    TBranch        *b_tk_ibetahs;   //!
    TBranch        *b_tk_betahs;   //!
@@ -499,9 +519,9 @@ void selectdata::Init(TTree *tree)
    /*
    fChain->SetBranchAddress("jmembpatt2", &jmembpatt2, &b_jmembpatt2);
    fChain->SetBranchAddress("ecalflag", &ecalflag, &b_ecalflag);
+   */
    fChain->SetBranchAddress("tofflag", tofflag, &b_tofflag);
    fChain->SetBranchAddress("antipatt", &antipatt, &b_antipatt);
-   */
    fChain->SetBranchAddress("irti", &irti, &b_irti);
    fChain->SetBranchAddress("zenith", &zenith, &b_zenith);
    //fChain->SetBranchAddress("glong", &glong, &b_glong);
@@ -581,6 +601,11 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("tk_exqln", tk_exqln, &b_tk_exqln);
    fChain->SetBranchAddress("tk_exqls", tk_exqls, &b_tk_exqls);
    fChain->SetBranchAddress("tk_exdis", tk_exdis, &b_tk_exdis);
+   fChain->SetBranchAddress("tk_exqvn", tk_exqvn, &b_tk_exqvn);
+   fChain->SetBranchAddress("tk_l1qxy", tk_l1qxy, &b_tk_l1qxy);
+   fChain->SetBranchAddress("ibetahs", &ibetahs, &b_ibetahs);
+   fChain->SetBranchAddress("itrdtracks", &itrdtracks, &b_itrdtracks);
+   fChain->SetBranchAddress("betahs", &betahs, &b_betahs);
    //fChain->SetBranchAddress("tk_res", tk_res, &b_tk_res);
    //fChain->SetBranchAddress("tk_fzm", tk_fzm, &b_tk_fzm);
    fChain->SetBranchAddress("tk_rigidity1", tk_rigidity1, &b_tk_rigidity1);
@@ -588,6 +613,7 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("tk_chis1", tk_chis1, &b_tk_chis1);
    fChain->SetBranchAddress("tk_dir0", tk_dir0, &b_tk_dir0);
    fChain->SetBranchAddress("tk_pos", tk_pos, &b_tk_pos);
+   fChain->SetBranchAddress("tk_pos1s", tk_pos1s, &b_tk_pos1s);
    fChain->SetBranchAddress("tk_dir", tk_dir, &b_tk_dir);
    fChain->SetBranchAddress("tof_btype", &tof_btype, &b_tof_btype);
    fChain->SetBranchAddress("tof_bpatt", &tof_bpatt, &b_tof_bpatt);
@@ -609,6 +635,9 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("tof_q", tof_q, &b_tof_q);
    fChain->SetBranchAddress("tof_qrms", tof_qrms, &b_tof_qrms);
    fChain->SetBranchAddress("tof_ql", tof_ql, &b_tof_ql);
+   fChain->SetBranchAddress("tof_chiscs", &tof_chiscs, &b_tof_chiscs);
+   fChain->SetBranchAddress("tof_chists", &tof_chists, &b_tof_chists);
+   fChain->SetBranchAddress("tof_qls", tof_qls, &b_tof_qls);
    fChain->SetBranchAddress("tof_ql1", tof_ql1, &b_tof_ql1);
    fChain->SetBranchAddress("tof_qs", &tof_qs, &b_tof_qs);
    fChain->SetBranchAddress("rich_itrtrack", &rich_itrtrack, &b_rich_itrtrack);
@@ -638,6 +667,7 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("rich_phi_tkItr", &rich_phi_tkItr, &b_rich_phi_tkItr);
    fChain->SetBranchAddress("rich_n", rich_n, &b_rich_n);
    /*
+   fChain->SetBranchAddress("tk_ibetahs", &tk_ibetahs, &b_tk_ibetahs);
    fChain->SetBranchAddress("rich_tile", &rich_tile, &b_rich_tile);
    fChain->SetBranchAddress("rich_distb", &rich_distb, &b_rich_distb);
    fChain->SetBranchAddress("rich_cstat", &rich_cstat, &b_rich_cstat);
@@ -646,13 +676,13 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("rich_rpz", &rich_rpz, &b_rich_rpz);
    fChain->SetBranchAddress("itrtracks", &itrtracks, &b_itrtracks);
    fChain->SetBranchAddress("tk_hitbs", tk_hitbs, &b_tk_hitbs);
-   fChain->SetBranchAddress("tk_ibetahs", &tk_ibetahs, &b_tk_ibetahs);
    fChain->SetBranchAddress("tk_betahs", &tk_betahs, &b_tk_betahs);
    fChain->SetBranchAddress("tk_tofchiscs", &tk_tofchiscs, &b_tk_tofchiscs);
    fChain->SetBranchAddress("tk_tofchists", &tk_tofchists, &b_tk_tofchists);
    fChain->SetBranchAddress("tk_tofsumhus", &tk_tofsumhus, &b_tk_tofsumhus);
    fChain->SetBranchAddress("tk_tofqls", tk_tofqls, &b_tk_tofqls);
    */
+   fChain->SetBranchAddress("anti_nhit", &anti_nhit, &b_anti_nhit);
    fChain->SetBranchAddress("mmom", &mmom, &b_mmom);
    fChain->SetBranchAddress("mch", &mch, &b_mch);
    fChain->SetBranchAddress("mtrmom", mtrmom, &b_mtrmom);

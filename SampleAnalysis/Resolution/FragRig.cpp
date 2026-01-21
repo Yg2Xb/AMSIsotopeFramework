@@ -8,8 +8,8 @@
 #include <iostream>
 
 void FragRig() {
-    TString inName  = "/eos/user/z/zixuan/Isotope/Add/B11_rew_frag4_rsl.root";
-    TString outName = "/eos/user/z/zixuan/Isotope/Resolution/B11_Be10checkTrueFragRig.pdf";
+    TString inName  = "/eos/user/z/zixuan/Isotope/Add/B11_rew_frag4_withBkg.rsl.root";
+    TString outName = "/eos/user/z/zixuan/Isotope/Resolution/B11_Be10checkTrueFragBeta.pdf";
 
     std::vector<TString> histKeys = {
         "L1Inner_IDH7_TOF",
@@ -41,11 +41,11 @@ void FragRig() {
 
         // --- 参数设置 ---
         // AGL从4.0开始，其余从1.92开始
-        double minRig = (key.Contains("AGL")) ? 4.0 : 1.92;
-        double maxRig = 1300.0;
+        double minRig = (key.Contains("AGL")) ? 4.0 : 0.7;
+        double maxRig = 1.2;
         double theoryVal = -0.136;
-        double biasMin = -0.16;
-        double biasMax = 0.035;
+        double biasMin = -0.;
+        double biasMax = 0.5;
 
         // ===========================
         // 1. Draw 2D Colz
@@ -58,9 +58,9 @@ void FragRig() {
         h2->GetXaxis()->SetNdivisions(508);
         
         // 标题 (使用 LaTeX 格式)
-        h2->SetTitle("Rigidity Change of B11#rightarrowBe10 Fragments at L2 (MC Truth)");
-        h2->GetXaxis()->SetTitle("Relative Rigidity Change: (R_{gen} - R_{L2}) / R_{gen}");
-        h2->GetYaxis()->SetTitle("Gen Rigidity [GV]");
+        h2->SetTitle("Beta Change of B11#rightarrowBe10 Fragments at L2 (MC Truth)");
+        h2->GetXaxis()->SetTitle("Relative Beta Change: (beta_{L1} - beta_{L2}) / beta_{L1}");
+        h2->GetYaxis()->SetTitle("L1 Beta");
         
         // 字体大小 (0.05) & 偏移
         h2->SetTitleSize(0.07);
@@ -69,7 +69,7 @@ void FragRig() {
         h2->GetYaxis()->SetTitleOffset(1.2); 
 
         // Log与画图
-        c1->SetLogx(0); c1->SetLogy(1); c1->SetLogz(0);
+        c1->SetLogx(0); c1->SetLogy(0); c1->SetLogz(1);
         h2->Draw("COLZ");
 
         // 红色虚线 (x = -0.136)
@@ -91,9 +91,9 @@ void FragRig() {
         prof->SetMinimum(biasMin); 
         prof->GetYaxis()->SetNdivisions(508);
 
-        prof->SetTitle("Rigidity Change of B11#rightarrowBe10 Fragments at L2 (MC Truth)");
-        prof->GetXaxis()->SetTitle("Gen Rigidity [GV]");
-        prof->GetYaxis()->SetTitle("Mean of Relative Rigidity Change");
+        prof->SetTitle("Beta Change of B11#rightarrowBe10 Fragments at L2 (MC Truth)");
+        prof->GetXaxis()->SetTitle("Gen Beta [GV]");
+        prof->GetYaxis()->SetTitle("Mean of Relative Beta Change");
 
         // 字体大小 (0.05) & 偏移
         prof->GetXaxis()->SetLabelSize(0.05); prof->GetXaxis()->SetTitleSize(0.05);
@@ -107,7 +107,7 @@ void FragRig() {
         prof->SetMarkerSize(1.0);
 
         // Log与画图 (PZ: 只画纵向误差)
-        c1->SetLogx(1); c1->SetLogy(0); c1->SetLogz(0);
+        c1->SetLogx(0); c1->SetLogy(0); c1->SetLogz(1);
         prof->Draw("PZ"); 
 
         // 红色虚线 (y = -0.136)

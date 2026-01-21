@@ -12,10 +12,13 @@ submit/hadd/**/*.txt
 *.root
 *.log
 *.png
+*.pdf
 *.o
 *.so
 *.pcm
 *.d
+*.swp
+*.swo
 
 # --- 具体的备份/废弃代码文件 (已修正路径) ---
 est_frag copy.cpp

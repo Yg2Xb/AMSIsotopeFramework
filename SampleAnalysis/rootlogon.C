@@ -16,18 +16,18 @@
    tmpStyle->SetLabelOffset(0.005, "x");
    tmpStyle->SetLabelOffset(0.005, "y");
    tmpStyle->SetLabelOffset(0.005, "z");
-   tmpStyle->SetLabelSize(0.05, "x"); /* @@@ */
-   tmpStyle->SetLabelSize(0.05, "y"); /* @@@ */
-   tmpStyle->SetLabelSize(0.05, "z"); /* @@@ */
+   tmpStyle->SetLabelSize(0.06, "x"); /* @@@ */
+   tmpStyle->SetLabelSize(0.06, "y"); /* @@@ */
+   tmpStyle->SetLabelSize(0.06, "z"); /* @@@ */
    tmpStyle->SetTickLength(0.03, "x");
    tmpStyle->SetTickLength(0.03, "y");
    tmpStyle->SetTickLength(0.03, "z");
    tmpStyle->SetTitleOffset(1., "x"); // @@@
    tmpStyle->SetTitleOffset(1.35, "y"); // @@@
    tmpStyle->SetTitleOffset(1., "z"); // @@@
-   tmpStyle->SetTitleSize(0.05, "x");
-   tmpStyle->SetTitleSize(0.05, "y");
-   tmpStyle->SetTitleSize(0.05, "z"); // @@@
+   tmpStyle->SetTitleSize(0.06, "x");
+   tmpStyle->SetTitleSize(0.06, "y");
+   tmpStyle->SetTitleSize(0.06, "z"); // @@@
    tmpStyle->SetTitleColor(1, "x");
    tmpStyle->SetTitleColor(1, "y");
    tmpStyle->SetTitleColor(1, "z");
@@ -87,9 +87,9 @@
    tmpStyle->SetPadColor(0);
    tmpStyle->SetPadBorderSize(2);
    tmpStyle->SetPadBorderMode(0);
-   tmpStyle->SetPadBottomMargin(0.15);
+   tmpStyle->SetPadBottomMargin(0.12);
    tmpStyle->SetPadTopMargin(0.12);
-   tmpStyle->SetPadLeftMargin(0.15);
+   tmpStyle->SetPadLeftMargin(0.1);
    tmpStyle->SetPadRightMargin(0.1);
    tmpStyle->SetPadGridX(kFALSE);
    tmpStyle->SetPadGridY(kFALSE);

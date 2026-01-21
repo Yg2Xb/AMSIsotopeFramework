@@ -31,10 +31,10 @@ struct FitResult {
 };
 
 struct Config {
-	string main_analysis_file_path = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_HeToOxy_iter0.root";
-	string output_dir = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/";
-	//vector<string> elements = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
-	vector<string> elements = {"Helium"};
+	string main_analysis_file_path = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter1.root";
+	string output_dir = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/";
+	vector<string> elements = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+	//vector<string> elements = {"Carbon"};
 	vector<string> detectors = {"TOF", "NaF", "AGL"};
 	vector<string> chains = {"L1Inner", "UnbiasedL1Inner"};
 	vector<string> templates = {"L1Template", "L2Template"};
@@ -48,7 +48,7 @@ struct Config {
 	map<string, int> templateColors = {{"L1Template", kBlack}, {"L2Template", kRed}};
 	map<string, int> modelColors = {{"LG", kRed}, {"EGE", kBlue}};
 	map<string, pair<double, double>> detRanges = {
-		{"TOF", {0.3, 1.3}}, {"NaF", {0.71, 5.1}}, {"AGL", {2.8, 20.0}}
+		{"TOF", {0.25, 1.5}}, {"NaF", {0.71, 6.10}}, {"AGL", {2.70, 22.0}}
 	};
 };
 
@@ -311,6 +311,19 @@ void plotTemplateComparison(TFile* fin, TCanvas* c, const string& pdfName) {
 			for (const auto& temp : gConfig.templates) {
 				string name = chain+"_"+element+"_"+det+"_"+temp+"_"+param.first+"_"+param.second;
 				TH1* h = getHist(fin, name);
+				if (h) {
+                    if (param.second == "Chi2NDF") {
+                        // 1. 对 Chi2NDF，误差设为 0
+                        for (int b = 1; b <= h->GetNbinsX(); ++b) h->SetBinError(b, 0);
+                    } 
+                    else if (param.second != "AlphaL") {
+                        // 2. 对 AlphaL 以外的其他直方图，误差增加为现在的 2 倍
+                        for (int b = 1; b <= h->GetNbinsX(); ++b) {
+                            h->SetBinError(b, h->GetBinError(b) * 2.0);
+                        }
+                    }
+                    // 3. AlphaL 保持不变（即不进入上面的判断分支）
+                }
 				hists.push_back(h);
 
 				if (param.second == "AlphaL") {
@@ -415,7 +428,7 @@ void plotChainComparison(TFile* fin, TCanvas* c, const string& pdfName) {
 
 void plotModelChi2Comparison(TFile* fin, TCanvas* c, const string& pdfName) {
 	cout << "\n[PROCESS] Starting Model Chi2 Comparison plots..." << endl;
-	vector<string> models = {"LG", "EGE"};
+	vector<string> models = {"EGE"};
 	vector<string> modelLabels = {"Landau-Gauss", "ExpGausExp"};
 	for (const auto& element : gConfig.elements) for (const auto& chain : gConfig.chains) for (const auto& det : gConfig.detectors)
 		for (const auto& temp : gConfig.templates) {
@@ -444,7 +457,7 @@ void compareFitResults() {
 	TCanvas* c = new TCanvas("c", "c", 800, 400); c->SetGrid();
 
 	// --- START OF MODIFICATION 5: Open the output file at the beginning ---
-	string splineOutFile = gConfig.output_dir + "allFitHistSplineSmooth_iter0.root";
+	string splineOutFile = gConfig.output_dir + "withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter1.root";
 	gSplineOutFile = make_unique<TFile>(splineOutFile.c_str(), "RECREATE");
 	if (!gSplineOutFile || gSplineOutFile->IsZombie()) {
 		cout << "[ERROR] Cannot create output spline file: " << splineOutFile << endl;
@@ -452,22 +465,22 @@ void compareFitResults() {
 	}
 	cout << "[INFO] Opened output file for splines: " << splineOutFile << endl;
 
-	string pdfName_template = gConfig.output_dir + "FitParam_TemplateCompare_iter0.pdf";
+	string pdfName_template = gConfig.output_dir + "withBkg_FitParam_TemplateCompare_iter1.pdf";
 	c->Print((pdfName_template + "[").c_str());
 	plotTemplateComparison(fin_main.get(), c, pdfName_template);
 	c->Print((pdfName_template + "]").c_str());
 
-	string pdfName_detector = gConfig.output_dir + "FitParam_DetectorCompare_iter0.pdf";
+	string pdfName_detector = gConfig.output_dir + "withBkg_FitParam_DetectorCompare_iter1.pdf";
 	c->Print((pdfName_detector + "[").c_str());
 	plotDetectorComparison(fin_main.get(), c, pdfName_detector);
 	c->Print((pdfName_detector + "]").c_str());
 
-	string pdfName_chain = gConfig.output_dir + "FitParam_ChainCompare_iter0.pdf";
+	string pdfName_chain = gConfig.output_dir + "withBkg_FitParam_ChainCompare_iter1.pdf";
 	c->Print((pdfName_chain + "[").c_str());
 	plotChainComparison(fin_main.get(), c, pdfName_chain);
 	c->Print((pdfName_chain + "]").c_str());
 
-	string pdfName_chi2 = gConfig.output_dir + "FitParam_Chi2ModelCompare_iter0.pdf";
+	string pdfName_chi2 = gConfig.output_dir + "withBkg_FitParam_Chi2ModelCompare_iter1.pdf";
 	c->Print((pdfName_chi2 + "[").c_str());
 	plotModelChi2Comparison(fin_main.get(), c, pdfName_chi2);
 	c->Print((pdfName_chi2 + "]").c_str());

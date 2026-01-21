@@ -93,9 +93,9 @@ static void findFitRange(TH1D* hist, double Z, double& lowEdge, double& highEdge
 }
 
 static inline bool passEnergyWindow(const string& det, double ekCen) {
-    if (det == "TOF") return ekCen > 0.33 && ekCen <= 1.28;
-    if (det == "NaF") return ekCen > 0.71 && ekCen <= 5.1;
-    if (det == "AGL") return ekCen > 2.8 && ekCen <= 20.00;
+    if (det == "TOF") return ekCen > 0.27 && ekCen <= 1.5;
+    if (det == "NaF") return ekCen > 0.71 && ekCen <= 6.1;
+    if (det == "AGL") return ekCen > 2.7 && ekCen <= 22.0;
     return false;
 }
 
@@ -149,9 +149,9 @@ private:
         
         double peakWin = isHe ? 0.6 : 0.2;
         f.SetParLimits(0, Z - peakWin, Z + peakWin); 
-        f.SetParLimits(1, 0.01, isHe ? 1.0 : 0.6);   
+        f.SetParLimits(1, 0.06, isHe ? 1.0 : 0.6);   
         f.SetParLimits(2, 0.1,  8.0);                
-        f.SetParLimits(3, 0.01, isHe ? 1.0 : 0.6);   
+        f.SetParLimits(3, 0.06, isHe ? 1.0 : 0.6);   
         f.SetParLimits(4, 0.1,  8.0);                
         
         f.FixParameter(6, lo); f.FixParameter(7, hi);
@@ -232,7 +232,7 @@ static TF1* doFit(TH1D* h, const vector<std::pair<string,int>>& pars, FitParamet
         if (curr_lo > limitLo || curr_hi < limitHi) continue;
 
         if (f) delete f;
-        f = BuildEGE(1.5, 8.5);
+        f = BuildEGE(1.5, 9.5);
         for (auto& p : pars) f->SetParName(p.second, p.first.c_str());
         
         pm.setParameters(*f, keyBase, ek, Z, maxH, curr_lo, curr_hi);
@@ -289,14 +289,19 @@ static TF1* doFit(TH1D* h, const vector<std::pair<string,int>>& pars, FitParamet
 
 void chargeHistFit(
     //const string& histFile = "/eos/ams/group/ihep/zixuan/filter/basic_L1Q2p5to8p8.root",
-    const string& histFile = "/eos/user/z/zixuan/Isotope/Add/bp/B_frag5.root",
-    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_HeToOxy_Tune_iter0.pdf",
-    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_HeToOxy_Tune_iter0.root",
-    int rebin = 2, bool firstFit = true, bool = false) 
+    const string& histFile = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_withBkg_NoTune_full.root",
+    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFits_HeToOxy_NoTune_iter1.pdf",
+    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter1.root",
+    /*
+    const string& histFile = "/eos/user/z/zixuan/Isotope/PureChargeTemp/PureChargeTemplates_UnbiasedL1Inner.root",
+    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_PureL1.pdf",
+    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_PureL1.root",
+    */
+    int rebin = 2, bool firstFit = false, bool = false) 
 {
     const vector<string> chains = {"UnbiasedL1Inner", "L1Inner"};
     const vector<string> nuclei = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen","Oxygen"}; 
-    //const vector<string> nuclei = {"Helium"}; 
+    //const vector<string> nuclei = {"Carbon"}; 
     const map<string,double> chargeZ = {{"Helium",2.0}, {"Lithium",3.0}, {"Beryllium",4.0}, {"Boron",5.0}, {"Carbon",6.0}, {"Nitrogen",7.0}, {"Oxygen",8.0}};
     
     const vector<string> types = {"L1Template", "L2Template"}; 
@@ -306,8 +311,8 @@ void chargeHistFit(
 
     const vector<std::pair<string,int>> EGE_p = {{"Peak",0},{"SigmaL",1},{"AlphaL",2},{"SigmaR",3},{"AlphaR",4},{"Norm",5},{"xmin",6},{"xmax",7}};
 
-    const string splinePath = "/eos/user/z/zixuan/Isotope/ChargeFit/comparison_plots/allFitHistSplineSmooth_iter0.root";
-    const string oriPath = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFitParams_HeToOxy_iter0.root";
+    const string splinePath = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter0.root";
+    const string oriPath = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter0.root";
     FitParameterManager pm(firstFit, splinePath, oriPath);
 
     unique_ptr<TFile> fin(TFile::Open(histFile.c_str()));
@@ -325,6 +330,7 @@ void chargeHistFit(
     for (auto& det : dets)
     for (auto& type : types) {
         string key = chain + "_BKG_H4_" + elem + "_" + type + "_" + det;
+        //string key = "h2d_PureQTemp_" + elem + "_" + det;
         TH2* h2 = dynamic_cast<TH2*>(fin->Get(key.c_str()));
         if (!h2) { if(DBG.infoOpen) cout << "[miss] " << key << endl; continue; }
 
@@ -370,7 +376,7 @@ void chargeHistFit(
             for(auto& p : EGE_p) {
                 TH1D* hh = PS.h[baseKey+"_EGE_"+p.first];
                 hh->SetBinContent(b, fEGE->GetParameter(p.second));
-                hh->SetBinError(b, fEGE->GetParError(p.second));
+                hh->SetBinError(b, p.second == 0 ? 1.*fEGE->GetParError(p.second) : 1.*fEGE->GetParError(p.second));
             }
             PS.h[baseKey+"_EGE_Chi2NDF"]->SetBinContent(b, (fEGE->GetNDF()>0 ? fEGE->GetChisquare()/fEGE->GetNDF() : 0));
 
@@ -394,11 +400,11 @@ void chargeHistFit(
             double tx = 0.16, ty = 0.86, tdy = 0.032;
             lt.SetTextColor(kGreen+2);
             lt.DrawLatex(tx, ty, "ExpGausExp:"); ty -= tdy;
-            lt.DrawLatex(tx+0.02, ty, Form("Peak = %.3f #pm %.3f", fEGE->GetParameter(0), fEGE->GetParError(0))); ty -= tdy;
-            lt.DrawLatex(tx+0.02, ty, Form("#sigma_{L} = %.3f #pm %.3f", fEGE->GetParameter(1), fEGE->GetParError(1))); ty -= tdy;
-            lt.DrawLatex(tx+0.02, ty, Form("#sigma_{R} = %.3f #pm %.3f", fEGE->GetParameter(3), fEGE->GetParError(3))); ty -= tdy;
-            lt.DrawLatex(tx+0.02, ty, Form("#alpha_{L} = %.3f #pm %.3f", fEGE->GetParameter(2), fEGE->GetParError(2))); ty -= tdy;
-            lt.DrawLatex(tx+0.02, ty, Form("#alpha_{R} = %.3f #pm %.3f", fEGE->GetParameter(4), fEGE->GetParError(4))); ty -= tdy;
+            lt.DrawLatex(tx+0.02, ty, Form("Peak = %.4f #pm %.4f", fEGE->GetParameter(0), fEGE->GetParError(0))); ty -= tdy;
+            lt.DrawLatex(tx+0.02, ty, Form("#sigma_{L} = %.4f #pm %.4f", fEGE->GetParameter(1), fEGE->GetParError(1))); ty -= tdy;
+            lt.DrawLatex(tx+0.02, ty, Form("#sigma_{R} = %.4f #pm %.4f", fEGE->GetParameter(3), fEGE->GetParError(3))); ty -= tdy;
+            lt.DrawLatex(tx+0.02, ty, Form("#alpha_{L} = %.4f #pm %.4f", fEGE->GetParameter(2), fEGE->GetParError(2))); ty -= tdy;
+            lt.DrawLatex(tx+0.02, ty, Form("#alpha_{R} = %.4f #pm %.4f", fEGE->GetParameter(4), fEGE->GetParError(4))); ty -= tdy;
             lt.DrawLatex(tx+0.02, ty, Form("#chi^{2}/ndf = %.2f", fEGE->GetNDF()>0?fEGE->GetChisquare()/fEGE->GetNDF():0)); ty -= tdy;
             lt.DrawLatex(tx+0.02, ty, Form("Range: %.2f-%.2f", lo, hi));
 

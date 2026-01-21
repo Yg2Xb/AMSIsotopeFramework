@@ -32,6 +32,18 @@ void selectdata::Loop() {
     const int FragmentZ = analyzer_->getFragmentZ();
     const int fragZ = isISS ? charge : FragmentZ;
     const bool forBackground = analyzer_->isNoBkgCut();
+    double AveMass_charge = isISS ? 0 : UseMass;
+    if (isISS && isotopeWeights.count(charge)) {
+            double sumW = 0, sumM = 0;
+            for (auto& p : isotopeWeights.at(charge)) { sumM += p.first * p.second; sumW += p.second; }
+            if (sumW > 0) AveMass_charge = sumM / sumW;
+    }
+    double AveMass_fragZ = isISS ? 0 : UseMass;
+    if (isISS && isotopeWeights.count(fragZ)) {
+            double sumW = 0, sumM = 0;
+            for (auto& p : isotopeWeights.at(fragZ)) { sumM += p.first * p.second; sumW += p.second; }
+            if (sumW > 0) AveMass_fragZ = sumM / sumW;
+    }
     
     auto* histManager = analyzer_->getHistManager();
     if (!histManager) { std::cerr << "Failed to get HistManager\n"; return; }
@@ -49,14 +61,15 @@ void selectdata::Loop() {
     ModelManager::init("/eos/ams/group/ihep/zixuan/ForSampleProduction/model_data.root",
                        "/eos/ams/group/ihep/zixuan/ForSampleProduction/model_mc.root");
     if(!isISS) AMS_Iso::Tools::initFluxFunctions();
-    if(isISS)  AMS_Iso::Tools::initChargeTuning();
+    if(isISS)  AMS_Iso::Tools::initChargeTuning("/eos/ams/group/ihep/zixuan/ForSampleProduction/withBkg_CDFLookupTable_fromSpline.root");
 
     // --- Constants & Helpers ---
     const int NchainLoc = (int)chains.size();
     const int NdetLoc = 3; 
+	const int NcutGroups = (int)cut_groups.size();
     const int NisoLoc = iso->getIsotopeCount();
     const std::vector<int> source_Z = {2,3,4,5,6,7,8};
-    const int NsrcLoc = (int)source_Z.size();
+    const int NsrcLoc = isISS ? (int)source_Z.size() : 1;
     
     // MC Specifics
     const int geneID_MC = analyzer_->getGeneID(charge, UseMass);
@@ -75,19 +88,12 @@ void selectdata::Loop() {
 
     // Cutoff & Binning Helpers
     auto& binMgr = BinningManager::GetInstance();
-    auto StdBetaBins = binMgr.GetBetaBins(2, 4);
-    auto* bins = histManager->IDH5a[0][0]->GetYaxis()->GetXbins();
-    std::vector<double> StdRigBins(bins->GetArray(), bins->GetArray() + bins->GetSize());
+    auto StdBetaBins = binMgr.GetBetaBins(4, 7);
+    //auto* bins = histManager->FLUXH1[isISS?3:0][0][0][3]->GetXaxis()->GetXbins();
+    //std::vector<double> StdRigBins(bins->GetArray(), bins->GetArray() + bins->GetSize());
 
-    bool beyondBetaCutoff[3][Constants::N_nuc] = {};
     std::map<std::pair<int,int>, int> ZAMap;
     for (int n = 0; n < Constants::N_nuc; ++n) ZAMap[{Constants::nuclei_Z[n], Constants::nuclei_A[n]}] = n;
-
-    auto getBeyondBetaCutoffCut = [&](int det, int Z, int A) {
-        if (det < 0 || det >= NdetLoc) return false;
-        auto it = ZAMap.find({Z, A});
-        return (it != ZAMap.end()) ? beyondBetaCutoff[det][it->second] : false;
-    };
     
     auto getMinAForZ = [&](int Z) {
         int Amin = -1;
@@ -157,22 +163,31 @@ void selectdata::Loop() {
                 for (int i = 0; i < NisoLoc; ++i) {
                     double betaCut = Detector::BetaTypes[d].getSafetyFactor() * Tools::rigidityToBeta(cutOffRig, charge, iso->getMass(i), false);
                     if (auto* h = histManager->ISS_FLUXH3[d][i].get()) {
-                        for (int ip = 1; ip <= h->GetNbinsX(); ++ip)
-                             if (h->GetBinLowEdge(ip) >= betaCut) h->AddBinContent(ip, expTime);
+                        for (int ip = 1; ip <= h->GetNbinsX(); ++ip){
+                             if (StdBetaBins[ip-1] >= betaCut) h->AddBinContent(ip, expTime);
+                        }
                     }
                 }
             }
             timeTag.push_back(time[0]);
         }
         */
+        
 
         // Beta Correction & Calibration
+        //make sure must be a valid rec charge
         int Charge_forCorr = RecCharge_Int > 0 ? RecCharge_Int : charge; // Fallback logic simplified for readablity
         if(RecCharge_Int <= 0) {
             double lowQ = (tof_ql[2] + tof_ql[3]) * 0.5;
             if (tof_ql[2] * tof_ql[3] == 0) lowQ *= 2.0;
             if (lowQ > 0) Charge_forCorr = (int)(lowQ + 0.5f);
             else if (tk_qln[0][7][2] > 0) Charge_forCorr = (int)(tk_qln[0][7][2] + 0.5f);
+        }
+        double AveMass = isISS ? 0 : UseMass;
+        if (isISS && isotopeWeights.count(Charge_forCorr)) {
+             double sumW = 0, sumM = 0;
+             for (auto& p : isotopeWeights.at(Charge_forCorr)) { sumM += p.first * p.second; sumW += p.second; }
+             if (sumW > 0) AveMass = sumM / sumW;
         }
 
         double rBetaCorr = richBeta;
@@ -193,6 +208,12 @@ void selectdata::Loop() {
         }
         richBeta = isISS ? Tools::CorrectCalibrationBiasInData(rBetaCorr, rich_NaF) : Tools::GetSmearRichBeta(Charge_forCorr, rBetaCorr, rich_NaF);
         // MC Truth & Reconstructed Vectors
+        int L1_Z = mtrz[0] & 0x3F;
+        double L1TruthRig  = double(mtrmom[0]) / L1_Z;
+        double L1_A        = double(findIsotopeMass(mtrpar[0], L1_Z));
+        double L1TruthBeta = L1_A > 0 ? Tools::rigidityToBeta(L1TruthRig, L1_Z, L1_A, false) : -9;
+        double L1TruthEk_n = L1_A > 0 ? Tools::rigidityToKineticEnergy(L1TruthRig, L1_Z, L1_A) : -9;
+
         int L2_Z = mtrz[1] & 0x3F;
         double L2TruthRig  = double(mtrmom[1]) / L2_Z;
         double L2_A        = double(findIsotopeMass(mtrpar[1], L2_Z));
@@ -200,6 +221,7 @@ void selectdata::Loop() {
         double L2TruthEk_n = L2_A > 0 ? Tools::rigidityToKineticEnergy(L2TruthRig, L2_Z, L2_A) : -9;
         
         double generatedRig  = mmom / mch;
+        double generatedEk_n  = Tools::rigidityToKineticEnergy(generatedRig, mch, UseMass);
         double generatedBeta = !isISS ? Tools::rigidityToBeta(generatedRig, mch, UseMass, false) : -9;
         double weight_NucFlux = isISS ? 1.0 : Tools::calculateWeight(mmom, mch, UseMass, isISS);
 
@@ -209,10 +231,10 @@ void selectdata::Loop() {
                                (!rich_NaF && richBeta > 0) ? Tools::betaToKineticEnergy(richBeta) : -9 };
 
         // Pre-compute Selection Results
-        auto twoAcc = tracker_cut.TwoAccTrackerCut(charge, isISS, false);
+        auto twoAcc = tracker_cut.TwoAccTrackerCut(charge, isISS, forBackground);
         bool PassTwoAcc[2] = { twoAcc.details[0], twoAcc.details[1] };
         
-        auto twoAcc_frag = tracker_cut.TwoAccTrackerCut(fragZ, isISS, false);
+        auto twoAcc_frag = tracker_cut.TwoAccTrackerCut(fragZ, isISS, forBackground);
         bool PassTwoAcc_frag[2] = { twoAcc_frag.details[0], twoAcc_frag.details[1] };
 
         // 0:TOF, 1:NaF, 2:Agl
@@ -221,19 +243,39 @@ void selectdata::Loop() {
         bool DetValidBkg[3]      = { tof_cut.cutTOF(charge, isISS).total, rich_NaF && rich_cut.cutRICHforBkg(charge, isISS, true).total, !rich_NaF && rich_cut.cutRICHforBkg(charge, isISS, true).total };
 
         // Beta Cutoff Logic
+        /*
         bool beyondRigCutoff = (!isISS);
-        if (rig_chain[1] >= 0.8 && rig_chain[1] <= 3300) {
-            int bin = Tools::findBin(StdRigBins, rig_chain[1]);
+        if (isISS && rig_chain[0] >= 0.8 && rig_chain[0] <= 3300) {
+            int bin = Tools::findBin(StdRigBins, rig_chain[0]);
             if (bin >= 0 && StdRigBins[bin] > Constants::SAFE_FACTOR_RIG * cutOffRig) beyondRigCutoff = true;
         }
+        */
 
+        bool beyondBetaCutoff[3][Constants::N_nuc] = {};
         for (int d = 0; d < NdetLoc; ++d) {
             int bBin = Tools::findBin(StdBetaBins, beta_det[d]);
             for (int n = 0; n < Constants::N_nuc; ++n) {
-                if (!isISS || beta_det[d] >= 1) { beyondBetaCutoff[d][n] = true; continue; }
-                beyondBetaCutoff[d][n] = (bBin >= 0) && Tools::isBeyondCutoff(StdBetaBins[bBin], cutOffRig, Detector::BetaTypes[d].getSafetyFactor(), Constants::nuclei_Z[n], Constants::nuclei_A[n], true);
+                if (!isISS || beta_det[d] >= StdBetaBins.back()) { beyondBetaCutoff[d][n] = true; continue; }
+                beyondBetaCutoff[d][n] = (bBin >= 0) && Tools::isBeyondCutoff(StdBetaBins[bBin], cutOffRig, Detector::BetaTypes[d].getSafetyFactor(), Constants::nuclei_Z[n], Constants::nuclei_A[n], !isISS);
             }
         }
+        
+        auto getBeyondBetaCutoffCut = [&](int det, int Z, double mass) {
+            if (det < 0 || det >= NdetLoc) return false;
+            bool isIntegerLike = std::abs(mass - std::round(mass)) < 1e-9;
+            if (isIntegerLike) {
+                int A = static_cast<int>(std::round(mass)); 
+                auto it = ZAMap.find({Z, A});
+                if (it != ZAMap.end()) {
+                    return beyondBetaCutoff[det][it->second];
+                }
+            }
+            int bBin = Tools::findBin(StdBetaBins, beta_det[det]);
+            if (!isISS || beta_det[det] > StdBetaBins.back()) return true; 
+            return (bBin >= 0) && Tools::isBeyondCutoff(StdBetaBins[bBin], cutOffRig, 
+                                        Detector::BetaTypes[det].getSafetyFactor(), 
+                                        Z, mass, !isISS);
+        };
 
         // ---------------------------------------------------------
         // A. Filtered Tree
@@ -258,7 +300,8 @@ void selectdata::Loop() {
                 auto mres = Tools::calculateMass(beta_det[d], 1.0, Tools::GetSmearRigidity(rig_chain[c], isISS, d), RecCharge_Int);
                 
                 for (int i = 0; i < NisoLoc; ++i) {
-                    if (!getBeyondBetaCutoffCut(d, charge, iso->getMass(i))) continue;
+                    //if (!getBeyondBetaCutoffCut(d, charge, iso->getMass(i))) continue;
+                    if (!getBeyondBetaCutoffCut(d, charge, AveMass_charge)) continue;//use ave mass for cutoff check now, in the future we can try to use isotope mass
                     
                     if (isISS) histManager->ISS_IDH1[c][d][i]->Fill(ek_det[d], weight_NucFlux);
                     histManager->IDH2[c][d][i]->Fill(mres.invMass, ek_det[d], weight_NucFlux);
@@ -268,22 +311,15 @@ void selectdata::Loop() {
                 }
             }
         }
-
+        /*
         // ---------------------------------------------------------
         // C. Beta & Rigidity Resolution (IDH4, 5, 6, 7)
         // ---------------------------------------------------------
-        double AveMass = isISS ? 0 : UseMass;
-        if (isISS && isotopeWeights.count(RecCharge_Int)) {
-             double sumW = 0, sumM = 0;
-             for (auto& p : isotopeWeights.at(RecCharge_Int)) { sumM += p.first * p.second; sumW += p.second; }
-             if (sumW > 0) AveMass = sumM / sumW;
-        }
-
         int nZ_Beta = isISS ? 7 : 1;
         for (int iz = 0; iz < nZ_Beta; ++iz) {
             int z_use = isISS ? source_Z[iz] : charge;
             if (z_use != RecCharge_Int && fragZ != RecCharge_Int ) continue;
-            int A_use = isISS ? getMinAForZ(z_use) : UseMass;
+            int A_use = isISS ? AveMass : UseMass;
             if (A_use < 0) continue;
 
             // Recalculate cuts for specific Z if different from primary charge
@@ -292,7 +328,7 @@ void selectdata::Loop() {
                 std::copy(std::begin(PassTwoAcc), std::end(PassTwoAcc), pAcc);
                 std::copy(std::begin(BetaDetQual), std::end(BetaDetQual), bQual);
             } else {
-                auto acc = tracker_cut.TwoAccTrackerCut(z_use, isISS, false);
+                auto acc = tracker_cut.TwoAccTrackerCut(z_use, isISS, forBackground);
                 pAcc[0] = acc.details[0]; pAcc[1] = acc.details[1];
                 bQual[0] = tof_cut.cutTOF(z_use, isISS).total;
                 bQual[1] = rich_NaF && rich_cut.cutRICH(z_use, isISS, true).total;
@@ -343,7 +379,7 @@ void selectdata::Loop() {
                 }
 
                 // --- Part 2: Frag Truth Resolution (Frag Cuts) ---
-                if (!isISS && L2_Z == fragZ && PassTwoAcc_frag[c]) {
+                if (!isISS && mtrpar[1] == checkedFragID && PassTwoAcc_frag[c]) {
                     histManager->IDH5d4[iz][c]->Fill(1.0/rig_chain[c] - 1.0/generatedRig, generatedRig, weight_NucFlux);
                     if (BetaDetQual_frag[0]) 
                         histManager->IDH5c4[iz][c]->Fill(1.0/beta_det[0] - 1.0/generatedBeta, generatedBeta, weight_NucFlux);
@@ -362,14 +398,15 @@ void selectdata::Loop() {
             if (isISS || !(PassTwoAcc_frag[c] && mtrpar[1] == checkedFragID)) continue;
             for (int d = 0; d < NdetLoc; ++d) {
                 if (!BetaDetQual_frag[d]) continue;
-                histManager->IDH7[c][d]->Fill((generatedRig - L2TruthRig)/generatedRig, generatedRig, weight_NucFlux);
+                histManager->IDH7[c][d]->Fill((L1TruthBeta - L2TruthBeta)/L1TruthBeta, L1TruthBeta, weight_NucFlux);
             }
-            histManager->IDH7[c][3]->Fill((generatedRig - L2TruthRig)/generatedRig, generatedRig, weight_NucFlux);
+            histManager->IDH7[c][3]->Fill((L1TruthBeta - L2TruthBeta)/L1TruthBeta, L1TruthBeta, weight_NucFlux);
         }
-
+        */
         // ---------------------------------------------------------
         // D. Background Histograms
         // ---------------------------------------------------------
+        // all sample should be under Z/A = frag/AveMass_fragZ beta cutoff, because we are estimating the background of fragZ, we need make sure each zsrc use same cutoff 
         int startSrc = isISS ? 0 : (charge - 2);
         int endSrc   = isISS ? NsrcLoc : (charge - 1);
 
@@ -378,11 +415,7 @@ void selectdata::Loop() {
             if (getMinAForZ(zsrc) < 0) continue;
 
             auto charge_cuts = tracker_cut.chargeTempCut(zsrc, fragZ, isISS, forBackground);
-            auto eq_num = tracker_cut.FragSampleSel(zsrc, fragZ, 0, isISS, forBackground);
-            auto eq_d1  = tracker_cut.FragSampleSel(zsrc, fragZ, 1, isISS, forBackground);
-            auto eq_d2  = tracker_cut.FragSampleSel(zsrc, fragZ, 2, isISS, forBackground);
-            auto eq_d3  = tracker_cut.FragSampleSel(zsrc, fragZ, 3, isISS, forBackground);
-
+            
             bool BetaDetQual_zsrc[3] = {
                 tof_cut.cutTOF(zsrc, isISS).total,
                 rich_NaF && rich_cut.cutRICH(zsrc, isISS, true).total,
@@ -390,37 +423,43 @@ void selectdata::Loop() {
             };
 
             for (int c = 0; c < std::min(2, NchainLoc); ++c) {
+                bool L1BeamL2Any = tracker_cut.FragSampleSel(zsrc, fragZ, c, 0, isISS, forBackground);
+                bool L1BeamL2BeamLoose  = tracker_cut.FragSampleSel(zsrc, fragZ, c, 1, isISS, forBackground);
+                bool L1BeamL2BeamFull  = tracker_cut.FragSampleSel(zsrc, fragZ, c, 2, isISS, forBackground);
+                bool L1BeamL2FragLoose  = tracker_cut.FragSampleSel(zsrc, fragZ, c, 3, isISS, forBackground);
+                bool L1BeamL2FragFull  = tracker_cut.FragSampleSel(zsrc, fragZ, c, 4, isISS, forBackground);
+                
                 for (int d = 0; d < NdetLoc; ++d) {
-                    if (!DetValidBkg[d] || !getBeyondBetaCutoffCut(d, fragZ, getMinAForZ(fragZ))) continue;
+                    if (!DetValidBkg[d] || !getBeyondBetaCutoffCut(d, fragZ, AveMass_fragZ)) continue;
 
                     double ek = ek_det[d];
                     int srcIdx = isISS ? s : 0;
 
-                    // MC BKG Components
                     if (!isISS && mtrpar[0] == geneID_MC) {
-                        if (eq_d1[c]) histManager->BKG_H1a[c][srcIdx][d]->Fill(ek, weight_NucFlux);
-                        if (eq_d2[c] && mtrpar[1] == geneID_MC) histManager->BKG_H1b[c][srcIdx][d]->Fill(ek, weight_NucFlux);
-                        if (eq_d3[c] && mtrpar[1] != geneID_MC && L2_Z <= mch) histManager->BKG_H1c[c][srcIdx][d]->Fill(ek, weight_NucFlux);
+                        if (L1BeamL2Any) histManager->BKG_H1a[c][srcIdx][d]->Fill(ek, weight_NucFlux);
+                        if (L1BeamL2BeamLoose && mtrpar[1] == geneID_MC) histManager->BKG_H1b[c][srcIdx][d]->Fill(ek, weight_NucFlux);
+                        if (L1BeamL2BeamFull && mtrpar[1] == geneID_MC) histManager->BKG_H1b2[c][srcIdx][d]->Fill(ek, weight_NucFlux);
+                        //if (L1BeamL2NotBeam && mtrpar[1] != geneID_MC && L2_Z <= mch) histManager->BKG_H1c[c][srcIdx][d]->Fill(ek, weight_NucFlux);
                     }
 
-                    // Data-driven BKG Est
-                    if (eq_num[c] && BetaDetQual_frag[d]) {
+                    if (L1BeamL2FragLoose && BetaDetQual_frag[d]) {
                         auto mres = Tools::calculateMass(beta_det[d], 1.0, Tools::GetSmearRigidity(rig_chain[c], isISS, d), fragZ);
                         histManager->BKG_H2b[c][srcIdx][d]->Fill(mres.invMass, ek, weight_NucFlux);
+                        if(L1BeamL2FragFull)
+                            histManager->BKG_H2b2[c][srcIdx][d]->Fill(mres.invMass, ek, weight_NucFlux);
                     }
 
                     // H4: Charge Templates (Nested switch for clarity)
                     double fillQ = (c == 0) ? tk_ql1_unb : tk_ql1;
-                    for (int t = 0; t < 5; ++t) {
-                        if (t <= 1 && zsrc != charge) continue;
+                    for (int t = 0; t <= 5; ++t) {
                         if (!charge_cuts.details[2 * t + c]) continue;
                         if (t > 1 && !BetaDetQual_zsrc[d]) continue;
 
                         double q_val = fillQ;
-                        if (t == 3) {
+                        if (t == 4) {
                             q_val = tk_ql2;
-                            //if (isISS) q_val = Tools::tuneL2Charge((c==0?"UnbiasedL1Inner":"L1Inner"), sources[s], detectors[d], Tools::findBin(StdBetaBins, beta_det[d]), tk_ql2);
-                        } else if (t == 4) {
+                            if (isISS) q_val = Tools::tuneL2Charge((c==0?"UnbiasedL1Inner":"L1Inner"), sources[s], detectors[d], Tools::findBin(StdBetaBins, beta_det[d]), tk_ql2);
+                        } else if (t == 5) {
                             q_val = tk_qinner;
                         }
                         histManager->BKG_H4[c][srcIdx][d][t]->Fill(q_val, ek, weight_NucFlux);
@@ -429,20 +468,24 @@ void selectdata::Loop() {
             }
         }
 
-        // MC Truth for BKG (H2a2, H3)
+        // MC Truth for BKG (H2a, H3),beam = charge
         if (!isISS && NisoBKG > 0) {
-            auto numPass = tracker_cut.FragSampleSel(charge, fragZ, 1, isISS, forBackground);//use den1 cut here because no InnerQ cut
             for (int c = 0; c < std::min(2, NchainLoc); ++c) {
+                bool L1BeamL2FragLoose  = tracker_cut.FragSampleSel(charge, fragZ, c, 3, isISS, forBackground);
+                bool L1BeamL2FragFull  = tracker_cut.FragSampleSel(charge, fragZ, c, 4, isISS, forBackground);
+                
                 for (int d = 0; d < NdetLoc; ++d) {
                     for (int bi = 0; bi < NisoBKG; ++bi) {
                         bool IsFragOrig = (fragZ == charge) && (FragA[bi] == UseMass);
                         bool isL2FragTruth = (mtrpar[1] == fragIDs_global[bi]);
 
-                        if (numPass[c] && DetValidBkg[d] && mtrpar[0] == geneID_MC && isL2FragTruth)
+                        if (L1BeamL2FragLoose && DetValidBkg[d] && mtrpar[0] == geneID_MC && isL2FragTruth)
+                            histManager->BKG_H2a[c][d][bi]->Fill(ek_det[d], weight_NucFlux);
+                        if (L1BeamL2FragFull && BetaDetQual_frag[d] && mtrpar[0] == geneID_MC && isL2FragTruth)
                             histManager->BKG_H2a2[c][d][bi]->Fill(ek_det[d], weight_NucFlux);
                         
-                        if (PassTwoAcc_frag[c] && BetaDetQual_frag[d] && (IsFragOrig || isL2FragTruth)) {
-                            histManager->BKG_H3a[c][d][bi]->Fill(L2TruthEk_n, weight_NucFlux);
+                        if (PassTwoAcc_frag[c] && BetaDetQual_frag[d] && (IsFragOrig || mtrpar[0] == fragIDs_global[bi])) { //L1 frag truth
+                            histManager->BKG_H3a[c][d][bi]->Fill(generatedEk_n, weight_NucFlux);
                             histManager->BKG_H3b[c][d][bi]->Fill(ek_det[d], weight_NucFlux);
                         }
                     }
@@ -451,37 +494,114 @@ void selectdata::Loop() {
         }
         
         // BKG H5 (Correlation)
+        /*
         for (int c = 0; c < std::min(2, NchainLoc); ++c) {
             if (!tracker_cut.chargeTempCut(8, fragZ, isISS, forBackground).details[c]) continue;
             for (int d = 0; d < NdetLoc; ++d) {
-                if (DetValidBkg[d] && getBeyondBetaCutoffCut(d, 2, 4))
+                if (DetValidBkg[d] && getBeyondBetaCutoffCut(d, fragZ, AveMass_fragZ))
                     histManager->BKG_H5[c][d][0]->Fill(tk_qinner, (c == 0 ? tk_ql1_unb : tk_ql1), ek_det[d], weight_NucFlux);
             }
         }
-
+        
         // ---------------------------------------------------------
-        // E. Flux Efficiency
+        // E. Flux Efficiency Filling
         // ---------------------------------------------------------
-        for (int iz = 0; iz < (isISS ? 3 : 1); ++iz) {
-            int useZ = isISS ? (iz == 0 ? 2 : (iz == 1 ? 6 : 8)) : charge;
-            bool BetaDetQual_Eff[3] = { tof_cut.cutTOF(useZ, isISS).total, rich_NaF && rich_cut.cutRICH(useZ, isISS, true).total, !rich_NaF && rich_cut.cutRICH(useZ, isISS, true).total };
-            
-            auto eff_num = tracker_cut.TwoAccTrackerCut(useZ, isISS, false, 0.2);
-            auto eff_den = tracker_cut.TwoAccTrackerCut(useZ, isISS, true, 0.2);
+        
+        // Pre-calc common reference variables
+        double ref_rig_inner = isISS ? (0.939615 + 0.739231 * cutOffRig) : generatedRig;
+        double unbiasedTOFEk = AMS_Iso::Tools::betaToKineticEnergy(betahs);
 
-            for (int d = 0; d < NdetLoc; ++d) {
-                if (isISS && !getBeyondBetaCutoffCut(d, 6, 12)) continue;
-                if (!BetaDetQual_Eff[d]) continue;
-                for (int c = 0; c < std::min(2, NchainLoc); ++c) {
-                    if (eff_den.details[c]) histManager->FLUXH1[c][0][1][d][iz]->Fill(ek_det[d], weight_NucFlux);
-                    if (eff_num.details[c]) histManager->FLUXH1[c][0][0][d][iz]->Fill(ek_det[d], weight_NucFlux);
+        // 1. Loop Source Elements (index s: 0=He, 1=Li, 2=Be, 3=B, 4=C, 5=N, 6=O)
+        for (int s = 0; s < NsrcLoc; ++s) {
+            // Map index to actual charge: targetZ = 2, 3, 4, 5, 6, 7, 8, for mc only charge
+            int tZ = isISS ? s + 2 : charge; 
+            // 2. Loop Cut Groups
+            for (int cg = 0; cg < NcutGroups; ++cg) {
+                const std::string& cut = cut_groups[cg];
+                bool isBkgRed = (cut == "BkgReduction"), isBetaRec = (cut == "BetaRecQuality"), isInner = (cut == "InnerTracking");
+                
+                // Rule: Helium (s=0) only fills BkgReduction
+                if (tZ == 2 && !isBkgRed) continue;
+
+                // 3. Get Efficiency Result for current tZ
+                auto res = [&]() -> AMS_Iso::CutResult<2> {
+                    if (cut == "Trigger")       return tracker_cut.getEfficiencyTrigger(tZ, isISS, forBackground);
+                    if (cut == "L1QLowLimit")   return tracker_cut.getEfficiencyL1QLowLimit(tZ, isISS, forBackground);
+                    if (cut == "L1PickUp")      return tracker_cut.getEfficiencyL1PickUp(tZ, isISS, forBackground);
+                    if (cut == "InnerTracking") return tracker_cut.getEfficiencyInnerTracking(tZ, isISS);
+                    if (cut == "InnerTrackerQ") return tracker_cut.getEfficiencyInnerTrackerQ(tZ, isISS, forBackground);
+                    if (cut == "UpperTOFQ")     return tracker_cut.getEfficiencyUTOFQ(tZ, isISS, forBackground);
+                    if (cut == "BkgReduction")  return tracker_cut.getEfficiencyBkgReduction(tZ, isISS);
+                    return CutResult<2>();
+                }();
+
+                // 4. Pre-calc Beta Detector Quality for current tZ
+                bool BetaQ_eff[3] = { 
+                    tof_cut.cutTOF(tZ, isISS).total, 
+                    rich_NaF && rich_cut.cutRICH(tZ, isISS, true).total, 
+                    !rich_NaF && rich_cut.cutRICH(tZ, isISS, true).total 
+                };
+
+                // 5. Detector Loop (0:TOF, 1:NaF, 2:Agl, 3:Tracker)
+                for (int d = 0; d < 4; ++d) { 
+                    bool isTrk = (d == 3);
+
+                    if (isTrk == isBetaRec) continue; 
+
+                    // Z/A Ratio Rule: use particle's charge if tZ matches event charge, else use Carbon (6/12.0)
+                    int cZ = (tZ == charge) ? charge : 6; 
+                    double cA = (tZ == charge) ? AveMass_charge : 12.0;
+                    // Cutoff checks
+                    if (isTrk) { if (!beyondRigCutoff) continue; } 
+                    else { if (!getBeyondBetaCutoffCut(d, cZ, cA)) continue; }
+
+                    // --- Determine Value to fill ---
+
+                    double val = -3;
+                    if (isInner) {
+                        double unbiasedRig = AMS_Iso::Tools::kineticEnergyToRigidity(unbiasedTOFEk, cZ, cA);
+                        val = (unbiasedRig > 0 && unbiasedRig <= 6.3) ? unbiasedRig : ref_rig_inner;
+                    } 
+                    else {
+                        // Tracker fills Rigidity, Detectors fill converted Ek
+                        val = isTrk ? rig_chain[0] : AMS_Iso::Tools::rigidityToKineticEnergy(rig_chain[0], cZ, cA);
+                    }
+
+                    // --- Pass/Fail Condition ---
+                    bool pDen = false, pNum = false;
+                    if (isBetaRec) {
+                        bool trkAcc = (d == 0) ? tracker_cut.TwoAccTrackerCut_OneTrk(tZ, isISS).details[0] 
+                                               : tracker_cut.TwoAccTrackerCut(tZ, isISS, forBackground).details[0];
+                        bool detGeo = (d == 0) ? tof_cut.cutTOF(tZ, isISS).details[0] 
+                                               : (rich_cut.cutRICH(tZ, isISS, true).details[0] && rich_beta[0] > 0 && (d == 1 ? rich_NaF : !rich_NaF));
+                        pDen = trkAcc && detGeo;
+                        pNum = pDen && BetaQ_eff[d];
+                    } else {
+                        pDen = res.details[1];
+                        pNum = res.details[0];
+                    }
+
+                    // 6. Fill Histograms: [source_idx][cut_idx][numden][det]
+                    if (pDen && histManager->FLUXH1[s][cg][1][d]) {
+                        histManager->FLUXH1[s][cg][1][d]->Fill(val, weight_NucFlux); 
+                    }
+                    if (pNum && histManager->FLUXH1[s][cg][0][d]) {
+                        histManager->FLUXH1[s][cg][0][d]->Fill(val, weight_NucFlux);
+                    }
                 }
             }
         }
+        */
+        
+        //ISS FLUXH5
+        /*
+        if(isISS && PassTwoAcc[0]) histManager->ISS_FLUXH5[0]->Fill(cutOffRig, rig_chain[0], weight_NucFlux);
+        if(isISS && PassTwoAcc[1]) histManager->ISS_FLUXH5[1]->Fill(cutOffRig, rig_chain[1], weight_NucFlux);
             
 
-        if(isISS && rig_chain[0] > 1.2*cutOffRig) histManager->ISS_FLUXH4[0]->Fill(run, btstat);
-
+        //if(isISS && rig_chain[0] > 1.2*cutOffRig) histManager->ISS_FLUXH4[0]->Fill(run, btstat);
+        */
+        
     } // End Event Loop
 
     // --- Finalization: MC Flux ---

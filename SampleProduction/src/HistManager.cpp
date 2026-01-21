@@ -83,7 +83,7 @@ HistManager::HistManager(const std::string& output_filename,
 	
 	auto ekBinsStd = safeBins("EkPerNucleon");
 	auto rigBins = safeBins("Rigidity");
-	auto betaBins = binMgr.GetBetaBins(2, 4);
+	auto betaBins = binMgr.GetBetaBins(4, 7);
 
 	std::cout<<"DEBUG: Niso="<<Niso<<" charge="<<charge<<std::endl;
 	std::cout<<"DEBUG: iso ptr="<<iso<<std::endl;
@@ -134,7 +134,7 @@ HistManager::HistManager(const std::string& output_filename,
 
 	// IDH2 & IDH3
 	createMass2D(IDH2, "ID_H2", "%s %s UseMass%dBin Isotope MC 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]");
-
+	/*
 	IDH3.resize(Nchain);
 	for (int c = 0; c < Nchain; ++c) {
 		IDH3[c].resize(Ndet);
@@ -146,7 +146,6 @@ HistManager::HistManager(const std::string& output_filename,
 				200, 0, 0.5, static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 		}
 	}
-
 	//--------- Beta Study Histograms ---------
 	int zMin = isISS ? 2 : charge;
 	int zMax = isISS ? 8 : charge;
@@ -173,7 +172,6 @@ HistManager::HistManager(const std::string& output_filename,
 	};
 	createRICH1D_Z(IDH4a, "a", "NaF", 0);
 	createRICH1D_Z(IDH4b, "b", "AGL", 1);
-
 	// IDH5/6
 	auto createDeltaBeta2D_Z = [&](auto& container, const char* prefix, const char* suffix, 
 								const char* titleFmt, const std::vector<double>& yBins) {
@@ -208,26 +206,26 @@ HistManager::HistManager(const std::string& output_filename,
 		createDeltaBeta2D_Z(IDH5b4, "H5", "b4", "%s %s frag AGL-Gene #Delta(1/#beta);frag AGL-Gene #Delta(1/#beta);L2True Beta", betaBins);
 		createDeltaBeta2D_Z(IDH5c4, "H5", "c4", "%s %s frag TOF-Gene #Delta(1/#beta);frag TOF-Gene #Delta(1/#beta);L2True Beta", betaBins);
 		createDeltaBeta2D_Z(IDH5d4, "H5", "d4", "%s %s frag Track-Gene #Delta(1/rig);frag Track-Gene #Delta(1/rig);L2True Rigidity [GV]", rigBins);
+		
+		IDH7.resize(Nchain);
+		for (int c = 0; c < Nchain; ++c) {
+			IDH7[c].resize(Ndet+1);
+			for (int d = 0; d < Ndet; ++d) {
+				IDH7[c][d] = createHist<TH2F>(
+					Form("%s_IDH7_%s", chains[c].c_str(), detectors[d].c_str()),
+					Form("%s %s Frag Rig Change; (GeneRig - L2TruthRig)/GeneRig; gene Rigidity [GV]",chains[c].c_str(), detectors[d].c_str()),
+					2000, -0.5, 0.5, static_cast<int>(betaBins.size()) - 1, betaBins.data());
+			}
+			IDH7[c][3] = createHist<TH2F>(
+				Form("%s_IDH7_Tracker", chains[c].c_str()),
+				Form("%s Tracker Frag Rig Change; (GeneRig - L2TruthRig)/GeneRig; gene Rigidity [GV]",chains[c].c_str()),
+				2000, -0.5, 0.5, static_cast<int>(betaBins.size()) - 1, betaBins.data());
+		}	
 	}
 
 	createDeltaBeta2D_Z(IDH6a, "H6", "a", "%s %s TOF-NaF #Delta(1/#beta);TOF-NaF Delta(1/#beta);NaF #beta [GeV/n]", betaBins);
 	createDeltaBeta2D_Z(IDH6b, "H6", "b", "%s %s TOF-AGL #Delta(1/#beta);TOF-AGL #Delta(1/#beta);AGL #beta [GeV/n]", betaBins);
-	
-	IDH7.resize(Nchain);
-	for (int c = 0; c < Nchain; ++c) {
-		IDH7[c].resize(Ndet+1);
-		for (int d = 0; d < Ndet; ++d) {
-			IDH7[c][d] = createHist<TH2F>(
-				Form("%s_IDH7_%s", chains[c].c_str(), detectors[d].c_str()),
-				Form("%s %s Frag Rig Change; (GeneRig - L2TruthRig)/GeneRig; gene Rigidity [GV]",chains[c].c_str(), detectors[d].c_str()),
-				2000, -0.5, 0.5, static_cast<int>(rigBins.size()) - 1, rigBins.data());
-		}
-		IDH7[c][3] = createHist<TH2F>(
-			Form("%s_IDH7_Tracker", chains[c].c_str()),
-			Form("%s Tracker Frag Rig Change; (GeneRig - L2TruthRig)/GeneRig; gene Rigidity [GV]",chains[c].c_str()),
-			2000, -0.5, 0.5, static_cast<int>(rigBins.size()) - 1, rigBins.data());
-	}	
-
+	*/
 
 	// ============ BKG AREA ============
 	std::cout<<"DEBUG: BKG Hists"<<std::endl;
@@ -236,19 +234,21 @@ HistManager::HistManager(const std::string& output_filename,
 	if(!isISS){
 		BKG_H1a.resize(Nchain);
 		BKG_H1b.resize(Nchain);
+		BKG_H1b2.resize(Nchain);
 		BKG_H1c.resize(Nchain);
-		//BKG_H2a.resize(Nchain);
 	}
 	BKG_H2b.resize(Nchain);
+	BKG_H2b2.resize(Nchain);
 	BKG_H4.resize(Nchain);
 	for(int c=0; c<Nchain; ++c) {
 		if(!isISS){
 			BKG_H1a[c].resize(Nsrc);
 			BKG_H1b[c].resize(Nsrc);
+			BKG_H1b2[c].resize(Nsrc);
 			BKG_H1c[c].resize(Nsrc);
-			//BKG_H2a[c].resize(Nsrc);
 		}
 		BKG_H2b[c].resize(Nsrc);
+		BKG_H2b2[c].resize(Nsrc);
 		BKG_H4[c].resize(Nsrc);
 
 		for(int s=0; s<Nsrc; ++s) {
@@ -257,10 +257,11 @@ HistManager::HistManager(const std::string& output_filename,
 			if(!isISS){
 				BKG_H1a[c][s].resize(Ndet);
 				BKG_H1b[c][s].resize(Ndet);
+				BKG_H1b2[c][s].resize(Ndet);
 				BKG_H1c[c][s].resize(Ndet);
-				//BKG_H2a[c][s].resize(Ndet);
 			}
 			BKG_H2b[c][s].resize(Ndet);
+			BKG_H2b2[c][s].resize(Ndet);
 			BKG_H4[c][s].resize(Ndet);
 
 			for(int d=0; d<Ndet; ++d) {
@@ -275,32 +276,30 @@ HistManager::HistManager(const std::string& output_filename,
 						Form("%s_BKG_H1b_%s_%s", chains[c].c_str(), srcName.c_str(), detectors[d].c_str()),
 						Form("%s %s %s Truth L1 X->L2 Still X;E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
 						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
+					
+					BKG_H1b2[c][s][d] = createHist<TH1F>(
+						Form("%s_BKG_H1b2_%s_%s", chains[c].c_str(), srcName.c_str(), detectors[d].c_str()),
+						Form("%s %s %s Truth L1 X->L2 Still X fullcut; E_{k}/n [GeV/n]; Counts", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
+						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 
 					BKG_H1c[c][s][d] = createHist<TH1F>(
 						Form("%s_BKG_H1c_%s_%s", chains[c].c_str(), srcName.c_str(), detectors[d].c_str()),
 						Form("%s %s %s Truth L1 X->L2 Any Frag ;E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
 						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
-
-					// --- BKG_H2 Series (Numerators) ---
-					/*
-					BKG_H2a[c][s][d] = createHist<TH1F>(
-						Form("%s_BKG_H2a_%s_%s", chains[c].c_str(), srcName.c_str(), detectors[d].c_str()),
-						Form("%s %s %s L1 X->L2 Frag Elem Y;E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
-						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
-					*/
 				}
 
 				BKG_H2b[c][s][d] = createHist<TH2F>(
 					Form("%s_BKG_H2b_%s_%s", chains[c].c_str(), srcName.c_str(), detectors[d].c_str()),
-					Form("%s %s %s L1 X->L2 Frag Elem Y 1/Mass;1/Mass;E_{k}/n [GeV/n]", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
+					Form("%s %s %s L1 X->L2 Frag Elem Y 1/Mass (L1Q Window Cut and loose selection);1/Mass;E_{k}/n [GeV/n]", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
+					200, 0, 0.5, static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
+				BKG_H2b2[c][s][d] = createHist<TH2F>(
+					Form("%s_BKG_H2b2_%s_%s", chains[c].c_str(), srcName.c_str(), detectors[d].c_str()),
+					Form("%s %s %s L1 X->L2 Frag Elem Y 1/Mass (L1Q Window Cut and Standard Selection);1/Mass;E_{k}/n [GeV/n]", chains[c].c_str(), detectors[d].c_str(), srcName.c_str()),
 					200, 0, 0.5, static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 
 				// --- BKG_H4 Series (Charge Study) ---
 				BKG_H4[c][s][d].resize(Nct);
 				for(int t=0; t<Nct; ++t) {
-					// 1. L1QSignal only for Be
-					if (t<=1 && isISS && s != charge-2) continue;
-					// 2. Fixed ranges
 					int x_bins = 800; double x_min = 1.5; double x_max = 9.5;
 					BKG_H4[c][s][d][t] = createHist<TH2F>(
 						Form("%s_BKG_H4_%s_%s_%s", chains[c].c_str(), srcName.c_str(), charge_types[t].c_str(), detectors[d].c_str()),
@@ -310,6 +309,8 @@ HistManager::HistManager(const std::string& output_filename,
 			}
 		}
 	}
+	
+	/*
 	double binStep = 0.01;
     double valMin = 0.5,  valMax = isISS ? 9. : charge + 1.;
     int nBinsVal = static_cast<int>((valMax - valMin) / binStep + 0.5); // +0.5 用于防止浮点误差
@@ -342,21 +343,25 @@ HistManager::HistManager(const std::string& output_filename,
             }
         }
     }
+	*/
 	
 	// --- MC Only BKG Histograms ---
 	if(!isISS) {
 		int NisoBKG = static_cast<int>(FragA.size());
 		
+		BKG_H2a.resize(Nchain);
 		BKG_H2a2.resize(Nchain);
 		BKG_H3a.resize(Nchain);
 		BKG_H3b.resize(Nchain);
 
 		for(int c=0; c<Nchain; ++c) {
+			BKG_H2a[c].resize(Ndet);
 			BKG_H2a2[c].resize(Ndet);
 			BKG_H3a[c].resize(Ndet);
 			BKG_H3b[c].resize(Ndet);
 
 			for(int d=0; d<Ndet; ++d) {
+				BKG_H2a[c][d].resize(NisoBKG);
 				BKG_H2a2[c][d].resize(NisoBKG);
 				BKG_H3a[c][d].resize(NisoBKG);
 				BKG_H3b[c][d].resize(NisoBKG);
@@ -364,67 +369,101 @@ HistManager::HistManager(const std::string& output_filename,
 				for(int i=0; i<NisoBKG; ++i) {
 					int massA = FragA[i];
 					
+					BKG_H2a[c][d][i] = createHist<TH1F>(
+						Form("%s_BKG_H2a_%s_Z%d_Mass%d", chains[c].c_str(), detectors[d].c_str(), fragZ, massA),
+						Form("%s %s MC L1 X->L2 Truth Frag Isotope Mass%d Counts;E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA),
+						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
+
 					BKG_H2a2[c][d][i] = createHist<TH1F>(
 						Form("%s_BKG_H2a2_%s_Z%d_Mass%d", chains[c].c_str(), detectors[d].c_str(), fragZ, massA),
-						Form("%s %s MC L1 X->L2 Truth Frag Isotope Mass%d Counts;E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA),
+						Form("%s %s MC L1 X->L2 Truth Frag Isotope Mass%d Counts full selection;E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA),
 						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 
 					BKG_H3a[c][d][i] = createHist<TH1F>(
 						Form("%s_BKG_H3a_%s_Z%d_Mass%d", chains[c].c_str(), detectors[d].c_str(), fragZ, massA),
-						Form("%s %s MC L2 Truth Frag Isotop Mass%d Counts;L2Truth E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA),
+						Form("%s %s MC L1 Truth Frag Isotop Mass%d Counts;generated E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA),
 						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 
 					BKG_H3b[c][d][i] = createHist<TH1F>(
 						Form("%s_BKG_H3b_%s_Z%d_Mass%d", chains[c].c_str(), detectors[d].c_str(), fragZ, massA),
-						Form("%s %s MC L2 Truth Frag Isotop Mass%d Counts;%s E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA,  detectors[d].c_str()),
+						Form("%s %s MC L1 Truth Frag Isotop Mass%d Counts;%s E_{k}/n [GeV/n];Counts", chains[c].c_str(), detectors[d].c_str(), massA,  detectors[d].c_str()),
 						static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 				}
 			}
 		}
 	}
-
+	
 	// ============ FLUX AREA ============
+	/*
+	
 	std::cout<<"DEBUG: Flux Hists"<<std::endl;
 
-	// FLUXH1: [chain][cut_group][num_den][det][iz]
-	FLUXH1.resize(Nchain);
-	for (int c = 0; c < Nchain; ++c) {
-		FLUXH1[c].resize(NcutGroups);
-		for (int cg = 0; cg < NcutGroups; ++cg) {
-			FLUXH1[c][cg].resize(NnumDen);
-			for (int nd = 0; nd < NnumDen; ++nd) {
-				FLUXH1[c][cg][nd].resize(Ndet);
-				for (int d = 0; d < Ndet; ++d) {
-					FLUXH1[c][cg][nd][d].resize(isISS ? 3 : 1);
-					for (int i = 0; i < (isISS ? 3 : 1); ++i){
-						int useZ = (i == 0) ? 2 : (i == 1 ? 6 : 8);
-						if(!isISS) useZ = charge;
-						FLUXH1[c][cg][nd][d][i] = createHist<TH1F>(
-							Form("%s_FLUXH1_%s_%s_%s_Z%d",
-								chains[c].c_str(), cut_groups[cg].c_str(), num_den[nd].c_str(), detectors[d].c_str(), useZ),
-							Form("%s %s %s %s Efficiency Sample;E_{k}/n [GeV/n];Counts",
-								chains[c].c_str(), detectors[d].c_str(), cut_groups[cg].c_str(), num_den[nd].c_str()),
-							static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
-					}
-				}
-			}
-		}
-	}
+	// Resize the first dimension for 7 sources (He to O)
+    FLUXH1.resize(Nsrc);
+    for (int s = 0; s < Nsrc; ++s) {
+        int targetZ = isISS ? s + 2 : charge; 
+        FLUXH1[s].resize(NcutGroups);
+
+        for (int cg = 0; cg < NcutGroups; ++cg) {
+            std::string cut = cut_groups[cg];
+            FLUXH1[s][cg].resize(NnumDen);
+
+            for (int nd = 0; nd < NnumDen; ++nd) {
+                FLUXH1[s][cg][nd].resize(Ndet + 1);
+
+                for (int d = 0; d < Ndet + 1; ++d) {
+                    bool isTracker = (d == Ndet);
+                    std::string detName = isTracker ? "Tracker" : detectors[d];
+
+                    // --- Refined Boolean Logic to Flatten the Control Flow ---
+                    bool isHe = (targetZ == 2);
+                    bool isBetaCut = (cut == "BetaRecQuality");
+                    bool isBkgRed = (cut == "BkgReduction");
+
+                    bool shouldCreate = false;
+                    if (isHe) {
+                        // Helium Rule: Only BkgReduction
+                        shouldCreate = isBkgRed && isTracker;
+                    } else {
+                        // Li-O Rule: Tracker gets all except BetaRecQuality; Detectors get ONLY BetaRecQuality
+                        shouldCreate = (isTracker != isBetaCut); 
+                    }
+
+                    // Exit early if this combination is not needed
+                    if (!shouldCreate) {
+                        FLUXH1[s][cg][nd][d] = nullptr;
+                        continue;
+                    }
+
+                    // --- Setup Binning and Axis Titles ---
+                    const double* bins = isTracker ? rigBins.data() : ekBinsStd.data();
+                    int nBins = isTracker ? (rigBins.size() - 1) : (ekBinsStd.size() - 1);
+                    std::string xTitle = isTracker ? "Rigidity [GV]" : "E_{k}/n [GeV/n]";
+
+                    // --- Single, Unified Creation Call ---
+                    FLUXH1[s][cg][nd][d] = createHist<TH1F>(
+                        Form("Eff_FLUXH1_%s_%s_%s_Z%d", cut.c_str(), num_den[nd].c_str(), detName.c_str(), targetZ),
+                        Form("%s %s %s %s Efficiency (Z=%d);%s;Counts", chains[0].c_str(), detName.c_str(), cut.c_str(), num_den[nd].c_str(), targetZ, xTitle.c_str()),
+                        nBins, bins
+                    );
+                }
+            }
+        }
+    }
 
 	if (isISS) {
-		/*
 		ISS_FLUXH2.resize(1);
 		ISS_FLUXH2[0] = createHist<TH1F>(
 			"ISS_FLUX_H2",
 			"ISS Exposure time;Rigidity [GV];Exposure Time [s]",
 			static_cast<int>(rigBins.size()) - 1, rigBins.data());
-		*/
 		
 		ISS_FLUXH3.resize(Ndet);
 		for (int d = 0; d < Ndet; ++d) {
 			ISS_FLUXH3[d].resize(Niso);
 			for (int i = 0; i < Niso; ++i) {
 				int mass = iso->getMass(i);
+				auto ekBins = binMgr.GetEkPerNucleonBins(charge, mass);
 				ISS_FLUXH3[d][i] = createHist<TH1F>(
 					Form("ISS_FLUX_H3_%s_Mass%dBin", detectors[d].c_str(), mass),
 					Form("%s Mass%dBin Exposure time;E_{k}/n [GeV/n];Exposure Time [s]",
@@ -437,6 +476,9 @@ HistManager::HistManager(const std::string& output_filename,
 		ISS_FLUXH4[0] = createHist<TH2F>(
 			"ISS_FLUXH4","BTstatus vs Run;Run;BTstatus",
 			70985, 1305853512,1731763512, 3, 0.5,3.5);
+		ISS_FLUXH5.resize(2);
+		ISS_FLUXH5[0] = createHist<TH2F>("ISS_FLUX_H5_0","30deg Max CutoffRig vs InnerRig;30deg Max CutoffRig;InnerRig",2500,3,28,2500,3,28);
+		ISS_FLUXH5[1] = createHist<TH2F>("ISS_FLUX_H5_1","30deg Max CutoffRig vs L1InnerRig;30deg Max CutoffRig;L1InnerRig",2500,3,28,2500,3,28);
 		
 	} else {
 		MC_FLUXH3.resize(1);
@@ -444,29 +486,10 @@ HistManager::HistManager(const std::string& output_filename,
 			"MC_FLUX_H3",
 			"MC Generated counts;E_{k}^{gen}/n [GeV/n];Counts",
 			static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
-		/*
-		MC_FLUXH2.resize(Nchain);
-		for (int c = 0; c < Nchain; ++c) {
-			MC_FLUXH2[c].resize(NcutGroups);
-			for (int cg = 0; cg < NcutGroups; ++cg) {
-				MC_FLUXH2[c][cg].resize(Ndet);
-				for (int d = 0; d < Ndet; ++d) {
-					MC_FLUXH2[c][cg][d].resize(NgeneRec);
-					for (int gr = 0; gr < NgeneRec; ++gr) {
-						MC_FLUXH2[c][cg][d][gr] = createHist<TH1F>(
-							Form("%s_MC_FLUX_H2_%s_%s_%s",
-								chains[c].c_str(), cut_groups[cg].c_str(),
-								detectors[d].c_str(), gene_rec[gr].c_str()),
-							Form("%s %s MC %s %s counts;%s E_{k}/n [GeV/n];Counts",
-								chains[c].c_str(), detectors[d].c_str(),
-								cut_groups[cg].c_str(), gene_rec[gr].c_str(), detectors[d].c_str()),
-							static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
-					}
-				}
-			}
-		}
-		*/
 	}
+	*/
+	
+	
 
 	std::cout<<"DEBUG Finish Hist Defination"<<std::endl;
 }
@@ -528,12 +551,13 @@ void HistManager::Save(bool saveTree) {
     writeHists(IDH5b); writeHists(IDH5b2); writeHists(IDH5b3); writeHists(IDH5b4);
     writeHists(IDH5c3); writeHists(IDH5c4); writeHists(IDH5d3); writeHists(IDH5d4);
     writeHists(IDH6a); writeHists(IDH6b);
-    writeHists(IDH7);
+    if (!IDH7.empty()) writeHists(IDH7);
 	if (!BKG_H1a.empty()) {
 		writeHists(BKG_H1a); writeHists(BKG_H1b); writeHists(BKG_H1c);
-		//writeHists(BKG_H2a); 
+		writeHists(BKG_H2a); writeHists(BKG_H1b2);
     }
 	writeHists(BKG_H2b);
+	writeHists(BKG_H2b2);
 	writeHists(BKG_H4);
 	if (!BKG_H5.empty()) writeHists(BKG_H5);
 
@@ -545,7 +569,7 @@ void HistManager::Save(bool saveTree) {
     
     writeHists(FLUXH1);
 
-    if (!ISS_FLUXH2.empty()) { writeHists(ISS_FLUXH2); writeHists(ISS_FLUXH3); writeHists(ISS_FLUXH4); }
+    if (!ISS_FLUXH2.empty()) { writeHists(ISS_FLUXH2); writeHists(ISS_FLUXH3); writeHists(ISS_FLUXH4); writeHists(ISS_FLUXH5);}
     if (!MC_FLUXH3.empty()) { writeHists(MC_FLUXH3);} //writeHists(MC_FLUXH2); }
 
     if (saveTree && m_filteredTree) {

@@ -34,9 +34,9 @@ void BinningManager::Initialize() {
     
     m_bin_map["common_EkPerNucleon"] = ek_common_vec;
     m_bin_map["old_EkPerNucleon"] = ek_old_vec;
-    m_bin_map["EkPerNucleon"] = ConvertRigidityToEk(rigidity_bins_vec, 2, 4);
-    m_bin_map["Beta"] = ConvertRigidityToBeta(rigidity_bins_vec, 2, 4);
-    m_bin_map["BetaRig"] = ConvertRigidityToBetaRig(rigidity_bins_vec, 2, 4);
+    m_bin_map["EkPerNucleon"] = ConvertRigidityToEk(rigidity_bins_vec, 4, 7);
+    m_bin_map["Beta"] = ConvertRigidityToBeta(rigidity_bins_vec, 4, 7);
+    m_bin_map["BetaRig"] = ConvertRigidityToBetaRig(rigidity_bins_vec, 4, 7);
 
     m_bin_map["InverseMass"] = {}; 
     m_bin_map["1/NaFBeta"] = {};   

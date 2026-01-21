@@ -55,20 +55,19 @@ namespace Constants {
 }
 
 	const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
-	/*
+	
     const std::vector<std::string> cut_groups = {
-		"BasicAndFiducial", "Trigger", "InnerTracker", "L1BigZ", "L1PickUp", "L1UpperQ", "UpperTOFQ", "BkgReduction",
-		"TOFGeo", "TOFBetaQuality", "NaFGeo", "NaFReconstruction", "AGLGeo", "AGLReconstruction"
+        "Trigger", "L1QLowLimit", "L1PickUp","InnerTracking", "InnerTrackerQ", "UpperTOFQ", "BetaRecQuality", "BkgReduction"
 	};
-    */
-    const std::vector<std::string> cut_groups = {"BkgReduction"};
+    
+    //const std::vector<std::string> cut_groups = {"Trigger", "nAcc", "L1QLowLimit", "UpperTOFQ", "BkgReduction"};
     
 	const std::vector<std::string> num_den = {"Num", "Den"};
     //！！！！！！！！remove all Z=1 ！！！！！！！！！
-	const std::vector<std::string> charge_types = { //now use L1-InnerQ 2D hist to get equ2 3 den 
-        "L1Sig_Any",      // L1选了X, Inner不看Q只看RMS (对应 Equ1 分母逻辑),无法用2D替代因为不能有InnerQ上限cut
-        "L1Sig_Pass",     // L1选了X, Inner也是X (对应 Equ2 分母逻辑), 现在用来研究BelowL1
-        //"L1Sig_Frag",     // L1选了X, Inner是碎裂产物 (对应 Equ3 分母逻辑)
+	const std::vector<std::string> charge_types = { 
+        "L1Sig_Any",      // L1选了X, Inner不看Q只看RMS,无法用2D替代因为不能有L1Qcut
+        "L1Sig_PassLoose",     // L1选了X, Inner也是X, loose selection
+        "L1Sig_Pass",     // L1选了X, Inner也是X, full selection
         "L1Template",     // 也就是原来的 L1QTemplate
         "L2Template",     // 原来的 L2QTemplate
         //"InnerQSignal",   // 保持不变

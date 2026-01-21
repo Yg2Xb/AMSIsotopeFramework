@@ -30,6 +30,7 @@ struct HistInfo {
     int bin_min;
     int bin_max;
     double min_bin_width;
+    bool is_rigidity; // 新增：标记 x 轴是否为 Rigidity
 };
 
 struct FitResult {
@@ -44,21 +45,21 @@ struct FileConfig {
     double weight;
 };
 
-// Signal files (*2, *3): All are Beryllium isotopes
+// Signal files (, *3): All are Beryllium isotopes
 const vector<FileConfig> FILES_SIG = {
-    {"Be7_rew_frag4.root",  "Beryllium", 1.8},
-    {"Be9_rew_frag4.root",  "Beryllium", 0.9},
-    {"Be10_rew_frag4.root", "Beryllium", 0.3}
+    {"Be7_rew_frag4_NoBkg.root",  "Beryllium", 0.},
+    {"Be9_rew_frag4_NoBkg.root",  "Beryllium", 0.},
+    {"Be10_rew_frag4_NoBkg.root", "Beryllium", 1.0}
 };
 
 // Background/Frag files (*4): Mixed elements
 const vector<FileConfig> FILES_BKG = {
-    {"B10_rew_frag4.root",  "Boron",    0.15},
-    {"B11_rew_frag4.root",  "Boron",    0.35},
-    {"C12_rew_frag4.root",  "Carbon",   2.50},
-    {"N14_rew_frag4.root",  "Nitrogen", 0.25},
-    {"N15_rew_frag4.root",  "Nitrogen", 0.25},
-    {"O16_rew_frag4.root",  "Oxygen",   2.50}
+    {"B10_rew_frag4_NoBkg.root",  "Boron",    0.15},
+    {"B11_rew_frag4_NoBkg.root",  "Boron",    0.35},
+    {"C12_rew_frag4_NoBkg.root",  "Carbon",   2.50},
+    {"N14_rew_frag4_NoBkg.root",  "Nitrogen", 0.25},
+    {"N15_rew_frag4_NoBkg.root",  "Nitrogen", 0.25},
+    {"O16_rew_frag4_NoBkg.root",  "Oxygen",   2.50}
 };
 
 void SetGraphStyle(TGraphErrors* g, int color, int marker) {
@@ -70,7 +71,7 @@ void SetGraphStyle(TGraphErrors* g, int color, int marker) {
 
 void AutoRebin(TH1* h, double min_width) {
     for(int r = 1; r <= 10; ++r) {
-        if (h->GetMaximum() >= 50 && h->GetBinWidth(1) > min_width) break;
+        if (h->GetMaximum() >= 60 && h->GetBinWidth(1) > min_width) break;
         h->Rebin(2);
     }
 }
@@ -136,28 +137,28 @@ void getGlobalYRange(const vector<TGraphErrors*>& graphs, double& y_min, double&
     }
     if (found) {
         double r = (y_max - y_min == 0) ? (abs(y_min)*0.1 ? abs(y_min)*0.1 : 0.01) : (y_max - y_min);
-        y_min -= r * 0.1;
-        y_max += r * 0.1;
+        y_min -= r * 0.2;
+        y_max += r * 0.2;
     } else {
         y_min = -0.01; y_max = 0.01;
     }
 }
 
 HistInfo getHistInfo(const string& suffix) {
-    if (suffix == "ID_H5a2") return {"a2", "NaF-Tracker #Delta(1/#beta)", "gene Rigidity [GV]", 10, 25, 25e-5};
-    if (suffix == "ID_H5b2") return {"b2", "AGL-Tracker #Delta(1/#beta)", "gene Rigidity [GV]", 20, 47, 5e-5};
+    if (suffix == "ID_H5a2") return {"a2", "NaF-Tracker #Delta(1/#beta)", "gene Rigidity [GV]", 11, 25, 25e-5, true};
+    if (suffix == "ID_H5b2") return {"b2", "AGL-Tracker #Delta(1/#beta)", "gene Rigidity [GV]", 21, 47, 5e-5, true};
     
-    if (suffix == "ID_H5a3") return {"a3", "NaF-Gene #Delta(1/#beta)", "gene Beta", 10, 25, 25e-5};
-    if (suffix == "ID_H5b3") return {"b3", "AGL-Gene #Delta(1/#beta)", "gene Beta", 20, 47, 5e-5};
-    if (suffix == "ID_H5c3") return {"c3", "TOF-Gene #Delta(1/#beta)", "gene Beta", 7, 14, 5e-5};
-    if (suffix == "ID_H5d3") return {"d3", "Track-Gene #Delta(1/rig)", "gene Rigidity [GV]", 6, 55, 25e-5};
+    if (suffix == "ID_H5a3") return {"a3", "NaF-Gene #Delta(1/#beta)", "gene Beta", 11, 25, 25e-5, false};
+    if (suffix == "ID_H5b3") return {"b3", "AGL-Gene #Delta(1/#beta)", "gene Beta", 21, 47, 5e-5, false};
+    if (suffix == "ID_H5c3") return {"c3", "TOF-Gene #Delta(1/#beta)", "gene Beta", 8, 14, 5e-5, false};
+    if (suffix == "ID_H5d3") return {"d3", "Track-Gene #Delta(1/rig)", "gene Rigidity [GV]", 7, 45, 25e-5, true};
 
-    if (suffix == "ID_H5a4") return {"a4", "frag NaF-L2True #Delta(1/#beta)", "L2True Beta", 10, 25, 5e-5};
-    if (suffix == "ID_H5b4") return {"b4", "frag AGL-L2True #Delta(1/#beta)", "L2True Beta", 20, 47, 5e-5};
-    if (suffix == "ID_H5c4") return {"c4", "frag TOF-L2True #Delta(1/#beta)", "L2True Beta", 7, 14, 5e-5};
-    if (suffix == "ID_H5d4") return {"d4", "frag Track-L2True #Delta(1/rig)", "L2True Rigidity [GV]", 6, 55, 5e-5};
+    if (suffix == "ID_H5a4") return {"a4", "frag NaF-L2True #Delta(1/#beta)", "L2True Beta", 11, 25, 5e-5, false};
+    if (suffix == "ID_H5b4") return {"b4", "frag AGL-L2True #Delta(1/#beta)", "L2True Beta", 21, 47, 5e-5, false};
+    if (suffix == "ID_H5c4") return {"c4", "frag TOF-L2True #Delta(1/#beta)", "L2True Beta", 8, 14, 5e-5, false};
+    if (suffix == "ID_H5d4") return {"d4", "frag Track-L2True #Delta(1/rig)", "L2True Rigidity [GV]", 7, 45, 5e-5, true};
 
-    return {"", "", "", 0, 0, 0};
+    return {"", "", "", 0, 0, 0, false};
 }
 
 // Updated function to construct histogram name dynamically based on element
@@ -211,13 +212,32 @@ FitResult twoStepGaussianFit(TH1* hist, const string& title, double center_x, do
     double sigma0 = f1->GetParameter(2);
     delete f1;
 
-    double x_min = mean0 - 2 * abs(sigma0);
-    double x_max = mean0 + 2 * abs(sigma0);
+    double scale = (title.find("frag") != string::npos) ? 1.5 : 1.5;
+    
+    double x_min = mean0 - scale * abs(sigma0);
+    double x_max = mean0 + scale * abs(sigma0);
+    
     if (x_max <= x_min) return result;
+
+    // --- 修改点 2: 检查拟合范围内的 bin 数 ---
+    int bin_min_fit = hist->GetXaxis()->FindFixBin(x_min + 1e-9);
+    int bin_max_fit = hist->GetXaxis()->FindFixBin(x_max - 1e-9);
+    if (bin_max_fit - bin_min_fit + 1 < 4) {
+        // 如果拟合范围内的 bin 数小于 4，则直接返回 (相当于 continue)
+        TCanvas* c = (TCanvas*)gROOT->FindObject("c_fit"); 
+        if(c) {
+            c->cd(); hist->SetTitle(title.c_str()); hist->Draw("hist");
+            TLatex lat; lat.SetNDC(); lat.SetTextSize(0.035);
+            lat.DrawLatex(0.55, 0.85, Form("Fit Bins < 4: %d", bin_max_fit - bin_min_fit + 1));
+            c->Update();
+        }
+        return result;
+    }
+    // ----------------------------------------
 
     TCanvas* c = (TCanvas*)gROOT->FindObject("c_fit"); 
     hist->SetTitle(title.c_str());
-    double buf = 0.5 * (x_max - x_min);
+    double buf = 4 * (x_max - x_min);
     hist->GetXaxis()->SetRangeUser(x_min - buf, x_max + buf);
 
     vector<vector<double>> data = DoGausPlusAsymGausFit(hist, x_min, x_max, c, false);
@@ -257,22 +277,27 @@ void DrawAndSave(TGraphErrors* g_mean, TGraphErrors* g_sigma, const HistInfo& in
     getGlobalYRange(v_mean, ym_min, ym_max);
     getGlobalYRange(v_sigma, ys_min, ys_max);
 
+    int logx_setting = info.is_rigidity ? 1 : 0; 
+    // ----------------------------
+
     c->cd(1);
     gPad->SetGrid();
-    gPad->SetLogx();
+    gPad->SetLogx(logx_setting);
     g_mean->SetTitle((info.title_part + " Mean").c_str());
     g_mean->GetXaxis()->SetTitle(info.x_axis_label.c_str());
     g_mean->GetYaxis()->SetTitle("Mean");
     g_mean->GetYaxis()->SetRangeUser(ym_min, ym_max);
+    g_mean->GetXaxis()->SetTitleOffset(0.9);
     g_mean->Draw("APZ");
 
     c->cd(2);
     gPad->SetGrid();
-    gPad->SetLogx();
+    gPad->SetLogx(logx_setting); // 应用修改后的 LogX 设置
     g_sigma->SetTitle((info.title_part + " Sigma").c_str());
     g_sigma->GetXaxis()->SetTitle(info.x_axis_label.c_str());
     g_sigma->GetYaxis()->SetTitle("Sigma");
     g_sigma->GetYaxis()->SetRangeUser(ys_min, ys_max);
+    g_sigma->GetXaxis()->SetTitleOffset(0.9);
     g_sigma->Draw("APZ");
 
     c->SaveAs((output_dir + base_name + ".png").c_str());
@@ -310,9 +335,13 @@ void DrawCombined(const map<string, TGraphErrors*>& graphs, const string& detect
     getGlobalYRange(vs, ys_min, ys_max);
 
     HistInfo info = getHistInfo(s3);
+    
+    // --- 修改点 1: LogX 设置 ---
+    int logx_setting = info.is_rigidity ? 1 : 0; 
+    // ----------------------------
 
     auto drawPad = [&](int pad, TGraphErrors* g3, TGraphErrors* g4, const string& type, double min, double max) {
-        c->cd(pad); gPad->SetGrid(); gPad->SetLogx();
+        c->cd(pad); gPad->SetGrid(); gPad->SetLogx(logx_setting); // 应用修改后的 LogX 设置
         g3->SetTitle((info.title_part + " " + type + " Comparison").c_str());
         g3->GetXaxis()->SetTitle(info.x_axis_label.c_str());
         g3->GetYaxis()->SetTitle(type.c_str());
@@ -320,10 +349,10 @@ void DrawCombined(const map<string, TGraphErrors*>& graphs, const string& detect
         g3->Draw("AP"); 
         g4->Draw("P same"); 
         
-        TLegend* leg = new TLegend(0.75, 0.8, 0.9, 0.9);
-        leg->SetFillStyle(0); leg->SetBorderSize(0);
-        leg->AddEntry(g3, "Non-Frag (Be)", "p");
-        leg->AddEntry(g4, "Frag (Mix)", "p");
+        TLegend* leg = new TLegend(0.5, 0.65, 0.88, 0.88);
+        leg->SetFillStyle(0); leg->SetBorderSize(0);leg->SetTextSize(0.035);
+        leg->AddEntry(g3, "Non-Frag Be10(MC Be10)", "p");
+        leg->AddEntry(g4, "Frag Be10 (MC B to Oxy)", "p");
         leg->Draw();
     };
 
@@ -341,7 +370,7 @@ void Analyze(const string& suffix, const string& input_dir, const string& output
     cout << "Analyzing " << suffix << " ..." << endl;
     
     // Choose file list based on suffix ending (3/2 -> Signal, 4 -> Background)
-    // Assuming *2 and *3 are signal (Be), and *4 is background (Frag)
+    // Assuming and *3 are signal (Be), and *4 is background (Frag)
     const vector<FileConfig>& files = (suffix.back() == '4') ? FILES_BKG : FILES_SIG;
 
     TH2F* h2 = LoadCombinedHist(suffix, files, input_dir);
@@ -361,6 +390,7 @@ void Analyze(const string& suffix, const string& input_dir, const string& output
     
     for (int i = 1; i <= nBinsY; ++i) {
         if (i < info.bin_min || (info.bin_max != 999 && i > info.bin_max)) continue;
+        cout<<"bin:"<<i<<endl;
 
         double x_val = h2->GetYaxis()->GetBinCenter(i);
         
@@ -368,6 +398,7 @@ void Analyze(const string& suffix, const string& input_dir, const string& output
         h1->SetDirectory(nullptr);
         
         if (h1->GetEntries() > 50) {
+            // 此处不需要 LogX 逻辑，因为拟合是在 1D 直方图上进行的
             stringstream ss; ss << fixed << setprecision(3) << x_val;
             string label = "Val: " + ss.str();
             

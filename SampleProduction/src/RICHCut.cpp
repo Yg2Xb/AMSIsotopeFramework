@@ -30,7 +30,7 @@
         event_->rich_pb > 0.01,
         event_->rich_pmt > RICH::cut_pmt[richRegion],
         event_->rich_npe[2] > 0 ? (event_->rich_npe[0] / event_->rich_npe[2]) > RICH::cut_per[richRegion] : false,
-        event_->rich_hit > 0 ? (event_->rich_usedm / event_->rich_hit) < 0.85 : false, 
+        true, //event_->rich_hit > 0 ? (event_->rich_usedm / event_->rich_hit) < 0.85 : false, 
         event_->rich_beta[0] > 0
      };
  
@@ -128,8 +128,8 @@
  
  CutResult<3> RICHCut::cutRICH(int charge, bool isISS, bool interpolate) const {
      std::array<bool, 3> cuts{
-         //cutGeometry(interpolate).total,
-         yanzx_dst ? event_->rich_goodgeo : cutGeometry(interpolate).total,
+         cutGeometry(interpolate).total,
+         //yanzx_dst ? event_->rich_goodgeo : cutGeometry(interpolate).total,
          cutBasic().total,
          cutCharge(charge).total
      };

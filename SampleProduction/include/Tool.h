@@ -141,7 +141,7 @@ double GetSmearRichBeta(int iz, double beta, bool isNaF);
 double GetSmearRigidity(double Rigidity, bool isISS, int idet);
 
 // Initializes the charge tuning lookup tables. Thread-safe.
-void initChargeTuning(const std::string& filename = "/eos/ams/group/ihep/zixuan/ForSampleProduction/CDFLookupTable_fromSpline.root");
+void initChargeTuning(const std::string& filename = "/eos/ams/group/ihep/zixuan/ForSampleProduction/withBkg_CDFLookupTable_fromSpline.root");
 
 // Performs L2 charge tuning using pre-loaded tables.
 double tuneL2Charge(
