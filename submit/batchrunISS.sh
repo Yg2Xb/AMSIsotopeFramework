@@ -13,7 +13,7 @@ START=5
 END=9
 
 # 你的 ISSBer.sh 绝对路径
-ISSBER="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh"
+ISSBER="/afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer2.sh"
 
 # time 命令路径
 TIME_CMD="/usr/bin/time"

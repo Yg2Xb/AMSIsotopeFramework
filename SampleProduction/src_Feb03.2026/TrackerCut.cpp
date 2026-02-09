@@ -7,7 +7,6 @@
  * History:
  * 20241029 - created by ZX.Yan
  * 20241123 - Optimized
- * 20260204 - Cached Chi2 vars & Updated Efficiency logic
  ***********************************************************/
 #include <cmath>
 #include <bitset>
@@ -56,7 +55,8 @@ void TrackerCut::initializeStatus() {
             }
         }
 
-        // Calculate Secondary Hits
+        // Calculate Secondary Hits (bitset logic from getSecondaryHitCount moved here)
+        // Assuming event_->betah2hb is also bitset for secondary hits
         if (layer >= 1 && layer < Tracker::LAYER_COUNT - 1) {
             if (std::bitset<32>(event_->betah2hb[0]).test(layer)) ++status_.secondaryHitCountX;
             if (std::bitset<32>(event_->betah2hb[1]).test(layer)) ++status_.secondaryHitCountY;
@@ -81,16 +81,6 @@ void TrackerCut::initializeStatus() {
     // 4. L2 Status Caching
     status_.hasL2XY = status_.hasXYHit[1]; // L2 is index 1
     status_.hasL2QStatusGood = ((event_->tk_qls[1] & GOOD_CHARGE_MASK) == 0);
-
-    // 5. Chi2 Caching (NEW)
-    status_.l1InnerChi2 = event_->tk_chis1[Tracker::Algorithm::DEFAULT][Tracker::Alignment::DEFAULT][Tracker::Span::INNER_L1][Tracker::Direction::Y];
-    status_.innerChi2   = event_->tk_chis1[Tracker::Algorithm::DEFAULT][Tracker::Alignment::DEFAULT][Tracker::Span::INNER]   [Tracker::Direction::Y];
-    
-    // Calculate L1 Chi2 Contribution
-    // Formula: (N_Inner - 2)*Chi2_InnerL1 - (N_Inner - 3)*Chi2_Inner
-    // Note: Use status_.innerLayerHits which represents hits in L2-L8
-    status_.l1Chi2 = (status_.innerLayerHits - 2) * status_.l1InnerChi2 - 
-                     (status_.innerLayerHits - 3) * status_.innerChi2;
 }
 
 // Accessor implementations
@@ -104,12 +94,7 @@ int TrackerCut::getSecondaryHitCount(int direction) const {
     return (direction == 0) ? status_.secondaryHitCountX : status_.secondaryHitCountY;
 }
 
-// New Accessors for Chi2 (需要在 .h 文件中声明)
-double TrackerCut::getL1Chi2() const { return status_.l1Chi2; }
-double TrackerCut::getL1InnerChi2() const { return status_.l1InnerChi2; }
-double TrackerCut::getInnerChi2() const { return status_.innerChi2; }
-
-// ... (Standard Geometry checks) ...
+// ... (getRadius, isInFiducial, validateLayer, getLayerPosition, checkFiducialCut: KEEP AS IS) ...
 double TrackerCut::getRadius(bool isUnphysical, int layer) const {
     if (!validateLayer(layer)) return -1.0;
     auto position = getLayerPosition(isUnphysical, layer);
@@ -120,16 +105,19 @@ bool TrackerCut::isInFiducial(bool isUnphysical, int layer) const {
     auto position = getLayerPosition(isUnphysical, layer);
     return checkFiducialCut(layer, position, std::hypot(position[0], position[1]));
 }
+
 bool TrackerCut::validateLayer(int layer) const { return layer >= 0 && layer < Tracker::LAYER_COUNT && event_; }
+
 std::array<double, 2> TrackerCut::getLayerPosition(bool isUnphysical, int layer) const {
     if (isUnphysical) return {event_->tk_pos1s[layer][0], event_->tk_pos1s[layer][1]};
     return {event_->tk_pos[layer][0], event_->tk_pos[layer][1]};
 }
+
 bool TrackerCut::checkFiducialCut(int layer, const std::array<double, 2>& position, double radius) const {
     return radius < Tracker::FiducialCuts::R_POS[layer] && std::abs(position[1]) < Tracker::FiducialCuts::Y_POS[layer];
 }
 
-// ===================== Cuts Implementation =====================
+// ===================== Cuts Implementation (Using Cached Values) =====================
 
 CutResult<4> TrackerCut::cutBasicAndFiducial(bool isISS, bool isUnbiased, bool ForInTrkEffNum) const {
     if (!event_) return CutResult<4>();
@@ -176,7 +164,20 @@ CutResult<5> TrackerCut::cutL1Norm(int charge, bool isISS, float coe) const {
     if (!event_) return CutResult<5>();
 
     bool hasL1XY = status_.hasXYHit[0]; // CACHED
-    double l1Q = status_.L1Q_Normal;    // CACHED
+    
+    // Chi2 calculation still needs array access unless cached
+    double l1ChiY = (status_.innerLayerHits - 2) * 
+                event_->tk_chis1[Tracker::Algorithm::DEFAULT]
+                                [Tracker::Alignment::DEFAULT]
+                                [Tracker::Span::INNER_L1]  // 包含L1
+                                [Tracker::Direction::Y] - 
+                    (status_.innerLayerHits - 3) * 
+                event_->tk_chis1[Tracker::Algorithm::DEFAULT]
+                                [Tracker::Alignment::DEFAULT]
+                                [Tracker::Span::INNER]     
+                                [Tracker::Direction::Y];
+
+    double l1Q = status_.L1Q_Normal; // CACHED
     int qStatus = status_.L1QStatus_Normal; // CACHED
     
     double low = 0.46 + (charge - 3) * 0.16;
@@ -187,7 +188,7 @@ CutResult<5> TrackerCut::cutL1Norm(int charge, bool isISS, float coe) const {
         (l1Q > charge - coe*low),
         qStatus == 0, 
         hasL1XY,
-        true // NO Chi2 Cut here as requested
+        true //l1ChiY < 10.0 Jan.25.2026 remove all L1 and L1Inner Chi2 as 
     };
     return CutResult<5>(cuts, true);
 }
@@ -195,7 +196,7 @@ CutResult<5> TrackerCut::cutL1Norm(int charge, bool isISS, float coe) const {
 CutResult<3> TrackerCut::cutUTOFQ(int charge, bool isISS,
                                  bool forEfficiency, bool forBackground, float coe) const {
     if (!event_) return CutResult<3>();
-    double UpperTOFmeanQ = (event_->tof_ql[0] + event_->tof_ql[1]) * 0.5; 
+    double UpperTOFmeanQ = (event_->tof_ql[0] + event_->tof_ql[1]) * 0.5; // Mul instead of div
     if(event_->tof_ql[0]==0 || event_->tof_ql[1]==0) UpperTOFmeanQ = UpperTOFmeanQ*2;
     std::array<bool, 3> cuts{
         UpperTOFmeanQ > (charge - coe*0.6) && UpperTOFmeanQ < (charge + coe*1.5),
@@ -222,13 +223,16 @@ CutResult<4> TrackerCut::cutInnerTracker(int charge, bool isISS,
                                          bool forEfficiency, bool forBackground) const {
     if (!event_) return CutResult<4>();
     
+    // Use CACHED map
     bool hasInnerHits = (status_.innerLayerHits >= 5) && 
-                        status_.hasYHit[1] && 
-                        (status_.hasYHit[2] || status_.hasYHit[3]) && 
-                        (status_.hasYHit[4] || status_.hasYHit[5]) && 
-                        (status_.hasYHit[6] || status_.hasYHit[7]);
+                       status_.hasYHit[1] && 
+                       (status_.hasYHit[2] || status_.hasYHit[3]) && 
+                       (status_.hasYHit[4] || status_.hasYHit[5]) && 
+                       (status_.hasYHit[6] || status_.hasYHit[7]);
 
-    double innerNormChisY = status_.innerChi2; // Use CACHED value
+    double innerNormChisY = event_->tk_chis1[Tracker::Algorithm::DEFAULT]
+                                          [Tracker::Alignment::DEFAULT]
+                                          [Tracker::Span::INNER][1];
     std::array<bool, 4> cuts{
         hasInnerHits,
         innerNormChisY < 10,
@@ -250,15 +254,34 @@ CutResult<3> TrackerCut::cutBackground(int charge, bool isISS,
     std::array<bool, 3> cuts{
         forBackground || (single || (yH < 5 || xyH < 3) || low2nd),  
         (single || (yH < 5 || xyH < 3) || low2nd),                  
-        single                                                      
+        single                                                             
     };
     return CutResult<3>(cuts, false);
 }
 
 CutResult<1> TrackerCut::cutPhysTrigger(bool isISS) const {
     if (!event_) return CutResult<1>();
-    int ptrig = isISS ? event_->physbpatt2 : event_->physbpatt1; 
+    //int ptrig = isISS ? event_->physbpatt2 : 0x3EL;
+    int ptrig = isISS ? event_->physbpatt2 : event_->physbpatt1; //2025.12.07, apply mc phystrigger
     return CutResult<1>({ (ptrig & 0x3EL) != 0 });
+}
+
+CutResult<10> TrackerCut::cutTracker(int charge, bool isISS) const {
+    if (!event_) return CutResult<10>();
+    auto phys = cutPhysTrigger(isISS);
+    auto basic = cutBasicAndFiducial(isISS);
+    auto inTrk = cutInnerTracker(charge, isISS);
+    auto inQ = cutInnerQ(charge, isISS);
+    auto l1u = cutL1Unbiased(charge, isISS);
+    auto l1n = cutL1Norm(charge, isISS);
+    auto tof = cutUTOFQ(charge, isISS);
+    auto bg = cutBackground(charge, isISS);
+
+    return CutResult<10>({
+        phys.total && basic.total && inTrk.total && inQ.total && l1u.total && tof.total && bg.total,
+        phys.total, basic.total, inTrk.total, inQ.total, l1u.total, tof.total, bg.total, l1n.total, 
+        phys.total && basic.total && inTrk.total && inQ.total && l1n.total  && tof.total && bg.total
+    }, false);
 }
 
 bool TrackerCut::AccUndepCut(int charge, bool isISS, bool forBackground, double coe) const {
@@ -293,18 +316,23 @@ CutResult<12> TrackerCut::chargeTempCut(int zsrc, int fragZ, bool isISS, bool fo
     std::array<bool, 12> cuts; cuts.fill(false);
     if (!event_) return CutResult<12>(cuts, false);
     
+    // 1. Base
     if (!cutPhysTrigger(isISS).total) return CutResult<12>(cuts, false);
     if (!cutBasicAndFiducial(isISS).total) return CutResult<12>(cuts, false);
     if (!cutInnerTracker(zsrc, isISS).total) return CutResult<12>(cuts, false);
 
+    // 2. Variables (Cached)
     auto bg = cutBackground(zsrc, isISS, false, forBackground);
     double innerQ = status_.innerQ;
     double L38 = status_.L38InnerAveQ;
+
+    // 3. L1 Selections
     auto l1n = cutL1Norm(zsrc, isISS);
     auto l1u = cutL1Unbiased(zsrc, isISS);
     bool L1N_Qual = l1n.details[2] && l1n.details[3] && l1n.details[4] ;
     bool L1U_Qual = l1u.details[2] && l1u.details[3];
 
+    // 4. Strict
     double bkg_coe = 0.6;
     if(zsrc==2) bkg_coe = 0.1;
 
@@ -313,31 +341,38 @@ CutResult<12> TrackerCut::chargeTempCut(int zsrc, int fragZ, bool isISS, bool fo
     auto s_L1N  = cutL1Norm(zsrc, isISS, bkg_coe);
     auto s_L1U  = cutL1Unbiased(zsrc, isISS, false, false, bkg_coe);
 
+    // Indices: 0 L1Sig any, 1 L1Sig PassFullSel for BL1, 2 L1Temp, 3 L2Temp, 4 InnerTemp
+    // --- Group 1: L1 Signal Study ---
     bool rms_ok = cutInnerQ(zsrc, isISS).details[1]; 
-    bool excludeZ1 = zsrc != -1 ? rms_ok && innerQ > 1.5 : event_->tk_qrms[1] < 0.55;
 
     if (bg.details[0]) {
-        if (excludeZ1) { cuts[0] = L1U_Qual; cuts[1] = L1N_Qual; }  
+        
+        if (rms_ok || event_->tk_qrms[1] < 0.55) { cuts[0] = L1U_Qual; cuts[1] = L1N_Qual; }  // Any
         
         double innerLowLimit[7] = {0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5};
         double innerUpLimit[7] =  {0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5};
         
-        if (rms_ok && innerQ > zsrc - innerLowLimit[zsrc-2] && innerQ < zsrc + innerUpLimit[zsrc-2]) { cuts[2] = L1U_Qual; cuts[3] = L1N_Qual; } 
+        if (rms_ok && innerQ > zsrc - innerLowLimit[zsrc-2] && innerQ < zsrc + innerUpLimit[zsrc-2]) { cuts[2] = L1U_Qual; cuts[3] = L1N_Qual; } // Pass Loose TrackerCut except L1 
         
-        if (AccUndepCut(zsrc, isISS, forBackground, 1.0)) { cuts[4] = L1U_Qual; cuts[5] = L1N_Qual; } 
+        if (AccUndepCut(zsrc, isISS, forBackground, 1.0)) { cuts[4] = L1U_Qual; cuts[5] = L1N_Qual; } // Pass Full TrackerCut except L1 
     }
 
+    // --- Group 2: Templates ---
+    // L1 Template
     if (s_InQ.total && s_TOF.details[1] && bg.details[0]) {
          cuts[6] = L1U_Qual; cuts[7] = L1N_Qual;
     }
 
+    // L2 Template
     bool L38_ok = std::abs(L38 - zsrc) < 0.45 * bkg_coe;
     if (status_.hasL2XY && status_.hasL2QStatusGood && L38_ok && s_TOF.details[2] && bg.details[0]) {
         cuts[8] = s_L1U.total; 
         cuts[9] = s_L1N.total ; 
     }
 
+    // InnerTemp: Pure X
     double LowerTOFmeanQ = (event_->tof_ql[2] + event_->tof_ql[3]) * 0.5; 
+    //if(event_->tof_ql[2]==0 || event_->tof_ql[3]==0) LowerTOFmeanQ = LowerTOFmeanQ*2;
     if (rms_ok && cutUTOFQ(zsrc, isISS, false, false, 1.).details[1] && LowerTOFmeanQ > zsrc - 0.5 && LowerTOFmeanQ < zsrc + 0.5 && bg.details[0]) {
         cuts[10] = cutL1Norm(zsrc, isISS, 0.6).total ; 
         cuts[11] = cutL1Unbiased(zsrc, isISS, false, false, 0.6).total;
@@ -346,37 +381,33 @@ CutResult<12> TrackerCut::chargeTempCut(int zsrc, int fragZ, bool isISS, bool fo
     return CutResult<12>(cuts, false);
 }
 
+// Selector for Fragmentation
 bool TrackerCut::FragSampleSel(int zsrc, int fragZ, int c, int selector, bool isISS, bool forBackground) const {
     bool pass = false;
     if (!event_) return pass;
+
     auto chargetempcut_beam = chargeTempCut(zsrc, fragZ, isISS, forBackground);
     auto chargetempcut_frag = chargeTempCut(fragZ,  fragZ, isISS, forBackground);
+
     bool inner_opts[5] = {
-        chargetempcut_beam.details[0+c], chargetempcut_beam.details[2+c], chargetempcut_beam.details[4+c],
-        chargetempcut_frag.details[2+c], chargetempcut_frag.details[4+c],
+        chargetempcut_beam.details[0+c],         // 0: L1Beam, L2Any
+        chargetempcut_beam.details[2+c],         // 1: L1Beam, L2Beam, loose cut
+        chargetempcut_beam.details[4+c],         // 2: L1Beam, L2Beam, full cut
+        chargetempcut_frag.details[2+c],         // 3: L1Beam, L2Frag, loose cut
+        chargetempcut_frag.details[4+c],         // 4: L1Beam, L2Frag, full cut
     };
+
     if (selector < 0 || selector > 4) return pass; 
     if (!inner_opts[selector]) return pass;
 
+    // 3. L1 Checks (Only calculated if Inner passed)
     double q_l1_u = status_.L1Q_Unbiased;
     double q_l1_n = status_.L1Q_Normal;
-    double low = 0, up = 0;
-    if(forBackground)
-    {
-        if(zsrc == 5) {low = 0.3; up = 0.4;}
-        else if(zsrc == 7) {low = 0.4; up = 0.4;}
-        else {low = 0.5; up = 0.5;}
-    }
-    else
-    {
-        if(zsrc == 5) {low = 0.3; up = 0.5;}
-        else if(zsrc == 7) {low = 0.3; up = 0.5;}
-        else {low = 0.5; up = 0.5;}
-    }
-    bool L1N_Beam =  q_l1_n > (zsrc - low) && q_l1_n < (zsrc + up);
-    bool L1U_Beam =  q_l1_u > (zsrc - low) && q_l1_u < (zsrc + up);
+    bool L1N_Beam =  q_l1_n > (zsrc - 0.5) && q_l1_n < (zsrc + 0.5);
+    bool L1U_Beam =  q_l1_u > (zsrc - 0.5) && q_l1_u < (zsrc + 0.5);
     
     pass = c == 0 ? L1U_Beam : L1N_Beam; 
+    
     return pass;
 }
 
@@ -386,11 +417,14 @@ CutResult<2> TrackerCut::getEfficiencyTrigger(int charge, bool isISS, bool forBa
     auto basic = cutBasicAndFiducial(isISS);
     auto inTrk = cutInnerTracker(charge, isISS);
     auto inQ = cutInnerQ(charge, isISS);
-    auto l1n = cutL1Norm(charge, isISS);
+    auto l1u = cutL1Unbiased(charge, isISS);
     auto tof = cutUTOFQ(charge, isISS);
     auto bg = cutBackground(charge, isISS, false, forBackground);
-    bool common = basic.total && inTrk.total && inQ.total && l1n.total && tof.total && bg.total;
-    return CutResult<2>({common && phys.total, common && !phys.total});
+    bool common = basic.total && inTrk.total && inQ.total && l1u.total && tof.total && bg.total;
+    
+    bool num = common && phys.total;
+    bool den = common && !phys.total;
+    return CutResult<2>({num , den});
 }
 
 CutResult<2> TrackerCut::getEfficiencynAcc(int charge, bool isISS, bool forBackground) const {
@@ -420,26 +454,35 @@ CutResult<2> TrackerCut::getEfficiencynAcc(int charge, bool isISS, bool forBackg
 
 CutResult<2> TrackerCut::getEfficiencyL1QLowLimit(int charge, bool isISS, bool forBackground) const {
     if (!event_) return CutResult<2>();
+    
     auto phys = cutPhysTrigger(isISS);
     auto basic = cutBasicAndFiducial(isISS);
     auto inTrk = cutInnerTracker(charge, isISS);
     auto inQ = cutInnerQ(charge, isISS, false, false, 1.0);
-    auto tof = cutUTOFQ(charge, isISS, false, forBackground);
+    auto tof = cutUTOFQ(charge, isISS, false, false, 1.0);
+    //double UpperTOFmeanQ = (event_->tof_ql[0] + event_->tof_ql[1]) * 0.5; // Mul instead of div
+    //if(event_->tof_ql[0]==0 || event_->tof_ql[1]==0) UpperTOFmeanQ = UpperTOFmeanQ*2;
+    //bool tofq = UpperTOFmeanQ > charge - 0.6 && UpperTOFmeanQ < charge + 1.5;
     auto bg = cutBackground(charge, isISS, false, forBackground);
     auto l1u = cutL1Unbiased(charge, isISS);
 
-    bool den = phys.total && basic.total && inTrk.total && inQ.total && tof.details[0] && bg.total;
+    bool den = phys.total && basic.total && inTrk.total && inQ.total && tof.total && bg.total;
     bool num = den && l1u.details[1] && l1u.details[2] && l1u.details[3];
+
     return CutResult<2>({ num, den });
 }
 
 CutResult<2> TrackerCut::getEfficiencyL1PickUp(int charge, bool isISS, bool forBackground) const {
     if (!event_) return CutResult<2>();
+
+    // 1. Base Selection (Common Denominator Base)
     auto tof = cutUTOFQ(charge, isISS, 1.0);
     auto l1u = cutL1Unbiased(charge, isISS);
     bool common = getEfficiencyL1QLowLimit(charge, isISS, forBackground).details[0] && tof.details[1] && l1u.total;
 
-    bool den = common;
+    //bool tightQ = (status_.L1Q_Unbiased > charge - 0.3 && status_.L1Q_Unbiased < charge + 0.3);
+    bool den = common;// && tightQ;
+
     auto l1n = cutL1Norm(charge, isISS);
     bool num = den && l1n.details[1] && l1n.details[2] && l1n.details[3] && l1n.details[4] ;
 
@@ -448,25 +491,33 @@ CutResult<2> TrackerCut::getEfficiencyL1PickUp(int charge, bool isISS, bool forB
 
 CutResult<2> TrackerCut::getEfficiencyInnerTracking(int charge, bool isISS) const {
     if (!event_) return CutResult<2>();
+
     auto phys = cutPhysTrigger(isISS);
-    auto basicForEff = cutBasicAndFiducial(isISS, true, false); 
+    auto basicForEff = cutBasicAndFiducial(isISS, true, false); //full unbiased fiducial volume cut
     bool extraBasicCuts = event_->itrdtracks >= 0 && event_->ibetahs >= 0 && event_->betahs > 0.4;
-    bool externalL1 = event_->tk_l1qxy[0] > 0 && event_->tk_l1qxy[1] > 0; 
+    //auto l1u = cutL1Unbiased(charge, isISS, 1.0); 
+    bool externalL1 = event_->tk_l1qxy[0] > 0 && event_->tk_l1qxy[1] > 0; //l1 xy signal
+    //extra basic cuts
+    //unbiased tofq
     bool StricTOFQCut = event_->tof_qls[0] > charge - 0.4 && event_->tof_qls[0] < charge + 0.5 &&
                         event_->tof_qls[1] > charge - 0.4 && event_->tof_qls[1] < charge + 0.5 &&
                         event_->tof_qls[2] > charge - 0.4 && event_->tof_qls[2] < charge + 0.5 &&
                         event_->tof_qls[3] > charge - 0.4 && event_->tof_qls[3] < charge + 0.5;
+    //bool StricUnbL1QCut = (status_.L1Q_Unbiased > charge - 0.6 && status_.L1Q_Unbiased < charge + 0.7);
+    //unbiased external q
     bool StrictExternalQCut = event_->tk_exqvn[0][0] > charge - 0.6 && event_->tk_exqvn[0][0] < charge + 0.7;
-    bool TOFRecCut = event_->tof_chiscs < 20 && event_->tof_chists < 20;
+    bool TOFRecCut = event_->tof_chiscs < 20 && event_->tof_chists < 20;//unbiased tof rec
     bool den = extraBasicCuts && phys.total && basicForEff.total && externalL1 && StricTOFQCut && StrictExternalQCut && TOFRecCut;
     
     auto inTrk = cutInnerTracker(charge, isISS, true);
-    bool num = den && inTrk.total; 
+    bool num = den && inTrk.total; // cutInnerTracker contain basic cut,haha!
+
     return CutResult<2>({ num, den });
 }
 
 CutResult<2> TrackerCut::getEfficiencyInnerTrackerQ(int charge, bool isISS, bool forBackground) const {
     if (!event_) return CutResult<2>();
+    
     auto phys = cutPhysTrigger(isISS);
     auto basic = cutBasicAndFiducial(isISS);
     auto inTrk = cutInnerTracker(charge, isISS);
@@ -479,21 +530,17 @@ CutResult<2> TrackerCut::getEfficiencyInnerTrackerQ(int charge, bool isISS, bool
     bool StricTOFQCut = UpperTOFmeanQ > charge - 0.5 && UpperTOFmeanQ < charge + 0.5 &&
                         LowerTOFmeanQ > charge - 0.5 && LowerTOFmeanQ < charge + 0.5;
 
-    // Use Cached Chi2 values
-    bool l1Chi2Cut = status_.l1Chi2 < 10.0;
-    bool InnerL1Chi2Cut = status_.l1InnerChi2 < 10.0;
-
-    // Added Chi2 cuts to denominator
-    bool den = phys.total && basic.total && inTrk.total && l1n.total && tof.details[0] && 
-               StricL1QCut && StricTOFQCut && bg.total && l1Chi2Cut && InnerL1Chi2Cut;
+    bool den = phys.total && basic.total && inTrk.total && l1n.total && tof.details[0] && StricL1QCut && StricTOFQCut && bg.total;
 
     auto inQ = cutInnerQ(charge, isISS);
     bool num = den && inQ.total;
+
     return CutResult<2>({ num, den });
 }
 
 CutResult<2> TrackerCut::getEfficiencyUTOFQ(int charge, bool isISS, bool forBackground) const {
     if (!event_) return CutResult<2>();
+    
     auto phys = cutPhysTrigger(isISS);
     auto basic = cutBasicAndFiducial(isISS);
     auto inTrk = cutInnerTracker(charge, isISS);
@@ -502,26 +549,19 @@ CutResult<2> TrackerCut::getEfficiencyUTOFQ(int charge, bool isISS, bool forBack
     auto bg = cutBackground(charge, isISS, false, forBackground);
     bool StricL1QCut = (status_.L1Q_Normal > charge - 0.5 && status_.L1Q_Normal < charge + 0.5);
 
-    // Use Cached Chi2 values
-    bool l1Chi2Cut = status_.l1Chi2 < 10.0;
-    bool InnerL1Chi2Cut = status_.l1InnerChi2 < 10.0;
-
-    // Added Chi2 cuts to denominator
-    bool den = phys.total && basic.total && inTrk.total && inQ.total && l1n.total && 
-               bg.total && StricL1QCut && l1Chi2Cut && InnerL1Chi2Cut;
+    bool den = phys.total && basic.total && inTrk.total && inQ.total && l1n.total && bg.total  && StricL1QCut;
 
     auto tof = cutUTOFQ(charge, isISS);
     bool num = den && tof.total;
+
     return CutResult<2>({ num, den });
 }
 
 CutResult<2> TrackerCut::getEfficiencyBkgReduction(int charge, bool isISS) const {
     if (!event_) return CutResult<2>();
-     bool l1Chi2Cut = status_.l1Chi2 < 10.0;
-    bool InnerL1Chi2Cut = status_.l1InnerChi2 < 10.0;
     auto num = TwoAccTrackerCut(charge, isISS, false, 0.4);
     auto den = TwoAccTrackerCut(charge, isISS, true, 0.4);
-    return CutResult<2>({ num.details[1] && l1Chi2Cut && InnerL1Chi2Cut, den.details[1] && l1Chi2Cut && InnerL1Chi2Cut });
+    return CutResult<2>({ num.details[0], den.details[0] });
 }
 
 CutResult<2> TrackerCut::TwoAccTrackerCut_OneTrk(int charge, bool isISS) const {

@@ -93,9 +93,9 @@ static void findFitRange(TH1D* hist, double Z, double& lowEdge, double& highEdge
 }
 
 static inline bool passEnergyWindow(const string& det, double ekCen) {
-    if (det == "TOF") return ekCen > 0.27 && ekCen <= 1.5;
-    if (det == "NaF") return ekCen > 0.71 && ekCen <= 6.1;
-    if (det == "AGL") return ekCen > 2.7 && ekCen <= 22.0;
+    if (det == "TOF") return ekCen > 0.2 && ekCen <= 1.8;
+    if (det == "NaF") return ekCen > 0.61 && ekCen <= 6.1;
+    if (det == "AGL") return ekCen > 2.7 && ekCen <= 30.0;
     return false;
 }
 
@@ -289,9 +289,9 @@ static TF1* doFit(TH1D* h, const vector<std::pair<string,int>>& pars, FitParamet
 
 void chargeHistFit(
     //const string& histFile = "/eos/ams/group/ihep/zixuan/filter/basic_L1Q2p5to8p8.root",
-    const string& histFile = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_withBkg_NoTune_full.root",
-    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFits_HeToOxy_NoTune_iter1.pdf",
-    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter1.root",
+    const string& histFile = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_NoBkg_NoTune_full.root",
+    const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/NoBkg_ChargeFits_HeToOxy_NoTune_iter2.pdf",
+    const string& histOut = "/eos/user/z/zixuan/Isotope/ChargeFit/NoBkg_ChargeFitParams_HeToOxy_NoTune_iter2.root",
     /*
     const string& histFile = "/eos/user/z/zixuan/Isotope/PureChargeTemp/PureChargeTemplates_UnbiasedL1Inner.root",
     const string& pdfOut = "/eos/user/z/zixuan/Isotope/ChargeFit/ChargeFits_PureL1.pdf",
@@ -311,8 +311,8 @@ void chargeHistFit(
 
     const vector<std::pair<string,int>> EGE_p = {{"Peak",0},{"SigmaL",1},{"AlphaL",2},{"SigmaR",3},{"AlphaR",4},{"Norm",5},{"xmin",6},{"xmax",7}};
 
-    const string splinePath = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter0.root";
-    const string oriPath = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter0.root";
+    const string splinePath = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/NoBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter1.root";
+    const string oriPath = "/eos/user/z/zixuan/Isotope/ChargeFit/NoBkg_ChargeFitParams_HeToOxy_NoTune_iter1.root";
     FitParameterManager pm(firstFit, splinePath, oriPath);
 
     unique_ptr<TFile> fin(TFile::Open(histFile.c_str()));
@@ -376,6 +376,7 @@ void chargeHistFit(
             for(auto& p : EGE_p) {
                 TH1D* hh = PS.h[baseKey+"_EGE_"+p.first];
                 hh->SetBinContent(b, fEGE->GetParameter(p.second));
+                double err = std::min(fEGE->GetParError(p.second), 0.1 * std::abs(fEGE->GetParameter(p.second))); 
                 hh->SetBinError(b, p.second == 0 ? 1.*fEGE->GetParError(p.second) : 1.*fEGE->GetParError(p.second));
             }
             PS.h[baseKey+"_EGE_Chi2NDF"]->SetBinContent(b, (fEGE->GetNDF()>0 ? fEGE->GetChisquare()/fEGE->GetNDF() : 0));
@@ -387,7 +388,7 @@ void chargeHistFit(
             
             c->cd(); c->SetLogy(Z==2?0:1);
             h1->Draw("E");
-            fEGE->SetNpx(2000);
+            //fEGE->SetNpx(1000);
             fEGE->SetLineColor(kGreen+2); fEGE->SetLineWidth(3); fEGE->Draw("same");
             drawFitRangeLines(lo, hi, kGreen+2);
 

@@ -121,6 +121,7 @@ public :
    Float_t         tk_ql[9];
    Int_t           tk_qls[9];
    Int_t           tk_qlsn;
+   Float_t         tk_q[2];
    Float_t         tk_qin[2][3];
    Float_t         tk_qrmn[2][3];
    Float_t         tk_qln[2][9][3];
@@ -314,6 +315,7 @@ public :
    TBranch        *b_tk_qlsn;   //!
    TBranch        *b_tk_qin;   //!
    TBranch        *b_tk_qrmn;   //!
+   TBranch        *b_tk_q;   //!
    TBranch        *b_tk_qln;   //!
    TBranch        *b_tk_iso;   //!
    TBranch        *b_tk_exql;   //!
@@ -594,6 +596,7 @@ void selectdata::Init(TTree *tree)
    fChain->SetBranchAddress("tk_qls", tk_qls, &b_tk_qls);
    fChain->SetBranchAddress("tk_qlsn", &tk_qlsn, &b_tk_qlsn);
    fChain->SetBranchAddress("tk_qin", tk_qin, &b_tk_qin);
+   fChain->SetBranchAddress("tk_q", tk_q, &b_tk_q);
    fChain->SetBranchAddress("tk_qrmn", tk_qrmn, &b_tk_qrmn);
    fChain->SetBranchAddress("tk_qln", tk_qln, &b_tk_qln);
    fChain->SetBranchAddress("tk_iso", tk_iso, &b_tk_iso);

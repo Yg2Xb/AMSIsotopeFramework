@@ -30,13 +30,12 @@ std::vector<std::string> HistManager::GetActiveBranches() {
         //"issaa","rtilf", "rtinev", "rtinerr", "rtintrig","rtinpar", "rtigood", "rtinexl", "irti",
         
         // Tracker
-        "physbpatt2", "itrtrack", "ntrack", "tk_hitb", "tk_q", "tk_qrms","tk_qin", "tk_qrmn", "tk_qln", "tk_qls",
-        "tk_exqln", "tk_exqls", "tk_rigidity1", "tk_chis1", "tk_pos", "tk_dir", "tk_pos1s",
-		"itrdtracks", "ibetahs", "tk_l1qxy", "tk_exqvn", "tof_qls", "tof_chiscs", "tof_chists",
+        "physbpatt2", "itrtrack", "ntrack", "tk_hitb", "tk_qin", "tk_qrmn", "tk_qln", "tk_qls",
+        "tk_exqln", "tk_exqls", "tk_rigidity1", "tk_chis1", "tk_pos", "tk_dir",
         "betah2hb", "betah2r","btstat","btstat_pR","btstat_new","cutoffpi",
         
         // TOF
-        "betahs", "ibetah", "tof_betah", "tof_btype", "tof_ql", "tof_barid", "tof_pos",
+        "ibetah", "tof_betah", "tof_btype", "tof_ql", "tof_barid", "tof_pos",
         "tof_pass", "tof_chisc", "tof_chist", "tof_trapezoidedge", "tof_edge",
         "tof_goodgeo",
         
@@ -84,12 +83,13 @@ HistManager::HistManager(const std::string& output_filename,
 	
 	auto ekBinsStd = safeBins("EkPerNucleon");
 	auto rigBins = safeBins("Rigidity");
-	auto betaBins = safeBins("Beta");
+	auto betaBins = binMgr.GetBetaBins(4, 7);
 
 	std::cout<<"DEBUG: Niso="<<Niso<<" charge="<<charge<<std::endl;
 	std::cout<<"DEBUG: iso ptr="<<iso<<std::endl;
 
 	// ============ ID AREA ============
+	/*
 	std::cout<<"DEBUG: ID Hists"<<std::endl;
 	
 	auto createMass2D = [&](auto& container, const char* prefix, const char* titleTemplate) {
@@ -135,8 +135,6 @@ HistManager::HistManager(const std::string& output_filename,
 
 	// IDH2 & IDH3
 	createMass2D(IDH2, "ID_H2", "%s %s UseMass%dBin Isotope MC 1/Mass vs E_{k}/n;%s 1/Mass;%s E_{k}/n [GeV/n]");
-	
-	/*
 	IDH3.resize(Nchain);
 	for (int c = 0; c < Nchain; ++c) {
 		IDH3[c].resize(Ndet);
@@ -228,6 +226,8 @@ HistManager::HistManager(const std::string& output_filename,
 	createDeltaBeta2D_Z(IDH6a, "H6", "a", "%s %s TOF-NaF #Delta(1/#beta);TOF-NaF Delta(1/#beta);NaF #beta [GeV/n]", betaBins);
 	createDeltaBeta2D_Z(IDH6b, "H6", "b", "%s %s TOF-AGL #Delta(1/#beta);TOF-AGL #Delta(1/#beta);AGL #beta [GeV/n]", betaBins);
 	*/
+
+	/*
 	// ============ BKG AREA ============
 	std::cout<<"DEBUG: BKG Hists"<<std::endl;
 
@@ -310,7 +310,7 @@ HistManager::HistManager(const std::string& output_filename,
 			}
 		}
 	}
-	/*
+	
 	double binStep = 0.01;
     double valMin = 0.5,  valMax = isISS ? 9. : charge + 1.;
     int nBinsVal = static_cast<int>((valMax - valMin) / binStep + 0.5); // +0.5 用于防止浮点误差
@@ -320,8 +320,8 @@ HistManager::HistManager(const std::string& output_filename,
     int nBinsDiff = static_cast<int>((diffMax - diffMin) / binStep + 0.5);
     std::vector<double> binsDiff(nBinsDiff + 1);
     for (int i = 0; i <= nBinsDiff; ++i) { binsDiff[i] = diffMin + i * binStep;}
-	BKG_H5.resize(1);
-    for(int c = 0; c < 1; ++c) {
+	BKG_H5.resize(Nchain);
+    for(int c = 0; c < Nchain; ++c) {
         BKG_H5[c].resize(Ndet);
         for(int d = 0; d < Ndet; ++d) {
             BKG_H5[c][d].resize(2); 
@@ -343,7 +343,7 @@ HistManager::HistManager(const std::string& output_filename,
             }
         }
     }
-	*/
+	
 	// --- MC Only BKG Histograms ---
 	if(!isISS) {
 		int NisoBKG = static_cast<int>(FragA.size());
@@ -391,9 +391,10 @@ HistManager::HistManager(const std::string& output_filename,
 			}
 		}
 	}
+	*/
 	
 	// ============ FLUX AREA ============
-	/*
+	
 	std::cout<<"DEBUG: Flux Hists"<<std::endl;
 
 	// Resize the first dimension for 7 sources (He to O)
@@ -414,7 +415,7 @@ HistManager::HistManager(const std::string& output_filename,
                     std::string detName = isTracker ? "Tracker" : detectors[d];
 
                     // --- Refined Boolean Logic to Flatten the Control Flow ---
-                    bool isHe = false;//(targetZ == 2);
+                    bool isHe = (targetZ == 2);
                     bool isBetaCut = (cut == "BetaRecQuality");
                     bool isBkgRed = (cut == "BkgReduction");
 
@@ -448,7 +449,8 @@ HistManager::HistManager(const std::string& output_filename,
             }
         }
     }
-	*/
+
+		/*
 	if (isISS) {
 		ISS_FLUXH2.resize(1);
 		ISS_FLUXH2[0] = createHist<TH1F>(
@@ -469,7 +471,6 @@ HistManager::HistManager(const std::string& output_filename,
 					static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
 			}
 		}
-
 		ISS_FLUXH4.resize(1);
 		ISS_FLUXH4[0] = createHist<TH2F>(
 			"ISS_FLUXH4","BTstatus vs Run;Run;BTstatus",
@@ -484,82 +485,9 @@ HistManager::HistManager(const std::string& output_filename,
 			"MC_FLUX_H3",
 			"MC Generated counts;E_{k}^{gen}/n [GeV/n];Counts",
 			static_cast<int>(ekBinsStd.size()) - 1, ekBinsStd.data());
-		
 	}
-	/*
-	if(!isISS && charge > 3){
-		// ============ FRAG STUDY AREA (Initialization) ============
-		std::vector<std::string> fTypes = {"AboveL1", "BelowL1"};
-		std::vector<std::string> fGeos = {"TOF", "NaF", "AGL"};
-		std::vector<std::string> rVars = {"LTOFQ", "richQ", "rich_pmt", "rich_pb", "rich_npe_ratio", "rich_used_ratio", "rich_good", "rich_clean"};
-		std::vector<std::string> tVars = {"tof_chisc", "tof_chist"};
-		std::vector<std::string> fND   = {"Total", "PassBkg"};
-
-		int nRigBins = static_cast<int>(rigBins.data() ? rigBins.size() - 1 : 0);
-
-		// 1. UTOFQ (TH2F): 2 types * 3 geos = 6 hists
-		BKG_FRAG_UTOFQ.resize(2);
-		for (int t = 0; t < 2; ++t) {
-			BKG_FRAG_UTOFQ[t].resize(3);
-			for (int g = 0; g < 3; ++g) {
-				BKG_FRAG_UTOFQ[t][g] = createHist<TH2F>(
-					Form("FRAG_UTOFQ_%s_%s", fTypes[t].c_str(), fGeos[g].c_str()),
-					Form("UTOFQ %s %s;UTOFQ;Rigidity [GV]", fTypes[t].c_str(), fGeos[g].c_str()),
-					600, 2, 8, nRigBins, rigBins.data());
-			}
-		}
-
-		// 2. RICH Vars (TH2F): 2 types * 2 geos * 8 vars = 32 hists
-		BKG_FRAG_RICH.resize(2);
-		for (int t = 0; t < 2; ++t) {
-			BKG_FRAG_RICH[t].resize(2); // 0: NaF, 1: AGL
-			for (int g = 0; g < 2; ++g) {
-				BKG_FRAG_RICH[t][g].resize(rVars.size());
-				for (int v = 0; v < (int)rVars.size(); ++v) {
-					int binsX = 100; double xMin = 0, xMax = 1;
-					if (v == 0 || v == 1)      { binsX = 600; xMin = 2; xMax = 8; }    // LTOFQ, richQ
-					else if (v == 2)           { binsX = 50;  xMin = 0; xMax = 50; }   // rich_pmt
-					else if (v == 3)           { binsX = 110; xMin = 0; xMax = 1.1; }  // rich_pb
-					else if (v == 4)           { binsX = 120; xMin = 0; xMax = 1.2; }  // rich_npe_ratio
-					else if (v == 5)           { binsX = 100; xMin = 0; xMax = 1.0; }  // rich_used_ratio
-					else if (v == 6 || v == 7) { binsX = 2;   xMin = 0; xMax = 2; }    // rich_good, rich_clean
-
-					BKG_FRAG_RICH[t][g][v] = createHist<TH2F>(
-						Form("FRAG_%s_%s_%s", rVars[v].c_str(), fTypes[t].c_str(), fGeos[g+1].c_str()),
-						Form("%s %s %s;%s;Rigidity [GV]", rVars[v].c_str(), fTypes[t].c_str(), fGeos[g+1].c_str(), rVars[v].c_str()),
-						binsX, xMin, xMax, nRigBins, rigBins.data());
-				}
-			}
-		}
-
-		// 3. TOF Vars (TH2F): 2 types * 2 vars = 4 hists
-		BKG_FRAG_TOF.resize(2);
-		for (int t = 0; t < 2; ++t) {
-			BKG_FRAG_TOF[t].resize(2);
-			for (int v = 0; v < 2; ++v) {
-				BKG_FRAG_TOF[t][v] = createHist<TH2F>(
-					Form("FRAG_%s_%s_TOF", tVars[v].c_str(), fTypes[t].c_str()),
-					Form("%s %s TOF;%s;Rigidity [GV]", tVars[v].c_str(), fTypes[t].c_str(), tVars[v].c_str()),
-					250, 0, 50, nRigBins, rigBins.data());
-			}
-		}
-
-		// 4. BkgRejection (TH1F): 2 types * 3 geos * 2 (num/den) = 12 hists
-		BKG_FRAG_REJ.resize(2);
-		for (int t = 0; t < 2; ++t) {
-			BKG_FRAG_REJ[t].resize(3);
-			for (int g = 0; g < 3; ++g) {
-				BKG_FRAG_REJ[t][g].resize(2);
-				for (int nd = 0; nd < 2; ++nd) {
-					BKG_FRAG_REJ[t][g][nd] = createHist<TH1F>(
-						Form("FRAG_REJ_%s_%s_%s", fTypes[t].c_str(), fGeos[g].c_str(), fND[nd].c_str()),
-						Form("BkgCut Efficiency %s %s %s;Rigidity [GV];Counts", fTypes[t].c_str(), fGeos[g].c_str(), fND[nd].c_str()),
-						nRigBins, rigBins.data());
-				}
-			}
-		}
-	}
-	*/
+		*/
+	
 	
 
 	std::cout<<"DEBUG Finish Hist Defination"<<std::endl;
@@ -626,7 +554,6 @@ void HistManager::Save(bool saveTree) {
 	if (!BKG_H1a.empty()) {
 		writeHists(BKG_H1a); writeHists(BKG_H1b); writeHists(BKG_H1c);
 		writeHists(BKG_H2a); writeHists(BKG_H1b2);
-		writeHists(BKG_H2a2);
     }
 	writeHists(BKG_H2b);
 	writeHists(BKG_H2b2);
@@ -634,6 +561,7 @@ void HistManager::Save(bool saveTree) {
 	if (!BKG_H5.empty()) writeHists(BKG_H5);
 
 
+	if (!BKG_H2a2.empty()) writeHists(BKG_H2a2);
 	if (!BKG_H3a.empty()) {
 		writeHists(BKG_H3a); writeHists(BKG_H3b);
 	}
@@ -642,12 +570,6 @@ void HistManager::Save(bool saveTree) {
 
     if (!ISS_FLUXH2.empty()) { writeHists(ISS_FLUXH2); writeHists(ISS_FLUXH3); writeHists(ISS_FLUXH4); writeHists(ISS_FLUXH5);}
     if (!MC_FLUXH3.empty()) { writeHists(MC_FLUXH3);} //writeHists(MC_FLUXH2); }
-	
-	// 在 Save() 函数末尾添加
-    if (!BKG_FRAG_UTOFQ.empty()) writeHists(BKG_FRAG_UTOFQ);
-    if (!BKG_FRAG_RICH.empty())  writeHists(BKG_FRAG_RICH);
-    if (!BKG_FRAG_TOF.empty())   writeHists(BKG_FRAG_TOF);
-    if (!BKG_FRAG_REJ.empty())   writeHists(BKG_FRAG_REJ);
 
     if (saveTree && m_filteredTree) {
         m_outputFile->cd();

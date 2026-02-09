@@ -40,9 +40,9 @@ using namespace AMS_Iso;
 using namespace RooFit;
 using namespace std;
 
-const std::string inputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_withBkg_Tune_full.root";
+const std::string inputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_NoBkg_Tune_full.root";
 const std::string outputDir = "/eos/user/z/zixuan/Isotope/PureChargeTemp/";
-const std::string chainName = "L1Inner";
+const std::string chainName = "UnbiasedL1Inner";
 const std::vector<std::string> detectors = {"TOF", "NaF", "AGL"};
 const double Q_GLOBAL_MIN = 1.0;
 const double Q_GLOBAL_MAX = 9.0;
@@ -53,7 +53,7 @@ const std::map<std::string, int> elementZ = {{"Helium", 2}, {"Lithium", 3}, {"Be
 const std::map<std::string, std::pair<double, double>> detector_ek_ranges = {
 	{"TOF", {0.25, 1.5}},
 	{"NaF", {0.61, 6.10}},
-	{"AGL", {2.50, 22.0}}
+	{"AGL", {2.50, 25.0}}
 };
 
 std::string getTemplateHistName(const std::string& elName, const std::string& detector, std::string tag) {
@@ -405,8 +405,8 @@ void CalPureQTemp() {
 	RooMsgService::instance().setGlobalKillBelow(RooFit::ERROR);
 	TH1::AddDirectory(kFALSE);
 
-	std::string pdfFileName = outputDir + "withBkg_CalPureQTemp_" + chainName + ".pdf";
-	std::string rootFileName = outputDir + "withBkg_PureChargeTemplates_" + chainName + ".root";
+	std::string pdfFileName = outputDir + "NoBkg_CalPureQTemp_" + chainName + ".pdf";
+	std::string rootFileName = outputDir + "NoBkg_PureChargeTemplates_" + chainName + ".root";
 	system(Form("mkdir -p %s", outputDir.c_str()));
 
 	auto inputFile = std::unique_ptr<TFile>(TFile::Open(inputFileName.c_str()));

@@ -1,6 +1,6 @@
 Universe = vanilla
 executable = /afs/cern.ch/user/z/zixuan/public/AMSIsotopeFramework/submit/ISSBer.sh
-request_memory = 2000MB 
+request_memory = 4500MB 
 output = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 error = /afs/cern.ch/work/z/zixuan/logISS/output_$(Cluster).$(Process)
 log = /afs/cern.ch/work/z/zixuan/logISS/log_$(Cluster)

@@ -59,6 +59,11 @@ namespace Constants {
     const std::vector<std::string> cut_groups = {
         "Trigger", "L1QLowLimit", "L1PickUp","InnerTracking", "InnerTrackerQ", "UpperTOFQ", "BetaRecQuality", "BkgReduction"
 	};
+    /*
+    const std::vector<std::string> cut_groups = {
+        "BetaRecQuality"
+	};
+    */
     
     //const std::vector<std::string> cut_groups = {"Trigger", "nAcc", "L1QLowLimit", "UpperTOFQ", "BkgReduction"};
     

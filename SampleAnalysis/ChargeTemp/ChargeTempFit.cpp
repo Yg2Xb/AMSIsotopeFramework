@@ -44,7 +44,7 @@ const std::vector<std::string> signal_types = {"L1Sig_Any", "L1Sig_PassLoose", "
 const std::map<std::string, std::pair<double, double>> detector_ek_ranges = {
   {"TOF", {0.25, 1.5}},
   {"NaF", {0.61, 6.10}},
-  {"AGL", {2.50, 23.0}}
+  {"AGL", {2.70, 23.0}}
 };
 
 struct ElementInfo { int Z; std::string name; };
@@ -73,11 +73,8 @@ struct UnifiedFitResult {
     std::map<std::string, double> fit_fractions;
     std::map<std::string, double> fit_fractions_err;
 
-    std::map<std::string, double> yield_in_source_window;
-    std::map<std::string, double> yield_in_source_window_err;
-    
-    std::map<std::string, double> fraction_in_source_window;
-    std::map<std::string, double> fraction_in_source_window_err;
+    std::map<std::string, double> yield_in_window;
+    std::map<std::string, double> yield_in_window_err;
 };
 
 class UnifiedChargeFitter {
@@ -89,13 +86,12 @@ public:
 
     bool initializeAndProject();
     bool runFit();
-    UnifiedFitResult calculateAllYields(const std::string& sourceName);
+    
+    std::pair<double, double> calculateYieldInWindow(const std::string& componentName, const std::string& windowCenterElement, bool isNoBkg);
+
+    UnifiedFitResult getFitInfo(); 
     std::unique_ptr<RooPlot> generatePlotAndCalcChi2(UnifiedFitResult& result);
     const std::vector<std::string>& getTemplateElements() const { return templateElements_; }
-    TH1D* getSignalHist() const { return h_signal_extended_.get(); }
-    const std::map<std::string, std::unique_ptr<TH1D>>& getTemplateHists() const { return h_templates_extended_; }
-    double getFitMin() const { return fitMin_; }
-    double getFitMax() const { return fitMax_; }
 
 private:
     std::string chainName_, detectorName_;
@@ -142,24 +138,17 @@ bool UnifiedChargeFitter::initializeAndProject() {
     auto h_signal_slice = projectSlice(h_signal_rebinned_, Form("h_signal_slice_bin%d", energyBin_));
     double N_signal_total = h_signal_slice ? h_signal_slice->GetEntries() : 0;
     
-    if (!h_signal_slice || N_signal_total < 50) { 
-        return false;
-    }
+    if (!h_signal_slice || N_signal_total < 50) return false;
     
     std::map<std::string, std::unique_ptr<TH1D>> h_templates_slices;
     double N_templates_total_sum = 0.0;
     
     for (const auto& el : templateElements_) {
         auto it = templates_rebinned_.find(el);
-        if (it == templates_rebinned_.end()) {
-            return false;
-        }
+        if (it == templates_rebinned_.end()) return false;
         h_templates_slices[el] = projectSlice(it->second, Form("h_template_%s_slice_bin%d", el.c_str(), energyBin_));
         double N_template = h_templates_slices[el] ? h_templates_slices[el]->GetEntries() : 0;
-        
-        if (!h_templates_slices[el] || N_template < 10) { 
-            return false;
-        }
+        if (!h_templates_slices[el] || N_template < 10) return false;
         N_templates_total_sum += N_template;
     }
 
@@ -177,14 +166,11 @@ bool UnifiedChargeFitter::initializeAndProject() {
     }
 
     std::map<std::string, RooAbsReal*> frac_map;
-    
     for (const auto& el : templateElements_) {
         if (el == constrainedElement_) continue;
-
         double N_template_i = h_templates_slices.at(el)->GetEntries();
         double initial_guess = (N_templates_total_sum > 0) ? N_template_i / N_templates_total_sum : (1.0/templateElements_.size());
         initial_guess = std::max(0.001, std::min(0.999, initial_guess));
-        
         auto fracVar = std::make_unique<RooRealVar>(Form("frac_%s", el.c_str()), "", initial_guess, 0.0, 1.0);
         frac_map[el] = fracVar.get();
         fractionParams_.push_back(std::move(fracVar));
@@ -212,132 +198,107 @@ bool UnifiedChargeFitter::runFit() {
     RooMsgService::instance().setGlobalKillBelow(RooFit::INFO);     
     charge_->setRange("fit_range", fitMin_, fitMax_);
     fitResult_ = std::unique_ptr<RooFitResult>(
-        total_pdf_->fitTo(
-            *data_hist_, 
-            Save(true), 
-            PrintLevel(-1),    
-            Verbose(false),    
-            Range("fit_range"), 
-            Strategy(1), 
-            Minimizer("Minuit2")
-        )
+        total_pdf_->fitTo(*data_hist_, Save(true), PrintLevel(-1), Verbose(false), Range("fit_range"), Strategy(1), Minimizer("Minuit2"))
     );
     RooMsgService::instance().setSilentMode(true);
-
-    if (fitResult_) {
-        return true;
-    } else {
-        return false;
-    }
+    return (fitResult_ != nullptr);
 }
 
-UnifiedFitResult UnifiedChargeFitter::calculateAllYields(const std::string& sourceName) {
+UnifiedFitResult UnifiedChargeFitter::getFitInfo() {
     UnifiedFitResult res;
-
-    if (!fitResult_) {
-        res.fit_status = fitResult_ ? fitResult_->status() : -1;
-        return res;
-    }
+    if (!fitResult_) return res;
     res.fit_status = fitResult_->status();
 
     for (const auto& el : templateElements_) { 
         RooAbsReal* frac_param = (RooAbsReal*)fitResult_->floatParsFinal().find(Form("frac_%s", el.c_str()));
         if (!frac_param) {      
-            if (lastFraction_ && lastFraction_->GetName() == std::string("frac_" + el)) {
-                frac_param = lastFraction_.get();
-            }
+            if (lastFraction_ && lastFraction_->GetName() == std::string("frac_" + el)) frac_param = lastFraction_.get();
         }
         if (!frac_param) continue;
-
-        double F_A = frac_param->getVal();
-        res.fit_fractions[el] = F_A;
-        
-        double err_F_A = 0.0;
-        if (frac_param->IsA()->InheritsFrom(RooRealVar::Class())) {
-            err_F_A = ((RooRealVar*)frac_param)->getError();
-        } else if (lastFraction_ && lastFraction_.get() == frac_param) {
+        res.fit_fractions[el] = frac_param->getVal();
+        double err = 0.0;
+        if (frac_param->IsA()->InheritsFrom(RooRealVar::Class())) err = ((RooRealVar*)frac_param)->getError();
+        else {
             double sum_err_sq = 0;
             for(const auto& p : fractionParams_) sum_err_sq += pow(p->getError(), 2);
-            err_F_A = sqrt(sum_err_sq); 
+            err = sqrt(sum_err_sq); 
         }
-        res.fit_fractions_err[el] = err_F_A;
+        res.fit_fractions_err[el] = err;
     }
-
-    if (element_db_by_name.count(sourceName)) {
-        int Z_window = element_db_by_name.at(sourceName);
-        double narrowMin = Z_window - 0.2;
-        double narrowMax = Z_window + 0.4;
-        
-        if (narrowMax >= fitMin_ && narrowMin <= fitMax_) {
-            std::string range_name = "narrow_range_" + sourceName;
-            charge_->setRange(range_name.c_str(), narrowMin, narrowMax);
-
-            int bin_low = h_signal_extended_->GetXaxis()->FindBin(narrowMin);
-            int bin_high = h_signal_extended_->GetXaxis()->FindBin(narrowMax);
-            double N_sig_window = h_signal_extended_->Integral(bin_low, bin_high);
-            double err_N_sig_window = (N_sig_window > 0) ? sqrt(N_sig_window) : 0.0;
-
-            auto integral_R_total_obj = std::unique_ptr<RooAbsReal>(total_pdf_->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
-            double R_total_window = integral_R_total_obj->getVal();
-            double err_R_total_window = 0.0; 
-
-            if (R_total_window > 1e-9) {
-                for (const auto& component_el : templateElements_) { 
-                    double F_A = res.fit_fractions.at(component_el);
-                    double err_F_A = res.fit_fractions_err.at(component_el);
-
-                    auto integral_R_A_obj = std::unique_ptr<RooAbsReal>(template_pdfs_.at(component_el)->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
-                    double R_A = integral_R_A_obj->getVal();
-                    
-                    const auto& h_template = h_templates_extended_.at(component_el);
-                    double N_template_total = h_template->Integral();
-                    double k_template_narrow = h_template->Integral(h_template->GetXaxis()->FindBin(narrowMin), h_template->GetXaxis()->FindBin(narrowMax));
-                    double R_A_for_err = (N_template_total > 0) ? k_template_narrow / N_template_total : 0.0;
-                    double err_R_A = (N_template_total > 0) ? sqrt(std::max(0.0, R_A_for_err * (1.0 - R_A_for_err) / N_template_total)) : 0.0;
-
-                    double P_A_window = F_A * R_A / R_total_window;
-                    double rel_err_sq_P_A = 0.0;
-                    if (F_A > 0) rel_err_sq_P_A += pow(err_F_A / F_A, 2);
-                    if (R_A > 0) rel_err_sq_P_A += pow(err_R_A / R_A, 2);
-                    if (R_total_window > 0) rel_err_sq_P_A += pow(err_R_total_window / R_total_window, 2);
-                    double err_P_A_window = P_A_window * sqrt(rel_err_sq_P_A);
-
-                    res.fraction_in_source_window[component_el] = P_A_window;
-                    res.fraction_in_source_window_err[component_el] = err_P_A_window;
-
-                    double Yield_A = N_sig_window * P_A_window;
-                    double rel_err_sq_Yield_A = 0.0;
-                    if (N_sig_window > 0) rel_err_sq_Yield_A += pow(err_N_sig_window / N_sig_window, 2);
-                    if (P_A_window > 0) rel_err_sq_Yield_A += pow(err_P_A_window / P_A_window, 2);
-                    double err_Yield_A = Yield_A * sqrt(rel_err_sq_Yield_A);
-
-                    res.yield_in_source_window[component_el] = Yield_A;
-                    res.yield_in_source_window_err[component_el] = err_Yield_A;
-                }
-            }
-        }
-    }
-
-    charge_->setRange("full_range", charge_->getMin(), charge_->getMax());
     return res;
+}
+
+std::pair<double, double> UnifiedChargeFitter::calculateYieldInWindow(const std::string& componentName, const std::string& windowCenterElement, bool isNoBkg) {
+    if (!fitResult_ || !element_db_by_name.count(windowCenterElement)) return {0.0, 0.0};
+    
+    if (std::find(templateElements_.begin(), templateElements_.end(), componentName) == templateElements_.end()) return {0.0, 0.0};
+
+    int Z_window = element_db_by_name.at(windowCenterElement);
+    
+    double low = 0.5, up = 0.5;
+    if(isNoBkg) {
+        if(Z_window == 5) {low = 0.3; up = 0.4;}
+        else if(Z_window == 7) {low = 0.4; up = 0.4;}
+    } else {
+        if(Z_window == 5 || Z_window == 7) {low = 0.3; up = 0.5;}
+    }
+
+    double narrowMin = Z_window - low;
+    double narrowMax = Z_window + up;
+    
+    if (narrowMin < fitMin_ || narrowMax > fitMax_) return {0.0, 0.0};
+
+    std::string range_name = Form("win_%s_for_%s", windowCenterElement.c_str(), componentName.c_str());
+    charge_->setRange(range_name.c_str(), narrowMin, narrowMax);
+
+    int bin_low = h_signal_extended_->GetXaxis()->FindBin(narrowMin);
+    int bin_high = h_signal_extended_->GetXaxis()->FindBin(narrowMax);
+    double N_sig_window = h_signal_extended_->Integral(bin_low, bin_high);
+    double err_N_sig_window = (N_sig_window > 0) ? sqrt(N_sig_window) : 0.0;
+
+    auto integral_R_total_obj = std::unique_ptr<RooAbsReal>(total_pdf_->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
+    double R_total_window = integral_R_total_obj->getVal();
+
+    if (R_total_window < 1e-9) return {0.0, 0.0};
+
+    auto info = getFitInfo();
+    double F_A = info.fit_fractions[componentName];
+    double err_F_A = info.fit_fractions_err[componentName];
+
+    auto integral_R_A_obj = std::unique_ptr<RooAbsReal>(template_pdfs_.at(componentName)->createIntegral(*charge_, NormSet(*charge_), Range(range_name.c_str())));
+    double R_A = integral_R_A_obj->getVal();
+    
+    const auto& h_template = h_templates_extended_.at(componentName);
+    double N_template_total = h_template->Integral();
+    double k_template_narrow = h_template->Integral(h_template->GetXaxis()->FindBin(narrowMin), h_template->GetXaxis()->FindBin(narrowMax));
+    double R_A_raw = (N_template_total > 0) ? k_template_narrow / N_template_total : 0.0;
+    double err_R_A = (N_template_total > 0) ? sqrt(std::max(0.0, R_A_raw * (1.0 - R_A_raw) / N_template_total)) : 0.0;
+
+    double P_A_window = F_A * R_A / R_total_window;
+    
+    double rel_err_sq = 0.0;
+    if (F_A > 0) rel_err_sq += pow(err_F_A / F_A, 2);
+    if (R_A > 0) rel_err_sq += pow(err_R_A / R_A, 2);
+    double err_P_A_window = P_A_window * sqrt(rel_err_sq);
+
+    double Yield = N_sig_window * P_A_window;
+    double err_Yield = Yield * sqrt(pow(err_N_sig_window/N_sig_window, 2) + pow(err_P_A_window/P_A_window, 2));
+
+    return {Yield, err_Yield};
 }
 
 std::unique_ptr<RooPlot> UnifiedChargeFitter::generatePlotAndCalcChi2(UnifiedFitResult& result) {
     auto frame = std::unique_ptr<RooPlot>(charge_->frame(Range(fitMin_, fitMax_), Title("Unified Charge Fit")));
-    
     if (!fitResult_) {
         if(data_hist_) data_hist_->plotOn(frame.get(), Name("data_hist"), MarkerStyle(20), MarkerSize(0.8));
         return frame;
     }
-
     data_hist_->plotOn(frame.get(), Name("data_hist"), MarkerStyle(20), MarkerSize(0.8));
     total_pdf_->plotOn(frame.get(), Name("total_pdf"), LineColor(kRed), LineWidth(2));
-    
     std::vector<int> colors = {28, kBlue, kOrange - 3, kGreen + 2, kAzure + 7, kMagenta, kCyan + 2}; 
     for (size_t i = 0; i < templateElements_.size(); ++i) { 
         total_pdf_->plotOn(frame.get(), Components(*template_pdfs_.at(templateElements_[i])), Name(Form("comp_%s", templateElements_[i].c_str())), LineColor(colors[i % colors.size()]), LineWidth(2));
     }
-    
     int nFreeParams = fitResult_->floatParsFinal().getSize();
     int nBinsInRange = 0;
     for(int i = 1; i <= h_signal_extended_->GetNbinsX(); ++i) {
@@ -346,21 +307,22 @@ std::unique_ptr<RooPlot> UnifiedChargeFitter::generatePlotAndCalcChi2(UnifiedFit
     result.ndf = nBinsInRange - nFreeParams;
     double chi2 = calculateChi2(frame.get(), "data_hist", "total_pdf", fitMin_, fitMax_);
     result.chi2ndf = (result.ndf > 0) ? chi2 / result.ndf : 0.0;
-
     return frame;
 }
 
-void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode, const std::string& SourceNuc) {
-    std::string signalInputFileName = "/eos/user/z/zixuan/Isotope/Add/Be_frag4_withBkg_bkgest.root";
-    auto signalFile = std::unique_ptr<TFile>(TFile::Open(signalInputFileName.c_str()));      
+void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode, const std::string& SourceNuc, bool isNoBkg) {
+    std::string prefix = isNoBkg ? "NoBkg" : "withBkg";
+    
+    std::string signalInputFileName = Form("/eos/user/z/zixuan/Isotope/Add/Be_frag4_%s_Tune_full.root", prefix.c_str(), mode.c_str());
+    auto signalFile = std::unique_ptr<TFile>(TFile::Open(signalInputFileName.c_str()));       
     if (!signalFile || signalFile->IsZombie()) { return; }
 
-    std::string templateInputFileName = Form("/eos/user/z/zixuan/Isotope/PureChargeTemp/withBkg_PureChargeTemplates_%s.root", chain.c_str());
-    auto templateFile = std::unique_ptr<TFile>(TFile::Open(templateInputFileName.c_str()));      
+    std::string templateInputFileName = Form("/eos/user/z/zixuan/Isotope/PureChargeTemp/%s_PureChargeTemplates_%s.root", prefix.c_str(), chain.c_str());
+    auto templateFile = std::unique_ptr<TFile>(TFile::Open(templateInputFileName.c_str()));       
     if (!templateFile || templateFile->IsZombie()) { return; }
 
-    std::string pdf_filename = outputDir + "withBkg_" + mode + "QFit_" + SourceNuc + "ToBeryllium_" + chain + ".frag.pdf";
-    std::string root_filename = outputDir + "withBkg_" + mode + "QFit_" + SourceNuc + "ToBeryllium_" + chain + ".frag.root";
+    std::string pdf_filename = outputDir + prefix + "_" + mode + "QFit_Inner" + SourceNuc  + "_" + chain + ".pdf";
+    std::string root_filename = outputDir + prefix + "_" + mode + "QFit_Inner" + SourceNuc + "_" + chain + ".root";
     
     TCanvas* c_pdf = new TCanvas("c_pdf", "PDF Canvas", 800, 600);
     c_pdf->Print((pdf_filename + "[").c_str());
@@ -382,7 +344,14 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
         if (!all_templates_found) { continue; }
 
         for (const auto& sigType : signal_types) {
-            std::string signalHistName = chain + "_BKG_H4_" + "Beryllium" + "_" + sigType + "_" + detector;
+            if (SourceNuc != "Beryllium" && sigType == "L1Sig_Any") continue; 
+
+            std::string effectiveSource = SourceNuc;
+            if (SourceNuc == "Beryllium" && sigType == "L1Sig_Any") {
+                effectiveSource = "Boron";
+            }
+            std::string signalHistName = chain + "_BKG_H4_" + effectiveSource + "_" + sigType + "_" + detector;
+            
             TH2F* h_signal_raw = (TH2F*)signalFile->Get(signalHistName.c_str());
             if (!h_signal_raw) { continue; }
             auto h_signal_rebinned = std::unique_ptr<TH2F>((TH2F*)h_signal_raw->Clone(Form("%s_rebinned", signalHistName.c_str())));
@@ -392,9 +361,28 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
             const TAxis* y_axis = h_signal_rebinned->GetYaxis();
             auto h_chi2ndf = std::make_unique<TH1D>(Form("h_chi2ndf_%s_%s_%s", detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
             
-            std::map<std::string, std::unique_ptr<TH1D>> h_window_yields;
-            for (const auto& el : required_elements) {
-                h_window_yields[el] = std::make_unique<TH1D>(Form("h_yield_in_%s_window_from_%s_%s_%s_%s", SourceNuc.c_str(), el.c_str(), detector.c_str(), sigType.c_str(), chain.c_str()), "", n_bins_y, y_axis->GetXbins()->GetArray());
+            std::map<std::string, std::unique_ptr<TH1D>> output_hists;
+            
+            if (SourceNuc == "Beryllium" && (sigType == "L1Sig_Pass" || sigType == "L1Sig_PassLoose")) {
+                 for (int z = 4; z <= 8; ++z) {
+                     std::string winName = element_db_by_z.at(z).name;
+                     std::string rawHistName = Form("h_raw_count_in_%s_window_%s_%s_%s", winName.c_str(), detector.c_str(), sigType.c_str(), chain.c_str());
+                     output_hists[rawHistName] = std::make_unique<TH1D>(rawHistName.c_str(), "", n_bins_y, y_axis->GetXbins()->GetArray());
+                 }
+            }
+
+            if (SourceNuc == "Beryllium") {
+                for (int compZ = 4; compZ <= 8; ++compZ) {
+                    for (int winZ = 4; winZ <= 8; ++winZ) {
+                        std::string compName = element_db_by_z.at(compZ).name;
+                        std::string winName = element_db_by_z.at(winZ).name;
+                        std::string histName = Form("h_yield_%s_in_%s_window_%s_%s_%s", compName.c_str(), winName.c_str(), detector.c_str(), sigType.c_str(), chain.c_str());
+                        output_hists[histName] = std::make_unique<TH1D>(histName.c_str(), "", n_bins_y, y_axis->GetXbins()->GetArray());
+                    }
+                }
+            } else {
+                std::string histName = Form("h_yield_%s_in_%s_window_%s_%s_%s", SourceNuc.c_str(), SourceNuc.c_str(), detector.c_str(), sigType.c_str(), chain.c_str());
+                output_hists[histName] = std::make_unique<TH1D>(histName.c_str(), "", n_bins_y, y_axis->GetXbins()->GetArray());
             }
 
             for (int y_bin = 1; y_bin <= n_bins_y; ++y_bin) {
@@ -403,6 +391,24 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
                 const auto& range = detector_ek_ranges.at(detector);
                 if (ek_center < range.first || ek_center > range.second) continue;
 
+                if (SourceNuc == "Beryllium" && (sigType == "L1Sig_Pass" || sigType == "L1Sig_PassLoose")) {
+                    for (int z = 4; z <= 8; ++z) {
+                        double winMin = z - 0.5;
+                        double winMax = z + 0.5;
+                        int binX_min = h_signal_raw->GetXaxis()->FindBin(winMin+0.001);
+                        int binX_max = h_signal_raw->GetXaxis()->FindBin(winMax-0.001);
+                        double rawCount = h_signal_raw->Integral(binX_min, binX_max, y_bin, y_bin);
+                        double rawError = (rawCount > 0) ? sqrt(rawCount) : 0.0;
+
+                        std::string winName = element_db_by_z.at(z).name;
+                        std::string rawHistName = Form("h_raw_count_in_%s_window_%s_%s_%s", winName.c_str(), detector.c_str(), sigType.c_str(), chain.c_str());
+                        if (output_hists.count(rawHistName)) {
+                            output_hists[rawHistName]->SetBinContent(y_bin, rawCount);
+                            output_hists[rawHistName]->SetBinError(y_bin, rawError);
+                        }
+                    }
+                }
+
                 std::map<std::string, TH2F*> templates_raw_ptr;
                 for(auto const& [key, val] : templates_rebinned) templates_raw_ptr[key] = val.get();
                 
@@ -410,11 +416,12 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
                 std::vector<std::string> current_templates;
                 int Z_source = element_db_by_name.at(SourceNuc);
 
-                if (sigType == "L1Sig_Any") {
+                if (SourceNuc == "Beryllium") {
                     fitMinVal = 2.6; fitMaxVal = 8.5;
-                    current_templates = required_elements;
+                    current_templates = required_elements; 
                 } else {
-                    fitMinVal = Z_source - 1.6; fitMaxVal = std::min(8.5, Z_source + 1.6);
+                    fitMinVal = Z_source - 1.4; 
+                    fitMaxVal = std::min(8.5, Z_source + 1.4);
                     for (int z = Z_source - 1; z <= Z_source + 1; ++z) {
                         if (element_db_by_z.count(z)) current_templates.push_back(element_db_by_z.at(z).name);
                     }
@@ -424,30 +431,52 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
 
                 UnifiedChargeFitter fitter(chain, detector, y_bin, h_signal_rebinned.get(), templates_raw_ptr, fitMinVal, fitMaxVal, current_templates, SourceNuc);
                 if (!fitter.initializeAndProject()) continue;
-                fitter.runFit();
+                if (!fitter.runFit()) continue;
                 
-                UnifiedFitResult result = fitter.calculateAllYields(SourceNuc);
-                result.ekpernuc_center = ek_center;
-                result.ekpernuc_low = ek_low;      
-                result.ekpernuc_up = y_axis->GetBinUpEdge(y_bin);
-                auto frame = fitter.generatePlotAndCalcChi2(result);
-
-                h_chi2ndf->SetBinContent(y_bin, result.chi2ndf);
-                for (const auto& el : current_templates) { 
-                    if (result.yield_in_source_window.count(el)) {
-                        h_window_yields.at(el)->SetBinContent(y_bin, result.yield_in_source_window[el]);
-                        h_window_yields.at(el)->SetBinError(y_bin, result.yield_in_source_window_err[el]);
+                UnifiedFitResult plot_result = fitter.getFitInfo(); 
+                
+                if (SourceNuc == "Beryllium") {
+                    for (int compZ = 4; compZ <= 8; ++compZ) {
+                        std::string compName = element_db_by_z.at(compZ).name;
+                        for (int winZ = 4; winZ <= 8; ++winZ) {
+                            std::string winName = element_db_by_z.at(winZ).name;
+                            
+                            std::pair<double, double> res = fitter.calculateYieldInWindow(compName, winName, isNoBkg);
+                            std::string histName = Form("h_yield_%s_in_%s_window_%s_%s_%s", compName.c_str(), winName.c_str(), detector.c_str(), sigType.c_str(), chain.c_str());
+                            
+                            if (output_hists.count(histName)) {
+                                output_hists[histName]->SetBinContent(y_bin, res.first);
+                                output_hists[histName]->SetBinError(y_bin, res.second);
+                            }
+                        }
+                    }
+                } else {
+                    std::pair<double, double> res = fitter.calculateYieldInWindow(SourceNuc, SourceNuc, isNoBkg);
+                    std::string histName = Form("h_yield_%s_in_%s_window_%s_%s_%s", SourceNuc.c_str(), SourceNuc.c_str(), detector.c_str(), sigType.c_str(), chain.c_str());
+                     if (output_hists.count(histName)) {
+                        output_hists[histName]->SetBinContent(y_bin, res.first);
+                        output_hists[histName]->SetBinError(y_bin, res.second);
                     }
                 }
+                
+                plot_result.ekpernuc_center = ek_center;
+                plot_result.ekpernuc_low = ek_low;        
+                plot_result.ekpernuc_up = y_axis->GetBinUpEdge(y_bin);
+                auto frame = fitter.generatePlotAndCalcChi2(plot_result);
+                h_chi2ndf->SetBinContent(y_bin, plot_result.chi2ndf);
                 
                 c_pdf->Clear();
                 c_pdf->Divide(1, 2);
                 TPad* pad1 = (TPad*)c_pdf->cd(1);
                 pad1->SetPad(0, 0.3, 1, 1); pad1->SetLogy(); pad1->SetBottomMargin(0.02);
                 
-                frame->SetTitle(Form("%s %s %sFit (E_{k}=%.2f-%.2f GeV/n)", detector.c_str(), sigType.c_str(), mode.c_str(), result.ekpernuc_low, result.ekpernuc_up));
+                frame->SetTitle(Form("%s %s %sFit (E_{k}=%.2f-%.2f GeV/n)", detector.c_str(), sigType.c_str(), mode.c_str(), plot_result.ekpernuc_low, plot_result.ekpernuc_up));
                 frame->GetYaxis()->SetTitle("Events"); frame->GetXaxis()->SetLabelSize(0);
-                frame->SetMinimum(20); 
+                if (sigType == "L1Sig_Any") {
+                    frame->SetMinimum(20); 
+                } else {
+                    frame->SetMinimum(1); 
+                }
                 auto hproj = std::unique_ptr<TH1D>(h_signal_rebinned->ProjectionX(Form("hproj_%d", y_bin), y_bin, y_bin));
                 double ymax = (sigType != "L1Sig_Any") ? hproj->GetMaximum() : hproj->GetBinContent(hproj->FindBin(2.6));
                 frame->SetMaximum(5 * ymax); 
@@ -464,10 +493,10 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
 
                 TPaveText* info = new TPaveText(0.14, 0.48, 0.5, 0.88, "NDC"); 
                 info->SetFillStyle(0); info->SetBorderSize(0); info->SetTextAlign(12); info->SetTextSize(0.03);
-                info->AddText(Form("#chi^{2}/ndf = %.1f/%d = %.2f", result.chi2ndf * result.ndf, result.ndf, result.chi2ndf));
-                info->AddText("Nuclei Fractions:");
+                info->AddText(Form("#chi^{2}/ndf = %.1f/%d = %.2f", plot_result.chi2ndf * plot_result.ndf, plot_result.ndf, plot_result.chi2ndf));
+                info->AddText("Fractions:");
                 for (const auto& el : current_templates) {
-                    info->AddText(Form("  %s: %.4f#pm%.4f", el.c_str(), result.fit_fractions[el], result.fit_fractions_err[el]));
+                    info->AddText(Form(" %s: %.4f#pm%.4f", el.c_str(), plot_result.fit_fractions[el], plot_result.fit_fractions_err[el]));
                 }
                 info->Draw();
                 
@@ -477,9 +506,6 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
                 calculatePull(frame.get(), pullGraph, frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
                 setupPullPlot(pullGraph, frame->GetXaxis()->GetXmin(), frame->GetXaxis()->GetXmax());
                 pullGraph->Draw("AP");
-                TLine zeroLine(frame->GetXaxis()->GetXmin(), 0, frame->GetXaxis()->GetXmax(), 0);
-                zeroLine.SetLineStyle(2); zeroLine.SetLineColor(kGray + 1);
-                zeroLine.Draw("SAME");
                 
                 c_pdf->Update();
                 c_pdf->Print(pdf_filename.c_str());
@@ -487,7 +513,9 @@ void runUnifiedChargeAnalysis(const std::string& chain, const std::string& mode,
             
             outputFile->cd();
             h_chi2ndf->Write();
-            for (auto& pair : h_window_yields) pair.second->Write();
+            for (auto& pair : output_hists) {
+                if(pair.second->GetEntries() > 0) pair.second->Write();
+            }
         }
     }
     c_pdf->Print((pdf_filename + "]").c_str());
@@ -500,12 +528,7 @@ void ChargeTempFit() {
     gStyle->SetPadTickX(1); gStyle->SetPadTickY(1);
     RooMsgService::instance().setGlobalKillBelow(RooFit::ERROR);
     
-    runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Boron");
-    runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Carbon");
-    runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Nitrogen");
-    runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", "Oxygen");
-    runUnifiedChargeAnalysis("L1Inner", "Pure", "Boron");
-    runUnifiedChargeAnalysis("L1Inner", "Pure", "Carbon");
-    runUnifiedChargeAnalysis("L1Inner", "Pure", "Nitrogen");
-    runUnifiedChargeAnalysis("L1Inner", "Pure", "Oxygen");
+    const vector<string> sources = {"Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
+    for (const auto& src : sources) runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", src, true);
+    for (const auto& src : sources) runUnifiedChargeAnalysis("UnbiasedL1Inner", "Pure", src, false);
 }

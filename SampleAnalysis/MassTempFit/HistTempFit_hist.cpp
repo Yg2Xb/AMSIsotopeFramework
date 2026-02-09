@@ -18,7 +18,7 @@ using namespace AMS_Iso;
 
 // Main fitting function
 // ===== MODIFICATION START: Added fitFragMass and sourceName parameters =====
-void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = true, bool usePureTemplates = true, int rebinX, int ProNbin, bool fitFragMass = false, const string& sourceName = "") {
+void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = true, bool usePureTemplates = false, int rebinX, int ProNbin, bool fitFragMass = false, const string& sourceName = "") {
 // ===== MODIFICATION END =====
     
     // 1. ============================ Configuration and Initialization ============================
@@ -45,10 +45,10 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
     const string suffix = usePureTemplates ? "" : "MC_";
 
     // Construct input file paths (UNCHANGED as requested)
-    string dataFilePath = "/eos/user/z/zixuan/Isotope/Add/" + config.name + Form("_frag%d_withBkg_bkgest.root",config.charge);
+    string dataFilePath = "/eos/user/z/zixuan/Isotope/Add/" + config.name + Form("_frag%d_NoBkg_NoTune_full.root",config.charge);
     vector<unique_ptr<TFile>> f_mc_vec;
     for (int mass : config.masses) {
-        string mcFilePath = Form("/eos/user/z/zixuan/Isotope/Add/%s%d_rew_frag%d_withBkg_bkgest_eff.root", config.name.c_str(), mass, config.charge);
+        string mcFilePath = Form("/eos/user/z/zixuan/Isotope/Add/%s%d_rew_frag%d_NoBkg_full.root", config.name.c_str(), mass, config.charge);
         f_mc_vec.emplace_back(TFile::Open(mcFilePath.c_str()));
         if (!f_mc_vec.back() || f_mc_vec.back()->IsZombie()) {
             cout << "[ERROR] Failed to open MC file: " << mcFilePath << endl;
@@ -74,8 +74,8 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
     string fileSuffix = Form("_%s_%s_UseMass%d%s", chainName.c_str(), templateType.c_str(), UseMass, fitTypeSuffix.c_str());
     // --- END OF MODIFICATION ---
 
-    string outputPdfPath = outputDir + "/wide_MassTF_" + config.name + fileSuffix + "_withBkg_full.pdf";
-    string outputRootPath = outputDir + "/wide_MassTF_" + config.name + fileSuffix + "_withBkg_full.root";
+    string outputPdfPath = outputDir + "/wide_MassTF_" + config.name + fileSuffix + "_NoBkg.pdf";
+    string outputRootPath = outputDir + "/wide_MassTF_" + config.name + fileSuffix + "_NoBkg.root";
 
     unique_ptr<TFile> output_file(TFile::Open(outputRootPath.c_str(), "RECREATE"));
     cout << "[INFO] Output ROOT file: " << outputRootPath << endl;
@@ -99,7 +99,7 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
         string dataHistName;
         if (fitFragMass) {
             // New logic for fitting fragment mass from BKG histogram
-            dataHistName = Form("%s_BKG_H2b2_%s_%s", 
+            dataHistName = Form("%s_BKG_H2b_%s_%s", 
                                 chainName.c_str(), 
                                 sourceName.c_str(), 
                                 DetName[idet], 
@@ -333,15 +333,10 @@ void HistTempFit(const string& isotype, int UseMass, bool useUnbiasedChain = tru
 
 // Entry point to run the analysis
 void HistTempFit_hist() {
-    HistTempFit("Be", 7, true, false, 1, 2);
-    HistTempFit("Be", 7, true, false, 2, 2, true, "Boron");
-    HistTempFit("Be", 7, true, false, 2, 2, true, "Carbon");
-    HistTempFit("Be", 7, true, false, 2, 2, true, "Nitrogen");
-    HistTempFit("Be", 7, true, false, 2, 2, true, "Oxygen");
-    HistTempFit("Be", 7, false, false, 1, 2);
-    HistTempFit("Be", 7, false, false, 2, 2, true, "Boron");
-    HistTempFit("Be", 7, false, false, 2, 2, true, "Carbon");
-    HistTempFit("Be", 7, false, false, 2, 2, true, "Nitrogen");
-    HistTempFit("Be", 7, false, false, 2, 2, true, "Oxygen");
+    HistTempFit("Be", 7, true, false, 1, 1);
+    HistTempFit("Be", 7, true, false, 1, 1, true, "Boron");
+    HistTempFit("Be", 7, true, false, 1, 1, true, "Carbon");
+    HistTempFit("Be", 7, true, false, 1, 1, true, "Nitrogen");
+    HistTempFit("Be", 7, true, false, 1, 1, true, "Oxygen");
 
 }

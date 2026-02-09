@@ -82,8 +82,8 @@ public:
     // MC source dim is 1, ISS source dim is sources.size()
     std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1a; // Equ1 Denom
     std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1b; // Equ2 Denom
-    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1b2; // Equ2 Denom
-    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1c; // Equ3 Denom
+    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1b2; // Equ3 Denom
+    std::vector<std::vector<std::vector<H1Ptr>>> BKG_H1c; // Equ4 Denom
 
     // ---- H2 Series: frag corr num samples ----
     
@@ -128,6 +128,26 @@ public:
     // MC Flux Aux
     //std::vector<std::vector<std::vector<std::vector<H1Ptr>>>> MC_FLUXH2; // [chain][cut][det][gen/rec]
     std::vector<H1Ptr> MC_FLUXH3; // Generated counts
+
+    // ==========================================
+    // ======= FRAG STUDY AREA (Added) ==========
+    // ==========================================
+    
+    // --- 1. 变量分布研究 (TH2F: Var vs Rigidity) ---
+    // [type: 0=AboveL1, 1=BelowL1][geo: 0=TOF, 1=NaF, 2=AGL]
+    std::vector<std::vector<H2Ptr>> BKG_FRAG_UTOFQ;
+
+    // [type: 0=AboveL1, 1=BelowL1][geo_rich: 0=NaF, 1=AGL][var: 0..7]
+    // Var Index: 0:LTOFQ, 1:richQ, 2:rich_pmt, 3:rich_pb, 4:rich_npe_ratio, 5:rich_used_ratio, 6:rich_good, 7:rich_clean
+    std::vector<std::vector<std::vector<H2Ptr>>> BKG_FRAG_RICH;
+
+    // [type: 0=AboveL1, 1=BelowL1][var: 0..1]
+    // Var Index: 0:tof_chisc, 1:tof_chist
+    std::vector<std::vector<H2Ptr>> BKG_FRAG_TOF;
+
+    // --- 2. cutBackground 排除能力研究 (TH1F: Counts vs Rigidity) ---
+    // [type: 0=AboveL1, 1=BelowL1][geo: 0=TOF, 1=NaF, 2=AGL][num_den: 0=Total, 1=PassBkg]
+    std::vector<std::vector<std::vector<H1Ptr>>> BKG_FRAG_REJ;
 
 
 private:

@@ -70,7 +70,7 @@ CutResult<10> RTICut::cutRTI() const {
         // 曝光检查
         event_->rtinexl[0][0] > 700 && event_->rtinexl[1][0] > 500,
         
-        // 坏运行检查,//且去掉photonRun
+        // 坏运行检查,且去掉photonRun
         !event_->isbadrun && !isPhotonRun
     };
 

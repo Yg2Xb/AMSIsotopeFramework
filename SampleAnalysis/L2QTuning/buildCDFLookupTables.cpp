@@ -46,12 +46,12 @@ const std::vector<std::string> TEMPLATES = {"L1Template", "L2Template"};
 
 // 探测器能量范围
 const std::map<std::string, std::pair<double, double>> DETECTOR_RANGES = {
-    {"TOF", {0.25, 1.28}}, {"NaF", {0.71, 6.10}}, {"AGL", {2.70, 22.0}}
+    {"TOF", {0.2, 1.8}}, {"NaF", {0.61, 6.10}}, {"AGL", {2.70, 30.0}}
 };
 
 // 安全外推范围
 const std::map<std::string, std::pair<double, double>> SAFE_DETECTOR_RANGES = {
-    {"TOF", {0.3, 1.26}}, {"NaF", {0.75, 5.6}}, {"AGL", {2.95, 19.9}}
+    {"TOF", {0.25, 1.6}}, {"NaF", {0.7, 5.8}}, {"AGL", {2.8, 25.9}}
 };
 
 // 参数限制 (已移除 Width 和 Sigma，只保留 EGE 相关)
@@ -68,7 +68,7 @@ struct LookupTable {
     std::vector<double> cdf_l1;
     std::vector<double> cdf_l2;
     
-    void build(TF1& f_l1, TF1& f_l2, double qmin, double qmax, const std::string& context, int npts = 3500) {
+    void build(TF1& f_l1, TF1& f_l2, double qmin, double qmax, const std::string& context, int npts = 4000) {
         if (npts <= 0) { std::cerr << "Error: npts must be positive." << std::endl; return; }
         q_values.resize(npts + 1); cdf_l1.resize(npts + 1); cdf_l2.resize(npts + 1);
         
@@ -200,12 +200,12 @@ void buildCDFLookupTables(const std::string& nucleusName) {
     const time_t start_time = time(nullptr);
     std::cout << "Starting performance monitoring..." << std::endl;
 
-    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter1.root";
-    const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/withBkg_CDFLookupTable_fromSpline_" + nucleusName + ".root";
+    const std::string paramFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter2.root";
+    const std::string outFileName = "/eos/user/z/zixuan/Isotope/L2QTuning/NoBkg_CDFLookupTable_fromSpline_" + nucleusName + ".root";
     
     // 读取 Binning 信息 (保持原样)
-    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter0.root";
-    const std::string binningHistName = "UnbiasedL1Inner_Helium_AGL_L1Template_EGE_Peak";
+    const std::string binningFileName = "/eos/user/z/zixuan/Isotope/ChargeFit/NoBkg_ChargeFitParams_HeToOxy_NoTune_iter2.root";
+    const std::string binningHistName = "L1Inner_Beryllium_AGL_L1Template_EGE_Peak";
     std::vector<double> energyBins;
     auto finBinning = std::unique_ptr<TFile>(TFile::Open(binningFileName.c_str()));
     if (!finBinning || finBinning->IsZombie()) { std::cerr << "Error: Failed to open binning file: " << binningFileName << std::endl; return; }
@@ -236,9 +236,9 @@ void buildCDFLookupTables(const std::string& nucleusName) {
                 double ekCenter = (energyBins[iy] + energyBins[iy+1]) / 2.0;
 
                 // 简单的能量切割
-                if ((det == "TOF" && (ekCenter < 0.25 || ekCenter > 1.5)) ||
-                    (det == "NaF" && (ekCenter < 0.6 || ekCenter > 6.1)) ||
-                    (det == "AGL" && (ekCenter < 2.5 || ekCenter > 22.0))) continue;
+                if ((det == "TOF" && (ekCenter < 0.2 || ekCenter > 1.8)) ||
+                    (det == "NaF" && (ekCenter < 0.61 || ekCenter > 6.1)) ||
+                    (det == "AGL" && (ekCenter < 2.7 || ekCenter > 30.0))) continue;
                 
                 printf("--> Processing Bin %zu (Ek_low = %.4f, Ek_center = %.4f)\n", iy, ekLow, ekCenter);
 
@@ -264,7 +264,6 @@ void buildCDFLookupTables(const std::string& nucleusName) {
                 TVectorD(ege_lookup.cdf_l1.size(), ege_lookup.cdf_l1.data()).Write((baseName + "_EGE_cdf_l1").c_str());
                 TVectorD(ege_lookup.cdf_l2.size(), ege_lookup.cdf_l2.data()).Write((baseName + "_EGE_cdf_l2").c_str());
 
-                // 【确认修改 2】找回丢失的参数输出
                 // 将 double 数组转换为 TVectorD 并保存
                 TVectorD vec_par_l1(8, par_ege_l1);
                 TVectorD vec_par_l2(8, par_ege_l2);

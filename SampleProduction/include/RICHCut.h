@@ -40,7 +40,7 @@
      std::array<double, 3> getModifiedPosition(bool interpolate) const;
      bool isBadAerogelPosition(double x, double y) const;
      bool isBadAerogelTile() const;
-     CutResult<6> cutGeometry(bool interpolate = true) const;  // 6个几何切割
+     CutResult<6> cutGeometry(bool interpolate = true, int mode = -1) const;
      
      CutResult<3> cutRICH(int charge, bool isISS, bool interpolate = true) const;  // 3个RICH切割
      CutResult<2> cutNoGeometry(int charge) const;  // 2个非几何切割

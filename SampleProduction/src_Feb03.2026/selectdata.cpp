@@ -61,7 +61,7 @@ void selectdata::Loop() {
     ModelManager::init("/eos/ams/group/ihep/zixuan/ForSampleProduction/model_data.root",
                        "/eos/ams/group/ihep/zixuan/ForSampleProduction/model_mc.root");
     if(!isISS) AMS_Iso::Tools::initFluxFunctions();
-    if(isISS)  AMS_Iso::Tools::initChargeTuning("/eos/ams/group/ihep/zixuan/ForSampleProduction/CDFLookupTable_fromSpline.root");
+    //if(isISS)  AMS_Iso::Tools::initChargeTuning("/eos/ams/group/ihep/zixuan/ForSampleProduction/withBkg_CDFLookupTable_fromSpline.root");
 
     // --- Constants & Helpers ---
     const int NchainLoc = (int)chains.size();
@@ -89,8 +89,8 @@ void selectdata::Loop() {
     // Cutoff & Binning Helpers
     auto& binMgr = BinningManager::GetInstance();
     auto StdBetaBins = binMgr.GetBetaBins(4, 7);
-    //auto* bins = histManager->FLUXH1[isISS?3:0][0][0][3]->GetXaxis()->GetXbins();
-    //std::vector<double> StdRigBins(bins->GetArray(), bins->GetArray() + bins->GetSize());
+    auto* bins = histManager->FLUXH1[isISS?3:0][0][0][3]->GetXaxis()->GetXbins();
+    std::vector<double> StdRigBins(bins->GetArray(), bins->GetArray() + bins->GetSize());
 
     std::map<std::pair<int,int>, int> ZAMap;
     for (int n = 0; n < Constants::N_nuc; ++n) ZAMap[{Constants::nuclei_Z[n], Constants::nuclei_A[n]}] = n;
@@ -150,7 +150,7 @@ void selectdata::Loop() {
         double richBeta  = yanzx_dst ? rich_cut.getBeta(1) : rich_cut.getBeta(0);
 
         // Exposure Calculation
-        /*
+        /* 
         if (isISS && (std::find(timeTag.begin(), timeTag.end(), time[0]) == timeTag.end())) {
             float expTime = rti_cut.calculateExposure().value;
             // Fill ISS_FLUXH2 and ISS_FLUXH3
@@ -244,13 +244,12 @@ void selectdata::Loop() {
         bool BetaDetGeo[3]      = { tof_cut.cutTOF(charge, isISS).details[0], rich_cut.cutGeometry(true, 1).total, rich_cut.cutGeometry(true, 0).total };
 
         // Beta Cutoff Logic
-        /*
+        
         bool beyondRigCutoff = (!isISS);
         if (isISS && rig_chain[0] >= 0.8 && rig_chain[0] <= 3300) {
             int bin = Tools::findBin(StdRigBins, rig_chain[0]);
             if (bin >= 0 && StdRigBins[bin] > Constants::SAFE_FACTOR_RIG * cutOffRig) beyondRigCutoff = true;
         }
-        */
         
 
         bool beyondBetaCutoff[3][Constants::N_nuc] = {};
@@ -286,6 +285,7 @@ void selectdata::Loop() {
         // ---------------------------------------------------------
         // B. Signal Histograms (ID)
         // ---------------------------------------------------------
+        /*
         for (int c = 0; c < std::min(2, NchainLoc); ++c) {
             if (!PassTwoAcc[c]) continue;
             for (int d = 0; d < NdetLoc; ++d) {
@@ -306,7 +306,6 @@ void selectdata::Loop() {
             }
         }
         
-        /*
         // ---------------------------------------------------------
         // C. Beta & Rigidity Resolution (IDH4, 5, 6, 7)
         // ---------------------------------------------------------
@@ -410,7 +409,6 @@ void selectdata::Loop() {
             }
             histManager->IDH7[c][3]->Fill((L1TruthBeta - L2TruthBeta)/L1TruthBeta, L1TruthBeta, weight_NucFlux);
         }
-        */
         
         // ---------------------------------------------------------
         // D. Background Histograms
@@ -463,17 +461,23 @@ void selectdata::Loop() {
                     double fillQ = (c == 0) ? tk_ql1_unb : tk_ql1;
                     for (int t = 0; t <= 5; ++t) {
                         if (!charge_cuts.details[2 * t + c]) continue;
-                        if (t > 3 && !BetaDetQual_zsrc[d]) continue;
+                        if (t > 2 && !BetaDetQual_zsrc[d]) continue;
 
                         double q_val = fillQ;
                         if (t == 4) {
                             q_val = tk_ql2;
-                            if (isISS) q_val = Tools::tuneL2Charge((c==0?"UnbiasedL1Inner":"L1Inner"), sources[s], detectors[d], Tools::findBin(StdBetaBins, beta_det[d]), tk_ql2);
+                            //if (isISS) q_val = Tools::tuneL2Charge((c==0?"UnbiasedL1Inner":"L1Inner"), sources[s], detectors[d], Tools::findBin(StdBetaBins, beta_det[d]), tk_ql2);
                         } else if (t == 5) {
                             q_val = tk_qinner;
                         }
                         histManager->BKG_H4[c][srcIdx][d][t]->Fill(q_val, ek, weight_NucFlux);
-                        if ((t == 0 && tk_ql1_unb > 2.6 && tk_ql1_unb < 8.8) || (t > 0 && zsrc > 2))     isFilled = true;
+                        if (t == 0) {
+                            if (tk_ql1_unb > 2.5 && tk_ql1_unb < 8.8) {
+                                isFilled = true;
+                            }
+                        } else {
+                            isFilled = true;
+                        }
                     }
                 }
             }
@@ -504,17 +508,20 @@ void selectdata::Loop() {
             }
         }
         
-        /*
         // BKG H5 (Correlation)
         for (int c = 0; c < 1; ++c) {
-            if (!tracker_cut.chargeTempCut(-1, fragZ, isISS, forBackground).details[c]) continue;
+            if (!tracker_cut.chargeTempCut(8, fragZ, isISS, forBackground).details[c]) continue;
             for (int d = 0; d < NdetLoc; ++d) {
                 if (BetaDetGeo[d] && getBeyondBetaCutoffCut(d, 6, 12)){
                     double Qinner = tk_qinner >= 1.5 ? tk_qinner : tk_q[1];
-                    histManager->BKG_H5[c][d][0]->Fill(Qinner, (c == 0 ? tk_ql1_unb : tk_ql1), ek_det[d], weight_NucFlux);
+                    if(Qinner > 0.5 && Qinner < 9 && tk_ql1_unb > 2.5 && tk_ql1_unb < 9){
+                        histManager->BKG_H5[c][d][0]->Fill(Qinner, (c == 0 ? tk_ql1_unb : tk_ql1), ek_det[d], weight_NucFlux);
+                        isFilled = true;
+                    }
                 }
             }
-        
+        }
+        */
         // ---------------------------------------------------------
         // E. Flux Efficiency Filling
         // ---------------------------------------------------------
@@ -524,7 +531,7 @@ void selectdata::Loop() {
         double unbiasedTOFEk = AMS_Iso::Tools::betaToKineticEnergy(betahs);
 
         // 1. Loop Source Elements (index s: 0=He, 1=Li, 2=Be, 3=B, 4=C, 5=N, 6=O)
-        for (int s = 0; s < NsrcLoc; ++s) {
+        for (int s = 2; s < 3; ++s) {
             // Map index to actual charge: targetZ = 2, 3, 4, 5, 6, 7, 8, for mc only charge
             int tZ = isISS ? s + 2 : charge; 
             // 2. Loop Cut Groups
@@ -572,7 +579,7 @@ void selectdata::Loop() {
                     double val = -3;
                     if (isInner) {
                         double unbiasedRig = AMS_Iso::Tools::kineticEnergyToRigidity(unbiasedTOFEk, cZ, cA);
-                        val = (unbiasedRig > 0 && unbiasedRig <= 6.25) ? unbiasedRig : ref_rig_inner;
+                        val = (unbiasedRig > 0 && unbiasedRig <= 6.3) ? unbiasedRig : ref_rig_inner;
                     } 
                     else {
                         // Tracker fills Rigidity, Detectors fill converted Ek
@@ -604,6 +611,7 @@ void selectdata::Loop() {
             }
         }
         
+        /*
         //ISS FLUXH5
         if(isISS && PassTwoAcc[0]) histManager->ISS_FLUXH5[0]->Fill(cutOffRig, rig_chain[0], weight_NucFlux);
         if(isISS && PassTwoAcc[1]) histManager->ISS_FLUXH5[1]->Fill(cutOffRig, rig_chain[1], weight_NucFlux);
@@ -612,88 +620,16 @@ void selectdata::Loop() {
         if(isISS && rig_chain[0] > 1.2*cutOffRig) histManager->ISS_FLUXH4[0]->Fill(run, btstat);
 
         // ---------------------------------------------------------
-        // F. Fragmentation Study (MC Only)
-        // ---------------------------------------------------------
-        if (!isISS && charge > 3) {
-            // --- 1. 变量准备 ---
-            double utofq = (tof_ql[0] + tof_ql[1]) * 0.5;
-            if (tof_ql[0] == 0 || tof_ql[1] == 0) utofq *= 2.0;
-            double ltofq = (tof_ql[2] + tof_ql[3]) * 0.5;
-            if (tof_ql[2] == 0 || tof_ql[3] == 0) ltofq *= 2.0;
-
-            double rQ = sqrt(rich_q[0]);
-            double npe_ratio = (rich_npe[2] > 0) ? (rich_npe[0] / rich_npe[2]) : -1.0;
-            double used_ratio = (rich_hit > 0) ? (rich_usedm / (double)rich_hit) : -1.0;
-            double fillRig = rig_chain[0];
-
-            // --- 2. 判定标志 ---
-            bool IsFragOrig = (fragZ == charge);
-            bool isAboveL1_MC = (L1_Z == fragZ);
-            bool isBelowL1_MC =  mtrpar[0] == geneID_MC && L2_Z == fragZ;
-
-            // Above L1: 要求 L1 已经是 fragZ 且满足 Normal 筛选
-            bool passAboveCuts = tracker_cut.Q_L1_BkgIndependCut(fragZ, isISS) && 
-                                 tracker_cut.cutInnerQ(fragZ, isISS).total && 
-                                 tracker_cut.cutL1Norm(fragZ, isISS).total;
-            
-            // Below L1: L1BeamL2FragLoose (使用 c=0 作为代表性链)
-            bool passBelowCuts = tracker_cut.FragSampleSel(charge, fragZ, 0, 3, isISS, true);
-
-            // 背景 Cut 标志 (用于排除能力研究)
-            bool passBkgCut = tracker_cut.cutBackground(charge, isISS, false, forBackground).details[1];
-
-            // --- 3. 探测器循环填充 ---
-            for (int d = 0; d < 3; ++d) {
-                if (!BetaDetGeo[d]) continue;
-
-                // 准备填充数组索引 [0]:Above, [1]:Below
-                for (int type = 0; type < 2; ++type) {
-                    bool isMatchMC = (type == 0) ? isAboveL1_MC : isBelowL1_MC;
-                    bool isMatchCut = (type == 0) ? passAboveCuts : passBelowCuts;
-
-                    if (isMatchMC && isMatchCut) {
-                        // A. UTOFQ (所有几何 d=0,1,2)
-                        if(passBkgCut) histManager->BKG_FRAG_UTOFQ[type][d]->Fill(utofq, fillRig, weight_NucFlux);
-
-                        // B. Bkg Rejection (TH1F: Rigidity)
-                        if(utofq > fragZ - 0.6 && utofq < fragZ + 1.5) histManager->BKG_FRAG_REJ[type][d][0]->Fill(fillRig, weight_NucFlux); // Total
-                        if (utofq > fragZ - 0.6 && utofq < fragZ + 1.5 && passBkgCut) histManager->BKG_FRAG_REJ[type][d][1]->Fill(fillRig, weight_NucFlux); // Pass
-
-                        // C. RICH 核心变量 (d=1,2: NaF, AGL)
-                        if (passBkgCut && d > 0) {
-                            int gIdx = d - 1;
-                            histManager->BKG_FRAG_RICH[type][gIdx][0]->Fill(ltofq, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][1]->Fill(rQ, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][2]->Fill(rich_pmt, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][3]->Fill(rich_pb, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][4]->Fill(npe_ratio, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][5]->Fill(used_ratio, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][6]->Fill(rich_good, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_RICH[type][gIdx][7]->Fill(rich_clean, fillRig, weight_NucFlux);
-                        }
-
-                        // D. TOF 品质变量 (d=0: TOF)
-                        if (passBkgCut && d == 0) {
-                            histManager->BKG_FRAG_TOF[type][0]->Fill(tof_chisc, fillRig, weight_NucFlux);
-                            histManager->BKG_FRAG_TOF[type][1]->Fill(tof_chist, fillRig, weight_NucFlux);
-                        }
-                        
-                    }
-                }
-            }
-        }
-
-        // ---------------------------------------------------------
         // A. Filtered Tree
         // ---------------------------------------------------------
         if (filteredTree) {
             auto l1n = tracker_cut.cutL1Norm(charge, isISS);
             auto l1u = tracker_cut.cutL1Unbiased(charge, isISS);
-            bool l1n_pass = l1n.details[2] && l1n.details[3] && l1n.details[4] && tk_ql1 > 2.6 && tk_ql1 < 8.8;
-            bool l1u_pass = l1u.details[2] && l1u.details[3] && tk_ql1_unb > 2.6 && tk_ql1_unb < 8.8;
+            bool l1n_pass = l1n.details[2] && l1n.details[3] && l1n.details[4] && tk_ql1 > 2.5 && tk_ql1 < 8.8;
+            bool l1u_pass = l1u.details[2] && l1u.details[3] && tk_ql1_unb > 2.5 && tk_ql1_unb < 8.8;
             
-            if (isFilled || (tracker_cut.Q_L1_BkgIndependCut(charge, isISS) && (l1n_pass || l1u_pass))){
-                filteredTree->Fill();
+            if (isFilled || tracker_cut.Q_L1_BkgIndependCut(charge, isISS) && (l1n_pass || l1u_pass)){
+                if(tk_ql1_unb < 9) filteredTree->Fill();
             } 
         }
         */

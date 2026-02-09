@@ -50,15 +50,18 @@ struct TrackerStatus {
 
     // Rigidity
     double rigidity;
+    double l1Chi2;
+    double l1InnerChi2;
+    double innerChi2;
 
     TrackerStatus() 
-        : hasXYHit{}, hasYHit{}, innerLayerHits(0)
-        , secondaryHitCountX(0), secondaryHitCountY(0)
+        : hasXYHit{}, hasYHit{}, innerLayerHits(-1)
+        , secondaryHitCountX(-1), secondaryHitCountY(-1)
         , hasL2XY(false), hasL2QStatusGood(false)
-        , innerQ(0.0), innerQRMS(0.0), L38InnerAveQ(0.0)
-        , L1Q_Unbiased(0.0), L1Q_Normal(0.0)
+        , innerQ(999), innerQRMS(999), L38InnerAveQ(999)
+        , L1Q_Unbiased(999), L1Q_Normal(999)
         , L1QStatus_Unbiased(-1), L1QStatus_Normal(-1)
-        , rigidity(0.0) 
+        , rigidity(-999), l1Chi2(999.), l1InnerChi2(999.), innerChi2(999.)
     {}
 };
 
@@ -86,6 +89,9 @@ TrackerCut& operator=(TrackerCut&&) = default;
     double getRigidity(int algorithm = Tracker::Algorithm::DEFAULT,
                        int alignment = Tracker::Alignment::DEFAULT,
                        int span = Tracker::Span::DEFAULT) const;
+    double getL1Chi2() const;
+    double getInnerChi2() const;
+    double getL1InnerChi2() const;
 
     // --- Basic Cuts ---
     CutResult<4> cutBasicAndFiducial(bool isISS, bool isUnbiased = false, bool forInTrkEffNum = false) const;

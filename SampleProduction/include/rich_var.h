@@ -44,8 +44,8 @@ inline constexpr int kNBadTiles{7};
 inline constexpr std::array<int, 7> kBadTile{3, 7, 12, 20, 87, 100, 108};
 
 // PMT和光电子比例切割 //2026.1.14 change to old
-inline constexpr std::array<int, 2> cut_pmt{10, 2};        // [0]:Aero [1]:NaF
-inline constexpr std::array<double, 2> cut_per{0.4, 0.45}; // [0]:Aero [1]:NaF // 25.6.12 NaF 0.45->0.4, 12.13 0.4->0.2
+inline constexpr std::array<int, 2> cut_pmt{2, 2};        // [0]:Aero [1]:NaF
+inline constexpr std::array<double, 2> cut_per{0.2, 0.2}; // [0]:Aero [1]:NaF // 25.6.12 NaF 0.45->0.4, 12.13 0.4->0.2
 
 } // namespace RICH
 } // namespace AMS_Iso

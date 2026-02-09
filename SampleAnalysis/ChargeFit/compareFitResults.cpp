@@ -31,7 +31,7 @@ struct FitResult {
 };
 
 struct Config {
-	string main_analysis_file_path = "/eos/user/z/zixuan/Isotope/ChargeFit/withBkg_ChargeFitParams_HeToOxy_NoTune_iter1.root";
+	string main_analysis_file_path = "/eos/user/z/zixuan/Isotope/ChargeFit/NoBkg_ChargeFitParams_HeToOxy_NoTune_iter2.root";
 	string output_dir = "/eos/user/z/zixuan/Isotope/ChargeFit/smooth/";
 	vector<string> elements = {"Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen"};
 	//vector<string> elements = {"Carbon"};
@@ -48,7 +48,7 @@ struct Config {
 	map<string, int> templateColors = {{"L1Template", kBlack}, {"L2Template", kRed}};
 	map<string, int> modelColors = {{"LG", kRed}, {"EGE", kBlue}};
 	map<string, pair<double, double>> detRanges = {
-		{"TOF", {0.25, 1.5}}, {"NaF", {0.71, 6.10}}, {"AGL", {2.70, 22.0}}
+		{"TOF", {0.2, 1.8}}, {"NaF", {0.61, 6.10}}, {"AGL", {2.70, 30.0}}
 	};
 };
 
@@ -149,9 +149,9 @@ FitResult performSplineFit(TH1* hist, const string& detector, const string& base
 	cout << "\n[INFO] Starting smart spline fit for: " << baseName << " (" << valid_bin_centers.size() << " points)" << endl;
 
 	const map<int, double> chi2ndf_thresholds = {
-		{1, 1.8}, {2, 2.5}, {3, 3.0}, {4, 4.0}, {5, 5.0}, {6, 4.0}, {7, 4.0}
+		{1, 1.8}, {2, 2.5}, {3, 3.0}, {4, 4.0}, {5, 5.0}, {6, 4.0}, {7, 4.0}, {8, 4.0}
 	};
-	const int max_segments = (detector == "TOF") ? 5 : 7;
+	const int max_segments = (detector == "TOF") ? 7 : 8;
 
 	map<int, pair<double, int>> fit_quality;
 	int best_seg_idx = -1;
@@ -162,7 +162,7 @@ FitResult performSplineFit(TH1* hist, const string& detector, const string& base
 
 		TF1* temp_fit = nullptr;
 		try {
-			temp_fit = SplineFit(hist, xpoints.data(), xpoints.size(), 0x38, "b1e1", "temp_fit", 0.25, 22);
+			temp_fit = SplineFit(hist, xpoints.data(), xpoints.size(), 0x38, "b1e1", "temp_fit", 0.2, 30);
 		} catch (...) { continue; }
 
 		if (!temp_fit || temp_fit->GetNDF() < 1) {
@@ -211,7 +211,7 @@ FitResult performSplineFit(TH1* hist, const string& detector, const string& base
 		cout << "  [FIT] Finalizing with loop variable 'segments' = " << best_seg_idx << endl;
 		vector<double> xpoints = generateSplineNodes(best_seg_idx, detector, valid_bin_centers, fitStart, fitEnd);
 		string final_fit_name = baseName + "_spline";
-		TF1* final_fit = SplineFit(hist, xpoints.data(), xpoints.size(), 0x38, "b2e2", final_fit_name.c_str(), 0.25, 22);
+		TF1* final_fit = SplineFit(hist, xpoints.data(), xpoints.size(), 0x38, "b2e2", final_fit_name.c_str(), 0.2, 30);
 
 		if (!final_fit) return {};
 
@@ -354,7 +354,7 @@ void plotTemplateComparison(TFile* fin, TCanvas* c, const string& pdfName) {
 
 					string fit_name = name + "_spline";
 					// 使用计算出的平均值创建常数函数
-					TF1* const_fit = new TF1(fit_name.c_str(), Form("%f", alpha_avg_val), 0.25, 22);
+					TF1* const_fit = new TF1(fit_name.c_str(), Form("%f", alpha_avg_val), 0.2, 30);
 
 					if (gSplineOutFile && gSplineOutFile->IsOpen()) {
 						gSplineOutFile->cd();
@@ -457,7 +457,7 @@ void compareFitResults() {
 	TCanvas* c = new TCanvas("c", "c", 800, 400); c->SetGrid();
 
 	// --- START OF MODIFICATION 5: Open the output file at the beginning ---
-	string splineOutFile = gConfig.output_dir + "withBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter1.root";
+	string splineOutFile = gConfig.output_dir + "NoBkg_ChargeFitParamsSmooth_HeToOxy_NoTune_iter2.root";
 	gSplineOutFile = make_unique<TFile>(splineOutFile.c_str(), "RECREATE");
 	if (!gSplineOutFile || gSplineOutFile->IsZombie()) {
 		cout << "[ERROR] Cannot create output spline file: " << splineOutFile << endl;
@@ -465,26 +465,26 @@ void compareFitResults() {
 	}
 	cout << "[INFO] Opened output file for splines: " << splineOutFile << endl;
 
-	string pdfName_template = gConfig.output_dir + "withBkg_FitParam_TemplateCompare_iter1.pdf";
+	string pdfName_template = gConfig.output_dir + "NoBkg_FitParam_TemplateCompare_iter2.pdf";
 	c->Print((pdfName_template + "[").c_str());
 	plotTemplateComparison(fin_main.get(), c, pdfName_template);
 	c->Print((pdfName_template + "]").c_str());
-
-	string pdfName_detector = gConfig.output_dir + "withBkg_FitParam_DetectorCompare_iter1.pdf";
+	/*
+	string pdfName_detector = gConfig.output_dir + "NoBkg_FitParam_DetectorCompare_iter2.pdf";
 	c->Print((pdfName_detector + "[").c_str());
 	plotDetectorComparison(fin_main.get(), c, pdfName_detector);
 	c->Print((pdfName_detector + "]").c_str());
 
-	string pdfName_chain = gConfig.output_dir + "withBkg_FitParam_ChainCompare_iter1.pdf";
+	string pdfName_chain = gConfig.output_dir + "NoBkg_FitParam_ChainCompare_iter2.pdf";
 	c->Print((pdfName_chain + "[").c_str());
 	plotChainComparison(fin_main.get(), c, pdfName_chain);
 	c->Print((pdfName_chain + "]").c_str());
 
-	string pdfName_chi2 = gConfig.output_dir + "withBkg_FitParam_Chi2ModelCompare_iter1.pdf";
+	string pdfName_chi2 = gConfig.output_dir + "NoBkg_FitParam_Chi2ModelCompare_iter2.pdf";
 	c->Print((pdfName_chi2 + "[").c_str());
 	plotModelChi2Comparison(fin_main.get(), c, pdfName_chi2);
 	c->Print((pdfName_chi2 + "]").c_str());
-
+	*/
 	// --- START OF MODIFICATION 6: Close the file at the end ---
 	gSplineOutFile->Close();
 	cout << "\n[INFO] All spline fits have been saved to " << splineOutFile << endl;
